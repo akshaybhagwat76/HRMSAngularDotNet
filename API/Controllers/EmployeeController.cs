@@ -5,32 +5,37 @@ using System.Threading.Tasks;
 using Core.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Persistent.Repository;
-using ApplicationLayer.Interfaces;
 using AutoMapper;
 using API.Dtos;
 using Microsoft.AspNetCore.Cors;
+using Infrastructure.Services;
+using Core.Interfaces;
+using API.Errors;
 
 namespace API.Controllers
 {
-    [Route("api")]
+    [Route("api/")]
     [ApiController]
     //[EnableCors("AllowOrigin")]
-    public class EmployeeController : ControllerBase
+    public class EmployeeController : BaseApiController
     {
-        private readonly IHREmployeeService _employee;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public EmployeeController(IHREmployeeService employee, IMapper mapper)
+        public EmployeeController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _employee = employee;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         [HttpGet("GetEmployee")]
-        public async Task<ActionResult> GetEmployeeAsync()
+        public async Task<ActionResult<List<Tbl_HR_EmployeeDto>>> GetEmployeeAsync()
         {
             try
             {
-                return Ok(await _employee.GetAll());
+                var hR_Employees = await _unitOfWork.Repository<Tbl_HR_Employee>().ListAllAsync();
+
+                var data = _mapper.Map<IReadOnlyList<Tbl_HR_Employee>, IReadOnlyList<Tbl_HR_EmployeeDto>>(hR_Employees);
+
+                return Ok(new List<Tbl_HR_EmployeeDto>(data));
             }
             catch (Exception)
             {
@@ -39,11 +44,13 @@ namespace API.Controllers
             }
         }
         [HttpGet("GetEmployeeById")]
-        public async Task<ActionResult> GetEmployeeByIdAsync(int Id)
+        public async Task<ActionResult<Tbl_HR_EmployeeDto>> GetEmployeeByIdAsync(int Id)
         {
             try
             {
-                return Ok(await _employee.FindById(Id));
+                var employee = await _unitOfWork.Repository<Tbl_HR_Employee>().GetByIdAsync(Id);
+                if (employee == null) return NotFound(new ApiResponse(404));
+                return _mapper.Map<Tbl_HR_Employee, Tbl_HR_EmployeeDto>(employee);
             }
             catch (Exception)
             {
@@ -52,12 +59,17 @@ namespace API.Controllers
             }
         }
         [HttpPost("AddEmployee")]
-        public async Task<ActionResult> AddEmployeeAsync(Tbl_HR_EmployeeDto employeeDto)
+        public async Task<ActionResult<Tbl_HR_EmployeeDto>> AddEmployeeAsync(Tbl_HR_EmployeeDto employeeDto)
         {
             try
             {
+                var employee = _mapper.Map<Tbl_HR_EmployeeDto, Tbl_HR_Employee>(employeeDto);
+                _unitOfWork.Repository<Tbl_HR_Employee>().Add(employee);
+                var result = await _unitOfWork.Complete();
 
-                return Ok(await _employee.Insert(_mapper.Map<Tbl_HR_Employee>(employeeDto)));
+
+                if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employee"));
+                return _mapper.Map<Tbl_HR_Employee, Tbl_HR_EmployeeDto>(employee);
             }
             catch (Exception ex)
             {

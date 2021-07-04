@@ -1,33 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
-using ApplicationLayer.Interfaces;
+using API.Errors;
 using AutoMapper;
 using Core.Entities;
-using Microsoft.AspNetCore.Http;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [Route("api/")]
     [ApiController]
-    public class OtherInfoController : ControllerBase
+    public class OtherInfoController : BaseApiController
     {
-        private readonly IOtherInfoService _otherInfo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public OtherInfoController(IOtherInfoService otherInfo, IMapper mapper)
+        public OtherInfoController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _otherInfo = otherInfo;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         [HttpGet("GetOtherInfo")]
-        public async Task<ActionResult> GetOtherInfoAsync()
+        public async Task<ActionResult<List<TBL_HR_EMPLOYEE_DETAILSDto>>> GetOtherInfoAsync()
         {
             try
             {
-                return Ok(await _otherInfo.GetAll());
+                
+                var hR_Employees = await _unitOfWork.Repository<TBL_HR_EMPLOYEE_DETAILS>().ListAllAsync();
+
+                var data = _mapper.Map<IReadOnlyList<TBL_HR_EMPLOYEE_DETAILS>, IReadOnlyList<TBL_HR_EMPLOYEE_DETAILSDto>>(hR_Employees);
+
+                return Ok(new List<TBL_HR_EMPLOYEE_DETAILSDto>(data));
             }
             catch (Exception)
             {
@@ -36,11 +40,13 @@ namespace API.Controllers
             }
         }
         [HttpGet("GetOtherInfoById")]
-        public async Task<ActionResult> GetOtherInfoByIdAsync(int Id)
+        public async Task<ActionResult<TBL_HR_EMPLOYEE_DETAILSDto>> GetOtherInfoByIdAsync(int Id)
         {
             try
             {
-                return Ok(await _otherInfo.FindById(Id));
+                var employee = await _unitOfWork.Repository<TBL_HR_EMPLOYEE_DETAILS>().GetByIdAsync(Id);
+                if (employee == null) return NotFound(new ApiResponse(404));
+                return _mapper.Map<TBL_HR_EMPLOYEE_DETAILS, TBL_HR_EMPLOYEE_DETAILSDto>(employee);
             }
             catch (Exception ex)
             {
@@ -48,11 +54,17 @@ namespace API.Controllers
             }
         }
         [HttpPost("AddOtherInfo")]
-        public async Task<ActionResult> AddOtherInfoAsync(TBL_HR_EMPLOYEE_DETAILSDto OtherInfoDto)
+        public async Task<ActionResult<TBL_HR_EMPLOYEE_DETAILSDto>> AddOtherInfoAsync(TBL_HR_EMPLOYEE_DETAILSDto OtherInfoDto)
         {
             try
             {
-                return Ok(await _otherInfo.Insert(_mapper.Map<TBL_HR_EMPLOYEE_DETAILS>(OtherInfoDto)));
+                var employee = _mapper.Map<TBL_HR_EMPLOYEE_DETAILSDto, TBL_HR_EMPLOYEE_DETAILS>(OtherInfoDto);
+                _unitOfWork.Repository<TBL_HR_EMPLOYEE_DETAILS>().Add(employee);
+                var result = await _unitOfWork.Complete();
+
+
+                if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating AddOtherInfoAsync"));
+                return _mapper.Map<TBL_HR_EMPLOYEE_DETAILS, TBL_HR_EMPLOYEE_DETAILSDto>(employee);
             }
             catch (Exception ex)
             {

@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Core.Entities
 {
-   public class TBL_HR_EMPLOYEE_EXPERIENCE_DETAILS: BaseEntity
+    public class TBL_HR_EMPLOYEE_EXPERIENCE_DETAILS : BaseEntity
     {
         public int Employee_Id { get; set; }
         public string Employer_Name { get; set; }

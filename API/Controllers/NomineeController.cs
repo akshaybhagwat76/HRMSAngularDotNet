@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
@@ -8,21 +7,27 @@ using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/")]
     public class NomineeController : BaseApiController
     {
+        #region Declarations
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        #endregion
+
+        #region Constructor
         public NomineeController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        #endregion
+
+        #region Get Methods
+
         [HttpGet("GetNominee")]
         public async Task<ActionResult<List<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>>> GetNomineeAsync()
         {
@@ -34,12 +39,12 @@ namespace API.Controllers
 
                 return Ok(new List<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>(data));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
+
         [HttpGet("GetNomineeById")]
         public async Task<ActionResult<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>> GetNomineeByIdAsync(int Id)
         {
@@ -50,12 +55,16 @@ namespace API.Controllers
                 return _mapper.Map<TBL_HR_EMPLOYEE_NOMINEE_DETAILS, TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>(employeeNonimee);
 
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
+
+        #endregion
+
+        #region Add new nominee
+
         [HttpPost("AddNominee")]
         public async Task<ActionResult<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>> AddNomineeAsync(TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto NomineeDto)
         {
@@ -69,10 +78,11 @@ namespace API.Controllers
                 if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating Nominee"));
                 return _mapper.Map<TBL_HR_EMPLOYEE_NOMINEE_DETAILS, TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>(employeeNonimee);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
+        #endregion
     }
 }

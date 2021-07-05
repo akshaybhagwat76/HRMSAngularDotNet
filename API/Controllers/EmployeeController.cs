@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using API.Dtos;
-using Microsoft.AspNetCore.Cors;
-using Infrastructure.Services;
 using Core.Interfaces;
 using API.Errors;
 
@@ -16,16 +12,23 @@ namespace API.Controllers
 {
     [Route("api/")]
     [ApiController]
-    //[EnableCors("AllowOrigin")]
     public class EmployeeController : BaseApiController
     {
+        #region Declarations
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        #endregion
+
+        #region Constructor
         public EmployeeController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        #endregion
+
+
+        #region Get Methods
         [HttpGet("GetEmployee")]
         public async Task<ActionResult<List<Tbl_HR_EmployeeDto>>> GetEmployeeAsync()
         {
@@ -37,10 +40,9 @@ namespace API.Controllers
 
                 return Ok(new List<Tbl_HR_EmployeeDto>(data));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
         [HttpGet("GetEmployeeById")]
@@ -52,12 +54,32 @@ namespace API.Controllers
                 if (employee == null) return NotFound(new ApiResponse(404));
                 return _mapper.Map<Tbl_HR_Employee, Tbl_HR_EmployeeDto>(employee);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
+
+        [HttpGet("GetEmployeeCode")]
+        public async Task<string> GenerateEmployeeCode(string EmpName)
+        {
+            string employeeCode = "";
+            try
+            {
+                string name = EmpName.Substring(0, 3);
+                employeeCode = name.ToUpper() + RandomString();
+            }
+            catch (Exception exception)
+            {
+                employeeCode = exception.Message.ToString();
+                return employeeCode;
+            }
+
+            return employeeCode;
+        } 
+        #endregion
+
+        #region Add new employee
         [HttpPost("AddEmployee")]
         public async Task<ActionResult<Tbl_HR_EmployeeDto>> AddEmployeeAsync(Tbl_HR_EmployeeDto employeeDto)
         {
@@ -67,34 +89,17 @@ namespace API.Controllers
                 _unitOfWork.Repository<Tbl_HR_Employee>().Add(employee);
                 var result = await _unitOfWork.Complete();
 
-
                 if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employee"));
                 return _mapper.Map<Tbl_HR_Employee, Tbl_HR_EmployeeDto>(employee);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
-        [HttpGet("GetEmpCode")]
-        public async Task<string> GenerateEmpCode(string EmpName)
-        {
-            string EmpCode = "";
-            try
-            {
-                string name = EmpName.Substring(0, 3);
-                EmpCode = name.ToUpper() + RandomString();
-            }
-            catch (Exception ex)
-            {
-                EmpCode = ex.Message;
-                return EmpCode;
-            }
+        #endregion
 
-            return EmpCode;
-        }
-
+        #region Other methods
         private string RandomString()
         {
             var chars = "0123456789";
@@ -108,6 +113,7 @@ namespace API.Controllers
 
             string finalString = new String(stringChars);
             return finalString;
-        }
+        } 
+        #endregion
     }
 }

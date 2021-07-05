@@ -1,8 +1,6 @@
 ﻿using Core.Interfaces;
 using StackExchange.Redis;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -27,7 +25,6 @@ namespace Infrastructure.Services
             };
             var serialisedResponse = JsonSerializer.Serialize(response, option);
             await _database.StringSetAsync(cacheKey, serialisedResponse, timeToLive);
-
         }
 
         public async Task<string> GetCachedResponseAsync(string cacheKey)

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
 namespace Core.Entities
 {
-   public class TBL_HR_EMPLOYEE_DETAILS: BaseEntity
+    public class TBL_HR_EMPLOYEE_DETAILS : BaseEntity
     {
         public int Employee_Id { get; set; }
         public int Gender_Id { get; set; }

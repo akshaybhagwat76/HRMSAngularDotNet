@@ -14,31 +14,38 @@ namespace API.Controllers
     [ApiController]
     public class OtherInfoController : BaseApiController
     {
+        #region Declarations
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        #endregion
+
+        #region Constructor
         public OtherInfoController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        #endregion
+
+        #region Get Methods
         [HttpGet("GetOtherInfo")]
         public async Task<ActionResult<List<TBL_HR_EMPLOYEE_DETAILSDto>>> GetOtherInfoAsync()
         {
             try
             {
-                
+
                 var hR_Employees = await _unitOfWork.Repository<TBL_HR_EMPLOYEE_DETAILS>().ListAllAsync();
 
                 var data = _mapper.Map<IReadOnlyList<TBL_HR_EMPLOYEE_DETAILS>, IReadOnlyList<TBL_HR_EMPLOYEE_DETAILSDto>>(hR_Employees);
 
                 return Ok(new List<TBL_HR_EMPLOYEE_DETAILSDto>(data));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
+
         [HttpGet("GetOtherInfoById")]
         public async Task<ActionResult<TBL_HR_EMPLOYEE_DETAILSDto>> GetOtherInfoByIdAsync(int Id)
         {
@@ -48,11 +55,15 @@ namespace API.Controllers
                 if (employee == null) return NotFound(new ApiResponse(404));
                 return _mapper.Map<TBL_HR_EMPLOYEE_DETAILS, TBL_HR_EMPLOYEE_DETAILSDto>(employee);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
+        #endregion
+
+        #region Add new other info
+
         [HttpPost("AddOtherInfo")]
         public async Task<ActionResult<TBL_HR_EMPLOYEE_DETAILSDto>> AddOtherInfoAsync(TBL_HR_EMPLOYEE_DETAILSDto OtherInfoDto)
         {
@@ -66,10 +77,11 @@ namespace API.Controllers
                 if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating AddOtherInfoAsync"));
                 return _mapper.Map<TBL_HR_EMPLOYEE_DETAILS, TBL_HR_EMPLOYEE_DETAILSDto>(employee);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
+        #endregion
     }
 }

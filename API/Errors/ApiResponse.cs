@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿using API.Helpers;
 namespace API.Errors
 {
     public class ApiResponse
@@ -21,11 +17,11 @@ namespace API.Errors
         {
             return statusCode switch
             {
-                400 => "A bad request, you have made",
-                401 => "Authorized You are not",
-                403 => "Forbidden from doing this, you are",
-                404 => "Resource found, it was not",
-                500 => "Errors are the path to the dark side. Error lead to anger. Anger lead to hate. Hate leads to career change",
+                400 => Messages.A_BAD_REQUEST_YOU_HAVE_MADE,
+                401 => Messages.AUTHORIZE_YOU_ARE_NOT,
+                403 => Messages.FORBIDDEN,
+                404 => Messages.RESOURCE_FOUND,
+                500 => Messages.ERROR_500,
                 _ => null
             };
         }

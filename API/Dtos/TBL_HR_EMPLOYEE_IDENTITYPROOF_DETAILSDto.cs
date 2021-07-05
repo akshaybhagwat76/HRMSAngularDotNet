@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-
 namespace API.Dtos
 {
     public class TBL_HR_EMPLOYEE_IDENTITYPROOF_DETAILSDto
     {
-       public int Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public int Employee_Id { get; set; }
         public int Enum_Id { get; set; }

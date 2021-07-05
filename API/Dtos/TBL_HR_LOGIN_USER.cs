@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace API.Dtos
 {
     public class TBL_HR_LOGIN_USER : BaseDto

@@ -36,11 +36,17 @@ export class ValidationComponent implements OnInit {
      * Bootstrap validation form data
      */
     this.validationform = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      city: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      state: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      zip: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      company: ['', ],
+      zone: ['', ],
+      branch: ['', ],
+      department: ['', ],
+      designation: ['', ],
+      firstName: ['', ],
+      employeeCode: ['', ],
+      email: ['', ],
+      rdoAll: ['', ],
+      rdoInActive: ['', ],
+      rdoActive: ['', ],
     });
 
     /**

@@ -12,7 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class DefaultComponent implements OnInit {
 
   validationform: FormGroup; // bootstrap validation form
-
+  validationformNominee: FormGroup
   // Form submition
   submit: boolean;
 
@@ -25,6 +25,16 @@ export class DefaultComponent implements OnInit {
         /**
      * Bootstrap validation form data
      */
+         this.validationformNominee = this.formBuilder.group({
+          validationNameNominee: [''],
+          dateOfBirthNominee: [''],
+          relationshipNominee: [''],
+          aadharNoNominee: [''],
+          rdoAadharStatusNominee1: [''],
+          rdoAadharStatusNominee2: [''],
+          validationContactNominee: [''],
+          validationAddressNominee: [''],
+         });
          this.validationform = this.formBuilder.group({
           firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
           lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],

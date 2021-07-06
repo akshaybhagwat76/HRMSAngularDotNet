@@ -70,7 +70,7 @@
       "TEXT": "Menu"
     },
     "DASHBOARDS": {
-      "TEXT": "Dashboards",
+      "TEXT": "Employees",
       "BADGE": "04",
       "LIST": {
         "DEFAULT": "Default",
@@ -229,26 +229,7 @@
       "TEXT": "Components"
     },
     "UIELEMENTS": {
-      "TEXT": "UI Elements",
-      "LIST": {
-        "ALERTS": "Alerts",
-        "BUTTONS": "Buttons",
-        "CARDS": "Cards",
-        "CAROUSEL": "Carousel",
-        "DROPDOWNS": "Dropdowns",
-        "GRID": "Grid",
-        "IMAGES": "Images",
-        "MODALS": "Modals",
-        "RANGESLIDER": "Range Slider",
-        "PROGRESSBAR": "Progress Bars",
-        "SWEETALERT": "Sweet Alert",
-        "TABS": "Tabs & Accordions",
-        "TYPOGRAPHY": "Typography",
-        "VIDEO": "Video",
-        "GENERAL": "General",
-        "COLORS": "Colors",
-        "CROPPER": "Image Cropper"
-      }
+      "TEXT": "Search Employees"
     },
     "FORMS": {
       "TEXT": "Forms",

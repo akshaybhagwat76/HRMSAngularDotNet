@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { transactions, statData } from './data';
+import { employees } from './data';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,8 +16,7 @@ export class DefaultComponent implements OnInit {
   // Form submition
   submit: boolean;
 
-  transactions;
-  statData;
+  employees;
   @ViewChild('content') content;
 
   constructor(private modalService: NgbModal,public formBuilder: FormBuilder) { }
@@ -55,6 +54,12 @@ export class DefaultComponent implements OnInit {
           bloodGroup: [''],
           cast: [''],
           dateOfBirth: [''],
+          contactNo: [''],
+          address: [''],
+          aadharNo: [''],
+          familyDateOfBirth: [''],
+          relationship: [''],
+          familyName: [''],
         });
 
     /**
@@ -71,8 +76,7 @@ export class DefaultComponent implements OnInit {
    * Fetches the data
    */
   private fetchData() {
-    this.transactions = transactions;
-    this.statData = statData;
+    this.employees = employees;
   }
 
   // openModal() {
@@ -91,6 +95,10 @@ export class DefaultComponent implements OnInit {
    * Bootsrap validation form submit method
    */
      validSubmit() {
+      this.submit = true;
+    }
+
+    validSubmitNominee() {
       this.submit = true;
     }
 }

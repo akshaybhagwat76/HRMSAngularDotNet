@@ -90,60 +90,26 @@ const monthlyEarningChart: ChartType = {
     labels: ['Series A'],
 };
 
-const transactions = [
+const employees = [
     {
-        id: '#SK2540',
+        no: '1',
         name: 'Neal Matthews',
-        date: '07 Oct, 2019',
-        total: '$400',
-        status: 'Paid',
-        payment: ['fa-cc-mastercard', 'Mastercard'],
-        index: 1
+        relationship: 'Father',
+        dateOfBirth: '07 Oct, 2019',
+        aadharNo: '$400',
+        aadharStatus: 'Paid',
+        address: "US",
+        contactNo: "01236547564"
     },
     {
-        id: '#SK2541',
-        name: 'Jamal Burnett',
-        date: '07 Oct, 2019',
-        total: '$380',
-        status: 'Chargeback',
-        payment: ['fa-cc-visa', 'Visa'],
-        index: 2
-    },
-    {
-        id: '#SK2542',
-        name: 'Juan Mitchell',
-        date: '06 Oct, 2019',
-        total: '$384',
-        status: 'Paid',
-        payment: ['fab fa-cc-paypal', 'Paypal'],
-        index: 3
-    },
-    {
-        id: '#SK2543',
-        name: 'Barry Dick',
-        date: '05 Oct, 2019',
-        total: '$412',
-        status: 'Paid',
-        payment: ['fa-cc-mastercard', 'Mastercard'],
-        index: 4
-    },
-    {
-        id: '#SK2544',
-        name: 'Ronald Taylor',
-        date: '04 Oct, 2019',
-        total: '$404',
-        status: 'Refund',
-        payment: ['fa-cc-visa', 'Visa'],
-        index: 5
-    },
-    {
-        id: '#SK2545',
-        name: 'Jacob Hunter',
-        date: '04 Oct, 2019',
-        total: '$392',
-        status: 'Paid',
-        payment: ['fab fa-cc-paypal', 'Paypal'],
-        index: 6
+        no: '2',
+        name: 'Neal Matthews',
+        relationship: 'Father',
+        dateOfBirth: '07 Oct, 2019',
+        aadharNo: '$400',
+        aadharStatus: 'Paid',
+        address: "US",
+        contactNo: "01236547564"
     }
 ];
 
@@ -161,4 +127,4 @@ const statData = [{
     value: '$16.2'
 }];
 
-export { emailSentBarChart, monthlyEarningChart, transactions, statData };
+export { emailSentBarChart, monthlyEarningChart, employees, statData };

@@ -1,5 +1,7 @@
 using System.Reflection;
+using API.Helpers;
 using API.Middleware;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
@@ -28,9 +30,11 @@ namespace API
                 c.AddPolicy("AllowOrigin", builder =>
                     builder.AllowAnyOrigin());
             });
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddDbContext<StoreContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<AppIdentityDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"))); services.AddSwaggerGen();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddAutoMapper(typeof(MappingProfiles));
+            services.AddDbContext<StoreContext>(x => x.UseSqlServer(Configuration.GetConnectionString("FreelencerDB")));
+            //services.AddDbContext<AppIdentityDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+            services.AddSwaggerGen();
             services.AddControllers();
         }
 

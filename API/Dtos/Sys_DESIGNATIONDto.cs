@@ -6,7 +6,7 @@ namespace API.Dtos
         [Required]
         public int Department_Id { get; set; }
         [Required]
-        public int Designation_Name { get; set; }
+        public string Designation_Name { get; set; }
         [Required]
         public int Designation_Code { get; set; }
     }

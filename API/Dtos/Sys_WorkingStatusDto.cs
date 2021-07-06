@@ -2,10 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 namespace API.Dtos
 {
-    public class Sys_CompnayDto
+    public class Sys_WorkingStatusDto
     {
         public int Id { get; set; }
-        public string Compnay_Name { get; set; }
-        public string Compnay_Code { get; set; }
+        public string WorkingStatus_Name { get; set; }
     }
 }

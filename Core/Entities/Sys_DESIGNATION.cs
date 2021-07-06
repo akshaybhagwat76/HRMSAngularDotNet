@@ -4,7 +4,7 @@ namespace Core.Entities
     public class Sys_DESIGNATION: BaseEntity,IAuditableEntity
     {
         public int Department_Id { get; set; }
-        public int Designation_Name { get; set; }
+        public string Designation_Name { get; set; }
         public int Designation_Code { get; set; }
         public int Status_Id { get; set; }
         public string Remarks { get; set; }

@@ -1,10 +1,9 @@
 ﻿using System;
 namespace Core.Entities
 {
-    public class sys_Compnays : BaseEntity, IAuditableEntity
+    public class Sys_WorkingStatus : BaseEntity, IAuditableEntity
     {
-        public string Compnay_Name { get; set; }
-        public string Compnay_Code { get; set; }
+        public string WorkingStatus_Name { get; set; }
         public DateTime CreatedOn_Date { get ; set ; }
         public int CreatedBy_Login_User_Id { get ; set ; }
         public int CreatedBy_Login_Session_Id { get ; set ; }

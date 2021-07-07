@@ -3,6 +3,7 @@ import { employees } from './data';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CompanyService } from '../../../core/services/company.service';
 
 @Component({
   selector: 'app-default',
@@ -19,9 +20,12 @@ export class DefaultComponent implements OnInit {
   employees;
   @ViewChild('content') content;
 
-  constructor(private modalService: NgbModal,public formBuilder: FormBuilder) { }
+  constructor(private modalService: NgbModal,public formBuilder: FormBuilder,private companyService: CompanyService) { }
 
   ngOnInit() {
+      this.companyService.getAll().subscribe(data=>{
+        console.log(data);      
+      });
         /**
      * Bootstrap validation form data
      */

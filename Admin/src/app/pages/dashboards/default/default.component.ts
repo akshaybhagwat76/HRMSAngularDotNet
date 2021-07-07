@@ -12,6 +12,8 @@ import { WorkingStatusService } from '../../../core/services/workStatus.service'
 import { CategoryEmpsService } from '../../../core/services/categoryEmp.service';
 import { TypeEmpsService } from '../../../core/services/typeEmp.service';
 import { HigherAuthorityService } from '../../../core/services/higherAuthorites.service';
+import { HigherAuthorityNameService } from '../../../core/services/higherAuthoritesName.service';
+import { ThirdPartyTypeService } from '../../../core/services/thirdPartyType.service';
 @Component({
   selector: 'app-default',
   templateUrl: './default.component.html',
@@ -31,7 +33,8 @@ export class DefaultComponent implements OnInit {
   categories: any;
   typiesEmp: any;
   higherAuthority: any;
-  
+  thirdParty: any;
+  higherAuthortyName: any;
   employees;
   
   @ViewChild('content') content;
@@ -42,7 +45,9 @@ export class DefaultComponent implements OnInit {
     private workingStatusService: WorkingStatusService,
     private categoryEmpsService: CategoryEmpsService,
     private typeEmpsService: TypeEmpsService,
-    private higherAuthorityService: HigherAuthorityService) { }
+    private higherAuthorityService: HigherAuthorityService,
+    private thirdPartyTypeService:ThirdPartyTypeService,
+    private higherAuthorityNameService:HigherAuthorityNameService) { }
 
   ngOnInit() {
       this.companyService.getAll().subscribe(data=>{
@@ -120,7 +125,11 @@ export class DefaultComponent implements OnInit {
     const categories = this.categoryEmpsService.getAll();
     const typesEmp = this.typeEmpsService.getAll();
     const higherAuthority = this.higherAuthorityService.getAll();
-    forkJoin([companies, branches, contries, departments, workingStatus, categories, typesEmp,higherAuthority]).subscribe(result => {
+    const higherAuthorityName = this.higherAuthorityNameService.getAll();
+    const thirdPartyType = this.thirdPartyTypeService.getAll();
+    
+    forkJoin([companies, branches, contries, departments, workingStatus, categories,
+       typesEmp,higherAuthority,higherAuthorityName,thirdPartyType]).subscribe(result => {
       this.companies = result[0];
       this.branches = result[1];
       this.contries = result[2];
@@ -129,6 +138,8 @@ export class DefaultComponent implements OnInit {
       this.categories = result[5];
       this.typiesEmp = result[6];
       this.higherAuthority = result[7];
+      this.higherAuthortyName = result[8];
+      this.thirdParty = result[9];
     });
     //this.employees = employees;
   }

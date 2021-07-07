@@ -18,6 +18,8 @@ import { CastService } from '../../../core/services/cast.service';
 import { BloodGroupService } from '../../../core/services/bloodgroup.service';
 import { ZoneService } from '../../../core/services/zone.service';
 import { StateService } from '../../../core/services/state.service';
+import { RelationshipService } from '../../../core/services/relationShip.service';
+
 @Component({
   selector: 'app-default',
   templateUrl: './default.component.html',
@@ -43,8 +45,9 @@ export class DefaultComponent implements OnInit {
   bloodGroup: any;
   states: any;
   zones: any;
+  relationShip:any;
   employees;
-  
+
   @ViewChild('content') content;
 
   constructor(private modalService: NgbModal,public formBuilder: FormBuilder,private companyService: CompanyService,
@@ -59,11 +62,12 @@ export class DefaultComponent implements OnInit {
     private castService:CastService,
     private bloodGroupService:BloodGroupService,
     private zoneService:ZoneService,
-    private stateService:StateService,) { }
+    private stateService:StateService,
+    private relationshipService: RelationshipService) { }
 
   ngOnInit() {
       this.companyService.getAll().subscribe(data=>{
-        console.log(data);      
+        console.log(data);
       });
         /**
      * Bootstrap validation form data
@@ -145,6 +149,8 @@ export class DefaultComponent implements OnInit {
 
     const state = this.stateService.getAll();
     const zones = this.zoneService.getAll();
+    const relationship = this.relationshipService.getAll();
+
     forkJoin([companies, branches, contries, departments, workingStatus, categories,
        typesEmp,higherAuthority,higherAuthorityName,thirdPartyType, cast,bloodGroup,
       state, zones]).subscribe(result => {
@@ -162,6 +168,8 @@ export class DefaultComponent implements OnInit {
       this.bloodGroup = result[11];
       this.states = result[12];
       this.zones = result[13];
+      this.relationShip = result[14];
+
     });
     //this.employees = employees;
   }

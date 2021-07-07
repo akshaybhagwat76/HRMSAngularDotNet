@@ -28,7 +28,8 @@ import { RelationshipService } from '../../../core/services/relationShip.service
 export class DefaultComponent implements OnInit {
 
   validationform: FormGroup; // bootstrap validation form
-  validationformNominee: FormGroup
+  validationformNominee: FormGroup;
+  validationFamily: FormGroup;
   // Form submition
   submit: boolean;
   companies: any;
@@ -73,6 +74,18 @@ export class DefaultComponent implements OnInit {
      * Bootstrap validation form data
      */
          this.validationformNominee = this.formBuilder.group({
+          validationNameNominee: [''],
+          dateOfBirthNominee: [''],
+          relationshipNominee: [''],
+          aadharNoNominee: [''],
+          rdoAadharStatusNominee1: [''],
+          rdoAadharStatusNominee2: [''],
+          validationContactNominee: [''],
+          validationAddressNominee: [''],
+         });
+
+         // form family detail
+         this.validationFamily = this.formBuilder.group({
           validationNameNominee: [''],
           dateOfBirthNominee: [''],
           relationshipNominee: [''],
@@ -182,7 +195,6 @@ export class DefaultComponent implements OnInit {
    * Returns form
    */
    get form() {
-     console.log(this.validationform.controls);
     return this.validationform.controls;
   }
 
@@ -195,5 +207,9 @@ export class DefaultComponent implements OnInit {
 
     validSubmitNominee() {
       this.submit = true;
+    }
+
+    addFamilyDetails() {
+      alert("test event");
     }
 }

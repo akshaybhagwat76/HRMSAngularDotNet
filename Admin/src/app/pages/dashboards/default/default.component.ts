@@ -19,6 +19,7 @@ import { BloodGroupService } from '../../../core/services/bloodgroup.service';
 import { ZoneService } from '../../../core/services/zone.service';
 import { StateService } from '../../../core/services/state.service';
 import { RelationshipService } from '../../../core/services/relationShip.service';
+import { UserTypeService } from '../../../core/services/usertype.service';
 
 @Component({
   selector: 'app-default',
@@ -47,6 +48,7 @@ export class DefaultComponent implements OnInit {
   states: any;
   zones: any;
   relationShip:any;
+  userType: any;
   employees;
 
   @ViewChild('content') content;
@@ -64,7 +66,8 @@ export class DefaultComponent implements OnInit {
     private bloodGroupService:BloodGroupService,
     private zoneService:ZoneService,
     private stateService:StateService,
-    private relationshipService: RelationshipService) { }
+    private relationshipService: RelationshipService,
+    private userTypeService: UserTypeService) { }
 
   ngOnInit() {
       this.companyService.getAll().subscribe(data=>{
@@ -162,11 +165,13 @@ export class DefaultComponent implements OnInit {
 
     const state = this.stateService.getAll();
     const zones = this.zoneService.getAll();
+
     const relationship = this.relationshipService.getAll();
+    const userType = this.userTypeService.getAll();
 
     forkJoin([companies, branches, contries, departments, workingStatus, categories,
        typesEmp,higherAuthority,higherAuthorityName,thirdPartyType, cast,bloodGroup,
-      state, zones]).subscribe(result => {
+      state, zones, relationship, userType]).subscribe(result => {
       this.companies = result[0];
       this.branches = result[1];
       this.contries = result[2];
@@ -182,7 +187,7 @@ export class DefaultComponent implements OnInit {
       this.states = result[12];
       this.zones = result[13];
       this.relationShip = result[14];
-
+      this.userType = result[15];
     });
     //this.employees = employees;
   }

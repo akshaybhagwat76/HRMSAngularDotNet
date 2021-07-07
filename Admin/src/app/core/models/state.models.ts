@@ -1,9 +1,10 @@
 export class State {
-    id: number;
-    username: string;
-    password: string;
-    firstName?: string;
-    lastName?: string;
-    token?: string;
-    email: string;
+  id: 0;
+  status_Id: 0;
+  remarks: string;
+  action_Remarks: string;
+  zone_Id: 0;
+  state_Name: string;
+  state_Short_Code: string;
+  state_Code: string
 }

@@ -1,10 +1,14 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { employees } from './data';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { forkJoin } from "rxjs";
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CompanyService } from '../../../core/services/company.service';
-
+import { BranchesService } from '../../../core/services/branches.service';
+import { ContriesService } from '../../../core/services/contries.service';
+import { DepartmentsService } from '../../../core/services/departments.service';
+import { WorkingStatusService } from '../../../core/services/workStatus.service';
 @Component({
   selector: 'app-default',
   templateUrl: './default.component.html',
@@ -16,11 +20,20 @@ export class DefaultComponent implements OnInit {
   validationformNominee: FormGroup
   // Form submition
   submit: boolean;
+  companies: any;
+  branches: any;
+  contries: any;
+  departments: any;
+  workingStatus: any;
 
   employees;
+  
   @ViewChild('content') content;
 
-  constructor(private modalService: NgbModal,public formBuilder: FormBuilder,private companyService: CompanyService) { }
+  constructor(private modalService: NgbModal,public formBuilder: FormBuilder,private companyService: CompanyService,
+    private branchesService: BranchesService, private contriesService: ContriesService,
+    private departmentsService: DepartmentsService,
+    private workingStatusService: WorkingStatusService,) { }
 
   ngOnInit() {
       this.companyService.getAll().subscribe(data=>{
@@ -90,7 +103,19 @@ export class DefaultComponent implements OnInit {
    * Fetches the data
    */
   private fetchData() {
-    this.employees = employees;
+    const companies = this.companyService.getAll();
+    const branches = this.branchesService.getAll();
+    const contries = this.contriesService.getAll();
+    const departments = this.departmentsService.getAll();
+    const workingStatus = this.workingStatusService.getAll();
+    forkJoin([companies, branches, contries, departments, workingStatus]).subscribe(result => {
+      this.companies = result[0];
+      this.branches = result[1];
+      this.contries = result[2];
+      this.departments = result[3];
+      this.workingStatus = result[4];
+    });
+    //this.employees = employees;
   }
 
   // openModal() {

@@ -16,6 +16,8 @@ import { HigherAuthorityNameService } from '../../../core/services/higherAuthori
 import { ThirdPartyTypeService } from '../../../core/services/thirdPartyType.service';
 import { CastService } from '../../../core/services/cast.service';
 import { BloodGroupService } from '../../../core/services/bloodgroup.service';
+import { ZoneService } from '../../../core/services/zone.service';
+import { StateService } from '../../../core/services/state.service';
 @Component({
   selector: 'app-default',
   templateUrl: './default.component.html',
@@ -39,6 +41,8 @@ export class DefaultComponent implements OnInit {
   higherAuthortyName: any;
   casts: any;
   bloodGroup: any;
+  states: any;
+  zones: any;
   employees;
   
   @ViewChild('content') content;
@@ -53,7 +57,9 @@ export class DefaultComponent implements OnInit {
     private thirdPartyTypeService:ThirdPartyTypeService,
     private higherAuthorityNameService:HigherAuthorityNameService,
     private castService:CastService,
-    private bloodGroupService:BloodGroupService,) { }
+    private bloodGroupService:BloodGroupService,
+    private zoneService:ZoneService,
+    private stateService:StateService,) { }
 
   ngOnInit() {
       this.companyService.getAll().subscribe(data=>{
@@ -135,10 +141,13 @@ export class DefaultComponent implements OnInit {
     const thirdPartyType = this.thirdPartyTypeService.getAll();
 
     const cast = this.castService.getAll();
-    const bloodGroup = this.bloodGroup.getAll();
-    
+    const bloodGroup = this.bloodGroupService.getAll();
+
+    const state = this.stateService.getAll();
+    const zones = this.zoneService.getAll();
     forkJoin([companies, branches, contries, departments, workingStatus, categories,
-       typesEmp,higherAuthority,higherAuthorityName,thirdPartyType, cast,bloodGroup]).subscribe(result => {
+       typesEmp,higherAuthority,higherAuthorityName,thirdPartyType, cast,bloodGroup,
+      state, zones]).subscribe(result => {
       this.companies = result[0];
       this.branches = result[1];
       this.contries = result[2];
@@ -151,6 +160,8 @@ export class DefaultComponent implements OnInit {
       this.thirdParty = result[9];
       this.casts = result[10];
       this.bloodGroup = result[11];
+      this.states = result[12];
+      this.zones = result[13];
     });
     //this.employees = employees;
   }

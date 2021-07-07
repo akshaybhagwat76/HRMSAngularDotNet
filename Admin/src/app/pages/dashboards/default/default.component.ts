@@ -9,6 +9,9 @@ import { BranchesService } from '../../../core/services/branches.service';
 import { ContriesService } from '../../../core/services/contries.service';
 import { DepartmentsService } from '../../../core/services/departments.service';
 import { WorkingStatusService } from '../../../core/services/workStatus.service';
+import { CategoryEmpsService } from '../../../core/services/categoryEmp.service';
+import { TypeEmpsService } from '../../../core/services/typeEmp.service';
+import { HigherAuthorityService } from '../../../core/services/higherAuthorites.service';
 @Component({
   selector: 'app-default',
   templateUrl: './default.component.html',
@@ -25,7 +28,10 @@ export class DefaultComponent implements OnInit {
   contries: any;
   departments: any;
   workingStatus: any;
-
+  categories: any;
+  typiesEmp: any;
+  higherAuthority: any;
+  
   employees;
   
   @ViewChild('content') content;
@@ -33,7 +39,10 @@ export class DefaultComponent implements OnInit {
   constructor(private modalService: NgbModal,public formBuilder: FormBuilder,private companyService: CompanyService,
     private branchesService: BranchesService, private contriesService: ContriesService,
     private departmentsService: DepartmentsService,
-    private workingStatusService: WorkingStatusService,) { }
+    private workingStatusService: WorkingStatusService,
+    private categoryEmpsService: CategoryEmpsService,
+    private typeEmpsService: TypeEmpsService,
+    private higherAuthorityService: HigherAuthorityService) { }
 
   ngOnInit() {
       this.companyService.getAll().subscribe(data=>{
@@ -108,12 +117,18 @@ export class DefaultComponent implements OnInit {
     const contries = this.contriesService.getAll();
     const departments = this.departmentsService.getAll();
     const workingStatus = this.workingStatusService.getAll();
-    forkJoin([companies, branches, contries, departments, workingStatus]).subscribe(result => {
+    const categories = this.categoryEmpsService.getAll();
+    const typesEmp = this.typeEmpsService.getAll();
+    const higherAuthority = this.higherAuthorityService.getAll();
+    forkJoin([companies, branches, contries, departments, workingStatus, categories, typesEmp,higherAuthority]).subscribe(result => {
       this.companies = result[0];
       this.branches = result[1];
       this.contries = result[2];
       this.departments = result[3];
       this.workingStatus = result[4];
+      this.categories = result[5];
+      this.typiesEmp = result[6];
+      this.higherAuthority = result[7];
     });
     //this.employees = employees;
   }

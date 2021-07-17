@@ -47,93 +47,95 @@ export class DefaultComponent implements OnInit {
   bloodGroup: any;
   states: any;
   zones: any;
-  relationShip:any;
+  relationShip: any;
   userType: any;
   employees;
 
   @ViewChild('content') content;
 
-  constructor(private modalService: NgbModal,public formBuilder: FormBuilder,private companyService: CompanyService,
+  constructor(private modalService: NgbModal, public formBuilder: FormBuilder, private companyService: CompanyService,
     private branchesService: BranchesService, private contriesService: ContriesService,
     private departmentsService: DepartmentsService,
     private workingStatusService: WorkingStatusService,
     private categoryEmpsService: CategoryEmpsService,
     private typeEmpsService: TypeEmpsService,
     private higherAuthorityService: HigherAuthorityService,
-    private thirdPartyTypeService:ThirdPartyTypeService,
-    private higherAuthorityNameService:HigherAuthorityNameService,
-    private castService:CastService,
-    private bloodGroupService:BloodGroupService,
-    private zoneService:ZoneService,
-    private stateService:StateService,
+    private thirdPartyTypeService: ThirdPartyTypeService,
+    private higherAuthorityNameService: HigherAuthorityNameService,
+    private castService: CastService,
+    private bloodGroupService: BloodGroupService,
+    private zoneService: ZoneService,
+    private stateService: StateService,
     private relationshipService: RelationshipService,
     private userTypeService: UserTypeService) { }
 
   ngOnInit() {
-      this.companyService.getAll().subscribe(data=>{
-        console.log(data);
-      });
-        /**
-     * Bootstrap validation form data
-     */
-         this.validationformNominee = this.formBuilder.group({
-          validationNameNominee: [''],
-          dateOfBirthNominee: [''],
-          relationshipNominee: [''],
-          aadharNoNominee: [''],
-          rdoAadharStatusNominee1: [''],
-          rdoAadharStatusNominee2: [''],
-          validationContactNominee: [''],
-          validationAddressNominee: [''],
-         });
+    this.companyService.getAll().subscribe(data => {
+      console.log(data);
+    });
+    /**
+ * Bootstrap validation form data
+ */
+    this.validationformNominee = this.formBuilder.group({
+      validationNameNominee: [''],
+      dateOfBirthNominee: [''],
+      relationshipNominee: [''],
+      aadharNoNominee: [''],
+      rdoAadharStatusNominee1: [''],
+      rdoAadharStatusNominee2: [''],
+      validationContactNominee: [''],
+      validationAddressNominee: [''],
+    });
 
-         // form family detail
-         this.validationFamily = this.formBuilder.group({
-          validationNameNominee: [''],
-          dateOfBirthNominee: [''],
-          relationshipNominee: [''],
-          aadharNoNominee: [''],
-          rdoAadharStatusNominee1: [''],
-          rdoAadharStatusNominee2: [''],
-          validationContactNominee: [''],
-          validationAddressNominee: [''],
-         });
-         this.validationform = this.formBuilder.group({
-          firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          employeeCode: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          company: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          category: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          department: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          project: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          dateOfJoining: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          mobileNo: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          employeeType: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          maritalStatus: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          physicalNo: [''],
-          religion: ['',[Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          nationality: ['',[Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-          biometricCode: [''],
-          higherAuthorityName: [''],
-          higherAuthority: [''],
-          higherAuthorityProject: [''],
-          emailAddress: [''],
-          thirdPartyType: [''],
-          thirdParty: [''],
-          workingStatus: [''],
-          probatlonPerlod: [''],
-          refName: [''],
-          refNo: [''],
-          bloodGroup: [''],
-          cast: [''],
-          dateOfBirth: [''],
-          contactNo: [''],
-          address: [''],
-          aadharNo: [''],
-          familyDateOfBirth: [''],
-          relationship: [''],
-          familyName: [''],
-        });
+    // form family detail
+    this.validationFamily = this.formBuilder.group({
+      validationNameNominee: [''],
+      dateOfBirthNominee: [''],
+      relationshipNominee: [''],
+      aadharNoNominee: [''],
+      rdoAadharStatusNominee1: [''],
+      rdoAadharStatusNominee2: [''],
+      validationContactNominee: [''],
+      validationAddressNominee: [''],
+    });
+    this.validationform = this.formBuilder.group({
+      firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      employeeCode: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      company: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      category: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      department: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      project: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      dateOfJoining: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      mobileNo: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      employeeType: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      maritalStatus: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      physicalNo: [''],
+      religion: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      nationality: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      biometricCode: [''],
+      higherAuthorityName: [''],
+      higherAuthority: [''],
+      higherAuthorityProject: [''],
+      identificationMark:[''],
+      emailAddress: [''],
+      thirdPartyType: [''],
+      thirdParty: [''],
+      workingStatus: [''],
+      probatlonPerlod: [''],
+      refName: [''],
+      refNo: [''],
+      bloodGroup: [''],
+      cast: [''],
+      physicalYes: [''],
+      dateOfBirth: [''],
+      contactNo: [''],
+      address: [''],
+      aadharNo: [''],
+      familyDateOfBirth: [''],
+      relationship: [''],
+      familyName: [''],
+    });
 
     /**
      * Fetches the data
@@ -170,25 +172,25 @@ export class DefaultComponent implements OnInit {
     const userType = this.userTypeService.getAll();
 
     forkJoin([companies, branches, contries, departments, workingStatus, categories,
-       typesEmp,higherAuthority,higherAuthorityName,thirdPartyType, cast,bloodGroup,
+      typesEmp, higherAuthority, higherAuthorityName, thirdPartyType, cast, bloodGroup,
       state, zones, relationship, userType]).subscribe(result => {
-      this.companies = result[0];
-      this.branches = result[1];
-      this.contries = result[2];
-      this.departments = result[3];
-      this.workingStatus = result[4];
-      this.categories = result[5];
-      this.typiesEmp = result[6];
-      this.higherAuthority = result[7];
-      this.higherAuthortyName = result[8];
-      this.thirdParty = result[9];
-      this.casts = result[10];
-      this.bloodGroup = result[11];
-      this.states = result[12];
-      this.zones = result[13];
-      this.relationShip = result[14];
-      this.userType = result[15];
-    });
+        this.companies = result[0];
+        this.branches = result[1];
+        this.contries = result[2];
+        this.departments = result[3];
+        this.workingStatus = result[4];
+        this.categories = result[5];
+        this.typiesEmp = result[6];
+        this.higherAuthority = result[7];
+        this.higherAuthortyName = result[8];
+        this.thirdParty = result[9];
+        this.casts = result[10];
+        this.bloodGroup = result[11];
+        this.states = result[12];
+        this.zones = result[13];
+        this.relationShip = result[14];
+        this.userType = result[15];
+      });
     //this.employees = employees;
   }
 
@@ -199,22 +201,22 @@ export class DefaultComponent implements OnInit {
   /**
    * Returns form
    */
-   get form() {
+  get form() {
     return this.validationform.controls;
   }
 
-    /**
-   * Bootsrap validation form submit method
-   */
-     validSubmit() {
-      this.submit = true;
-    }
+  /**
+ * Bootsrap validation form submit method
+ */
+  validSubmit() {
+    this.submit = true;
+  }
 
-    validSubmitNominee() {
-      this.submit = true;
-    }
+  validSubmitNominee() {
+    this.submit = true;
+  }
 
-    addFamilyDetails() {
-      alert("test event");
-    }
+  addFamilyDetails() {
+    alert("test event");
+  }
 }

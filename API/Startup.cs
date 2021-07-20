@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Reflection;
 using API.Helpers;
 using API.Middleware;
@@ -14,6 +16,8 @@ namespace API
 {
     public class Startup
     {
+        private const string DefaultCorsPolicyName = "http://localhost:4200/";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,6 +40,27 @@ namespace API
             //services.AddDbContext<AppIdentityDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
             services.AddSwaggerGen();
             services.AddControllers();
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(DefaultCorsPolicyName, builder =>
+                {
+                    builder
+                        .WithOrigins(
+                                 // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
+                                 appSettingsSection.GetSection("CorsOrigins").Value
+                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                                .Select(o => o.RemovePostFix("/"))
+                                .ToArray()
+                        )
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .SetIsOriginAllowed((host) => true)
+                        .AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +72,7 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(DefaultCorsPolicyName); //Enable CORS!
 
             app.UseHttpsRedirection();
             app.UseRouting(); 

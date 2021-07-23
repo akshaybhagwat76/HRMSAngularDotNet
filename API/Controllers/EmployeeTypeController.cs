@@ -29,7 +29,7 @@ namespace API.Controllers
         #endregion
 
         #region Get methods
-        [HttpGet("typies")]
+        [HttpGet("types")]
         public async Task<ActionResult<List<Sys_Employee_TypeDto>>> GetCompanyAsync()
         {
             try

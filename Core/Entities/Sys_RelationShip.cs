@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("sys_RelationShip")]
     public class Sys_RelationShip : BaseEntity, IAuditableEntity
     {
         public string RelationShip_Name { get; set; }

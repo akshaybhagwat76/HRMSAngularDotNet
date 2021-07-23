@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("sys_Employee_Category")]
     public class Sys_Employee_Category : BaseEntity, IAuditableEntity
     {
         public string Category_Name { get; set; }

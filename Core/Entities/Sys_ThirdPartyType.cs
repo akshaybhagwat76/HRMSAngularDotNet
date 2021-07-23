@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("sys_ThirdPartyType")]
     public class Sys_ThirdPartyType : BaseEntity, IAuditableEntity
     {
         public string ThirdPartyType_Name { get; set; }

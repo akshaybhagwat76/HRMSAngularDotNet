@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("sys_UserType")]
     public class Sys_UserType : BaseEntity, IAuditableEntity
     {
         public string UserType_Name { get; set; }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-namespace API.Dtos
+﻿namespace API.Dtos
 {
-    public class Sys_Employee_CategoryDto
+    public class Sys_Employee_CategoryDto : BaseDto
     {
-        public int id { get; set; }
         public string Category_Name { get; set; }
     }
 }

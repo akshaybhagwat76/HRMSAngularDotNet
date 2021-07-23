@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("sys_HigherAuthority")]
     public class Sys_HigherAuthority : BaseEntity, IAuditableEntity
     {
-        public string HigherAuthority_Name { get; set; }
+        public string HigherAuthority { get; set; }
         public int Status_Id { get; set; }
         public string Remarks { get; set; }
         public string Action_Remarks { get; set; }

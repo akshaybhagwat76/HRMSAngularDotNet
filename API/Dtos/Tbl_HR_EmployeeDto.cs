@@ -32,5 +32,6 @@ namespace API.Dtos
         public int Login_User_Id { get; set; }
         public bool IsExperiance { get; set; }
         public int No_Of_Update { get; set; }
+
     }
 }

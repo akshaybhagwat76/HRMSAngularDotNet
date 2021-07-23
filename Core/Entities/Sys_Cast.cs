@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("sys_Cast")]
     public class Sys_Cast : BaseEntity, IAuditableEntity
     {
         public string Cast_Name { get; set; }

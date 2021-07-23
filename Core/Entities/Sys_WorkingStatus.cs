@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("sys_WorkingStatus")]
     public class Sys_WorkingStatus : BaseEntity, IAuditableEntity
     {
         public string WorkingStatus_Name { get; set; }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("tbl_HR_Employees")]
     public class Tbl_HR_Employee : BaseEntity, IAuditableEntity
     {
         public string Emp_Name { get; set; }

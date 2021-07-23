@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("sys_BloodGroup")]
     public class Sys_BloodGroup : BaseEntity, IAuditableEntity
     {
         public string BloodGroup_Name { get; set; }

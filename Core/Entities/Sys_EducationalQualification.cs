@@ -1,12 +1,12 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Core.Entities
 {
-    [Table("sys_HigherAuthority")]
-    public class Sys_HigherAuthority : BaseEntity, IAuditableEntity
+  public  class Sys_EducationalQualification : BaseEntity, IAuditableEntity
     {
-       /// public string HigherAuthority { get; set; }
+        public string Educational_Qualification { get; set; }
         public int Status_Id { get; set; }
         public string Remarks { get; set; }
         public string Action_Remarks { get; set; }

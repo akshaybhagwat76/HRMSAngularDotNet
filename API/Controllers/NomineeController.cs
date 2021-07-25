@@ -74,7 +74,6 @@ namespace API.Controllers
                 _unitOfWork.Repository<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>().Add(employeeNonimee);
                 var result = await _unitOfWork.Complete();
 
-
                 if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating Nominee"));
                 return _mapper.Map<TBL_HR_EMPLOYEE_NOMINEE_DETAILS, TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>(employeeNonimee);
             }

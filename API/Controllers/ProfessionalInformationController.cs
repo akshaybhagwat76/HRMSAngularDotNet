@@ -30,7 +30,7 @@ namespace API.Controllers
 
         #region Get methods
         [HttpGet("professionalinformation")]
-        public async Task<ActionResult<List<Sys_ProfessionalInformationDto>>> GetBloodGroupsAsync()
+        public async Task<ActionResult<List<Sys_ProfessionalInformationDto>>> GetProfessionalinformationAsync()
         {
             try
             {

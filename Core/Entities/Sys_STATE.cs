@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("sys_STATE")]
     public class Sys_STATE : BaseEntity, IAuditableEntity
     {
         public int Zone_Id { get; set; }

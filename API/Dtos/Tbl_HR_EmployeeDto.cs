@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
+﻿using System.ComponentModel.DataAnnotations;
 namespace API.Dtos
 {
     public class Tbl_HR_EmployeeDto : BaseDto
@@ -36,5 +32,6 @@ namespace API.Dtos
         public int Login_User_Id { get; set; }
         public bool IsExperiance { get; set; }
         public int No_Of_Update { get; set; }
+
     }
 }

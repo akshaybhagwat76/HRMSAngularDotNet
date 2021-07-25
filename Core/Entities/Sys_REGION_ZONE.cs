@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities
 {
+    [Table("sys_REGION_ZONE")]
     public class Sys_REGION_ZONE : BaseEntity, IAuditableEntity
     {
         public int Country_Id { get; set; }

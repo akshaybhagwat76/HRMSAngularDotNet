@@ -1,59 +1,92 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Dtos;
-using ApplicationLayer.Interfaces;
+using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
+using Core.Interfaces;
+using Core.Specifications;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [Route("api/")]
     [ApiController]
-    public class EducationController : ControllerBase
+    public class EducationController : BaseApiController
     {
-        private readonly IEducationService _education;
+        #region Declarations
         private readonly IMapper _mapper;
-        public EducationController(IEducationService education, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        #endregion
+
+        #region Constructor
+        public EducationController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _education = education;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        #endregion
+
+        #region Get methods
         [HttpGet("GetEducation")]
-        public async Task<ActionResult> GetEducationAsync()
+        public async Task<ActionResult<List<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>>> GetEducationAsync()
         {
             try
             {
-                return Ok(await _education.GetAll());
+                var products = await _unitOfWork.Repository<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>().ListAllAsync();
+
+                var data = _mapper.Map<IReadOnlyList<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>, IReadOnlyList<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>>(products);
+
+                return Ok(new List<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>(data));
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
+
+        //[Cached(600)]
         [HttpGet("GetEducationById")]
-        public async Task<ActionResult> GetEducationByIdAsync(int Id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>> GetEducationByIdAsync(int Id)
         {
             try
             {
-                return Ok(await _education.FindById(Id));
+                var tBL_HR_EMPLOYEE = await _unitOfWork.Repository<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>().GetByIdAsync(Id);
+                if (tBL_HR_EMPLOYEE == null) return NotFound(new ApiResponse(404));
+                return _mapper.Map<TBL_HR_EMPLOYEE_EDUCATION_DETAILS, TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>(tBL_HR_EMPLOYEE);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
+
+        #endregion
+
+        #region Add new education
         [HttpPost("AddEducation")]
-        public async Task<ActionResult> AddEducationAsync(TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto EducationDto)
+        public async Task<ActionResult<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>> AddEducationAsync(TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto EducationDto)
         {
             try
             {
-                return Ok(await _education.Insert(_mapper.Map<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>(EducationDto)));
+                var tBL_HR_EMPLOYEE = _mapper.Map<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto, TBL_HR_EMPLOYEE_EDUCATION_DETAILS>(EducationDto);
+                _unitOfWork.Repository<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>().Add(tBL_HR_EMPLOYEE);
+                var result = await _unitOfWork.Complete();
+
+
+                if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating education"));
+                return _mapper.Map<TBL_HR_EMPLOYEE_EDUCATION_DETAILS, TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>(tBL_HR_EMPLOYEE);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
-        }
+        } 
+        #endregion
     }
 }

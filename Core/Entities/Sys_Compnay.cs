@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Core.Entities
 {
-    public class Sys_Compnay : BaseEntity, IAuditableEntity
+    public class sys_Compnays : BaseEntity, IAuditableEntity
     {
         public string Compnay_Name { get; set; }
         public string Compnay_Code { get; set; }

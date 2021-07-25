@@ -1,64 +1,88 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
-using ApplicationLayer.Interfaces;
+using API.Errors;
 using AutoMapper;
 using Core.Entities;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/")]
-    public class NomineeController : ControllerBase
+    public class NomineeController : BaseApiController
     {
-        private readonly INomineeService _nominee;
+        #region Declarations
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public NomineeController(INomineeService nominee, IMapper mapper)
+        #endregion
+
+        #region Constructor
+        public NomineeController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _nominee = nominee;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        #endregion
+
+        #region Get Methods
+
         [HttpGet("GetNominee")]
-        public async Task<ActionResult> GetNomineeAsync()
+        public async Task<ActionResult<List<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>>> GetNomineeAsync()
         {
             try
             {
-                return Ok(await _nominee.GetAll());
-            }
-            catch (Exception)
-            {
+                var products = await _unitOfWork.Repository<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>().ListAllAsync();
 
-                return BadRequest();
+                var data = _mapper.Map<IReadOnlyList<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>, IReadOnlyList<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>>(products);
+
+                return Ok(new List<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>(data));
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message.ToString());
             }
         }
+
         [HttpGet("GetNomineeById")]
-        public async Task<ActionResult> GetNomineeByIdAsync(int Id)
+        public async Task<ActionResult<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>> GetNomineeByIdAsync(int Id)
         {
             try
             {
-                return Ok(await _nominee.FindById(Id));
-            }
-            catch (Exception)
-            {
+                var employeeNonimee = await _unitOfWork.Repository<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>().GetByIdAsync(Id);
+                if (employeeNonimee == null) return NotFound(new ApiResponse(404));
+                return _mapper.Map<TBL_HR_EMPLOYEE_NOMINEE_DETAILS, TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>(employeeNonimee);
 
-                return BadRequest();
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message.ToString());
             }
         }
+
+        #endregion
+
+        #region Add new nominee
+
         [HttpPost("AddNominee")]
-        public async Task<ActionResult> AddNomineeAsync(TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto NomineeDto)
+        public async Task<ActionResult<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>> AddNomineeAsync(TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto NomineeDto)
         {
             try
             {
-                return Ok(await _nominee.Insert(_mapper.Map<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>(NomineeDto)));
+                var employeeNonimee = _mapper.Map<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto, TBL_HR_EMPLOYEE_NOMINEE_DETAILS>(NomineeDto);
+                _unitOfWork.Repository<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>().Add(employeeNonimee);
+                var result = await _unitOfWork.Complete();
+
+
+                if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating Nominee"));
+                return _mapper.Map<TBL_HR_EMPLOYEE_NOMINEE_DETAILS, TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>(employeeNonimee);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                return BadRequest();
+                return BadRequest(exception.Message.ToString());
             }
         }
+        #endregion
     }
 }

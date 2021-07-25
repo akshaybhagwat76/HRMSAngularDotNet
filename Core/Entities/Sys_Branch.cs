@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities
 {
+    [Table("sys_Branches")]
     public class Sys_Branch :BaseEntity, IAuditableEntity
     {
         public string Branch_Name { get; set; }

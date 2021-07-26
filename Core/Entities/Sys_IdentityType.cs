@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Core.Entities
 {
+    [Table("tbl_IdentityType")]
    public class Sys_IdentityType : BaseEntity, IAuditableEntity
     {
-        public string Professional_Information { get; set; }
+        public string Identity_Type { get; set; }
         public int Status_Id { get; set; }
         public string Remarks { get; set; }
         public string Action_Remarks { get; set; }

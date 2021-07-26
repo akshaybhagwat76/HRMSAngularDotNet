@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Core.Entities
 {
-  public  class Sys_Highest_Qualification : BaseEntity, IAuditableEntity
+    [Table("tbl_HighestQualification")]
+    public  class Sys_Highest_Qualification : BaseEntity, IAuditableEntity
     {
         public string Highest_Qualification { get; set; }
         public int Status_Id { get; set; }

@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Core.Entities
 {
-  public  class Sys_EducationalQualification : BaseEntity, IAuditableEntity
+    [Table("tbl_ProfessionalInformation")]
+    public  class Sys_EducationalQualification : BaseEntity, IAuditableEntity
     {
         public string Educational_Qualification { get; set; }
         public int Status_Id { get; set; }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Core.Entities
 {
-  public  class Sys_MaritalStatus : BaseEntity, IAuditableEntity
+    [Table("tbl_MaritalStatus")]
+    public  class Sys_MaritalStatus : BaseEntity, IAuditableEntity
     {
-
         public string Marital_Status { get; set; }
         public int Status_Id { get; set; }
         public string Remarks { get; set; }

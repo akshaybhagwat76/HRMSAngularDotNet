@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities
 {
-    [Table("sys_HigherAuthority")]
-    public class Sys_HigherAuthority : BaseEntity, IAuditableEntity
+    [Table("tbl_ThirdParty")]
+    public class Sys_ThirdParty : BaseEntity, IAuditableEntity
     {
-       /// public string HigherAuthority { get; set; }
+        public string ThirdParty_Name { get; set; }
         public int Status_Id { get; set; }
         public string Remarks { get; set; }
         public string Action_Remarks { get; set; }

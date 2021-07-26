@@ -29,6 +29,8 @@ namespace Infrastructure.Data
         public DbSet<Sys_ThirdPartyType> sys_ThirdPartyType { get; set; }
         public DbSet<Sys_UserType> sys_UserType { get; set; }
         public DbSet<Sys_REGION_ZONE> sys_REGION_ZONE { get; set; }
+        public DbSet<tbl_HigherAuthorityBranch> tbl_HigherAuthorityBranch { get; set; }
+        public DbSet<Sys_ThirdParty> Sys_ThirdParty { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

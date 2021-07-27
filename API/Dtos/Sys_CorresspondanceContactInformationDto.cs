@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.Dtos
 {
-    public class Sys_PermanentContactInformationDto : BaseDto
+    public class Sys_CorresspondanceContactInformationDto : BaseDto
     {
         public string Address { get; set; }
         public string Address1 { get; set; }

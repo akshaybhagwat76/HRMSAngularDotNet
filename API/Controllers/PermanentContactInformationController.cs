@@ -47,6 +47,7 @@ namespace API.Controllers
                 return BadRequest(exception.Message.ToString());
             }
         }
+
         [HttpGet("GetPermanentContactInformationById")]
         public async Task<ActionResult<Sys_PermanentContactInformationDto>> GetPermanentContactInformationByIdAsync(int Id)
         {

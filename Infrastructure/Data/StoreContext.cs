@@ -31,6 +31,15 @@ namespace Infrastructure.Data
         public DbSet<Sys_REGION_ZONE> sys_REGION_ZONE { get; set; }
         public DbSet<tbl_HigherAuthorityBranch> tbl_HigherAuthorityBranch { get; set; }
         public DbSet<Sys_ThirdParty> Sys_ThirdParty { get; set; }
+        public DbSet<Sys_Identity_Proof> Sys_Identity_Proof { get; set; }
+        public DbSet<Sys_OtherInformation> Sys_OtherInformation { get; set; }
+        public DbSet<Sys_IdentityType> Sys_IdentityType { get; set; }
+        public DbSet<Sys_CorresspondanceContactInformation> Sys_CorresspondanceContactInformation { get; set; }
+        public DbSet<Sys_EducationalQualification> Sys_EducationalQualification { get; set; }
+        public DbSet<Sys_Highest_Qualification> Sys_Highest_Qualification { get; set; }
+        public DbSet<Sys_ProfessionalInformation> Sys_ProfessionalInformation { get; set; }
+        public DbSet<Sys_FamilyDetails> Sys_FamilyDetails { get; set; }
+        public DbSet<Sys_PermanentContactInformation> Sys_PermanentContactInformation { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -26,6 +26,9 @@
 
   <ItemGroup>
     <Folder Include="Content\images\employees\" />
+    <Folder Include="Content\images\IdentityProof\" />
+    <Folder Include="Content\images\Picture\" />
+    <Folder Include="Content\images\Signature\" />
   </ItemGroup>
 
 

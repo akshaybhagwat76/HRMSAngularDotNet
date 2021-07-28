@@ -16,7 +16,6 @@ namespace API.Controllers
     [ApiController]
     public class CorresspondanceContactInformationController : BaseApiController
     {
-
         #region Declarations
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -29,7 +28,6 @@ namespace API.Controllers
             _mapper = mapper;
         }
         #endregion
-
 
         #region Get Methods
         [HttpGet("GetCorresspondanceContactInformation")]
@@ -63,7 +61,6 @@ namespace API.Controllers
                 return BadRequest(exception.Message.ToString());
             }
         }
-
 
         #endregion
 

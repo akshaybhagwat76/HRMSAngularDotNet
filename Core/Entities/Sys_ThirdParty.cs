@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities
 {
-    [Table("tbl_ThirdParty")]
+    [Table("Sys_ThirdParty")]
     public class Sys_ThirdParty : BaseEntity, IAuditableEntity
     {
         public string ThirdParty_Name { get; set; }

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Core.Entities
 {
 
-    [Table("tbl_HigherAuthorityBranch")]
+    [Table("sys_HigherAuthorityBranch")]
     public class tbl_HigherAuthorityBranch : BaseEntity, IAuditableEntity
     {
         public string HigherAuthority_Branch { get; set; }

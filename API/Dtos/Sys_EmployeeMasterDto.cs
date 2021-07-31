@@ -14,6 +14,7 @@ namespace API.Dtos
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
+        public string email { get; set; }
         public int Project_BranchId { get; set; }
         public int DepartmentId { get; set; }
         public int DesignationId { get; set; }

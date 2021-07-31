@@ -13,5 +13,6 @@ namespace API.Dtos
         public IFormFile Attachments { set; get; }
         public string Attachments_File_Name { get; set; }
         public DateTime Valid_Upto { get; set; }
+        public int OtherInformationId { get; set; }
     }
 }

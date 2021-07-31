@@ -15,5 +15,8 @@ namespace API.Dtos
         public string Aadhar_Status { get; set; }
         public string Address { get; set; }
         public string Contact_No { get; set; }
+        public int Employee_Id { get; set; }
+
+
     }
 }

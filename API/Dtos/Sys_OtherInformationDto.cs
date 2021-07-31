@@ -22,5 +22,7 @@ namespace API.Dtos
         public string Picture { get; set; }
         public IFormFile SignatureFile { get; set; }
         public IFormFile PictureFile { get; set; }
+        public int Employee_Id { get; set; }
+        public List<Sys_Identity_ProofDto> sys_Identity_ProofDtos { get; set; }
     }
 }

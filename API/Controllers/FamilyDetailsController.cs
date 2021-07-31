@@ -62,11 +62,11 @@ namespace API.Controllers
             }
         }
 
-     
+
         #endregion
 
-        #region Add new employee
-        [HttpPost("AddFamilyDetails")]
+        #region Add new family Detail
+        [HttpPost("AddFamilyDetail")]
         public async Task<ActionResult<Sys_FamilyDetailsDto>> AddFamilyDetailsAsync(Sys_FamilyDetailsDto familyDetailsDto)
         {
             try
@@ -83,6 +83,7 @@ namespace API.Controllers
                 return BadRequest(exception.Message.ToString());
             }
         }
+
         #endregion
 
     }

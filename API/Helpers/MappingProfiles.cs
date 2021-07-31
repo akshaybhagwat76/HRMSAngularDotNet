@@ -14,6 +14,23 @@ namespace API.Helpers
             CreateMap<Sys_DESIGNATIONDto, Sys_DESIGNATION>().ReverseMap();
             CreateMap<Sys_COUNTRYDto, Sys_COUNTRY>().ReverseMap();
             CreateMap<Sys_WorkingStatusDto, Sys_WorkingStatus>().ReverseMap();
+            CreateMap<Sys_HigherAuthorityDto, Sys_HigherAuthority>().ReverseMap();
+            CreateMap<Sys_HigherAuthorityBranchesDto, tbl_HigherAuthorityBranch>().ReverseMap();
+            CreateMap<Sys_HigherAuthorityNameDto, Sys_HigherAuthorityName>().ReverseMap();
+            CreateMap<Sys_ThirdPartyDto, Sys_ThirdParty>().ReverseMap();
+            CreateMap<Sys_ThirdPartyTypeDto, Sys_ThirdPartyType>().ReverseMap();
+            CreateMap<Sys_Employee_TypeDto, Sys_Employee_Type>().ReverseMap();
+            CreateMap<Sys_BloodGroupDto, Sys_BloodGroup>().ReverseMap();
+            CreateMap<Sys_CastDto, Sys_Cast>().ReverseMap();
+            CreateMap<Sys_MaritalStatusDto, Sys_MaritalStatus>().ReverseMap();
+            CreateMap<Sys_RelationShipDto, Sys_RelationShip>().ReverseMap();
+            CreateMap<Sys_EducationalQualificationDto, Sys_EducationalQualification>().ReverseMap();
+            CreateMap<Sys_STATEDto, Sys_STATE>().ReverseMap();
+            CreateMap<Sys_REGION_ZONEDto, Sys_REGION_ZONE>().ReverseMap();
+            CreateMap<Sys_UserTypeDto, Sys_UserType>().ReverseMap();
+            CreateMap<Sys_Employee_CategoryDto, Sys_Employee_Category>().ReverseMap();
+            CreateMap<Sys_FamilyDetailsDto, Sys_FamilyDetails>().ReverseMap();
+
         }
     }
 }

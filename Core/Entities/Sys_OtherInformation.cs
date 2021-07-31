@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Core.Entities
 {
-    [Table("tbl_Other_Information")]
+    [Table("tbl_OtherInformation")]
     public class Sys_OtherInformation : BaseEntity, IAuditableEntity
     {
         public string Identity_Type { get; set; }

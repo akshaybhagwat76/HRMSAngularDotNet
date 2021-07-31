@@ -178,7 +178,7 @@ namespace API.Controllers
 
         #region Add new employee
         [NonAction]
-        public async Task<ActionResult<Sys_CorresspondanceContactInformationDto>> AddPermanentContactInformationAsync(Sys_CorresspondanceContactInformationDto familyDetailsDto)
+        public async Task<ActionResult<Sys_CorresspondanceContactInformationDto>> AddCorresspondanceContactInformationAsync(Sys_CorresspondanceContactInformationDto familyDetailsDto)
         {
             try
             {

@@ -96,7 +96,7 @@ namespace API.Controllers
         #endregion
 
         #region Add new employee
-        [HttpPost("AddFamilyDetails")]
+        [NonAction]
         public async Task<ActionResult<Sys_FamilyDetailsDto>> AddFamilyDetailsAsync(Sys_FamilyDetailsDto familyDetailsDto)
         {
             try
@@ -116,7 +116,7 @@ namespace API.Controllers
         #endregion
 
         #region Add new education
-        [HttpPost("AddEducationalQualification")]
+        [NonAction]
         public async Task<ActionResult<Sys_EducationalQualificationDto>> AddEducationalQualificationAsync(Sys_EducationalQualificationDto EducationQuilificationDto)
         {
             try
@@ -265,5 +265,11 @@ namespace API.Controllers
             }
         }
         #endregion
+
+        #region Delete Employee Master
+
+
+        #endregion
+
     }
 }

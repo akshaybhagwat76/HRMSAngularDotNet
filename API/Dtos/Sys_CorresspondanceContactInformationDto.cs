@@ -14,5 +14,6 @@ namespace API.Dtos
         public int State { get; set; }
         public string City { get; set; }
         public string Pin { get; set; }
+        public int Employee_Id { get; set; }
     }
 }

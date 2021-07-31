@@ -66,7 +66,7 @@ namespace API.Controllers
 
         #endregion
 
-        #region Add new employee
+        #region Add new Permanent Contact Informations
         [HttpPost("AddPermanentContactInformations")]
         public async Task<ActionResult<Sys_PermanentContactInformationDto>> AddPermanentContactInformationAsync(Sys_PermanentContactInformationDto familyDetailsDto)
         {

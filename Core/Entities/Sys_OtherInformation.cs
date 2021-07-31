@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Core.Entities
 {
-    [Table("tbl_Other_Information")]
+    [Table("tbl_OtherInformation")]
     public class Sys_OtherInformation : BaseEntity, IAuditableEntity
     {
         public string Identity_Type { get; set; }
@@ -35,6 +35,7 @@ namespace Core.Entities
         public string UpdatedFrom_Page { get; set; }
         public int? UpdatedFrom_Sub_Menu_Id { get; set; }
         public string UpdatedFrom_API_Name { get; set; }
+        public int Employee_Id { get; set; }
 
     }
 }

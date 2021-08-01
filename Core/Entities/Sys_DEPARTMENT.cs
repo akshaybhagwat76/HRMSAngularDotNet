@@ -1,11 +1,14 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("sys_DEPARTMENTs")]
     public class Sys_DEPARTMENT : BaseEntity, IAuditableEntity
     {
         public int Branch_Id { get; set; }
         public string Department_Name { get; set; }
-        public string Departmen_Code { get; set; }
+        public string Department_Code { get; set; }
         public int Status_Id { get; set; }
         public string Remarks { get; set; }
         public string Action_Remarks { get; set; }

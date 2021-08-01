@@ -29,6 +29,8 @@ namespace API.Helpers
             CreateMap<Sys_REGION_ZONEDto, Sys_REGION_ZONE>().ReverseMap();
             CreateMap<Sys_UserTypeDto, Sys_UserType>().ReverseMap();
             CreateMap<Sys_Employee_CategoryDto, Sys_Employee_Category>().ReverseMap();
+            CreateMap<Sys_FamilyDetailsDto, Sys_FamilyDetails>().ReverseMap();
+
         }
     }
 }

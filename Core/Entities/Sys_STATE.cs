@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities
 {
-    [Table("sys_STATE")]
+    [Table("sys_STATEs")]
     public class Sys_STATE : BaseEntity, IAuditableEntity
     {
         public int Zone_Id { get; set; }

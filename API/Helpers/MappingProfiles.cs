@@ -30,7 +30,9 @@ namespace API.Helpers
             CreateMap<Sys_UserTypeDto, Sys_UserType>().ReverseMap();
             CreateMap<Sys_Employee_CategoryDto, Sys_Employee_Category>().ReverseMap();
             CreateMap<Sys_FamilyDetailsDto, Sys_FamilyDetails>().ReverseMap();
-
+            CreateMap<Sys_Highest_QualificationDto, Sys_Highest_Qualification>().ReverseMap();
+            CreateMap<Sys_IdentityTypeDto, Sys_IdentityType>().ReverseMap();
+            CreateMap<Sys_ProfessionalInformationDto, Sys_ProfessionalInformation>().ReverseMap();
         }
     }
 }

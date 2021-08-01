@@ -30,7 +30,7 @@ namespace API.Controllers
         #endregion
 
         #region Get methods
-        [HttpGet("educationalQualification")]
+        [HttpGet("Qualifications")]
         public async Task<ActionResult<List<Sys_EducationalQualificationDto>>> GeteducationalQualificationAsync()
         {
             try

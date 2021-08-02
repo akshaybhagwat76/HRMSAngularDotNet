@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
@@ -11,6 +12,7 @@ using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+using API.Helpers;
 namespace API.Controllers
 {
     [Route("api/")]
@@ -39,6 +41,7 @@ namespace API.Controllers
             try
             {
                 var employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
+                employeeMaster.Status = true;
                 _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
                 var result = await _unitOfWork.Complete();
 
@@ -76,7 +79,7 @@ namespace API.Controllers
                     try
                     {
                         EmployeeMasterDto.sys_PermanentContactInformationDto.Employee_Id = employeeMaster.Id;
-                        await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformationDto);                     
+                        await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformationDto);
                     }
                     catch (Exception) { }
                     try
@@ -93,6 +96,84 @@ namespace API.Controllers
                 return BadRequest(exception.Message.ToString());
             }
         }
+        #endregion
+
+        #region Get methods
+        [HttpGet("SearchEmployee")]
+        public async Task<ActionResult<List<Sys_EmployeeMasterDto>>> GetEmployees(EmployeeSearchDTO employeeSearchDTO)
+        {
+            try
+            {
+                List<Sys_EmployeeMasterDto> sys_EmployeeMasterDtos = new List<Sys_EmployeeMasterDto>();
+                var tbl_Employees = await _unitOfWork.Repository<Sys_EmployeeMaster>().ListAllAsync();
+
+                if (tbl_Employees.Count > 0 && employeeSearchDTO != null)
+                {
+                    tbl_Employees.WhereIf(employeeSearchDTO.CompanyId > 0, x => x.CompanyId == employeeSearchDTO.CompanyId)
+                                 .WhereIf(employeeSearchDTO.DepartmentId > 0, x => x.DepartmentId == employeeSearchDTO.DepartmentId)
+                                 .WhereIf(employeeSearchDTO.Project_BranchId > 0, x => x.Project_BranchId == employeeSearchDTO.Project_BranchId)
+                                 .WhereIf(employeeSearchDTO.DesignationId > 0, x => x.DesignationId == employeeSearchDTO.DesignationId)
+                                 .WhereIf(!string.IsNullOrEmpty(employeeSearchDTO.EmployeeCode), x => x.EmployeeCode == employeeSearchDTO.EmployeeCode)
+                                 .WhereIf(!string.IsNullOrEmpty(employeeSearchDTO.FirstName), x => x.FirstName == employeeSearchDTO.FirstName)
+                                 .WhereIf(!string.IsNullOrEmpty(employeeSearchDTO.email), x => x.email == employeeSearchDTO.email).ToList();
+
+                    if (employeeSearchDTO.ZoneId > 0)
+                    {
+                        var hR_Employees = await _unitOfWork.Repository<Sys_CorresspondanceContactInformation>().ListAllAsync();
+                        var permanentContactInformation = await _unitOfWork.Repository<Sys_PermanentContactInformation>().ListAllAsync();
+
+                        if (hR_Employees != null && hR_Employees.Count > 0)
+                        {
+                            var CorresspondanceContactInformation = hR_Employees.Where(x => x.Zone == employeeSearchDTO.ZoneId).ToList();
+                            
+                            if (hR_Employees != null && hR_Employees.Count > 0)
+                            {
+                                foreach (Sys_EmployeeMaster item in tbl_Employees)
+                                {
+                                    if (item.Id > 0)
+                                    {
+                                        CorresspondanceContactInformation = CorresspondanceContactInformation.Where(x => x.Employee_Id == item.Id).ToList();
+                                    }
+                                }
+                            }
+                            foreach (var item in CorresspondanceContactInformation)
+                            {
+                                tbl_Employees = tbl_Employees.Where(x => x.Id == item.Employee_Id).ToList();
+                            }
+                            
+                        }
+                        if (permanentContactInformation != null && permanentContactInformation.Count > 0)
+                        {
+                            var LstpermanentContactInformation = permanentContactInformation.Where(x => x.Zone == employeeSearchDTO.ZoneId).ToList();
+
+                            if (permanentContactInformation != null && permanentContactInformation.Count > 0)
+                            {
+                                foreach (Sys_EmployeeMaster item in tbl_Employees)
+                                {
+                                    if (item.Id > 0)
+                                    {
+                                        LstpermanentContactInformation = LstpermanentContactInformation.Where(x => x.Employee_Id == item.Id).ToList();
+                                    }
+                                }
+                            }
+                            foreach (var item in LstpermanentContactInformation)
+                            {
+                                tbl_Employees = tbl_Employees.Where(x => x.Id == item.Employee_Id).ToList();
+                            }
+                        }
+                    }
+
+
+                }
+
+                return Ok(tbl_Employees);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message.ToString());
+            }
+        }
+
         #endregion
 
         #region Add new employee
@@ -270,6 +351,8 @@ namespace API.Controllers
 
 
         #endregion
+
+
 
     }
 }

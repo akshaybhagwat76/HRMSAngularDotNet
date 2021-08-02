@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-
 namespace Core.Entities
 {
 
     [Table("tbl_EmployeeMaster")]
     public class Sys_EmployeeMaster : BaseEntity, IAuditableEntity
     {
-
         public int CompanyId { get; set; }
         public int EmployeeCategoryId { get; set; }
         public string EmployeeCode { get; set; }
@@ -54,6 +50,7 @@ namespace Core.Entities
         public string UpdatedFrom_Page { get; set; }
         public int? UpdatedFrom_Sub_Menu_Id { get; set; }
         public string UpdatedFrom_API_Name { get; set; }
+        public bool Status{ get; set; }
 
     }
 }

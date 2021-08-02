@@ -1,4 +1,8 @@
-﻿namespace API.Helpers
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
+
+namespace API.Helpers
 {
     public static class Helpers
     {
@@ -13,5 +17,6 @@
                 return s;
             }
         }
+       
     }
 }

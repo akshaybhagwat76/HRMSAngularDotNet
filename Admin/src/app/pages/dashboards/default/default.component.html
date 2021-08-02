@@ -1,829 +1,820 @@
 <div class="container-fluid">
-  <!-- start page title -->
-  <div class="row">
-    <div class="col-12">
-      <div class="page-title-box d-flex align-items-center justify-content-between">
-        <h4 class="mb-0 font-size-18">Employee</h4>
-        <div class="page-title-right">
-          <ol class="breadcrumb m-0">
-            <li class="breadcrumb-item active">Welcome to Employee Information</li>
-          </ol>
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 font-size-18">Employee</h4>
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item active">Welcome to Employee Information</li>
+                    </ol>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Employee - Details</h4>
-          <form class="needs-validation" (ngSubmit)="validSubmit()" [formGroup]="validationform">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom04" class="form-label">Company<span class="text-danger">*</span></label>
-                  <select class="form-select" id="validationCustom01" formControlName="company"
-                    [ngClass]="{'is-invalid': submit && !form.company.value}">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Employee - Details</h4>
+                    <form class="needs-validation" (ngSubmit)="validSubmit()" [formGroup]="validationform">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom04" class="form-label">Company<span class="text-danger">*</span></label>
+                                    <select class="form-select" id="validationCustom01" formControlName="company" [ngClass]="{'is-invalid': submit && !form.company.value}">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                  <div *ngIf="submit && form.company.errors" class="invalid-feedback">
-                    <span *ngIf="form.company.errors.required">Please provide a valid company.</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom04" class="form-label">Employee Category<span
+                                    <div *ngIf="submit && form.company.errors" class="invalid-feedback">
+                                        <span *ngIf="form.company.errors.required">Please provide a valid company.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom04" class="form-label">Employee Category<span
                       class="text-danger">*</span></label>
-                  <select class="form-select" id="validationCustom02" formControlName="category"
-                    [ngClass]="{'is-invalid': submit && !form.category.value}">
+                                    <select class="form-select" id="validationCustom02" formControlName="category" [ngClass]="{'is-invalid': submit && !form.category.value}">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                  <div *ngIf="submit && form.category.errors" class="invalid-feedback">
-                    <span *ngIf="form.category.errors.required">Please provide a valid category.</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom03">Employee Code<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="validationCustom03" formControlName="employeeCode"
-                    placeholder="Employee Code" [ngClass]="{'is-invalid': submit && form.employeeCode.errors}">
-                  <div *ngIf="submit && form.employeeCode.errors" class="invalid-feedback">
-                    <span *ngIf="form.employeeCode.errors.required">Please provide a valid employee code.</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom03">Biometric Code</label>
-                  <input type="text" class="form-control" id="validationCustom04" formControlName="biometricCode"
-                    placeholder="Biometric Code" />
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom05">First Name<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="validationCustom05" formControlName="firstName"
-                    placeholder="First Name" [ngClass]="{'is-invalid': submit && form.firstName.errors}">
-                  <div *ngIf="submit && form.firstName.errors" class="invalid-feedback">
-                    <span *ngIf="form.firstName.errors.required">Please provide a valid First Name.</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom06">Middle Name</label>
-                  <input type="text" class="form-control" id="validationCustom06" formControlName="employeeCode"
-                    placeholder="Middle Name" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom07">Last Name<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="validationCustom07" formControlName="lastName"
-                    placeholder="Last Name" [ngClass]="{'is-invalid': submit && form.lastName.errors}">
-                  <div *ngIf="submit && form.lastName.errors" class="invalid-feedback">
-                    <span *ngIf="form.lastName.errors.required">Please provide a valid Last Name.</span>
-                  </div>
-                </div>
-              </div>
 
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom08" class="form-label">Department<span
+                                    <div *ngIf="submit && form.category.errors" class="invalid-feedback">
+                                        <span *ngIf="form.category.errors.required">Please provide a valid category.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom03">Employee Code<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="validationCustom03" formControlName="employeeCode" placeholder="Employee Code" [ngClass]="{'is-invalid': submit && form.employeeCode.errors}">
+                                    <div *ngIf="submit && form.employeeCode.errors" class="invalid-feedback">
+                                        <span *ngIf="form.employeeCode.errors.required">Please provide a valid employee code.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-1">
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom03">Biometric Code</label>
+                                    <input type="text" class="form-control" id="validationCustom04" formControlName="biometricCode" placeholder="Biometric Code" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom05">First Name<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="validationCustom05" formControlName="firstName" placeholder="First Name" [ngClass]="{'is-invalid': submit && form.firstName.errors}">
+                                    <div *ngIf="submit && form.firstName.errors" class="invalid-feedback">
+                                        <span *ngIf="form.firstName.errors.required">Please provide a valid First Name.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom06">Middle Name</label>
+                                    <input type="text" class="form-control" id="validationCustom06" formControlName="employeeCode" placeholder="Middle Name" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom07">Last Name<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="validationCustom07" formControlName="lastName" placeholder="Last Name" [ngClass]="{'is-invalid': submit && form.lastName.errors}">
+                                    <div *ngIf="submit && form.lastName.errors" class="invalid-feedback">
+                                        <span *ngIf="form.lastName.errors.required">Please provide a valid Last Name.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom08" class="form-label">Department<span
                       class="text-danger">*</span></label>
-                  <select class="form-select" id="validationCustom08" formControlName="department"
-                    [ngClass]="{'is-invalid': submit && !form.department.value}">
+                                    <select class="form-select" id="validationCustom08" formControlName="department" [ngClass]="{'is-invalid': submit && !form.department.value}">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                  <div *ngIf="submit && form.department.errors" class="invalid-feedback">
-                    <span *ngIf="form.department.errors.required">Please provide a valid department.</span>
-                  </div>
-                </div>
-              </div>
+                                    <div *ngIf="submit && form.department.errors" class="invalid-feedback">
+                                        <span *ngIf="form.department.errors.required">Please provide a valid department.</span>
+                                    </div>
+                                </div>
+                            </div>
 
-            </div>
-            <div class="row">
+                        </div>
+                        <div class="row">
 
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom09" class="form-label">Project/Branch<span
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom09" class="form-label">Project/Branch<span
                       class="text-danger">*</span></label>
-                  <select class="form-select" id="validationCustom09" formControlName="project"
-                    [ngClass]="{'is-invalid': submit && !form.project.value}">
+                                    <select class="form-select" id="validationCustom09" formControlName="project" [ngClass]="{'is-invalid': submit && !form.project.value}">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                  <div *ngIf="submit && form.project.errors" class="invalid-feedback">
-                    <span *ngIf="form.project.errors.required">Please provide a valid project/branch.</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom10" class="form-label">Higher Authority Branch/Project<span
+                                    <div *ngIf="submit && form.project.errors" class="invalid-feedback">
+                                        <span *ngIf="form.project.errors.required">Please provide a valid project/branch.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom10" class="form-label">Higher Authority Branch/Project<span
                       class="text-danger">*</span></label>
-                  <select class="form-select" id="validationCustom10" formControlName="higherAuthorityProject">
+                                    <select class="form-select" id="validationCustom10" formControlName="higherAuthorityProject">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom11" class="form-label">Higher Authority</label>
-                  <select class="form-select" id="validationCustom11" formControlName="higherAuthority">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom11" class="form-label">Higher Authority</label>
+                                    <select class="form-select" id="validationCustom11" formControlName="higherAuthority">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom12" class="form-label">Select Higher Authority Name</label>
-                  <select class="form-select" id="validationCustom12" formControlName="higherAuthorityName">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom12" class="form-label">Select Higher Authority Name</label>
+                                    <select class="form-select" id="validationCustom12" formControlName="higherAuthorityName">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom07">Date Of Joining</label>
-                  <input type="date" class="form-control" id="validationCustom013" formControlName="dateOfJoining" />
-                  <div>
-                    <span><b>Service</b>: 5 Years 2 Month 26 Days</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom07">Email Address</label>
-                  <input type="text" class="form-control" id="validationCustom14" formControlName="emailAddress"
-                    placeholder="Email Address" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom15" class="form-label">Employee Type<span
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom07">Date Of Joining</label>
+                                    <input type="date" class="form-control" id="validationCustom013" formControlName="dateOfJoining" />
+                                    <div>
+                                        <span><b>Service</b>: 5 Years 2 Month 26 Days</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom07">Email Address</label>
+                                    <input type="text" class="form-control" id="validationCustom14" formControlName="emailAddress" placeholder="Email Address" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom15" class="form-label">Employee Type<span
                       class="text-danger">*</span></label>
-                  <select class="form-select" id="validationCustom15" formControlName="employeeType"
-                    [ngClass]="{'is-invalid': submit && !form.employeeType.value}">
+                                    <select class="form-select" id="validationCustom15" formControlName="employeeType" [ngClass]="{'is-invalid': submit && !form.employeeType.value}">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                  <div *ngIf="submit && form.employeeType.errors" class="invalid-feedback">
-                    <span *ngIf="form.employeeType.errors.required">Please provide a valid employee type.</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom16">Mobile No</label>
-                  <input type="text" class="form-control" id="validationCustom16" formControlName="mobileNo"
-                    placeholder="Mobile No" [ngClass]="{'is-invalid': submit && form.mobileNo.errors}">
-                  <div *ngIf="submit && form.mobileNo.errors" class="invalid-feedback">
-                    <span *ngIf="form.mobileNo.errors.required">Please provide a valid Mobile No.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom17" class="form-label">Third Party Type</label>
-                  <select class="form-select" id="validationCustom17" formControlName="thirdPartyType">
+                                    <div *ngIf="submit && form.employeeType.errors" class="invalid-feedback">
+                                        <span *ngIf="form.employeeType.errors.required">Please provide a valid employee type.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom16">Mobile No</label>
+                                    <input type="text" class="form-control" id="validationCustom16" formControlName="mobileNo" placeholder="Mobile No" [ngClass]="{'is-invalid': submit && form.mobileNo.errors}">
+                                    <div *ngIf="submit && form.mobileNo.errors" class="invalid-feedback">
+                                        <span *ngIf="form.mobileNo.errors.required">Please provide a valid Mobile No.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom17" class="form-label">Third Party Type</label>
+                                    <select class="form-select" id="validationCustom17" formControlName="thirdPartyType">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom18" class="form-label">Third Party</label>
-                  <select class="form-select" id="validationCustom18" formControlName="thirdParty">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom18" class="form-label">Third Party</label>
+                                    <select class="form-select" id="validationCustom18" formControlName="thirdParty">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom19" class="form-label">Working Status</label>
-                  <select class="form-select" id="validationCustom19" formControlName="workingStatus">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom19" class="form-label">Working Status</label>
+                                    <select class="form-select" id="validationCustom19" formControlName="workingStatus">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom20">Probatlon Perlod(Days)</label>
-                  <input type="text" class="form-control" id="validationCustom20" formControlName="probatlonPerlod"
-                    placeholder="Probatlon Perlod(Days)">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom21">Reference Employee Name</label>
-                  <input type="text" class="form-control" id="validationCustom21" formControlName="refName"
-                    placeholder="Reference Employee Name">
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom22">Reference Phone No</label>
-                  <input type="text" class="form-control" id="validationCustom22" formControlName="refNo"
-                    placeholder="Reference Phone No">
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h4 class="card-title">Personal Information</h4>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom22">Date Of Birth</label>
-                  <input type="date" class="form-control" id="validationCustom22" formControlName="dateOfBirth"
-                    placeholder="Date Of Birth">
-                </div>
-                <div>
-                  <!-- <span><b>Age : </b> 31 years 5 Month 18 Days</span> -->
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom23">Gender</label>
-                  <div class="d-flex">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom20">Probatlon Perlod(Days)</label>
+                                    <input type="text" class="form-control" id="validationCustom20" formControlName="probatlonPerlod" placeholder="Probatlon Perlod(Days)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom21">Reference Employee Name</label>
+                                    <input type="text" class="form-control" id="validationCustom21" formControlName="refName" placeholder="Reference Employee Name">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom22">Reference Phone No</label>
+                                    <input type="text" class="form-control" id="validationCustom22" formControlName="refNo" placeholder="Reference Phone No">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom19" class="form-label">Working Status</label>
+                                    <select class="form-select" id="validationCustom19" formControlName="workingStatus">
+                  <option selected="" disabled="" value="">Choose...</option>
+                  <option>...</option>
+                </select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4 class="card-title">Personal Information</h4>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom22">Date Of Birth</label>
+                                    <input type="date" class="form-control" id="validationCustom22" formControlName="dateOfBirth" placeholder="Date Of Birth">
+                                </div>
+                                <div>
+                                    <!-- <span><b>Age : </b> 31 years 5 Month 18 Days</span> -->
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom23">Gender</label>
+                                    <div class="d-flex">
 
-                    <div class="custom-control custom-radio custom-control-inline mr-5">
-                      <input type="radio" id="rdoGender" checked name="rdoGender" class="custom-control-input">
-                      <label class="custom-control-label" for="rdoGender"> Male</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline mr-5">
-                      <input type="radio" id="rdoFemale" name="rdoGender" class="custom-control-input">
-                      <label class="custom-control-label" for="rdoFemale"> FeMale</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="rdoTransit" name="rdoGender" class="custom-control-input" checked>
-                      <label class="custom-control-label" for="rdoTransit">Transit</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom24">Nationality<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="validationCustom24" formControlName="nationality"
-                    placeholder="Nationality" [ngClass]="{'is-invalid': submit && form.nationality.errors}">
-                  <div *ngIf="submit && form.nationality.errors" class="invalid-feedback">
-                    <span *ngIf="form.nationality.errors.required">Please provide a valid Nationality.</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom25">Religion<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="validationCustom25" formControlName="religion"
-                    placeholder="Religion" [ngClass]="{'is-invalid': submit && form.religion.errors}">
-                  <div *ngIf="submit && form.religion.errors" class="invalid-feedback">
-                    <span *ngIf="form.religion.errors.required">Please provide a valid Religion.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom26" class="form-label">Cast</label>
-                  <select class="form-select" id="validationCustom26" formControlName="cast">
+                                        <div class="custom-control custom-radio custom-control-inline mr-5">
+                                            <input type="radio" id="rdoGender" checked name="rdoGender" class="custom-control-input">
+                                            <label class="custom-control-label" for="rdoGender"> Male</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline mr-5">
+                                            <input type="radio" id="rdoFemale" name="rdoGender" class="custom-control-input">
+                                            <label class="custom-control-label" for="rdoFemale"> FeMale</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="rdoTransit" name="rdoGender" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="rdoTransit">Transit</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom24">Nationality<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="validationCustom24" formControlName="nationality" placeholder="Nationality" [ngClass]="{'is-invalid': submit && form.nationality.errors}">
+                                    <div *ngIf="submit && form.nationality.errors" class="invalid-feedback">
+                                        <span *ngIf="form.nationality.errors.required">Please provide a valid Nationality.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom25">Religion<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="validationCustom25" formControlName="religion" placeholder="Religion" [ngClass]="{'is-invalid': submit && form.religion.errors}">
+                                    <div *ngIf="submit && form.religion.errors" class="invalid-feedback">
+                                        <span *ngIf="form.religion.errors.required">Please provide a valid Religion.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom26" class="form-label">Cast</label>
+                                    <select class="form-select" id="validationCustom26" formControlName="cast">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom27">Physical Disability</label>
-                  <div class="d-flex">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom27">Physical Disability</label>
+                                    <div class="d-flex">
 
-                    <div class="custom-control custom-radio custom-control-inline mr-5">
-                      <input type="radio" id="physicalRadioInline1" name="physicalYes"
-                        class="custom-control-input" formControlName="physicalYes">
-                      <label class="custom-control-label" for="physicalRadioInline1"> Yes</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="physicalRadioInline2" name="physicalNo"
-                        class="custom-control-input" checked formControlName="physicalNo">
-                      <label class="custom-control-label" for="physicalRadioInline2"> No</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom28" class="form-label">Blood Group</label>
-                  <select class="form-select" id="validationCustom28" formControlName="bloodGroup">
+                                        <div class="custom-control custom-radio custom-control-inline mr-5">
+                                            <input type="radio" id="rdoYes" checked name="rdoPhysical" class="custom-control-input">
+                                            <label class="custom-control-label" for="physicalRadioInline1"> Yes</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="rdoNo" name="rdoPhysical" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="physicalRadioInline2"> No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom28" class="form-label">Blood Group</label>
+                                    <select class="form-select" id="validationCustom28" formControlName="bloodGroup">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom34" class="form-label">Marital Status<span
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom34" class="form-label">Marital Status<span
                       class="text-danger">*</span></label>
-                  <select class="form-select" id="validationCustom34" formControlName="maritalStatus"
-                    [ngClass]="{'is-invalid': submit && !form.maritalStatus.value}">
+                                    <select class="form-select" id="validationCustom34" formControlName="maritalStatus" [ngClass]="{'is-invalid': submit && !form.maritalStatus.value}">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                  <div *ngIf="submit && form.maritalStatus.errors" class="invalid-feedback">
-                    <span *ngIf="form.maritalStatus.errors.required">Please provide a valid Marital Status.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="identificationMark" class="form-label">Identification Mark</label>
-                  <textarea class="form-control" id="identificationMark" formControlName="identificationMark"></textarea>
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h4 class="card-title">Family Details</h4>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom27">Name<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="validationCustom27" formControlName="familyName"
-                    placeholder="Name">
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom29" class="form-label">Relationship<span class="text-danger">*</span></label>
-                  <select class="form-select" id="validationCustom29" formControlName="relationship">
+                                    <div *ngIf="submit && form.maritalStatus.errors" class="invalid-feedback">
+                                        <span *ngIf="form.maritalStatus.errors.required">Please provide a valid Marital Status.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="identificationMark" class="form-label">Identification Mark</label>
+                                    <textarea class="form-control" id="identificationMark" formControlName="identificationMark"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4 class="card-title">Family Details</h4>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom27">Name<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="validationCustom27" formControlName="familyName" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom29" class="form-label">Relationship<span class="text-danger">*</span></label>
+                                    <select class="form-select" id="validationCustom29" formControlName="relationship">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom28">Date Of Birth</label>
-                  <input type="date" class="form-control" id="validationCustom28" formControlName="familyDateOfBirth" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom35">Aadhar No</label>
-                  <input type="text" class="form-control" id="validationCustom35" formControlName="aadharNo" />
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom30">Aadhar Status</label>
-                  <div class="d-flex">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom28">Date Of Birth</label>
+                                    <input type="date" class="form-control" id="validationCustom28" formControlName="familyDateOfBirth" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom35">Aadhar No</label>
+                                    <input type="text" class="form-control" id="validationCustom35" formControlName="aadharNo" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom30">Aadhar Status</label>
+                                    <div class="d-flex">
 
-                    <div class="custom-control custom-radio custom-control-inline mr-5">
-                      <input type="radio" id="rdoAadhar" name="rdoAadhar" class="custom-control-input">
-                      <label class="custom-control-label" for="rdoAadhar">Verified</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="rdoAadhar1" name="rdoAadhar" checked class="custom-control-input">
-                      <label class="custom-control-label" for="rdoAadhar1">Not Verified</label>
-                    </div>
-                  </div>
+                                        <div class="custom-control custom-radio custom-control-inline mr-5">
+                                            <input type="radio" id="rdoAadhar" name="rdoAadhar" class="custom-control-input">
+                                            <label class="custom-control-label" for="rdoAadhar">Verified</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="rdoAadhar1" name="rdoAadhar" checked class="custom-control-input">
+                                            <label class="custom-control-label" for="rdoAadhar1">Not Verified</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom31" class="form-label">Address</label>
+                                    <textarea class="form-control" formControlName="address"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom32">Contact No</label>
+                                    <input type="text" class="form-control" id="validationCustom28" formControlName="contactNo" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom33">&nbsp;</label><br>
+                                    <a href="https://resident.uidai.gov.in/aadhaarverification">Aadhar Number Check</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" (click)="addFamilyDetails()">Add</button>
+                        </div>
+                    </form>
                 </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom31" class="form-label">Address</label>
-                  <textarea class="form-control" formControlName="address"></textarea>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom32">Contact No</label>
-                  <input type="text" class="form-control" id="validationCustom28" formControlName="contactNo" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom33">&nbsp;</label><br>
-                  <a href="https://resident.uidai.gov.in/aadhaarverification">Aadhar Number Check</a>
-                </div>
-              </div>
             </div>
-            <div>
-              <button class="btn btn-primary" (click)="addFamilyDetails()">Add</button>
-            </div>
-          </form>
+            <!-- end card -->
         </div>
-      </div>
-      <!-- end card -->
-    </div> <!-- end col -->
-  </div>
+        <!-- end col -->
+    </div>
 
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Nominee - Details</h4>
-          <form class="needs-validation" (ngSubmit)="validSubmitNominee()"  [formGroup]="validationformNominee">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationName">Name</label>
-                  <input type="text" class="form-control" id="validationName" formControlName="validationNameNominee"
-                    placeholder="Name">
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationRelation" class="form-label">Relationship</label>
-                  <select class="form-select" id="validationRelation" formControlName="relationshipNominee">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Nominee - Details</h4>
+                    <form class="needs-validation" (ngSubmit)="validSubmitNominee()" [formGroup]="validationformNominee">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationName">Name</label>
+                                    <input type="text" class="form-control" id="validationName" formControlName="validationNameNominee" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationRelation" class="form-label">Relationship</label>
+                                    <select class="form-select" id="validationRelation" formControlName="relationshipNominee">
                     <option selected="" disabled="" value="">Choose...</option>
                     <option>...</option>
                   </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCustom03">Date Of Birth</label>
-                  <input type="date" class="form-control" id="validationCustom04"
-                    formControlName="dateOfBirthNominee" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationAadharNominee">Aadhar No</label>
-                  <input type="text" class="form-control" id="validationCustom04" formControlName="aadharNoNominee" />
-                </div>
-              </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationCustom03">Date Of Birth</label>
+                                    <input type="date" class="form-control" id="validationCustom04" formControlName="dateOfBirthNominee" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationAadharNominee">Aadhar No</label>
+                                    <input type="text" class="form-control" id="validationCustom04" formControlName="aadharNoNominee" />
+                                </div>
+                            </div>
 
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationAadharStatusNominee">Aadhar Status</label>
-                  <div class="d-flex">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationAadharStatusNominee">Aadhar Status</label>
+                                    <div class="d-flex">
 
-                    <div class="custom-control custom-radio custom-control-inline mr-5">
-                      <input type="radio" id="rdoAadharStatusNominee" name="rdoAadharStatusNominee" formControlName="rdoAadharStatusNominee1"
-                        class="custom-control-input">
-                      <label class="custom-control-label" for="rdoAadharStatusNominee">Verified</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="rdoAadharStatusNominee1" checked  name="rdoAadharStatusNominee"  formControlName="rdoAadharStatusNominee2"
-                        class="custom-control-input">
-                      <label class="custom-control-label" for="rdoAadharStatusNominee1">Not Verified</label>
-                    </div>
-                  </div>
+                                        <div class="custom-control custom-radio custom-control-inline mr-5">
+                                            <input type="radio" id="rdoAadharStatusNominee" name="rdoAadharStatusNominee" formControlName="rdoAadharStatusNominee1" class="custom-control-input">
+                                            <label class="custom-control-label" for="rdoAadharStatusNominee">Verified</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="rdoAadharStatusNominee1" checked name="rdoAadharStatusNominee" formControlName="rdoAadharStatusNominee2" class="custom-control-input">
+                                            <label class="custom-control-label" for="rdoAadharStatusNominee1">Not Verified</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationAddressNominee">Address</label>
+                                    <textarea class="form-control" id="validationAddressNominee" formControlName="validationAddressNominee"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationContactNominee">Contact No</label>
+                                    <input type="text" class="form-control" id="validationContactNominee" formControlName="validationContactNominee" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="validationContactNominee">&nbsp;</label><br>
+                                    <a href="https://resident.uidai.gov.in/aadhaarverification">Aadhar Number Check</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" type="submit">Add</button>
+                        </div>
+                    </form>
                 </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationAddressNominee">Address</label>
-                  <textarea class="form-control" id="validationAddressNominee"
-                    formControlName="validationAddressNominee"></textarea>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationContactNominee">Contact No</label>
-                  <input type="text" class="form-control" id="validationContactNominee"
-                    formControlName="validationContactNominee" placeholder="Name">
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationContactNominee">&nbsp;</label><br>
-                  <a href="https://resident.uidai.gov.in/aadhaarverification">Aadhar Number Check</a>
-                </div>
-              </div>
             </div>
-            <div>
-              <button class="btn btn-primary" type="submit">Add</button>
-            </div>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
-  <hr>
-  <h4 class="card-title">Contact Information
-  </h4>
-  <hr>
-  <h4 class="card-title">Permanent Contact Information
-  </h4>
-  <div class="row">
-    <div class="col-md-3">
-      <div class="mb-3">
-        <label for="validationAddress1" class="form-label">Address<span class="text-danger">*</span></label>
-        <textarea class="form-control" id="validationAddress1" formControlName="address1"></textarea>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="mb-3">
-        <label for="validationAddress2" class="form-label">Address 1</label>
-        <textarea class="form-control" id="validationAddress2" formControlName="address2"></textarea>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="mb-3">
-        <label for="validationCountry" class="form-label">Country<span class="text-danger">*</span></label>
-        <select class="form-select" id="validationCountry" formControlName="country">
+    <hr>
+    <h4 class="card-title">Contact Information
+    </h4>
+    <hr>
+    <h4 class="card-title">Permanent Contact Information
+    </h4>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationAddress1" class="form-label">Address<span class="text-danger">*</span></label>
+                <textarea class="form-control" id="validationAddress1" formControlName="address1"></textarea>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationAddress2" class="form-label">Address 1</label>
+                <textarea class="form-control" id="validationAddress2" formControlName="address2"></textarea>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationCountry" class="form-label">Country<span class="text-danger">*</span></label>
+                <select class="form-select" id="validationCountry" formControlName="country">
           <option selected="" disabled="" value="">Choose...</option>
           <option>...</option>
         </select>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="mb-3">
-        <label for="validationZone" class="form-label">Zone<span class="text-danger">*</span></label>
-        <select class="form-select" id="validationZone" formControlName="zone">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationZone" class="form-label">Zone<span class="text-danger">*</span></label>
+                <select class="form-select" id="validationZone" formControlName="zone">
           <option selected="" disabled="" value="">Choose...</option>
           <option>...</option>
         </select>
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3">
-      <div class="mb-3">
-        <label for="validationCity">City </label>
-        <input type="text" class="form-control" id="validationCity" formControlName="city" />
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="mb-3">
-        <label for="validationPin">Pin <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" id="validationPin" formControlName="pin" />
-      </div>
-    </div>
-  </div>
-  <hr>
-  <h4 class="card-title">
-    Corresspondance Contact Information (Same as Above)
-    <input type="checkbox">
-  </h4>
     <div class="row">
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationAddress1" class="form-label">Address<span class="text-danger">*</span></label>
-          <textarea class="form-control" id="validationAddress1" formControlName="address1"></textarea>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationCity">City </label>
+                <input type="text" class="form-control" id="validationCity" formControlName="city" />
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationAddress2" class="form-label">Address 1</label>
-          <textarea class="form-control" id="validationAddress2" formControlName="address2"></textarea>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationPin">Pin <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="validationPin" formControlName="pin" />
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationCountry" class="form-label">Country<span class="text-danger">*</span></label>
-          <select class="form-select" id="validationCountry" formControlName="country">
+    </div>
+    <hr>
+    <h4 class="card-title">
+        Corresspondance Contact Information (Same as Above)
+        <input type="checkbox">
+    </h4>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationAddress1" class="form-label">Address<span class="text-danger">*</span></label>
+                <textarea class="form-control" id="validationAddress1" formControlName="address1"></textarea>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationAddress2" class="form-label">Address 1</label>
+                <textarea class="form-control" id="validationAddress2" formControlName="address2"></textarea>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationCountry" class="form-label">Country<span class="text-danger">*</span></label>
+                <select class="form-select" id="validationCountry" formControlName="country">
             <option selected="" disabled="" value="">Choose...</option>
             <option>...</option>
           </select>
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationZone" class="form-label">Zone<span class="text-danger">*</span></label>
-          <select class="form-select" id="validationZone" formControlName="zone">
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationZone" class="form-label">Zone<span class="text-danger">*</span></label>
+                <select class="form-select" id="validationZone" formControlName="zone">
             <option selected="" disabled="" value="">Choose...</option>
             <option>...</option>
           </select>
+            </div>
         </div>
-      </div>
     </div>
     <div class="row">
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationCity">City </label>
-          <input type="text" class="form-control" id="validationCity" formControlName="city" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationCity">City </label>
+                <input type="text" class="form-control" id="validationCity" formControlName="city" />
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationPin">Pin <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="validationPin" formControlName="pin" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationPin">Pin <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="validationPin" formControlName="pin" />
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationPhone">Phone</label>
-          <input type="text" class="form-control" id="validationPhone" formControlName="phone" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationPhone">Phone</label>
+                <input type="text" class="form-control" id="validationPhone" formControlName="phone" />
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationEmail2">Email Address2 </label>
-          <input type="text" class="form-control" id="validationEmail2" formControlName="email2" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationEmail2">Email Address2 </label>
+                <input type="text" class="form-control" id="validationEmail2" formControlName="email2" />
+            </div>
         </div>
-      </div>
     </div>
     <div class="row">
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationPhone2">Mobile No2 </label>
-          <input type="text" class="form-control" id="validationPhone2" formControlName="phone2" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationPhone2">Mobile No2 </label>
+                <input type="text" class="form-control" id="validationPhone2" formControlName="phone2" />
+            </div>
         </div>
-      </div>
     </div>
     <hr>
     <h4 class="card-title">Other Information
     </h4>
     <div class="row">
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationBankName">Bank Name  </label>
-          <input type="text" class="form-control" id="validationBankName" formControlName="bankName" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationBankName">Bank Name  </label>
+                <input type="text" class="form-control" id="validationBankName" formControlName="bankName" />
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationBranchName">Branch Name </label>
-          <input type="text" class="form-control" id="validationBranchName" formControlName="branchName" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationBranchName">Branch Name </label>
+                <input type="text" class="form-control" id="validationBranchName" formControlName="branchName" />
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationAccountNo">Account No. </label>
-          <input type="text" class="form-control" id="validationAccountNo" formControlName="accountNo" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationAccountNo">Account No. </label>
+                <input type="text" class="form-control" id="validationAccountNo" formControlName="accountNo" />
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationIfscCode">IFSC Code</label>
-          <input type="text" class="form-control" id="validationIfscCode" formControlName="IfscCode" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationIfscCode">IFSC Code</label>
+                <input type="text" class="form-control" id="validationIfscCode" formControlName="IfscCode" />
+            </div>
         </div>
-      </div>
     </div>
     <div class="row">
-      <div class="col-md-1">
-        <label>Identity Proof </label>
-      </div>
-      <div class="col-md-11">
-        <div class="table-responsive">
-          <table class="table align-middle table-nowrap mb-0">
-              <thead class="table-light">
-                  <tr>
-                      <th scope="col">Identity Type	</th>
-                      <th scope="col">Identity No	</th>
-                      <th scope="col">Valid Upto	</th>
-                      <th scope="col">Attachments</th>
-                      <th scope="col"></th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                     <td>
-                       <select class="form-control">
+        <div class="col-md-1">
+            <label>Identity Proof </label>
+        </div>
+        <div class="col-md-11">
+            <div class="table-responsive">
+                <table class="table align-middle table-nowrap mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Identity Type </th>
+                            <th scope="col">Identity No </th>
+                            <th scope="col">Valid Upto </th>
+                            <th scope="col">Attachments</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select class="form-control">
                         <option>-----</option>
                         <option>-----</option>
                        </select>
-                     </td>
-                     <td>
-                      <input type="text" class="form-control">
-                     </td>
-                     <td>
-                       <input type="date" class="form-control">
-                     </td>
-                     <td>
-                       <input type="file" class="form-control">
-                     </td>
-                     <td>
-                       <button>Add</button>
-                     </td>
-                  </tr>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control">
+                            </td>
+                            <td>
+                                <input type="date" class="form-control">
+                            </td>
+                            <td>
+                                <input type="file" class="form-control">
+                            </td>
+                            <td>
+                                <button>Add</button>
+                            </td>
+                        </tr>
 
-              </tbody>
-          </table>
+                    </tbody>
+                </table>
 
-      </div>
-      </div>
+            </div>
+        </div>
     </div>
     <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-11">
-        <div class="table-responsive">
-          <table class="table align-middle table-nowrap mb-0">
-              <tbody>
-                  <tr class="table-light">
-                     <td>
-                      1
-                     </td>
-                     <td>
-                      2
-                     </td>
-                     <td>
-                       4
-                     </td>
-                     <td>
-                      3
-                     </td>
-                  </tr>
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+            <div class="table-responsive">
+                <table class="table align-middle table-nowrap mb-0">
+                    <tbody>
+                        <tr class="table-light">
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                2
+                            </td>
+                            <td>
+                                4
+                            </td>
+                            <td>
+                                3
+                            </td>
+                        </tr>
 
-              </tbody>
-          </table>
+                    </tbody>
+                </table>
 
-      </div>
-      </div>
+            </div>
+        </div>
     </div>
     <div class="row">
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationStatus" class="mr-5">Status </label>
-          <input type="checkbox" id="validationStatus" formControlName="status" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationStatus" class="mr-5">Status </label>
+                <input type="checkbox" id="validationStatus" formControlName="status" />
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationOtherDetail">Other Details </label>
-          <textarea class="form-control" id="validationOtherDetail" formControlName="otherDetail"></textarea>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationOtherDetail">Other Details </label>
+                <textarea class="form-control" id="validationOtherDetail" formControlName="otherDetail"></textarea>
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationCardNo">Card No  </label>
-          <input type="text" class="form-control" id="validationCardNo" formControlName="cardNo" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationCardNo">Card No  </label>
+                <input type="text" class="form-control" id="validationCardNo" formControlName="cardNo" />
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationProxyNo">Proxy No </label>
-          <input type="text" class="form-control" id="validationProxyNo" formControlName="proxyNo" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationProxyNo">Proxy No </label>
+                <input type="text" class="form-control" id="validationProxyNo" formControlName="proxyNo" />
+            </div>
         </div>
-      </div>
     </div>
     <div class="row">
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationUserId">User Id</label>
-          <div class="d-flex">
-            <div class="custom-control custom-radio custom-control-inline mr-5">
-              <input type="radio" id="rdoUserId" checked name="rdoUserId" class="custom-control-input">
-              <label class="custom-control-label" for="rdoUserId"> Emp Code</label>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationUserId">User Id</label>
+                <div class="d-flex">
+                    <div class="custom-control custom-radio custom-control-inline mr-5">
+                        <input type="radio" id="rdoUserId" checked name="rdoUserId" class="custom-control-input">
+                        <label class="custom-control-label" for="rdoUserId"> Emp Code</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline mr-5">
+                        <input type="radio" id="rdoMobile" name="rdoUserId" class="custom-control-input">
+                        <label class="custom-control-label" for="rdoMobile"> Mobile No	</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="rdoOther" name="rdoUserId" class="custom-control-input" checked>
+                        <label class="custom-control-label" for="rdoOther">Others</label>
+                    </div>
+                </div>
+                <input type="text" class="form-control" id="validationUserId" formControlName="userId" />
             </div>
-            <div class="custom-control custom-radio custom-control-inline mr-5">
-              <input type="radio" id="rdoMobile" name="rdoUserId" class="custom-control-input">
-              <label class="custom-control-label" for="rdoMobile"> Mobile No	</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="rdoOther" name="rdoUserId" class="custom-control-input" checked>
-              <label class="custom-control-label" for="rdoOther">Others</label>
-            </div>
-          </div>
-          <input type="text" class="form-control" id="validationUserId" formControlName="userId" />
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationUserType" class="form-label">User Type</label>
-          <select class="form-select" id="validationUserType" formControlName="userType">
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationUserType" class="form-label">User Type</label>
+                <select class="form-select" id="validationUserType" formControlName="userType">
             <option selected="" disabled="" value="">Choose...</option>
             <option>...</option>
           </select>
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationPicture">Picture</label>
-          <input type="file" class="form-control" id="validationPicture" formControlName="picture" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationPicture">Picture</label>
+                <input type="file" class="form-control" id="validationPicture" formControlName="picture" />
+            </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="mb-3">
-          <label for="validationSignature">Signature</label>
-          <input type="file" class="form-control" id="validationSignature" formControlName="signature" />
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="validationSignature">Signature</label>
+                <input type="file" class="form-control" id="validationSignature" formControlName="signature" />
+            </div>
         </div>
-      </div>
     </div>
     <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-3">
-        <button type="submit" class="btn btn-primary mr-5">Save</button>
-        <button type="submit" class="btn btn-primary">Reset</button>
-      </div>
-      <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary mr-5">Save</button>
+            <button type="submit" class="btn btn-primary">Reset</button>
+        </div>
+        <div class="col-md-3"></div>
     </div>
-</div> <!-- container-fluid -->
+</div>
+<!-- container-fluid -->

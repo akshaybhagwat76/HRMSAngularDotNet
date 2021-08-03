@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { HttpClientService } from 'src/app/services/httpClient.service';
+
 import { MustMatch } from './validation.mustmatch';
 
 @Component({
@@ -17,8 +19,6 @@ export class ValidationComponent implements OnInit {
   tooltipvalidationform: FormGroup; // bootstrap tooltip validation form
   typeValidationForm: FormGroup; // type validation form
   rangeValidationForm: FormGroup; // range validation form
-
-  constructor(public formBuilder: FormBuilder) { }
   // bread crumb items
   breadCrumbItems: Array<{}>;
 
@@ -27,26 +27,137 @@ export class ValidationComponent implements OnInit {
   formsubmit: boolean;
   typesubmit: boolean;
   rangesubmit: boolean;
+  getCompanyData: any;
+  getZonesData: any;
+  getBranchesData: any;
+  getDesignationData: any;
+  getDepartmentData: any;
+
+  // companay get api cal
+  // https://pdfcoreattachment.azurewebsites.net/api/companies
+  getComapnyAPICall() {
+    try {
+
+      this._httpClient.get('companies', 'apiDevBaseUrl').subscribe((Result: any) => {
+        console.log('>>>>>>>>>>>>..', Result);
+
+        this.getCompanyData = Result;
+      },
+        err => {
+
+          console.error(err.error.m);
+        }
+      );
+    }
+    catch (err) {
+      console.error('Catch Error Called');
+    }
+  }
+  // department get api call
+  // https://pdfcoreattachment.azurewebsites.net/api/departments
+  getDepartmentAPICall() {
+    try {
+
+      this._httpClient.get('departments', 'apiDevBaseUrl').subscribe((Result: any) => {
+        console.log('>>>>>>>>>>>>..', Result);
+
+        this.getDepartmentData = Result;
+      },
+        err => {
+
+          console.error(err.error.m);
+        }
+      );
+    }
+    catch (err) {
+      console.error('Catch Error Called');
+    }
+  }
+  // designation get api call
+  // https://pdfcoreattachment.azurewebsites.net/api/designations
+  getDesignationAPICall() {
+    try {
+
+      this._httpClient.get('designations', 'apiDevBaseUrl').subscribe((Result: any) => {
+        console.log('>>>>>>>>>>>>..', Result);
+
+        this.getDesignationData = Result;
+      },
+        err => {
+
+          console.error(err.error.m);
+        }
+      );
+    }
+    catch (err) {
+      console.error('Catch Error Called');
+    }
+  }
+  // branches get api call
+  // https://pdfcoreattachment.azurewebsites.net/api/branches
+  getBranchesAPICall() {
+    try {
+
+      this._httpClient.get('branches', 'apiDevBaseUrl').subscribe((Result: any) => {
+        console.log('>>>>>>>>>>>>..', Result);
+
+        this.getBranchesData = Result;
+      },
+        err => {
+
+          console.error(err.error.m);
+        }
+      );
+    }
+    catch (err) {
+      console.error('Catch Error Called');
+    }
+  }
+  // branches get api call
+  // https://pdfcoreattachment.azurewebsites.net/api/zones
+  getZonesAPICall() {
+    try {
+
+      this._httpClient.get('zones', 'apiDevBaseUrl').subscribe((Result: any) => {
+        console.log('>>>>>>>>>>>>..', Result);
+
+        this.getZonesData = Result;
+      },
+        err => {
+
+          console.error(err.error.m);
+        }
+      );
+    }
+    catch (err) {
+      console.error('Catch Error Called');
+    }
+  }
+  constructor(public formBuilder: FormBuilder, private _httpClient: HttpClientService) { }
 
   ngOnInit() {
-
+    this.getComapnyAPICall();
+    this.getBranchesAPICall();
+    this.getDepartmentAPICall();
+    this.getDesignationAPICall();
+    this.getZonesAPICall();
     this.breadCrumbItems = [{ label: 'Forms' }, { label: 'Form Validation', active: true }];
 
     /**
      * Bootstrap validation form data
      */
     this.validationform = this.formBuilder.group({
-      company: ['', ],
-      zone: ['', ],
-      branch: ['', ],
-      department: ['', ],
-      designation: ['', ],
-      firstName: ['', ],
-      employeeCode: ['', ],
-      email: ['', ],
-      rdoAll: ['', ],
-      rdoInActive: ['', ],
-      rdoActive: ['', ],
+      company: ['',],
+      zone: ['',],
+      branch: ['',],
+      department: ['',],
+      designation: ['',],
+      firstName: ['',],
+      employeeCode: ['',],
+      email: ['',],
+      rdoAll: ['',],
+      rdoInActive: ['',],
+      rdoActive: ['',],
     });
 
     /**
@@ -75,8 +186,8 @@ export class ValidationComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmpwd: ['', Validators.required]
     }, {
-        validator: MustMatch('password', 'confirmpwd'),
-      });
+      validator: MustMatch('password', 'confirmpwd'),
+    });
 
 
     /**

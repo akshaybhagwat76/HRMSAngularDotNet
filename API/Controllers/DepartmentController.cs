@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Dtos;
-using API.Errors;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
-using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

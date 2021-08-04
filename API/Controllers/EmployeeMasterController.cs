@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using API.Helpers;
@@ -32,7 +30,6 @@ namespace API.Controllers
             _mapper = mapper;
         }
         #endregion
-
 
         #region Add new employeemaster
         [HttpPost("AddEmployeeMaster")]
@@ -215,7 +212,6 @@ namespace API.Controllers
         }
         #endregion
 
-
         #region Add new nominee
 
         [NonAction]
@@ -318,7 +314,6 @@ namespace API.Controllers
         }
         #endregion
 
-
         #region Add new IdentityProof
         [NonAction]
         public async Task<ActionResult<Sys_Identity_ProofDto>> AddIdentityProofAsync(Sys_Identity_ProofDto identityProofDto)
@@ -351,8 +346,5 @@ namespace API.Controllers
 
 
         #endregion
-
-
-
     }
 }

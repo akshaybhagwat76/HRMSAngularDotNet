@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -52,9 +50,9 @@ namespace API.Controllers
         {
             try
             {
-                var permanentContactInformation  = await _unitOfWork.Repository<Sys_CorresspondanceContactInformation>().GetByIdAsync(Id);
-                if (permanentContactInformation == null) return NotFound(new ApiResponse(404));
-                return _mapper.Map<Sys_CorresspondanceContactInformation, Sys_CorresspondanceContactInformationDto>(permanentContactInformation);
+                var CorresspondanceContactInformation = await _unitOfWork.Repository<Sys_CorresspondanceContactInformation>().GetByIdAsync(Id);
+                if (CorresspondanceContactInformation == null) return NotFound(new ApiResponse(404));
+                return _mapper.Map<Sys_CorresspondanceContactInformation, Sys_CorresspondanceContactInformationDto>(CorresspondanceContactInformation);
             }
             catch (Exception exception)
             {
@@ -64,7 +62,7 @@ namespace API.Controllers
 
         #endregion
 
-        #region Add new employee
+        #region Add new corresspondance contactInformation
         [HttpPost("AddCorresspondanceContactInformation")]
         public async Task<ActionResult<Sys_CorresspondanceContactInformationDto>> AddPermanentContactInformationAsync(Sys_CorresspondanceContactInformationDto familyDetailsDto)
         {

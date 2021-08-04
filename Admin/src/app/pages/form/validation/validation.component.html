@@ -18,7 +18,7 @@
                   <label for="validationCompany" class="form-label">Company</label>
                   <select class="form-select" id="validationCompany" formControlName="company">
                     <option selected="" disabled="" value="">Choose...</option>
-                    <option>...</option>
+                    <option *ngFor="let item of getCompanyData" [value]="item.compnay_Name">{{item.compnay_Name}}</option>
                   </select>
                 </div>
               </div>
@@ -27,7 +27,7 @@
                   <label for="validationZone" class="form-label">Zone</label>
                   <select class="form-select" id="validationZone" formControlName="zone">
                     <option selected="" disabled="" value="">Choose...</option>
-                    <option>...</option>
+                    <option *ngFor="let item of getZonesData" [value]="item.zone_Name">{{item.zone_Name}}</option>
                   </select>
                 </div>
               </div>
@@ -36,7 +36,7 @@
                   <label for="validationBranch" class="form-label">Branch</label>
                   <select class="form-select" id="validationBranch" formControlName="branch">
                     <option selected="" disabled="" value="">Choose...</option>
-                    <option>...</option>
+                    <option *ngFor="let item of getBranchesData" [value]="item.branch_Name">{{item.branch_Name}}</option>
                   </select>
                 </div>
               </div>
@@ -45,7 +45,8 @@
                   <label for="validationDepartment" class="form-label">Department</label>
                   <select class="form-select" id="validationDepartment" formControlName="department">
                     <option selected="" disabled="" value="">Choose...</option>
-                    <option>...</option>
+                    
+                    <option *ngFor="let item of getDepartmentData" [value]="item.department_Name">{{item.department_Name}}</option>
                   </select>
                 </div>
               </div>
@@ -56,8 +57,9 @@
                   <label for="validationDesignation" class="form-label">Designation</label>
                   <select class="form-select" id="validationDesignation" formControlName="designation">
                     <option selected="" disabled="" value="">Choose...</option>
-                    <option>...</option>
+                    <option *ngFor="let item of getDesignationData" [value]="item.designation_Name">{{item.designation_Name}}</option>
                   </select>
+                  {{getDesignationData.branch_Name}}
                 </div>
               </div>
               <div class="col-md-3">

@@ -27,7 +27,6 @@ namespace API.Controllers
         }
         #endregion
 
-
         #region Get Methods
         [HttpGet("GetEmployee")]
         public async Task<ActionResult<List<Tbl_HR_EmployeeDto>>> GetEmployeeAsync()

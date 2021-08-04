@@ -41,6 +41,8 @@ namespace Infrastructure.Data
         public DbSet<Sys_FamilyDetails> Sys_FamilyDetails { get; set; }
         public DbSet<Sys_PermanentContactInformation> Sys_PermanentContactInformation { get; set; }
         public DbSet<Sys_MaritalStatus> Sys_MaritalStatus { get; set; }
+        public DbSet<Sys_EmployeeMaster> Sys_EmployeeMaster { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

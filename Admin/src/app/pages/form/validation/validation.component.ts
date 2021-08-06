@@ -155,9 +155,7 @@ export class ValidationComponent implements OnInit {
       firstName: ['',],
       employeeCode: ['',],
       email: ['',],
-      rdoAll: ['',],
-      rdoInActive: ['',],
-      rdoActive: ['',],
+      status: ['0'],
     });
 
     /**

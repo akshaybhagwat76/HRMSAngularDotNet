@@ -37,7 +37,7 @@ import { LoaderService } from '../core/services/loader.service';
 import { LoaderInterceptorService } from '../core/services/interceptors/loader-interceptor.service';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin
-import bootstrapPlugin from "@fullcalendar/bootstrap";
+import bootstrapPlugin from '@fullcalendar/bootstrap';
 import { FilemanagerComponent } from './filemanager/filemanager.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins

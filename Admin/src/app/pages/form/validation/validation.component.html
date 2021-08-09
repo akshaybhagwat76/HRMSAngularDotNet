@@ -11,14 +11,16 @@
           <h4 class="card-title">Search Employee</h4>
           <!-- <p class="card-title-desc">Provide valuable, actionable feedback to your users with HTML5 form
             validation–available in all our supported browsers.</p> -->
-          <form class="needs-validation" (ngSubmit)="validSubmit()" [formGroup]="validationform">
+          <form class="needs-validation"  #f="ngForm" (ngSubmit)="validSubmit(f)"  >
             <div class="row">
               <div class="col-md-3">
                 <div class="mb-3">
                   <label for="validationCompany" class="form-label">Company</label>
-                  <select class="form-select" id="validationCompany" formControlName="company">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let item of getCompanyData" [value]="item.compnay_Name">{{item.compnay_Name}}
+                  <select  (change)="selectChangeHandler($event)" class="form-select"  id="validationCompany" name="company"  #pllp,ppopopo="ngModel" ngModel
+                  name="company" >
+                    <!-- <option selected="" disabled="" value="">Choose...</option> -->
+                    <option *ngFor="let company of companies" [value]="company.compnay_Name">
+                      {{company?.compnay_Name}}
                     </option>
                   </select>
                 </div>
@@ -27,8 +29,10 @@
                 <div class="mb-3">
                   <label for="validationZone" class="form-label">Zone</label>
                   <select class="form-select" id="validationZone" formControlName="zone">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let item of getZonesData" [value]="item.zone_Name">{{item.zone_Name}}</option>
+                    <!-- <option selected="" disabled="" value="">Choose...</option> -->
+                    <option *ngFor="let zone of zones" [value]="zone.id" name="zone">
+                      {{zone?.zone_Name}}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -36,8 +40,9 @@
                 <div class="mb-3">
                   <label for="validationBranch" class="form-label">Branch</label>
                   <select class="form-select" id="validationBranch" formControlName="branch">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let item of getBranchesData" [value]="item.branch_Name">{{item.branch_Name}}
+                    <!-- <option selected="" disabled="" value="">Choose...</option> -->
+                    <option *ngFor="let branch of branches" [value]="branch.id">
+                      {{branch?.branch_Name}}
                     </option>
                   </select>
                 </div>
@@ -46,10 +51,10 @@
                 <div class="mb-3">
                   <label for="validationDepartment" class="form-label">Department</label>
                   <select class="form-select" id="validationDepartment" formControlName="department">
-                    <option selected="" disabled="" value="">Choose...</option>
-
-                    <option *ngFor="let item of getDepartmentData" [value]="item.department_Name">
-                      {{item.department_Name}}</option>
+                    <!-- <option selected="" disabled="" value="">Choose...</option> -->
+                    <option *ngFor="let depart of departments" [value]="depart.id">
+                      {{depart?.department_Name}}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -59,9 +64,10 @@
                 <div class="mb-3">
                   <label for="validationDesignation" class="form-label">Designation</label>
                   <select class="form-select" id="validationDesignation" formControlName="designation">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let item of getDesignationData" [value]="item.designation_Name">
-                      {{item.designation_Name}}</option>
+                    <!-- <option selected="" disabled="" value="">Choose...</option> -->
+                    <option *ngFor="let designation of designations" [value]="designation.id">
+                      {{designation?.designation_Name}}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -94,17 +100,17 @@
                   <div class="d-flex">
 
                     <div class="custom-control custom-radio custom-control-inline mr-4">
-                      <input type="radio"  formControlName="status"
-                        class="custom-control-input" id="rdoAadharStatusNominee" value=0>
+                      <input type="radio" id="rdoAll" name="rdoAll"
+                        class="custom-control-input">
                       <label class="custom-control-label" for="rdoAadharStatusNominee">All</label>
-                    </div> &nbsp;
+                    </div>
                     <div class="custom-control custom-radio custom-control-inline mr-4">
-                      <input type="radio"value=1 formControlName="status"
-                        class="custom-control-input" id="rdoInActive">
+                      <input type="radio" id="rdoInActive" name="rdoAll"  
+                        class="custom-control-input">
                       <label class="custom-control-label" for="rdoInActive">In Active</label>
-                    </div>&nbsp;
+                    </div>
                     <div class="custom-control custom-radio custom-control-inline mr-4">
-                      <input type="radio" id="rdoActive"  value=2 formControlName="status"
+                      <input type="radio" id="rdoActive" name="rdoAll"  
                         class="custom-control-input">
                       <label class="custom-control-label" for="rdoActive">Active</label>
                     </div>
@@ -112,10 +118,10 @@
                 </div>
               </div>
             </div>
-            <div>
-              <button class="btn btn-primary" type="submit">Search</button>&nbsp;
-              <button class="btn btn-primary" type="submit">Reset</button>
-            </div>
+          <div>
+            <button class="btn btn-primary" type="submit">Search</button>
+            <button class="btn btn-primary" type="submit">Reset</button>
+          </div>
           </form>
         </div>
       </div>
@@ -124,58 +130,58 @@
   </div>
   <div class="row">
     <div class="col-lg-12">
-      <div class="table-responsive mb-0">
-        <table class="table table-centered table-nowrap">
-          <thead class="table-light">
-            <tr>
-              <th class="align-middle">SI. No.</th>
-              <th class="align-middle">Company</th>
-              <th class="align-middle">Employee Type</th>
-              <th class="align-middle">Employee Code</th>
-              <th class="align-middle">Name</th>
-              <th class="align-middle">Address</th>
-              <th class="align-middle">Department</th>
-              <th class="align-middle">Designation</th>
-              <th class="align-middle">Email Id</th>
-              <th class="align-middle">Contact No.</th>
-              <th class="align-middle">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Company 1</td>
-              <td>Full Time</td>
-              <td>NTR195</td>
-              <td>Address 1</td>
-              <td>FINANCE & ACCOUNTING</td>
-              <td>abc@gmail.com</td>
-              <td>123456789</td>
-              <td>
-                <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
-                <a href="#"><i class="mdi-alpha-i-circle"></i></a>
-                <a href="#" class="text-danger"><i class="mdi mdi-close"></i></a>
-              </td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>Company 1</td>
-              <td>Full Time</td>
-              <td>NTR195</td>
-              <td>Address 1</td>
-              <td>FINANCE & ACCOUNTING</td>
-              <td>abc@gmail.com</td>
-              <td>123456789</td>
-              <td>
-                <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
-                <a href="#"><i class="mdi-alpha-i-circle"></i></a>
-                <a href="#" class="text-danger"><i class="mdi mdi-close"></i></a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- end table -->
-    </div>
+          <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th class="align-middle">SI. No.</th>
+                  <th class="align-middle">Company</th>
+                  <th class="align-middle">Employee Type</th>
+                  <th class="align-middle">Employee Code</th>
+                  <th class="align-middle">Name</th>
+                  <th class="align-middle">Address</th>
+                  <th class="align-middle">Department</th>
+                  <th class="align-middle">Designation</th>
+                  <th class="align-middle">Email Id</th>
+                  <th class="align-middle">Contact No.</th>
+                  <th class="align-middle">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Company 1</td>
+                  <td>Full Time</td>
+                  <td>NTR195</td>
+                  <td>Address 1</td>
+                  <td>FINANCE & ACCOUNTING</td>
+                  <td>abc@gmail.com</td>
+                  <td>123456789</td>
+                  <td> 
+                    <a href="#"><i class="mdi mdi-lead-pencil"></i></a> 
+                    <a href="#"><i class="mdi-alpha-i-circle"></i></a> 
+                    <a href="#" class="text-danger"><i class="mdi mdi-close"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Company 1</td>
+                  <td>Full Time</td>
+                  <td>NTR195</td>
+                  <td>Address 1</td>
+                  <td>FINANCE & ACCOUNTING</td>
+                  <td>abc@gmail.com</td>
+                  <td>123456789</td>
+                  <td> 
+                    <a href="#"><i class="mdi mdi-lead-pencil"></i></a> 
+                    <a href="#"><i class="mdi-alpha-i-circle"></i></a> 
+                    <a href="#" class="text-danger"><i class="mdi mdi-close"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- end table -->
+        </div>
   </div>
 </div>

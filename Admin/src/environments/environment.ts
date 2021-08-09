@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  url: 'https://pdfcoreattachment.azurewebsites.net',
+  // url: 'https://pdfcoreattachment.azurewebsites.net',
+  url: 'http://localhost:64156',
+
   production: false,
   defaultauth: 'firebase',
   firebaseConfig: {

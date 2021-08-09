@@ -70,11 +70,14 @@ import {
 import {
   EmployeesService
 } from 'src/app/core/services/employees.service';
+import { HigherAuthoritiesBranchesService } from 'src/app/core/services/higher-authorities-branches.service';
+import { ThirdpartyService } from 'src/app/core/services/thirdparty.service';
+import { MeritalstatusService } from 'src/app/core/services/meritalstatus.service';
 
 
 
 @Component({
-  moduleId:"",
+  moduleId: "",
   selector: 'app-default',
   templateUrl: './default.component.html',
   styleUrls: ['./default.component.scss']
@@ -95,9 +98,11 @@ export class DefaultComponent implements OnInit {
     private departmentsService: DepartmentsService,
     private workingStatusService: WorkingStatusService,
     private categoryEmpsService: CategoryEmpsService,
+    private higherAuthoritiesBranchesService: HigherAuthoritiesBranchesService,
     private typeEmpsService: TypeEmpsService,
     private higherAuthorityService: HigherAuthorityService,
     private thirdPartyTypeService: ThirdPartyTypeService,
+    private thirdPartyService: ThirdpartyService,
     private higherAuthorityNameService: HigherAuthorityNameService,
     private castService: CastService,
     private bloodGroupService: BloodGroupService,
@@ -106,6 +111,7 @@ export class DefaultComponent implements OnInit {
     private relationshipService: RelationshipService,
     private userTypeService: UserTypeService,
     private employesService: EmployeesService,
+    private meritalstatusService: MeritalstatusService,
   ) { }
   companies: any;
   branches: any;
@@ -115,63 +121,25 @@ export class DefaultComponent implements OnInit {
   categories: any;
   typiesEmp: any;
   higherAuthorities: any;
+  higherAuthoritiesBranches: any;
+
+  thirdPartyName: any;
   thirdParty: any;
+  thirdPartyType: any;
+
+
   higherAuthorityNames: any;
   casts: any;
   bloodGroup: any;
   states: any;
   zones: any;
+  countryZones: any [] =[];
+  corresspondCountryZone: any [] =[];
   relationShip: any;
   userType: any;
   employees: any;
-  forCompany() {
-    this.companyService.getAll().subscribe(data => {
-      console.log(data);
-      this.companies = data;
-    });
-  }
-  forBranch() {
-    this.branchesService.getAll().subscribe(data => {
-      console.log(data);
-      this.branches = data;
-    });
-  }
-  forCountries() {
-    this.contriesService.getAll().subscribe(data => {
-      console.log(data);
-      this.contries = data;
-    });
-  }
-  forDepartments() {
-    this.departmentsService.getAll().subscribe(data => {
-      console.log(data);
-      this.departments = data;
-    });
-  }
-  forWorkingStatus() {
-    this.workingStatusService.getAll().subscribe(data => {
-      console.log(data);
-      this.workingStatus = data;
-    });
-  }
-  forCategories() {
-    this.categoryEmpsService.getAll().subscribe(data => {
-      console.log(data);
-      this.categories = data;
-    });
-  }
-  fortypiesEmp() {
-    this.typeEmpsService.getAll().subscribe(data => {
-      console.log(data);
-      this.typiesEmp = data;
-    });
-  }
-  forHigherAuthorityNames() {
-    this.higherAuthorityNameService.getAll().subscribe(data => {
-      console.log(data);
-      this.departments = data;
-    });
-  }
+  meritalStatuses:any;
+ 
   private fetchData() {
     const companies = this.companyService.getAll();
     const branches = this.branchesService.getAll();
@@ -182,7 +150,11 @@ export class DefaultComponent implements OnInit {
     const typesEmp = this.typeEmpsService.getAll();
     const higherAuthority = this.higherAuthorityService.getAll();
     const higherAuthorityName = this.higherAuthorityNameService.getAll();
+    const higherAuthoritesBranches = this.higherAuthoritiesBranchesService.getAll();
+
     const thirdPartyType = this.thirdPartyTypeService.getAll();
+    const thirdParty = this.thirdPartyService.getAll();
+
     const cast = this.castService.getAll();
     const bloodGroup = this.bloodGroupService.getAll();
     const state = this.stateService.getAll();
@@ -190,12 +162,12 @@ export class DefaultComponent implements OnInit {
     const relationship = this.relationshipService.getAll();
     const userType = this.userTypeService.getAll();
     const employees = this.employesService.getAll();
+    const merital = this.meritalstatusService.getAll();
     forkJoin([companies, branches, contries, departments, workingStatus, categories,
-      typesEmp, higherAuthority, higherAuthorityName, thirdPartyType, cast, bloodGroup,
-      state, zones, relationship, userType, employees
+      typesEmp, higherAuthority, higherAuthorityName, thirdPartyType, cast,
+      state, zones, relationship, userType, employees, higherAuthoritesBranches, thirdParty,cast,bloodGroup,merital
     ]).subscribe(result => {
       this.companies = result[0];
-      debugger
       this.branches = result[1];
       this.contries = result[2];
       this.departments = result[3];
@@ -204,14 +176,19 @@ export class DefaultComponent implements OnInit {
       this.typiesEmp = result[6];
       this.higherAuthorities = result[7];
       this.higherAuthorityNames = result[8];
-      this.thirdParty = result[9];
+      this.thirdPartyType = result[9];
       this.casts = result[10];
-      this.bloodGroup = result[11];
-      this.states = result[12];
-      this.zones = result[13];
-      this.relationShip = result[14];
-      this.userType = result[15];
-      this.employees = result[16];
+      this.states = result[11];
+      this.zones = result[12];
+      this.relationShip = result[13];
+      this.userType = result[14];
+      this.employees = result[15];
+      this.higherAuthoritiesBranches = result[16];
+      this.thirdParty = result[17];
+      this.casts= result[18];
+      this.bloodGroup = result[19]; 
+      this.meritalStatuses =result[20];  
+      debugger  
     });
 
     //this.employees = employees;
@@ -340,5 +317,70 @@ export class DefaultComponent implements OnInit {
     console.log(this.validationform.value);
     debugger
     alert('test event');
+  }
+
+  forCompany() {
+    this.companyService.getAll().subscribe(data => {
+      console.log(data);
+      this.companies = data;
+    });
+  }
+  forBranch() {
+    this.branchesService.getAll().subscribe(data => {
+      console.log(data);
+      this.branches = data;
+    });
+  }
+  forCountries() {
+    this.contriesService.getAll().subscribe(data => {
+      console.log(data);
+      this.contries = data;
+    });
+  }
+  forDepartments() {
+    this.departmentsService.getAll().subscribe(data => {
+      console.log(data);
+      this.departments = data;
+    });
+  }
+  forWorkingStatus() {
+    this.workingStatusService.getAll().subscribe(data => {
+      console.log(data);
+      this.workingStatus = data;
+    });
+  }
+  forCategories() {
+    this.categoryEmpsService.getAll().subscribe(data => {
+      console.log(data);
+      this.categories = data;
+    });
+  }
+  fortypiesEmp() {
+    this.typeEmpsService.getAll().subscribe(data => {
+      console.log(data);
+      this.typiesEmp = data;
+    });
+  }
+  forHigherAuthorityNames() {
+    this.higherAuthorityNameService.getAll().subscribe(data => {
+      console.log(data);
+      this.departments = data;
+    });
+  }
+  forHigherAuthoritiesBranches() {
+    this.higherAuthoritiesBranchesService.getAll().subscribe(data => {
+      console.log(data);
+      this.higherAuthoritiesBranches = data;
+    });
+  }
+
+  onOptionsSelected(event){
+    const value = event.target.value;
+     this.countryZones = this.zones.filter(x=>x.country_Id == value);
+  }
+  OptionsSelected(event){
+    debugger;
+    const value = event.target.value;
+     this.corresspondCountryZone = this.zones.filter(x=>x.country_Id == value);
   }
 }

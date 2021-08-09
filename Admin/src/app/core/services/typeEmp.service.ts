@@ -8,6 +8,6 @@ import {environment} from "../../../environments/environment";
 export class TypeEmpsService {
     constructor(private http: HttpClient) { }
     getAll() {
-        return this.http.get<TypeEmp[]>(`${environment.url}/api/typies`);
+        return this.http.get<TypeEmp[]>(`${environment.url}/api/types`);
     }
 }

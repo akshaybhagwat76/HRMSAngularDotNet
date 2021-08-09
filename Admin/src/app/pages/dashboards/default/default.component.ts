@@ -74,6 +74,7 @@ import {
 
 
 @Component({
+  moduleId:"",
   selector: 'app-default',
   templateUrl: './default.component.html',
   styleUrls: ['./default.component.scss']
@@ -105,7 +106,7 @@ export class DefaultComponent implements OnInit {
     private relationshipService: RelationshipService,
     private userTypeService: UserTypeService,
     private employesService: EmployeesService,
-  ) {}
+  ) { }
   companies: any;
   branches: any;
   contries: any;
@@ -141,34 +142,34 @@ export class DefaultComponent implements OnInit {
       this.contries = data;
     });
   }
-  forDepartments(){
-    this.departmentsService.getAll().subscribe(data =>{
+  forDepartments() {
+    this.departmentsService.getAll().subscribe(data => {
       console.log(data);
-      this.departments=data;
+      this.departments = data;
     });
   }
-  forWorkingStatus(){
-    this.workingStatusService.getAll().subscribe(data =>{
+  forWorkingStatus() {
+    this.workingStatusService.getAll().subscribe(data => {
       console.log(data);
-      this.workingStatus=data;
+      this.workingStatus = data;
     });
   }
-  forCategories(){
-    this.categoryEmpsService.getAll().subscribe(data =>{
+  forCategories() {
+    this.categoryEmpsService.getAll().subscribe(data => {
       console.log(data);
-      this.categories=data;
+      this.categories = data;
     });
   }
-  fortypiesEmp(){
-    this.typeEmpsService.getAll().subscribe(data =>{
+  fortypiesEmp() {
+    this.typeEmpsService.getAll().subscribe(data => {
       console.log(data);
-      this.typiesEmp=data;
+      this.typiesEmp = data;
     });
   }
-  forHigherAuthorityNames(){
-    this.higherAuthorityNameService.getAll().subscribe(data =>{
+  forHigherAuthorityNames() {
+    this.higherAuthorityNameService.getAll().subscribe(data => {
       console.log(data);
-      this.departments=data;
+      this.departments = data;
     });
   }
   private fetchData() {
@@ -312,7 +313,7 @@ export class DefaultComponent implements OnInit {
   /**
    * Fetches the data
    */
-  
+
   // openModal() {
   //   this.modalService.open(this.content, { centered: true });
   // }

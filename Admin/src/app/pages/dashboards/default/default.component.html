@@ -25,29 +25,29 @@
                                 <div class="mb-3">
                                     <label for="validationCustom04" class="form-label">Company<span class="text-danger">*</span></label>
                                     <select class="form-select" id="validationCustom01">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let company of companies" [value]="company.id">
-                      {{company?.compnay_Name}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let company of companies" [value]="company.id">
+                {{company?.compnay_Name}}
+            </option>
+            </select>
                                     <!-- <div *ngIf="submit && form.company.errors" class="invalid-feedback">
-                    <span *ngIf="form.company.errors.required">Please provide a valid company.</span>
-                  </div> -->
+            <span *ngIf="form.company.errors.required">Please provide a valid company.</span>
+            </div> -->
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="validationCustom04" class="form-label">Employee Category<span
-                      class="text-danger">*</span></label>
+                class="text-danger">*</span></label>
                                     <select class="form-select" id="validationCustom02">
-                                       <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let category of categories" [value]="category.id">
-                      {{category?.category_Name}}
-                    </option>
-                  </select>
+                                <option >Choose...</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+                {{category?.category_Name}}
+            </option>
+            </select>
                                     <!-- <div *ngIf="submit && form.category.errors" class="invalid-feedback">
-                    <span *ngIf="form.category.errors.required">Please provide a valid category.</span>
-                  </div> -->
+            <span *ngIf="form.category.errors.required">Please provide a valid category.</span>
+            </div> -->
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -55,8 +55,8 @@
                                     <label for="validationCustom03">Employee Code<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="validationCustom03" placeholder="Employee Code">
                                     <!-- <div *ngIf="submit && form.employeeCode.errors" class="invalid-feedback">
-                    <span *ngIf="form.employeeCode.errors.required">Please provide a valid employee code.</span>
-                  </div> -->
+            <span *ngIf="form.employeeCode.errors.required">Please provide a valid employee code.</span>
+            </div> -->
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -72,8 +72,8 @@
                                     <label for="validationCustom05">First Name<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="validationCustom05" placeholder="First Name">
                                     <!-- <div *ngIf="submit && form.firstName.errors" class="invalid-feedback">
-                    <span *ngIf="form.firstName.errors.required">Please provide a valid First Name.</span>
-                  </div> -->
+            <span *ngIf="form.firstName.errors.required">Please provide a valid First Name.</span>
+            </div> -->
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -87,55 +87,54 @@
                                     <label for="validationCustom07">Last Name<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="validationCustom07" placeholder="Last Name">
                                     <!-- <div *ngIf="submit && form.lastName.errors" class="invalid-feedback">
-                    <span *ngIf="form.lastName.errors.required">Please provide a valid Last Name.</span>
-                  </div> -->
+            <span *ngIf="form.lastName.errors.required">Please provide a valid Last Name.</span>
+            </div> -->
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="validationCustom08" class="form-label">Department<span
-                      class="text-danger">*</span></label>
+                class="text-danger">*</span></label>
                                     <select class="form-select" id="validationCustom08">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let depart of departments" [value]="depart.id">
-                      {{depart?.department_Name}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let depart of departments" [value]="depart.id">
+                {{depart?.department_Name}}
+            </option>
+            </select>
                                     <!-- <div *ngIf="submit && form.department.errors" class="invalid-feedback">
-                    <span *ngIf="form.department.errors.required">Please provide a valid department.</span>
-                  </div> -->
+            <span *ngIf="form.department.errors.required">Please provide a valid department.</span>
+            </div> -->
                                 </div>
                             </div>
 
                         </div>
                         <div class="row">
-
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="validationCustom09" class="form-label">Project/Branch<span
-                      class="text-danger">*</span></label>
+                class="text-danger">*</span></label>
                                     <select class="form-select" id="validationCustom09">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let branch of branches" [value]="branch.id">
-                      {{branch?.branch_Name}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let branch of branches" [value]="branch.id">
+                {{branch?.branch_Name}}
+            </option>
+            </select>
                                     <!-- <div *ngIf="submit && form.project.errors" class="invalid-feedback">
-                    <span *ngIf="form.project.errors.required">Please provide a valid project/branch.</span>
-                  </div> -->
+            <span *ngIf="form.project.errors.required">Please provide a valid project/branch.</span>
+            </div> -->
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="validationCustom10" class="form-label">Higher Authority Branch/Project<span
-                      class="text-danger">*</span></label>
+                class="text-danger">*</span></label>
                                     <select class="form-select" id="validationCustom10">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let hBranches of higherAuthoritiesBranches" [value]="hBranches.id">
-                      {{hBranches?.higherAuthority_Branch}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let hBranches of higherAuthoritiesBranches" [value]="hBranches.id">
+                {{hBranches?.higherAuthority_Branch}}
+            </option>
+            </select>
                                 </div>
                             </div>
 
@@ -143,22 +142,22 @@
                                 <div class="mb-3">
                                     <label for="validationCustom11" class="form-label">Higher Authority</label>
                                     <select class="form-select" id="validationCustom11">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let higherAuthority of higherAuthorities" [value]="higherAuthority.id">
-                      {{higherAuthority?.higherAuthority}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let higherAuthority of higherAuthorities" [value]="higherAuthority.id">
+                {{higherAuthority?.higherAuthority}}
+            </option>
+            </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="validationCustom12" class="form-label">Select Higher Authority Name</label>
                                     <select class="form-select" id="validationCustom12">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let higherAuthorityN of higherAuthorityNames" [value]="higherAuthorityN.id">
-                      {{higherAuthorityN?.higherAuthority_Name}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let higherAuthorityN of higherAuthorityNames" [value]="higherAuthorityN.id">
+                {{higherAuthorityN?.higherAuthority_Name}}
+            </option>
+            </select>
                                 </div>
                             </div>
                         </div>
@@ -181,16 +180,16 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="validationCustom15" class="form-label">Employee Type<span
-                      class="text-danger">*</span></label>
+                class="text-danger">*</span></label>
                                     <select class="form-select" id="validationCustom15">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let employee of employees" [value]="employee.id">
-                      {{employee?.type_Name}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let employee of employees" [value]="employee.id">
+                {{employee?.type_Name}}
+            </option>
+            </select>
                                     <!-- <div *ngIf="submit && form.employeeType.errors" class="invalid-feedback">
-                    <span *ngIf="form.employeeType.errors.required">Please provide a valid employee type.</span>
-                  </div> -->
+            <span *ngIf="form.employeeType.errors.required">Please provide a valid employee type.</span>
+            </div> -->
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -198,8 +197,8 @@
                                     <label for="validationCustom16">Mobile No</label>
                                     <input type="text" class="form-control" id="validationCustom16" placeholder="Mobile No">
                                     <!-- <div *ngIf="submit && form.mobileNo.errors" class="invalid-feedback">
-                    <span *ngIf="form.mobileNo.errors.required">Please provide a valid Mobile No.</span>
-                  </div> -->
+            <span *ngIf="form.mobileNo.errors.required">Please provide a valid Mobile No.</span>
+            </div> -->
                                 </div>
                             </div>
                         </div>
@@ -208,11 +207,11 @@
                                 <div class="mb-3">
                                     <label for="validationCustom17" class="form-label">Third Party Type</label>
                                     <select class="form-select" id="validationCustom17">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let tPartyType of thirdPartyType" [value]="tPartyType.id">
-                      {{tPartyType?.thirdPartyType_Name}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let tPartyType of thirdPartyType" [value]="tPartyType.id">
+                {{tPartyType?.thirdPartyType_Name}}
+            </option>
+            </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -220,11 +219,11 @@
 
                                     <label for="validationCustom18" class="form-label">Third Party</label>
                                     <select class="form-select" id="validationCustom18">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let tParty of thirdParty" [value]="tParty.id">
-                      {{tParty?.thirdParty_Name}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let tParty of thirdParty" [value]="tParty.id">
+                {{tParty?.thirdParty_Name}}
+            </option>
+            </select>
 
                                 </div>
                             </div>
@@ -232,11 +231,11 @@
                                 <div class="mb-3">
                                     <label for="validationCustom19" class="form-label">Working Status</label>
                                     <select class="form-select" id="validationCustom19">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let workingStatus of workingStatus" [value]="workingStatus.id">
-                      {{workingStatus?.workingStatus_Name}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let workingStatus of workingStatus" [value]="workingStatus.id">
+                {{workingStatus?.workingStatus_Name}}
+            </option>
+            </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -300,8 +299,8 @@
                                     <label for="validationCustom24">Nationality<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="validationCustom24" placeholder="Nationality">
                                     <!-- <div *ngIf="submit && form.nationality.errors" class="invalid-feedback">
-                    <span *ngIf="form.nationality.errors.required">Please provide a valid Nationality.</span>
-                  </div> -->
+            <span *ngIf="form.nationality.errors.required">Please provide a valid Nationality.</span>
+            </div> -->
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -309,8 +308,8 @@
                                     <label for="validationCustom25">Religion<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="validationCustom25" placeholder="Religion">
                                     <!-- <div *ngIf="submit && form.religion.errors" class="invalid-feedback">
-                    <span *ngIf="form.religion.errors.required">Please provide a valid Religion.</span>
-                  </div> -->
+            <span *ngIf="form.religion.errors.required">Please provide a valid Religion.</span>
+            </div> -->
                                 </div>
                             </div>
                         </div>
@@ -319,11 +318,11 @@
                                 <div class="mb-3">
                                     <label for="validationCustom26" class="form-label">Cast</label>
                                     <select class="form-select" id="validationCustom26">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let tcast of casts" [value]="tcast.id">
-                      {{tcast.cast_Name}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let tcast of casts" [value]="tcast.id">
+                {{tcast.cast_Name}}
+            </option>
+            </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -346,23 +345,23 @@
                                 <div class="mb-3">
                                     <label for="validationCustom28" class="form-label">Blood Group</label>
                                     <select class="form-select" id="validationCustom28">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let blood of bloodGroup" [value]="blood.id">{{blood.bloodGroup_Name}}</option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let blood of bloodGroup" [value]="blood.id">{{blood.bloodGroup_Name}}</option>
+            </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="validationCustom34" class="form-label">Marital Status<span
-                      class="text-danger">*</span></label>
+                class="text-danger">*</span></label>
                                     <select class="form-select" id="validationCustom34">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let meritalS of meritalStatuses" [value]="meritalS.id">{{meritalS.marital_Status}}
-                    </option>
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let meritalS of meritalStatuses" [value]="meritalS.id">{{meritalS.marital_Status}}
+            </option>
+            </select>
                                     <!-- <div *ngIf="submit && form.maritalStatus.errors" class="invalid-feedback">
-                    <span *ngIf="form.maritalStatus.errors.required">Please provide a valid Marital Status.</span>
-                  </div> -->
+            <span *ngIf="form.maritalStatus.errors.required">Please provide a valid Marital Status.</span>
+            </div> -->
                                 </div>
                             </div>
                         </div>
@@ -389,11 +388,11 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="validationCustom29" class="form-label">Relationship<span
-                      class="text-danger">*</span></label>
+                class="text-danger">*</span></label>
                                     <select class="form-select" id="validationCustom29">
-                    <option selected="" disabled="" value="">Choose...</option>
-                  <option *ngFor="let relation of relationShip" [value]="relation.id">{{relation.relationShip_Name}}
-                  </select>
+            <option >Choose...</option>
+            <option *ngFor="let relation of relationShip" [value]="relation.id">{{relation.relationShip_Name}}
+            </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -476,10 +475,10 @@
                                 <div class="mb-3">
                                     <label for="validationRelation" class="form-label">Relationship</label>
                                     <select class="form-select" id="validationRelation">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let relationS of relationShip" [value]="relationS.id">{{relationS.relationShip_Name}}
+            <option >Choose...</option>
+            <option *ngFor="let relationS of relationShip" [value]="relationS.id">{{relationS.relationShip_Name}}
 
-                  </select>
+            </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -551,16 +550,16 @@
                         <div class="mb-3">
                             <label for="validationCountry" class="form-label">Highest Qualification<span class="text-danger">*</span></label>
                             <select class="form-select" id="validationCountry" (change)="onOptionsSelected($event)">
-                      <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                    </select>
+                <option >Choose...</option>
+                <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+            </select>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="table align-middle table-nowrap mb-0">
+                            <table class="table align-middle table-nowrap">
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col">Qualification</th>
@@ -580,9 +579,9 @@
                     <div class="col-md-1">
                         <div class="mb-3">
                             <select class="form-select" id="validationCountry" (change)="onOptionsSelected($event)">
-                          <option selected="" disabled="" value="">Choose...</option>
-                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                        </select>
+                        <option >Choose...</option>
+                        <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                    </select>
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -610,11 +609,11 @@
                             <input type="text" class="form-control" id="validationContactNo" placeholder="Name">
                         </div>
                     </div>
-                    <div class="col-md-2 mt-2">
+                    <div class="col-md-2 my-2">
                         <input type="checkbox"><span> Want to add Document</span>
                     </div>
                 </div>
-                <div class="col-md-12 my-n3">
+                <div class="col-md-12">
                     <div class="table-responsive">
                         <table class="table align-middle table-nowrap mb-0">
                             <thead class="table-light">
@@ -658,19 +657,19 @@
             <div class="mb-3">
                 <label for="validationCountry" class="form-label">Country<span class="text-danger">*</span></label>
                 <select class="form-select" id="validationCountry" (change)="onOptionsSelected($event)">
-          <option selected="" disabled="" value="">Choose...</option>
-          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-        </select>
+    <option >Choose...</option>
+    <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+</select>
             </div>
         </div>
         <div class="col-md-3">
             <div class="mb-3">
                 <label for="validationZone" class="form-label">Zone<span class="text-danger">*</span></label>
                 <select class="form-select" id="validationZone">
-          <option selected="" disabled="" value="">Choose...</option>
-          <option *ngFor="let zone of countryZones" [value]="zone.id">{{zone.zone_Name}}
+    <option >Choose...</option>
+    <option *ngFor="let zone of countryZones" [value]="zone.id">{{zone.zone_Name}}
 
-        </select>
+</select>
             </div>
         </div>
     </div>
@@ -712,19 +711,19 @@
             <div class="mb-3">
                 <label for="validationCountry" class="form-label">Country<span class="text-danger">*</span></label>
                 <select class="form-select" id="validationCountry" (change)="OptionsSelected($event)">
-          <option selected="" disabled="" value="">Choose...</option>
-          <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
-        
-        </select>
+    <option >Choose...</option>
+    <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
+
+</select>
             </div>
         </div>
         <div class="col-md-3">
             <div class="mb-3">
                 <label for="validationZone" class="form-label">Zone<span class="text-danger">*</span></label>
                 <select class="form-select" id="validationZone">
-          <option selected="" disabled="" value="">Choose...</option>
-          <option *ngFor="let zn of corresspondCountryZone" [value]="zn.id">{{zn.zone_Name}}
-        </select>
+    <option >Choose...</option>
+    <option *ngFor="let zn of corresspondCountryZone" [value]="zn.id">{{zn.zone_Name}}
+</select>
             </div>
         </div>
     </div>
@@ -772,17 +771,366 @@
 
     <div class="row">
         <div class="container-fluid">
-
             <div class="custom-control custom-radio custom-control-inline">
                 <label for="validationPin">Status <span class="text-danger">*</span></label>:
                 <input type="radio" id="rdoTransit" name="rdoGender" class="custom-control-input">
-                <label class="custom-control-label" for="rdoTransit">Fresher</label>
+                <label class="custom-control-label mr-5" for="rdoTransit">Fresher</label>
                 <input type="radio" id="rdoTransit" name="rdoGender" class="custom-control-input">
                 <label class="custom-control-label" for="rdoTransit">Experience</label>
             </div>
         </div>
+
     </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div style="overflow-x: auto;width: 85%;">
+        <div>
+            <table cellspacing="0" cellpadding="4" border="0" id="ctl00_ContentPlaceHolder1_grdExperience" style="color:#333333;width:100%;border-collapse:collapse;">
+                <tbody>
+                    <tr style="color:White;background-color:#507CD1;font-weight:bold;">
+                        <th scope="col" style="color:Black;width:120px;">Employeer Name</th>
+                        <th scope="col" style="color:Black;">Employeer Address</th>
+                        <th scope="col" style="color:Black;">Designation</th>
+                        <th scope="col" style="color:Black;">Contact Person</th>
+                        <th scope="col" style="color:Black;">Contact No</th>
+                        <th scope="col" style="color:Black;">Email Id</th>
+                        <th scope="col" style="color:Black;">Date Of Joining</th>
+                        <th scope="col" style="color:Black;">Last Drawn Salary</th>
+                        <th scope="col" style="color:Black;">Reason for Leaving</th>
+                        <th scope="col" style="color:Black;">&nbsp;</th>
+                        <th scope="col" style="color:Black;">Date Of Leaving</th>
+                    </tr>
+                    <tr style="background-color:#EFF3FB;">
+                        <td>
+                            <input name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$txtEmployerName" type="text" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_txtEmployerName" tabindex="88" style="color:Black;">
+                        </td>
+                        <td>
+                            <textarea name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$txtEmployerAddress" rows="2" cols="20" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_txtEmployerAddress" tabindex="89" style="margin: 0px; height: 28px; width: 135px;"></textarea>
+                        </td>
+                        <td>
+                            <input name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$txtEmployerDesignation" type="text" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_txtEmployerDesignation" tabindex="90">
+                        </td>
+                        <td>
+                            <input name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$txtEmployerContactPerson" type="text" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_txtEmployerContactPerson" tabindex="91">
+                        </td>
+                        <td>
+                            <input name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$txtEmployerContactNo" type="text" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_txtEmployerContactNo" tabindex="92" onkeypress="return NumberOnly(event);">
+                        </td>
+                        <td>
+                            <input name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$txtEmployerEmailId" type="text" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_txtEmployerEmailId" tabindex="93">
+                        </td>
+                        <td>
+                            <div id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_wrapper" class="RadPicker RadPicker_Default" style="display:inline-block;width:160px;">
+                                <input style="visibility:hidden;display:block;float:right;margin:0 0 -1px -1px;width:1px;height:1px;overflow:hidden;border:0;padding:0;" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ" name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$RadDate_DOJ"
+                                    type="text" class="rdfd_ radPreventDecorate" title="Visually hidden input created for functionality purposes.">
+                                <table cellspacing="0" class="rcTable rcSingle" summary="Table holding date picker control for selection of dates." style="width:100%;">
+                                    <caption style="display:none;">
+                                        RadDatePicker
+                                    </caption>
+                                    <thead style="display:none;">
+                                        <tr>
+                                            <th scope="col">RadDatePicker</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="rcInputCell" style="width:100%;"><span id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_dateInput_wrapper" class="riSingle RadInput RadInput_Default" style="display:block;width:100%;"><input id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_dateInput" name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$RadDate_DOJ$dateInput" class="riTextBox riRead" readonly="readonly" tabindex="94" type="text"><input id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_dateInput_ClientState" name="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_dateInput_ClientState" type="hidden" autocomplete="off" value="{&quot;enabled&quot;:true,&quot;emptyMessage&quot;:&quot;&quot;,&quot;validationText&quot;:&quot;2021-08-10-00-00-00&quot;,&quot;valueAsString&quot;:&quot;2021-08-10-00-00-00&quot;,&quot;minDateStr&quot;:&quot;1900-01-01-00-00-00&quot;,&quot;maxDateStr&quot;:&quot;4000-12-31-00-00-00&quot;,&quot;lastSetTextBoxValue&quot;:&quot;10 Aug 2021&quot;}"></span></td>
+                                            <td>
+                                                <div id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_wrapper" style="display: none;">
+                                                    <table id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar" cellspacing="0" class="RadCalendar RadCalendar_Default" border="0">
+                                                        <caption>
+                                                            <span style="display:none;">Calendar</span>
+                                                        </caption>
+                                                        <thead>
+                                                            <tr>
+                                                                <td class="rcTitlebar">
+                                                                    <table cellspacing="0" border="0">
+                                                                        <caption>
+                                                                            <span style="display:none;">Title and navigation</span>
+                                                                        </caption>
+                                                                        <thead>
+                                                                            <tr style="display:none;">
+                                                                                <th scope="col">Title and navigation</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><a id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_FNP" class="rcFastPrev" href="#">&lt;&lt;</a></td>
+                                                                                <td><a id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_NP" class="rcPrev" href="#">&lt;</a></td>
+                                                                                <td id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Title" class="rcTitle">August 2021</td>
+                                                                                <td><a id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_NN" class="rcNext" title=">" href="#">&gt;</a></td>
+                                                                                <td><a id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_FNN" class="rcFastNext" title=">>" href="#">&lt;&lt;</a></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="rcMain">
+                                                                    <table id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top" class="rcMainTable" cellspacing="0" border="0">
+                                                                        <caption>
+                                                                            <span style="display:none;">August 2021</span>
+                                                                        </caption>
+                                                                        <thead>
+                                                                            <tr class="rcWeek">
+                                                                                <th class="rcViewSel" scope="col">&nbsp;</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_cs_1" title="Sunday" scope="col">S</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_cs_2" title="Monday" scope="col">M</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_cs_3" title="Tuesday" scope="col">T</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_cs_4" title="Wednesday" scope="col">W</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_cs_5" title="Thursday" scope="col">T</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_cs_6" title="Friday" scope="col">F</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_cs_7" title="Saturday" scope="col">S</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_rs_1" scope="row">31</th>
+                                                                                <td class="rcOtherMonth" title="Sunday, July 25, 2021"><a href="#">25</a></td>
+                                                                                <td class="rcOtherMonth" title="Monday, July 26, 2021"><a href="#">26</a></td>
+                                                                                <td class="rcOtherMonth" title="Tuesday, July 27, 2021"><a href="#">27</a></td>
+                                                                                <td class="rcOtherMonth" title="Wednesday, July 28, 2021"><a href="#">28</a></td>
+                                                                                <td class="rcOtherMonth" title="Thursday, July 29, 2021"><a href="#">29</a></td>
+                                                                                <td class="rcOtherMonth" title="Friday, July 30, 2021"><a href="#">30</a></td>
+                                                                                <td class="rcOtherMonth" title="Saturday, July 31, 2021"><a href="#">31</a></td>
+                                                                            </tr>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_rs_2" scope="row">32</th>
+                                                                                <td class="rcWeekend" title="Sunday, August 01, 2021"><a href="#">1</a></td>
+                                                                                <td title="Monday, August 02, 2021"><a href="#">2</a></td>
+                                                                                <td title="Tuesday, August 03, 2021"><a href="#">3</a></td>
+                                                                                <td title="Wednesday, August 04, 2021"><a href="#">4</a></td>
+                                                                                <td title="Thursday, August 05, 2021"><a href="#">5</a></td>
+                                                                                <td title="Friday, August 06, 2021"><a href="#">6</a></td>
+                                                                                <td class="rcWeekend" title="Saturday, August 07, 2021"><a href="#">7</a></td>
+                                                                            </tr>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_rs_3" scope="row">33</th>
+                                                                                <td class="rcWeekend" title="Sunday, August 08, 2021"><a href="#">8</a></td>
+                                                                                <td title="Monday, August 09, 2021"><a href="#">9</a></td>
+                                                                                <td title="Tuesday, August 10, 2021" class="rcSelected"><a href="#">10</a></td>
+                                                                                <td title="Wednesday, August 11, 2021"><a href="#">11</a></td>
+                                                                                <td title="Thursday, August 12, 2021"><a href="#">12</a></td>
+                                                                                <td title="Friday, August 13, 2021"><a href="#">13</a></td>
+                                                                                <td class="rcWeekend" title="Saturday, August 14, 2021"><a href="#">14</a></td>
+                                                                            </tr>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_rs_4" scope="row">34</th>
+                                                                                <td class="rcWeekend" title="Sunday, August 15, 2021"><a href="#">15</a></td>
+                                                                                <td title="Monday, August 16, 2021"><a href="#">16</a></td>
+                                                                                <td title="Tuesday, August 17, 2021"><a href="#">17</a></td>
+                                                                                <td title="Wednesday, August 18, 2021" class=""><a href="#">18</a></td>
+                                                                                <td title="Thursday, August 19, 2021"><a href="#">19</a></td>
+                                                                                <td title="Friday, August 20, 2021" class=""><a href="#">20</a></td>
+                                                                                <td class="rcWeekend" title="Saturday, August 21, 2021"><a href="#">21</a></td>
+                                                                            </tr>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_rs_5" scope="row">35</th>
+                                                                                <td class="rcWeekend" title="Sunday, August 22, 2021"><a href="#">22</a></td>
+                                                                                <td title="Monday, August 23, 2021"><a href="#">23</a></td>
+                                                                                <td title="Tuesday, August 24, 2021"><a href="#">24</a></td>
+                                                                                <td title="Wednesday, August 25, 2021" class=""><a href="#">25</a></td>
+                                                                                <td title="Thursday, August 26, 2021" class=""><a href="#">26</a></td>
+                                                                                <td title="Friday, August 27, 2021" class=""><a href="#">27</a></td>
+                                                                                <td class="rcWeekend" title="Saturday, August 28, 2021"><a href="#">28</a></td>
+                                                                            </tr>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_Top_rs_6" scope="row">36</th>
+                                                                                <td class="rcWeekend" title="Sunday, August 29, 2021"><a href="#">29</a></td>
+                                                                                <td title="Monday, August 30, 2021"><a href="#">30</a></td>
+                                                                                <td title="Tuesday, August 31, 2021"><a href="#">31</a></td>
+                                                                                <td class="rcOtherMonth" title="Wednesday, September 01, 2021"><a href="#">1</a></td>
+                                                                                <td class="rcOtherMonth" title="Thursday, September 02, 2021"><a href="#">2</a></td>
+                                                                                <td class="rcOtherMonth" title="Friday, September 03, 2021"><a href="#">3</a></td>
+                                                                                <td class="rcOtherMonth" title="Saturday, September 04, 2021"><a href="#">4</a></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table><input type="hidden" name="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_SD" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_SD" value="[[2021,8,10]]">
+                                                    <input type="hidden" name="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_AD" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_calendar_AD" value="[[1900,1,1],[4000,12,31],[2021,8,11]]">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table><input id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_ClientState" name="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOJ_ClientState" type="hidden" value="{&quot;minDateStr&quot;:&quot;1900-01-01-00-00-00&quot;,&quot;maxDateStr&quot;:&quot;4000-12-31-00-00-00&quot;}"
+                                    autocomplete="off">
+                            </div>
+                        </td>
+                        <td>
+                            <input name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$txtEmployerSalary" type="text" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_txtEmployerSalary" tabindex="95">
+                        </td>
+                        <td>
+                            <textarea name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$txtEmployerReasonforLeaving" rows="2" cols="20" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_txtEmployerReasonforLeaving" tabindex="96" style="margin: 0px; width: 141px; height: 27px;"></textarea>
+                        </td>
+                        <td>
+                            <input type="checkbox"><span> Attach<br> Documents?</span>
+                        </td>
+                        <td>
+                            <div id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_wrapper" class="RadPicker RadPicker_Default" style="display:inline-block;width:160px;">
+                                <input style="visibility:hidden;display:block;float:right;margin:0 0 -1px -1px;width:1px;height:1px;overflow:hidden;border:0;padding:0;" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL" name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$RadDate_DOL"
+                                    type="text" class="rdfd_ radPreventDecorate" title="Visually hidden input created for functionality purposes.">
+                                <table cellspacing="0" class="rcTable rcSingle" summary="Table holding date picker control for selection of dates." style="width:100%;">
+                                    <caption style="display:none;">
+                                        RadDatePicker
+                                    </caption>
+                                    <thead style="display:none;">
+                                        <tr>
+                                            <th scope="col">RadDatePicker</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="rcInputCell" style="width:100%;"><span id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_dateInput_wrapper" class="riSingle RadInput RadInput_Default" style="display:block;width:100%;"><input id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_dateInput" name="ctl00$ContentPlaceHolder1$grdExperience$ctl02$RadDate_DOL$dateInput" class="riTextBox riRead" readonly="readonly" tabindex="99" type="text"><input id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_dateInput_ClientState" name="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_dateInput_ClientState" type="hidden" autocomplete="off" value="{&quot;enabled&quot;:true,&quot;emptyMessage&quot;:&quot;&quot;,&quot;validationText&quot;:&quot;&quot;,&quot;valueAsString&quot;:&quot;&quot;,&quot;minDateStr&quot;:&quot;1900-01-01-00-00-00&quot;,&quot;maxDateStr&quot;:&quot;4000-12-31-00-00-00&quot;,&quot;lastSetTextBoxValue&quot;:&quot;&quot;}"></span></td>
+                                            <td>
+                                                <div id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_wrapper" style="display:none;">
+                                                    <table id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar" cellspacing="0" class="RadCalendar RadCalendar_Default" border="0">
+                                                        <caption>
+                                                            <span style="display:none;">Calendar</span>
+                                                        </caption>
+                                                        <thead>
+                                                            <tr>
+                                                                <td class="rcTitlebar">
+                                                                    <table cellspacing="0" border="0">
+                                                                        <caption>
+                                                                            <span style="display:none;">Title and navigation</span>
+                                                                        </caption>
+                                                                        <thead>
+                                                                            <tr style="display:none;">
+                                                                                <th scope="col">Title and navigation</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><a id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_FNP" class="rcFastPrev" href="#">&lt;&lt;</a></td>
+                                                                                <td><a id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_NP" class="rcPrev" href="#">&lt;</a></td>
+                                                                                <td id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Title" class="rcTitle">August 2021</td>
+                                                                                <td><a id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_NN" class="rcNext" title=">" href="#">&gt;</a></td>
+                                                                                <td><a id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_FNN" class="rcFastNext" title=">>" href="#">&lt;&lt;</a></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="rcMain">
+                                                                    <table id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top" class="rcMainTable" cellspacing="0" border="0">
+                                                                        <caption>
+                                                                            <span style="display:none;">August 2021</span>
+                                                                        </caption>
+                                                                        <thead>
+                                                                            <tr class="rcWeek">
+                                                                                <th class="rcViewSel" scope="col">&nbsp;</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_cs_1" title="Sunday" scope="col">S</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_cs_2" title="Monday" scope="col">M</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_cs_3" title="Tuesday" scope="col">T</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_cs_4" title="Wednesday" scope="col">W</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_cs_5" title="Thursday" scope="col">T</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_cs_6" title="Friday" scope="col">F</th>
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_cs_7" title="Saturday" scope="col">S</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_rs_1" scope="row">31</th>
+                                                                                <td class="rcOtherMonth" title="Sunday, July 25, 2021"><a href="#">25</a></td>
+                                                                                <td class="rcOtherMonth" title="Monday, July 26, 2021"><a href="#">26</a></td>
+                                                                                <td class="rcOtherMonth" title="Tuesday, July 27, 2021"><a href="#">27</a></td>
+                                                                                <td class="rcOtherMonth" title="Wednesday, July 28, 2021"><a href="#">28</a></td>
+                                                                                <td class="rcOtherMonth" title="Thursday, July 29, 2021"><a href="#">29</a></td>
+                                                                                <td class="rcOtherMonth" title="Friday, July 30, 2021"><a href="#">30</a></td>
+                                                                                <td class="rcOtherMonth" title="Saturday, July 31, 2021"><a href="#">31</a></td>
+                                                                            </tr>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_rs_2" scope="row">32</th>
+                                                                                <td class="rcWeekend" title="Sunday, August 01, 2021"><a href="#">1</a></td>
+                                                                                <td title="Monday, August 02, 2021"><a href="#">2</a></td>
+                                                                                <td title="Tuesday, August 03, 2021"><a href="#">3</a></td>
+                                                                                <td title="Wednesday, August 04, 2021"><a href="#">4</a></td>
+                                                                                <td title="Thursday, August 05, 2021"><a href="#">5</a></td>
+                                                                                <td title="Friday, August 06, 2021"><a href="#">6</a></td>
+                                                                                <td class="rcWeekend" title="Saturday, August 07, 2021"><a href="#">7</a></td>
+                                                                            </tr>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_rs_3" scope="row">33</th>
+                                                                                <td class="rcWeekend" title="Sunday, August 08, 2021"><a href="#">8</a></td>
+                                                                                <td title="Monday, August 09, 2021"><a href="#">9</a></td>
+                                                                                <td title="Tuesday, August 10, 2021"><a href="#">10</a></td>
+                                                                                <td title="Wednesday, August 11, 2021"><a href="#">11</a></td>
+                                                                                <td title="Thursday, August 12, 2021"><a href="#">12</a></td>
+                                                                                <td title="Friday, August 13, 2021"><a href="#">13</a></td>
+                                                                                <td class="rcWeekend" title="Saturday, August 14, 2021"><a href="#">14</a></td>
+                                                                            </tr>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_rs_4" scope="row">34</th>
+                                                                                <td class="rcWeekend" title="Sunday, August 15, 2021"><a href="#">15</a></td>
+                                                                                <td title="Monday, August 16, 2021"><a href="#">16</a></td>
+                                                                                <td title="Tuesday, August 17, 2021"><a href="#">17</a></td>
+                                                                                <td title="Wednesday, August 18, 2021"><a href="#">18</a></td>
+                                                                                <td title="Thursday, August 19, 2021"><a href="#">19</a></td>
+                                                                                <td title="Friday, August 20, 2021"><a href="#">20</a></td>
+                                                                                <td class="rcWeekend" title="Saturday, August 21, 2021"><a href="#">21</a></td>
+                                                                            </tr>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_rs_5" scope="row">35</th>
+                                                                                <td class="rcWeekend" title="Sunday, August 22, 2021"><a href="#">22</a></td>
+                                                                                <td title="Monday, August 23, 2021"><a href="#">23</a></td>
+                                                                                <td title="Tuesday, August 24, 2021"><a href="#">24</a></td>
+                                                                                <td title="Wednesday, August 25, 2021"><a href="#">25</a></td>
+                                                                                <td title="Thursday, August 26, 2021"><a href="#">26</a></td>
+                                                                                <td title="Friday, August 27, 2021"><a href="#">27</a></td>
+                                                                                <td class="rcWeekend" title="Saturday, August 28, 2021"><a href="#">28</a></td>
+                                                                            </tr>
+                                                                            <tr class="rcRow">
+                                                                                <th id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_Top_rs_6" scope="row">36</th>
+                                                                                <td class="rcWeekend" title="Sunday, August 29, 2021"><a href="#">29</a></td>
+                                                                                <td title="Monday, August 30, 2021"><a href="#">30</a></td>
+                                                                                <td title="Tuesday, August 31, 2021"><a href="#">31</a></td>
+                                                                                <td class="rcOtherMonth" title="Wednesday, September 01, 2021"><a href="#">1</a></td>
+                                                                                <td class="rcOtherMonth" title="Thursday, September 02, 2021"><a href="#">2</a></td>
+                                                                                <td class="rcOtherMonth" title="Friday, September 03, 2021"><a href="#">3</a></td>
+                                                                                <td class="rcOtherMonth" title="Saturday, September 04, 2021"><a href="#">4</a></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table><input type="hidden" name="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_SD" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_SD" value="[]"><input type="hidden"
+                                                        name="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_AD" id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_calendar_AD" value="[[1900,1,1],[4000,12,31],[2021,8,11]]">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table><input id="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_ClientState" name="ctl00_ContentPlaceHolder1_grdExperience_ctl02_RadDate_DOL_ClientState" type="hidden" value="{&quot;minDateStr&quot;:&quot;1900-01-01-00-00-00&quot;,&quot;maxDateStr&quot;:&quot;4000-12-31-00-00-00&quot;}"
+                                    autocomplete="off">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="color:White;background-color:#507CD1;font-weight:bold;">
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <button type="button" class="add">Add</button>
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light my-4">
         <h4 class="card-title">Other Information
         </h4>
     </nav>
@@ -833,9 +1181,9 @@
                         <tr>
                             <td>
                                 <select class="form-control">
-                  <option>-----</option>
-                  <option>-----</option>
-                </select>
+            <option>-----</option>
+            <option>-----</option>
+        </select>
                             </td>
                             <td>
                                 <input type="text" class="form-control">
@@ -920,10 +1268,10 @@
             <div class="mb-3">
                 <label for="validationUserType" class="form-label">User Type</label>
                 <select class="form-select" id="validationUserType">
-          <option selected="" disabled="" value="">Choose...</option>
-          <option *ngFor="let utype of userType" [value]="utype.id">{{utype.userType_Name}}
+    <option >Choose...</option>
+    <option *ngFor="let utype of userType" [value]="utype.id">{{utype.userType_Name}}
 
-        </select>
+</select>
             </div>
         </div>
         <div class="col-md-3">
@@ -945,7 +1293,6 @@
             <button type="submit" class="btn btn-primary mr-5">Save</button>
             <button type="submit" class="btn btn-primary">Reset</button>
         </div>
-
         <div class="col-md-3"></div>
     </div>
 </div>

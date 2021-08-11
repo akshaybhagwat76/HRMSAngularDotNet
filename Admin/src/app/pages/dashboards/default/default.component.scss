@@ -1,7 +1,3 @@
-textarea {
-    resize: none;
-}
-
 .mr-5 {
     margin-right: 5px;
 }
@@ -12,8 +8,13 @@ textarea {
     font-weight: 600;
     color: #b91d1e;
     margin-left: 20px;
+    margin-top: 10px;
 }
 
 .table> :not(caption)>*>* {
     padding: 0rem 0rem;
+}
+
+.Want {
+    width: 120px;
 }

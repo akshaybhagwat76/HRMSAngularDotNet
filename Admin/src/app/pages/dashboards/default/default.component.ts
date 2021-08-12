@@ -95,6 +95,7 @@ export class DefaultComponent implements OnInit {
   hrmsForm: FormGroup;
   familyForm: FormGroup;
   nomineeForm: FormGroup;
+  educationForm: FormGroup;
   @ViewChild('content') content;
 
   constructor(private modalService: NgbModal, public formBuilder: FormBuilder, private companyService: CompanyService,
@@ -148,7 +149,7 @@ export class DefaultComponent implements OnInit {
   employees: any;
   meritalStatuses: any;
 
-  //Family Details
+  // Family Details
   fName: string;
   fRelationship: number;
   fDateOfBirth: Date;
@@ -159,7 +160,7 @@ export class DefaultComponent implements OnInit {
   isFamilyEdited = false;
   updatedFamilyDetailsId: number;
 
-  //Nominee Details
+  // Nominee Details
   nName: string;
   nRelationship: number;
   nDateOfBirth: Date;
@@ -169,6 +170,18 @@ export class DefaultComponent implements OnInit {
   nContactNo: string;
   isNomineeEdited = false;
   updatedNomineeDetailsId: number;
+
+  // Educational Information
+  highestQualification: number;
+  qualification: number;
+  year: number;
+  specialization: string;
+  school: string;
+  board: string;
+  marks: number;
+  isUploaded: boolean;
+  isEducationEdited = false;
+  udatedEducationDetailsId: number;
 
   private fetchData() {
     const companies = this.companyService.getAll();
@@ -231,6 +244,11 @@ export class DefaultComponent implements OnInit {
   // Nominee Details
   get nomineeDetailsArr() {
     return (<FormArray>this.hrmsForm.get('nomineeDetails')).controls;
+  }
+
+  // Education Information
+  get educationInformationArr() {
+    return (<FormArray>this.hrmsForm.get('educationInformation')).controls;
   }
 
   ngOnInit() {
@@ -358,10 +376,11 @@ export class DefaultComponent implements OnInit {
       familyName: [''],
       familyDetails: new FormArray([]),
       nomineeDetails: new FormArray([]),
+      educationInformation: new FormArray([])
     });
   }
 
-  // Family details
+  // Add Family details
   addfamilyDetailsArr() {
     this.familyForm = this.formBuilder.group({
       NameNominee: [this.fName],
@@ -376,21 +395,21 @@ export class DefaultComponent implements OnInit {
     this.clearFamilyDetails();
   }
 
-  addNomineeDetailsArr() {
-    debugger;
-    this.nomineeForm = this.formBuilder.group({
-      NameNominee: [this.nName],
-      dateOfBirthNominee: [this.nDateOfBirth],
-      relationshipNominee: [this.nRelationship],
-      aadharNoNominee: [this.nAadharNo],
-      AadharStatusNominee: [this.nAadharStatus],
-      ContactNominee: [this.nContactNo],
-      AddressNominee: [this.nAddress],
-    });
-    (<FormArray>this.hrmsForm.get('nomineeDetails')).push(this.nomineeForm);
-    this.clearNomineeDetails();
+  // Edit Family Details
+  editFamilyDetails(row) {
+    const familyData = (<FormArray>this.hrmsForm.controls['familyDetails']).at(row).value;
+    this.fName = familyData.NameNominee;
+    this.fRelationship = familyData.relationshipNominee;
+    this.fDateOfBirth = familyData.dateOfBirthNominee;
+    this.fAadharNo = familyData.aadharNoNominee;
+    this.fAadharStatus = familyData.AadharStatusNominee;
+    this.fAddress = familyData.AddressNominee;
+    this.fContactNo = familyData.ContactNominee;
+    this.isFamilyEdited = true;
+    this.updatedFamilyDetailsId = row;
   }
 
+  // Update Family Details
   updatefamilyDetailsArr() {
     const familtyDetailsform = (<FormArray>this.hrmsForm.controls['familyDetails']).at(this.updatedFamilyDetailsId);
     familtyDetailsform.patchValue({
@@ -407,6 +426,56 @@ export class DefaultComponent implements OnInit {
     this.clearFamilyDetails();
   }
 
+  // Delete Familt Details
+  deleteFamilyDetails(row) {
+    const familyDetails = <FormArray>this.hrmsForm.controls['familyDetails'];
+    if (familyDetails) {
+      familyDetails.removeAt(row);
+    }
+  }
+
+  // Clear Family Details
+  clearFamilyDetails() {
+    this.fName = "";
+    this.fRelationship = null;
+    this.fDateOfBirth = null;
+    this.fAadharNo = "";
+    this.fAadharStatus = "";
+    this.fAddress = "";
+    this.fContactNo = "";
+  }
+
+  // Add Nominee Details
+  addNomineeDetailsArr() {
+    debugger;
+    this.nomineeForm = this.formBuilder.group({
+      NameNominee: [this.nName],
+      dateOfBirthNominee: [this.nDateOfBirth],
+      relationshipNominee: [this.nRelationship],
+      aadharNoNominee: [this.nAadharNo],
+      AadharStatusNominee: [this.nAadharStatus],
+      ContactNominee: [this.nContactNo],
+      AddressNominee: [this.nAddress],
+    });
+    (<FormArray>this.hrmsForm.get('nomineeDetails')).push(this.nomineeForm);
+    this.clearNomineeDetails();
+  }
+
+  // Edit Nominee Details
+  editNomineeDetails(row) {
+    const nomineeData = (<FormArray>this.hrmsForm.controls['nomineeDetails']).at(row).value;
+    this.nName = nomineeData.NameNominee;
+    this.nRelationship = nomineeData.relationshipNominee;
+    this.nDateOfBirth = nomineeData.dateOfBirthNominee;
+    this.nAadharNo = nomineeData.aadharNoNominee;
+    this.nAadharStatus = nomineeData.AadharStatusNominee;
+    this.nAddress = nomineeData.AddressNominee;
+    this.nContactNo = nomineeData.ContactNominee;
+    this.isNomineeEdited = true;
+    this.updatedNomineeDetailsId = row;
+  }
+
+  // Update Nominee Details
   updateNomineeDetailsArr() {
     const nommineeDetailsform = (<FormArray>this.hrmsForm.controls['nomineeDetails']).at(this.updatedNomineeDetailsId);
     nommineeDetailsform.patchValue({
@@ -423,13 +492,7 @@ export class DefaultComponent implements OnInit {
     this.clearNomineeDetails();
   }
 
-  deleteFamilyDetails(row) {
-    const familyDetails = <FormArray>this.hrmsForm.controls['familyDetails'];
-    if (familyDetails) {
-      familyDetails.removeAt(row);
-    }
-  }
-
+  // Delete Nominee Details
   deleteNomineeDetails(row) {
     const nomineeDetails = <FormArray>this.hrmsForm.controls['nomineeDetails'];
     if (nomineeDetails) {
@@ -437,16 +500,7 @@ export class DefaultComponent implements OnInit {
     }
   }
 
-  clearFamilyDetails() {
-    this.fName = "";
-    this.fRelationship = null;
-    this.fDateOfBirth = null;
-    this.fAadharNo = "";
-    this.fAadharStatus = "";
-    this.fAddress = "";
-    this.fContactNo = "";
-  }
-
+  // Clear Nominee Details
   clearNomineeDetails() {
     this.nName = "";
     this.nRelationship = null;
@@ -457,30 +511,74 @@ export class DefaultComponent implements OnInit {
     this.nContactNo = "";
   }
 
-  editFamilyDetails(row) {
-    const familyData = (<FormArray>this.hrmsForm.controls['familyDetails']).at(row).value;
-    this.fName = familyData.NameNominee;
-    this.fRelationship = familyData.relationshipNominee;
-    this.fDateOfBirth = familyData.dateOfBirthNominee;
-    this.fAadharNo = familyData.aadharNoNominee;
-    this.fAadharStatus = familyData.AadharStatusNominee;
-    this.fAddress = familyData.AddressNominee;
-    this.fContactNo = familyData.ContactNominee;
-    this.isFamilyEdited = true;
-    this.updatedFamilyDetailsId = row;
+  // Add Education Information
+  addEducationInformationArr() {
+    debugger;
+    this.educationForm = this.formBuilder.group({
+      highestQualification: [this.highestQualification],
+      qualification: [this.qualification],
+      year: [this.year],
+      specialization: [this.specialization],
+      school: [this.school],
+      board: [this.board],
+      marks: [this.marks],
+      isUploaded: [this.isUploaded]
+    });
+    (<FormArray>this.hrmsForm.get('educationInformation')).push(this.educationForm);
+    this.clearEducationInformation();
   }
 
-  editNomineeDetails(row) {
-    const nomineeData = (<FormArray>this.hrmsForm.controls['nomineeDetails']).at(row).value;
-    this.nName = nomineeData.NameNominee;
-    this.nRelationship = nomineeData.relationshipNominee;
-    this.nDateOfBirth = nomineeData.dateOfBirthNominee;
-    this.nAadharNo = nomineeData.aadharNoNominee;
-    this.nAadharStatus = nomineeData.AadharStatusNominee;
-    this.nAddress = nomineeData.AddressNominee;
-    this.nContactNo = nomineeData.ContactNominee;
-    this.isNomineeEdited = true;
-    this.updatedNomineeDetailsId = row;
+  // Edit Education Information
+  editEducationInformation(row) {
+    const educationData = (<FormArray>this.hrmsForm.controls['educationInformation']).at(row).value;
+    this.highestQualification = educationData.highestQualification;
+    this.qualification = educationData.qualification;
+    this.year = educationData.year;
+    this.specialization = educationData.specialization;
+    this.school = educationData.school;
+    this.board = educationData.board;
+    this.marks = educationData.marks;
+    this.isUploaded = educationData.isUploaded;
+    this.isEducationEdited = true;
+    this.udatedEducationDetailsId = row;
+  }
+
+  // Update Education Information
+  updateEducationInformationArr() {
+    const educationInformationform = (<FormArray>this.hrmsForm.controls['educationInformation']).at(this.udatedEducationDetailsId);
+    educationInformationform.patchValue({
+      'highestQualification': [this.highestQualification],
+      'qualification': [this.qualification],
+      'year': [this.year],
+      'specialization': [this.specialization],
+      'school': [this.school],
+      'board': [this.board],
+      'marks': [this.marks],
+      'isUploaded': [this.isUploaded],
+    });
+    this.isEducationEdited = false;
+    this.udatedEducationDetailsId = 0;
+    this.clearEducationInformation();
+  }
+
+  // Delete Education Information
+  deleteEducationInformation(row) {
+    const educationInformation = <FormArray>this.hrmsForm.controls['educationInformation'];
+    if (educationInformation) {
+      educationInformation.removeAt(row);
+    }
+  }
+
+  // Clear Education Information
+  clearEducationInformation() {
+    this.highestQualification = null;
+    this.qualification = null;
+    this.year = null;
+    this.specialization = "";
+    this.school = "";
+    this.board = "";
+    this.marks = null;
+    this.isUploaded = false;
   }
 
   ngAfterViewInit() {

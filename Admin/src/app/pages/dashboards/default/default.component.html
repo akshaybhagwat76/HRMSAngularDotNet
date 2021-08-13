@@ -690,23 +690,23 @@
                         </select>
                       </td>
                       <td>
-                        <input type="text" class="form-control" id="validationContactNo" placeholder="Name"
+                        <input type="text" class="form-control" id="validationContactNo" placeholder="Year"
                           [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
                       </td>
                       <td>
-                        <input type="text" class="form-control" id="validationContactNo" placeholder="Name"
+                        <input type="text" class="form-control" id="validationContactNo" placeholder="Specialization"
                           [(ngModel)]="specialization" [ngModelOptions]="{standalone: true}">
                       </td>
                       <td>
-                        <input type="text" class="form-control" id="validationContactNo" placeholder="Name"
+                        <input type="text" class="form-control" id="validationContactNo" placeholder="School"
                           [(ngModel)]="school" [ngModelOptions]="{standalone: true}">
                       </td>
                       <td>
-                        <input type="text" class="form-control" id="validationContactNo" placeholder="Name"
+                        <input type="text" class="form-control" id="validationContactNo" placeholder="Board"
                           [(ngModel)]="board" [ngModelOptions]="{standalone: true}">
                       </td>
                       <td>
-                        <input type="text" class="form-control" id="validationContactNo" placeholder="Name"
+                        <input type="text" class="form-control" id="validationContactNo" placeholder="Marks"
                           [(ngModel)]="marks" [ngModelOptions]="{standalone: true}">
                       </td>
                       <td>
@@ -761,7 +761,7 @@
                   </tbody>
                 </table>
 
-                <table class="table">
+                <table class="table" *ngIf="educationDocumentArr.length > 0">
                   <thead>
                     <tr style="background: aliceblue;">
                       <th>Sl.No</th>
@@ -772,25 +772,41 @@
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody formArrayName="educationInformation">
-                    <tr>
+                  <tbody formArrayName="educationDocument">
+                    <tr *ngFor="let educationDocument of educationDocumentArr;let l=index;" [formGroupName]="l">
                       <td>1</td>
-                      <td><span>MADHYAMIK</span></td>
-                      <td><input type="text" class="form-control"></td>
                       <td>
-                        <input type="file" class="form-control">
-                        <button class="form-control btn-sm btn-primary">Upload Document</button>
+                        <select class="form-select" id="validationCountry" formControlName="courseName">
+                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                        </select>
                       </td>
+                      <td><input type="text" class="form-control" formControlName="documentType"
+                          placeholder="Document Type"></td>
                       <td>
-                        <img height="70" width="70"
-                          src="https://images.template.net/2622/Free-Employee-Experience-Certificate-Template.jpeg"
-                          alt="">
+                        <input type="file" class="form-control" name="image" (change)="fileProgress($event)">
+                        <button class="form-control btn-sm btn-primary" (click)="onSubmit(l)"
+                          *ngIf="documentfile">Upload Document</button>
+                        <!-- <div *ngIf="fileUploadProgress" style="color: green;">
+                          Upload progress: <strong> {{ fileUploadProgress }}</strong>
+                        </div> -->
                       </td>
+
                       <td>
-                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"></span>
+                        <div *ngIf="!documentfile && !documentPreviewUrl">
+                          <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
+                        </div>
+                        <div class="image-preview mb-3" *ngIf="documentPreviewUrl && documentfile">
+                          <img [src]="documentPreviewUrl" height="70" width="70" />
+                        </div>
+                      </td>
+
+                      <td>
+                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                          (click)="addEducationDocumentArr()"></span>
                         &nbsp;&nbsp;
                         <i class="fa fa-eye" style="font-size:24px;color: cadetblue;"></i>&nbsp;&nbsp;
-                        <i class="fa fa-trash" style="font-size:24px;color: red;"></i>
+                        <i class="fa fa-trash" style="font-size:24px;color: red;"
+                          (click)="deleteEducationDocument(l)"></i>
                       </td>
                     </tr>
                   </tbody>
@@ -1098,7 +1114,7 @@
       <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-3">
-          <button type="submit" class="btn btn-primary mr-5">Save</button>
+          <button type="submit" class="btn btn-primary mr-5" (click)="finallySave()">Save</button>
           <button type="submit" class="btn btn-primary">Reset</button>
         </div>
         <div class="col-md-3"></div>

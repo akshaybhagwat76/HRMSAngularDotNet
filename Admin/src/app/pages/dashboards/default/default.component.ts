@@ -76,6 +76,7 @@ import { HigherAuthoritiesBranchesService } from 'src/app/core/services/higher-a
 import { ThirdpartyService } from 'src/app/core/services/thirdparty.service';
 import { MeritalstatusService } from 'src/app/core/services/meritalstatus.service';
 import { DesignationService } from 'src/app/core/services/designation.service';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 
 
@@ -96,6 +97,7 @@ export class DefaultComponent implements OnInit {
   familyForm: FormGroup;
   nomineeForm: FormGroup;
   educationForm: FormGroup;
+  educationDocumentForm: FormGroup;
   @ViewChild('content') content;
 
   constructor(private modalService: NgbModal, public formBuilder: FormBuilder, private companyService: CompanyService,
@@ -118,7 +120,8 @@ export class DefaultComponent implements OnInit {
     private userTypeService: UserTypeService,
     private employesService: EmployeesService,
     private meritalstatusService: MeritalstatusService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private http: HttpClient
   ) { }
   companies: any;
   branches: any;
@@ -182,6 +185,14 @@ export class DefaultComponent implements OnInit {
   isUploaded: boolean;
   isEducationEdited = false;
   udatedEducationDetailsId: number;
+
+  // Education Document
+  courseName: number;
+  documentType: string;
+  documentfile: File;
+  documentPreviewUrl: any = null;
+  fileUploadProgress: string = null;
+  uploadedFilePath: string = null;
 
   private fetchData() {
     const companies = this.companyService.getAll();
@@ -249,6 +260,11 @@ export class DefaultComponent implements OnInit {
   // Education Information
   get educationInformationArr() {
     return (<FormArray>this.hrmsForm.get('educationInformation')).controls;
+  }
+
+  // Education Document
+  get educationDocumentArr() {
+    return (<FormArray>this.hrmsForm.get('educationDocument')).controls;
   }
 
   ngOnInit() {
@@ -376,7 +392,8 @@ export class DefaultComponent implements OnInit {
       familyName: [''],
       familyDetails: new FormArray([]),
       nomineeDetails: new FormArray([]),
-      educationInformation: new FormArray([])
+      educationInformation: new FormArray([]),
+      educationDocument: new FormArray([]),
     });
   }
 
@@ -525,6 +542,9 @@ export class DefaultComponent implements OnInit {
       isUploaded: [this.isUploaded]
     });
     (<FormArray>this.hrmsForm.get('educationInformation')).push(this.educationForm);
+    if (this.isUploaded) {
+      this.addEducationDocumentArr();
+    }
     this.clearEducationInformation();
   }
 
@@ -579,6 +599,35 @@ export class DefaultComponent implements OnInit {
     this.board = "";
     this.marks = null;
     this.isUploaded = false;
+  }
+
+  // Add Education Document
+  addEducationDocumentArr() {
+    this.educationDocumentForm = this.formBuilder.group({
+      courseName: [this.qualification],
+      documentType: [''],
+      documentfile: [''],
+      documentPreviewUrl: ['']
+    });
+    (<FormArray>this.hrmsForm.get('educationDocument')).push(this.educationDocumentForm);
+    // this.clearEducationDocument();
+  }
+
+  // Clear Education Document
+  clearEducationDocument() {
+    this.courseName = null;
+    this.documentType = "";
+    this.documentfile = null;
+    this.fileUploadProgress = "";
+    this.documentPreviewUrl = "";
+  }
+
+  // Delete Education Document
+  deleteEducationDocument(row) {
+    const educationDocument = <FormArray>this.hrmsForm.controls['educationDocument'];
+    if (educationDocument) {
+      educationDocument.removeAt(row);
+    }
   }
 
   ngAfterViewInit() {
@@ -688,4 +737,69 @@ export class DefaultComponent implements OnInit {
     this.thirdPartyList = this.thirdParty.filter(x => x.thirdPartyType_Id == value);
   }
 
+  fileProgress(fileInput: any) {
+    this.documentfile = <File>fileInput.target.files[0];
+    this.preview();
+  }
+
+  preview() {
+    // Show preview 
+    var mimeType = this.documentfile.type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.readAsDataURL(this.documentfile);
+    reader.onload = (_event) => {
+      this.documentPreviewUrl = reader.result;
+    }
+  }
+
+  onSubmit(row) {
+    debugger;
+    const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
+    const educationDocData = (<FormArray>this.hrmsForm.controls['educationInformation']).at(row);
+    educationDocData.patchValue({
+      'courseName': [this.courseName],
+      'documentType': [this.documentType],
+      'documentfile': [this.documentPreviewUrl],
+      'documentPreviewUrl': [this.documentPreviewUrl]
+    });
+    // const formData = new FormData();
+    // formData.append('file', this.documentfile);
+    // this.fileUploadProgress = '0%';
+
+    // this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', formData, {
+    //   reportProgress: true,
+    //   observe: 'events'
+    // })
+    //   .subscribe(events => {
+    //     if (events.type === HttpEventType.UploadProgress) {
+    //       this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+    //     } else if (events.type === HttpEventType.Response) {
+    //       this.fileUploadProgress = '';
+    //       this.preview();
+    //       debugger;
+    //       const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
+    //       const educationDocData = (<FormArray>this.hrmsForm.controls['educationInformation']).at(row);
+    //       educationDocData.patchValue({
+    //         'courseName': [eduDocData.courseName],
+    //         'documentType': [eduDocData.documentType],
+    //         'documentfile': [this.documentPreviewUrl],
+    //         'documentPreviewUrl': [this.documentPreviewUrl]
+    //       });
+    //     }
+    //   })
+  }
+
+  getImgSrc(row) {
+    debugger
+    const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
+    return eduDocData.documentPreviewUrl;
+  }
+
+  finallySave() {
+    console.log(this.hrmsForm.value);
+  }
 }

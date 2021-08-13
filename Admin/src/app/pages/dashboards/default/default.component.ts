@@ -10,7 +10,9 @@ import {
 import {
   FormBuilder,
   Validators,
-  FormGroup
+  FormGroup,
+  FormArray,
+  FormControl
 } from '@angular/forms';
 import {
   forkJoin
@@ -73,6 +75,7 @@ import {
 import { HigherAuthoritiesBranchesService } from 'src/app/core/services/higher-authorities-branches.service';
 import { ThirdpartyService } from 'src/app/core/services/thirdparty.service';
 import { MeritalstatusService } from 'src/app/core/services/meritalstatus.service';
+import { DesignationService } from 'src/app/core/services/designation.service';
 
 
 
@@ -89,14 +92,17 @@ export class DefaultComponent implements OnInit {
   validationFamily: FormGroup;
   // Form submition
   submit: boolean;
-
-
+  hrmsForm: FormGroup;
+  familyForm: FormGroup;
+  nomineeForm: FormGroup;
+  educationForm: FormGroup;
   @ViewChild('content') content;
 
   constructor(private modalService: NgbModal, public formBuilder: FormBuilder, private companyService: CompanyService,
     private branchesService: BranchesService, private contriesService: ContriesService,
     private departmentsService: DepartmentsService,
     private workingStatusService: WorkingStatusService,
+    private designationService: DesignationService,
     private categoryEmpsService: CategoryEmpsService,
     private higherAuthoritiesBranchesService: HigherAuthoritiesBranchesService,
     private typeEmpsService: TypeEmpsService,
@@ -112,6 +118,7 @@ export class DefaultComponent implements OnInit {
     private userTypeService: UserTypeService,
     private employesService: EmployeesService,
     private meritalstatusService: MeritalstatusService,
+    private fb: FormBuilder
   ) { }
   companies: any;
   branches: any;
@@ -133,13 +140,49 @@ export class DefaultComponent implements OnInit {
   bloodGroup: any;
   states: any;
   zones: any;
-  countryZones: any [] =[];
-  corresspondCountryZone: any [] =[];
+  countryZones: any[] = [];
+  corresspondCountryZone: any[] = [];
+  thirdPartyList: any[] = [];
   relationShip: any;
+  designation: any;
   userType: any;
   employees: any;
-  meritalStatuses:any;
- 
+  meritalStatuses: any;
+
+  // Family Details
+  fName: string;
+  fRelationship: number;
+  fDateOfBirth: Date;
+  fAadharNo: string;
+  fAadharStatus: string;
+  fAddress: string;
+  fContactNo: string;
+  isFamilyEdited = false;
+  updatedFamilyDetailsId: number;
+
+  // Nominee Details
+  nName: string;
+  nRelationship: number;
+  nDateOfBirth: Date;
+  nAadharNo: string;
+  nAadharStatus: string;
+  nAddress: string;
+  nContactNo: string;
+  isNomineeEdited = false;
+  updatedNomineeDetailsId: number;
+
+  // Educational Information
+  highestQualification: number;
+  qualification: number;
+  year: number;
+  specialization: string;
+  school: string;
+  board: string;
+  marks: number;
+  isUploaded: boolean;
+  isEducationEdited = false;
+  udatedEducationDetailsId: number;
+
   private fetchData() {
     const companies = this.companyService.getAll();
     const branches = this.branchesService.getAll();
@@ -151,10 +194,8 @@ export class DefaultComponent implements OnInit {
     const higherAuthority = this.higherAuthorityService.getAll();
     const higherAuthorityName = this.higherAuthorityNameService.getAll();
     const higherAuthoritesBranches = this.higherAuthoritiesBranchesService.getAll();
-
     const thirdPartyType = this.thirdPartyTypeService.getAll();
     const thirdParty = this.thirdPartyService.getAll();
-
     const cast = this.castService.getAll();
     const bloodGroup = this.bloodGroupService.getAll();
     const state = this.stateService.getAll();
@@ -163,9 +204,10 @@ export class DefaultComponent implements OnInit {
     const userType = this.userTypeService.getAll();
     const employees = this.employesService.getAll();
     const merital = this.meritalstatusService.getAll();
+    const designation = this.designationService.getAll();
     forkJoin([companies, branches, contries, departments, workingStatus, categories,
       typesEmp, higherAuthority, higherAuthorityName, thirdPartyType, cast,
-      state, zones, relationship, userType, employees, higherAuthoritesBranches, thirdParty,cast,bloodGroup,merital
+      state, zones, relationship, userType, employees, higherAuthoritesBranches, thirdParty, cast, bloodGroup, merital
     ]).subscribe(result => {
       this.companies = result[0];
       this.branches = result[1];
@@ -185,19 +227,32 @@ export class DefaultComponent implements OnInit {
       this.employees = result[15];
       this.higherAuthoritiesBranches = result[16];
       this.thirdParty = result[17];
-      this.casts= result[18];
-      this.bloodGroup = result[19]; 
-      this.meritalStatuses =result[20];  
-      debugger  
+      this.casts = result[18];
+      this.bloodGroup = result[19];
+      this.meritalStatuses = result[20];
+      // this.designation = result[21];
     });
 
     //this.employees = employees;
   }
 
+  // Family Details
+  get familyDetailsArr() {
+    return (<FormArray>this.hrmsForm.get('familyDetails')).controls;
+  }
 
+  // Nominee Details
+  get nomineeDetailsArr() {
+    return (<FormArray>this.hrmsForm.get('nomineeDetails')).controls;
+  }
+
+  // Education Information
+  get educationInformationArr() {
+    return (<FormArray>this.hrmsForm.get('educationInformation')).controls;
+  }
 
   ngOnInit() {
-
+    this.fbBuilder();
     // this.forCompany();
     // this.forBranch();
     // this.forCountries();
@@ -281,6 +336,251 @@ export class DefaultComponent implements OnInit {
 
   }
 
+  fbBuilder() {
+    this.hrmsForm = this.fb.group({
+      firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      employeeCode: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      company: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      category: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      department: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      project: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      dateOfJoining: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      mobileNo: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      employeeType: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      maritalStatus: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      physicalNo: [''],
+      religion: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      nationality: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      biometricCode: [''],
+      higherAuthorityName: [''],
+      higherAuthority: [''],
+      higherAuthorityProject: [''],
+      identificationMark: [''],
+      emailAddress: [''],
+      thirdPartyType: [''],
+      thirdParty: [''],
+      workingStatus: [''],
+      probatlonPerlod: [''],
+      refName: [''],
+      refNo: [''],
+      bloodGroup: [''],
+      cast: [''],
+      physicalYes: [''],
+      dateOfBirth: [''],
+      contactNo: [''],
+      address: [''],
+      aadharNo: [''],
+      familyDateOfBirth: [''],
+      relationship: [''],
+      familyName: [''],
+      familyDetails: new FormArray([]),
+      nomineeDetails: new FormArray([]),
+      educationInformation: new FormArray([])
+    });
+  }
+
+  // Add Family details
+  addfamilyDetailsArr() {
+    this.familyForm = this.formBuilder.group({
+      NameNominee: [this.fName],
+      dateOfBirthNominee: [this.fDateOfBirth],
+      relationshipNominee: [this.fRelationship],
+      aadharNoNominee: [this.fAadharNo],
+      AadharStatusNominee: [this.fAadharStatus],
+      ContactNominee: [this.fContactNo],
+      AddressNominee: [this.fAddress],
+    });
+    (<FormArray>this.hrmsForm.get('familyDetails')).push(this.familyForm);
+    this.clearFamilyDetails();
+  }
+
+  // Edit Family Details
+  editFamilyDetails(row) {
+    const familyData = (<FormArray>this.hrmsForm.controls['familyDetails']).at(row).value;
+    this.fName = familyData.NameNominee;
+    this.fRelationship = familyData.relationshipNominee;
+    this.fDateOfBirth = familyData.dateOfBirthNominee;
+    this.fAadharNo = familyData.aadharNoNominee;
+    this.fAadharStatus = familyData.AadharStatusNominee;
+    this.fAddress = familyData.AddressNominee;
+    this.fContactNo = familyData.ContactNominee;
+    this.isFamilyEdited = true;
+    this.updatedFamilyDetailsId = row;
+  }
+
+  // Update Family Details
+  updatefamilyDetailsArr() {
+    const familtyDetailsform = (<FormArray>this.hrmsForm.controls['familyDetails']).at(this.updatedFamilyDetailsId);
+    familtyDetailsform.patchValue({
+      'NameNominee': [this.fName],
+      'dateOfBirthNominee': [this.fDateOfBirth],
+      'relationshipNominee': [this.fRelationship],
+      'aadharNoNominee': [this.fAadharNo],
+      'AadharStatusNominee': [this.fAadharStatus],
+      'ContactNominee': [this.fContactNo],
+      'AddressNominee': [this.fAddress],
+    });
+    this.isFamilyEdited = false;
+    this.updatedFamilyDetailsId = 0;
+    this.clearFamilyDetails();
+  }
+
+  // Delete Familt Details
+  deleteFamilyDetails(row) {
+    const familyDetails = <FormArray>this.hrmsForm.controls['familyDetails'];
+    if (familyDetails) {
+      familyDetails.removeAt(row);
+    }
+  }
+
+  // Clear Family Details
+  clearFamilyDetails() {
+    this.fName = "";
+    this.fRelationship = null;
+    this.fDateOfBirth = null;
+    this.fAadharNo = "";
+    this.fAadharStatus = "";
+    this.fAddress = "";
+    this.fContactNo = "";
+  }
+
+  // Add Nominee Details
+  addNomineeDetailsArr() {
+    debugger;
+    this.nomineeForm = this.formBuilder.group({
+      NameNominee: [this.nName],
+      dateOfBirthNominee: [this.nDateOfBirth],
+      relationshipNominee: [this.nRelationship],
+      aadharNoNominee: [this.nAadharNo],
+      AadharStatusNominee: [this.nAadharStatus],
+      ContactNominee: [this.nContactNo],
+      AddressNominee: [this.nAddress],
+    });
+    (<FormArray>this.hrmsForm.get('nomineeDetails')).push(this.nomineeForm);
+    this.clearNomineeDetails();
+  }
+
+  // Edit Nominee Details
+  editNomineeDetails(row) {
+    const nomineeData = (<FormArray>this.hrmsForm.controls['nomineeDetails']).at(row).value;
+    this.nName = nomineeData.NameNominee;
+    this.nRelationship = nomineeData.relationshipNominee;
+    this.nDateOfBirth = nomineeData.dateOfBirthNominee;
+    this.nAadharNo = nomineeData.aadharNoNominee;
+    this.nAadharStatus = nomineeData.AadharStatusNominee;
+    this.nAddress = nomineeData.AddressNominee;
+    this.nContactNo = nomineeData.ContactNominee;
+    this.isNomineeEdited = true;
+    this.updatedNomineeDetailsId = row;
+  }
+
+  // Update Nominee Details
+  updateNomineeDetailsArr() {
+    const nommineeDetailsform = (<FormArray>this.hrmsForm.controls['nomineeDetails']).at(this.updatedNomineeDetailsId);
+    nommineeDetailsform.patchValue({
+      'NameNominee': [this.nName],
+      'dateOfBirthNominee': [this.nDateOfBirth],
+      'relationshipNominee': [this.nRelationship],
+      'aadharNoNominee': [this.nAadharNo],
+      'AadharStatusNominee': [this.nAadharStatus],
+      'ContactNominee': [this.nContactNo],
+      'AddressNominee': [this.nAddress],
+    });
+    this.isNomineeEdited = false;
+    this.updatedNomineeDetailsId = 0;
+    this.clearNomineeDetails();
+  }
+
+  // Delete Nominee Details
+  deleteNomineeDetails(row) {
+    const nomineeDetails = <FormArray>this.hrmsForm.controls['nomineeDetails'];
+    if (nomineeDetails) {
+      nomineeDetails.removeAt(row);
+    }
+  }
+
+  // Clear Nominee Details
+  clearNomineeDetails() {
+    this.nName = "";
+    this.nRelationship = null;
+    this.nDateOfBirth = null;
+    this.nAadharNo = "";
+    this.nAadharStatus = "";
+    this.nAddress = "";
+    this.nContactNo = "";
+  }
+
+  // Add Education Information
+  addEducationInformationArr() {
+    debugger;
+    this.educationForm = this.formBuilder.group({
+      highestQualification: [this.highestQualification],
+      qualification: [this.qualification],
+      year: [this.year],
+      specialization: [this.specialization],
+      school: [this.school],
+      board: [this.board],
+      marks: [this.marks],
+      isUploaded: [this.isUploaded]
+    });
+    (<FormArray>this.hrmsForm.get('educationInformation')).push(this.educationForm);
+    this.clearEducationInformation();
+  }
+
+  // Edit Education Information
+  editEducationInformation(row) {
+    const educationData = (<FormArray>this.hrmsForm.controls['educationInformation']).at(row).value;
+    this.highestQualification = educationData.highestQualification;
+    this.qualification = educationData.qualification;
+    this.year = educationData.year;
+    this.specialization = educationData.specialization;
+    this.school = educationData.school;
+    this.board = educationData.board;
+    this.marks = educationData.marks;
+    this.isUploaded = educationData.isUploaded;
+    this.isEducationEdited = true;
+    this.udatedEducationDetailsId = row;
+  }
+
+  // Update Education Information
+  updateEducationInformationArr() {
+    const educationInformationform = (<FormArray>this.hrmsForm.controls['educationInformation']).at(this.udatedEducationDetailsId);
+    educationInformationform.patchValue({
+      'highestQualification': [this.highestQualification],
+      'qualification': [this.qualification],
+      'year': [this.year],
+      'specialization': [this.specialization],
+      'school': [this.school],
+      'board': [this.board],
+      'marks': [this.marks],
+      'isUploaded': [this.isUploaded],
+    });
+    this.isEducationEdited = false;
+    this.udatedEducationDetailsId = 0;
+    this.clearEducationInformation();
+  }
+
+  // Delete Education Information
+  deleteEducationInformation(row) {
+    const educationInformation = <FormArray>this.hrmsForm.controls['educationInformation'];
+    if (educationInformation) {
+      educationInformation.removeAt(row);
+    }
+  }
+
+  // Clear Education Information
+  clearEducationInformation() {
+    this.highestQualification = null;
+    this.qualification = null;
+    this.year = null;
+    this.specialization = "";
+    this.school = "";
+    this.board = "";
+    this.marks = null;
+    this.isUploaded = false;
+  }
+
   ngAfterViewInit() {
     // setTimeout(() => {
     //   this.openModal();
@@ -315,8 +615,6 @@ export class DefaultComponent implements OnInit {
 
   addFamilyDetails() {
     console.log(this.validationform.value);
-    debugger
-    alert('test event');
   }
 
   forCompany() {
@@ -374,13 +672,20 @@ export class DefaultComponent implements OnInit {
     });
   }
 
-  onOptionsSelected(event){
+  onOptionsSelected(event) {
     const value = event.target.value;
-     this.countryZones = this.zones.filter(x=>x.country_Id == value);
+    this.countryZones = this.zones.filter(x => x.country_Id == value);
+
   }
-  OptionsSelected(event){
+  OptionsSelected(event) {
+    const value = event.target.value;
+    this.corresspondCountryZone = this.zones.filter(x => x.country_Id == value);
+  }
+
+  onThirdPartySelected(event) {
+    const value = event.target.value;
     debugger;
-    const value = event.target.value;
-     this.corresspondCountryZone = this.zones.filter(x=>x.country_Id == value);
+    this.thirdPartyList = this.thirdParty.filter(x => x.thirdPartyType_Id == value);
   }
+
 }

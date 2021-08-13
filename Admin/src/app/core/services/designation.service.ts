@@ -11,6 +11,6 @@ export class DesignationService {
   constructor(private http :HttpClient) { }
 
   getAll() {
-    return this.http.get<Designation>(`${environment.url}​/api/designations`);
+    return this.http.get<Designation[]>(`${environment.url}​/api/designations`);
   }
 }

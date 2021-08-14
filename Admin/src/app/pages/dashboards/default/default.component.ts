@@ -98,6 +98,7 @@ export class DefaultComponent implements OnInit {
   nomineeForm: FormGroup;
   educationForm: FormGroup;
   educationDocumentForm: FormGroup;
+  identityProofForm: FormGroup;
   @ViewChild('content') content;
 
   constructor(private modalService: NgbModal, public formBuilder: FormBuilder, private companyService: CompanyService,
@@ -194,6 +195,15 @@ export class DefaultComponent implements OnInit {
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
 
+  // Identity Proof
+  identityType: number = 0;
+  identityNo: string;
+  validUpto: Date;
+  attachments: File;
+  identityPreviewUrl: string;
+
+  isPersonalStatus = false;
+
   private fetchData() {
     const companies = this.companyService.getAll();
     const branches = this.branchesService.getAll();
@@ -266,7 +276,10 @@ export class DefaultComponent implements OnInit {
   get educationDocumentArr() {
     return (<FormArray>this.hrmsForm.get('educationDocument')).controls;
   }
-
+  // Identity Proof
+  get identityProofArr() {
+    return (<FormArray>this.hrmsForm.get('identityProf')).controls;
+  }
   ngOnInit() {
     this.fbBuilder();
     // this.forCompany();
@@ -394,6 +407,7 @@ export class DefaultComponent implements OnInit {
       nomineeDetails: new FormArray([]),
       educationInformation: new FormArray([]),
       educationDocument: new FormArray([]),
+      identityProf: new FormArray([])
     });
   }
 
@@ -630,6 +644,27 @@ export class DefaultComponent implements OnInit {
     }
   }
 
+  // Add Identity Proof
+  addIdentityProoftArr() {
+    debugger;
+    this.identityProofForm = this.formBuilder.group({
+      identityType: [this.identityType],
+      identityNo: [this.identityNo],
+      validUpto: [this.validUpto],
+      attachments: [this.attachments],
+      identityPreviewUrl: [this.documentPreviewUrl]
+    });
+    (<FormArray>this.hrmsForm.get('identityProf')).push(this.identityProofForm);
+    // this.clearEducationDocument();
+  }
+  // Delete Identity Proof
+  deleteIdentityProof(row) {
+    const IdentityProof = <FormArray>this.hrmsForm.controls['identityProf'];
+    if (IdentityProof) {
+      IdentityProof.removeAt(row);
+    }
+  }
+
   ngAfterViewInit() {
     // setTimeout(() => {
     //   this.openModal();
@@ -799,7 +834,20 @@ export class DefaultComponent implements OnInit {
     return eduDocData.documentPreviewUrl;
   }
 
+  getIdentityImgSrc(row) {
+    debugger
+    const identityData = (<FormArray>this.hrmsForm.controls['identityProf']).at(row).value;
+    return identityData.identityPreviewUrl;
+  }
+
   finallySave() {
     console.log(this.hrmsForm.value);
+  }
+  pStatus(value) {
+    if (value == "f") {
+      this.isPersonalStatus = false
+    } else {
+      this.isPersonalStatus = true;
+    }
   }
 }

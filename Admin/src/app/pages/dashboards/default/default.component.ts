@@ -99,6 +99,7 @@ export class DefaultComponent implements OnInit {
   educationForm: FormGroup;
   educationDocumentForm: FormGroup;
   identityProofForm: FormGroup;
+  ProfessionalInformationForm: FormGroup;
   @ViewChild('content') content;
 
   constructor(private modalService: NgbModal, public formBuilder: FormBuilder, private companyService: CompanyService,
@@ -202,6 +203,19 @@ export class DefaultComponent implements OnInit {
   attachments: File;
   identityPreviewUrl: string;
 
+  // Professional Information
+  EmployeerName: string;
+  EmployeerAddress: string;
+  Designation: string;
+  ContactPerson: string;
+  ContactNo: string;
+  EmailId: string;
+  DateOfJoining: Date;
+  LastDrawnSalary: number;
+  ReasonforLeavingy: string;
+  DateOfLeaving: Date;
+  Professionaldocument: boolean;
+
   isPersonalStatus = false;
 
   private fetchData() {
@@ -279,6 +293,10 @@ export class DefaultComponent implements OnInit {
   // Identity Proof
   get identityProofArr() {
     return (<FormArray>this.hrmsForm.get('identityProf')).controls;
+  }
+  // Professional Information
+  get professionalInformationArr() {
+    return (<FormArray>this.hrmsForm.get('professionalInformation')).controls;
   }
   ngOnInit() {
     this.fbBuilder();
@@ -407,7 +425,8 @@ export class DefaultComponent implements OnInit {
       nomineeDetails: new FormArray([]),
       educationInformation: new FormArray([]),
       educationDocument: new FormArray([]),
-      identityProf: new FormArray([])
+      identityProf: new FormArray([]),
+      professionalInformation: new FormArray([])
     });
   }
 
@@ -657,11 +676,38 @@ export class DefaultComponent implements OnInit {
     (<FormArray>this.hrmsForm.get('identityProf')).push(this.identityProofForm);
     // this.clearEducationDocument();
   }
+  
   // Delete Identity Proof
   deleteIdentityProof(row) {
     const IdentityProof = <FormArray>this.hrmsForm.controls['identityProf'];
     if (IdentityProof) {
       IdentityProof.removeAt(row);
+    }
+  }
+
+   // Add Professional Information
+   addProfessionalInformationArr() {
+    this.ProfessionalInformationForm = this.formBuilder.group({
+      EmployeerName: [this.EmployeerName],
+      EmployeerAddress: [this.EmployeerAddress],
+      Designation: [this.Designation],
+      ContactPerson: [this.ContactPerson],
+      ContactNo: [this.ContactNo],
+      EmailId: [this.EmailId],
+      DateOfJoining: [this.DateOfJoining],
+      LastDrawnSalary: [this.LastDrawnSalary],
+      ReasonforLeavingy: [this.ReasonforLeavingy],
+      DateOfLeaving: [this.DateOfLeaving],
+      Professionaldocument: [this.Professionaldocument]
+    });
+    (<FormArray>this.hrmsForm.get('professionalInformation')).push(this.ProfessionalInformationForm);
+    // this.clearEducationDocument();
+  }
+   // Delete Professional Information
+   deleteProfessionalInformation(row) {
+    const ProfessionalInformation = <FormArray>this.hrmsForm.controls['professionalInformation'];
+    if (ProfessionalInformation) {
+      ProfessionalInformation.removeAt(row);
     }
   }
 

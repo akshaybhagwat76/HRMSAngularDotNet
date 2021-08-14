@@ -1028,11 +1028,46 @@
                       <td><input type="text" class="form-control"></td>
                       <td>
                         <input type="checkbox">&nbsp; <span>Attach Documents?</span> &nbsp;&nbsp;
-                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"></span>
+                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;" (click)="addProfessionalInformationArr()"></span>
                       </td>
                     </tr>
                   </tbody>
                 </table>
+                <table class="table" style="white-space: nowrap;" *ngIf="professionalInformationArr.length > 0">
+                  <thead>
+                    <tr style="background: aliceblue;">
+                      <th>Employeer Name</th>
+                      <th>Employeer Address</th>
+                      <th>Designation</th>
+                      <th>Contact Person</th>
+                      <th>Contact No</th>
+                      <th>Email Id</th>
+                      <th>Date Of Joining</th>
+                      <th>Last Drawn Salary</th>
+                      <th>Reason for Leaving</th>
+                      <th>Date Of Leaving</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="professionalInformation">
+                    <tr *ngFor="let professionalInformation of professionalInformationArr;let q=index;" [formGroupName]="q">
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="date" class="form-control" id="validationCustom04"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td>
+                        <i class="fa fa-trash" style="font-size:24px;color: red;"
+                          (click)="deleteProfessionalInformation(q)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table> 
               </div>
             </div>
           </div>

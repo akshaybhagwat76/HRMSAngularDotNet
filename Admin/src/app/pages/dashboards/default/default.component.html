@@ -22,8 +22,8 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom04" class="form-label">Company<span class="text-danger">*</span></label>
-                    <select class="form-select" id="validationCustom01">
+                    <label for="eCompanyName" class="form-label">Company<span class="text-danger">*</span></label>
+                    <select class="form-select" id="eCompanyName">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let company of companies" [value]="company.id">
                         {{company?.compnay_Name}}
@@ -36,9 +36,9 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom04" class="form-label">Employee Category<span
+                    <label for="eEmpCatagory" class="form-label">Employee Category<span
                         class="text-danger">*</span></label>
-                    <select class="form-select" id="validationCustom02">
+                    <select class="form-select" id="eEmpCatagory">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let category of categories" [value]="category.id">
                         {{category?.category_Name}}
@@ -51,9 +51,9 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom03">Employee Code<span class="text-danger">*<input type="checkbox">Auto
+                    <label for="eEmpCode">Employee Code<span class="text-danger">*<input type="checkbox">Auto
                         Generation</span></label>
-                    <input type="text" class="form-control" id="validationCustom03" placeholder="Employee Code">
+                    <input type="text" class="form-control" id="eEmpCode" placeholder="Employee Code">
                     <!-- <div *ngIf="submit && form.employeeCode.errors" class="invalid-feedback">
                     <span *ngIf="form.employeeCode.errors.required">Please provide a valid employee code.</span>
                   </div> -->
@@ -61,16 +61,16 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom03">Biometric Code</label>
-                    <input type="text" class="form-control" id="validationCustom04" placeholder="Biometric Code" />
+                    <label for="eBiometricCode">Biometric Code</label>
+                    <input type="text" class="form-control" id="eBiometricCode" placeholder="Biometric Code" />
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom05">First Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="validationCustom05" placeholder="First Name">
+                    <label for="eFirstname">First Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="eFirstname" placeholder="First Name">
                     <!-- <div *ngIf="submit && form.firstName.errors" class="invalid-feedback">
                     <span *ngIf="form.firstName.errors.required">Please provide a valid First Name.</span>
                   </div> -->
@@ -78,14 +78,14 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom06">Middle Name</label>
-                    <input type="text" class="form-control" id="validationCustom06" placeholder="Middle Name" />
+                    <label for="emiddleName">Middle Name</label>
+                    <input type="text" class="form-control" id="emiddleName" placeholder="Middle Name" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom07">Last Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="validationCustom07" placeholder="Last Name">
+                    <label for="eLastName">Last Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="eLastName" placeholder="Last Name">
                     <!-- <div *ngIf="submit && form.lastName.errors" class="invalid-feedback">
                     <span *ngIf="form.lastName.errors.required">Please provide a valid Last Name.</span>
                   </div> -->
@@ -94,17 +94,16 @@
 
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom08" class="form-label">Department<span
-                        class="text-danger">*</span></label>
-                    <select class="form-select" id="validationCustom08">
+                    <label for="eDept" class="form-label">Department<span class="text-danger">*</span></label>
+                    <select class="form-select" id="eDept">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let depart of departments" [value]="depart.id">
                         {{depart?.department_Name}}
                       </option>
                     </select>
                     <!-- <div *ngIf="submit && form.department.errors" class="invalid-feedback">
-                    <span *ngIf="form.department.errors.required">Please provide a valid department.</span>
-                  </div> -->
+                        <span *ngIf="form.department.errors.required">Please provide a valid department.</span>
+                      </div> -->
                   </div>
                 </div>
                 <!-- <div class="col-md-3">
@@ -119,15 +118,13 @@
                   </select>
                 </div>
               </div> -->
-
               </div>
               <div class="row">
-
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom09" class="form-label">Project/Branch<span
+                    <label for="proejctbranch" class="form-label">Project/Branch<span
                         class="text-danger">*</span></label>
-                    <select class="form-select" id="validationCustom09">
+                    <select class="form-select" id="proejctbranch">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let branch of branches" [value]="branch.id">
                         {{branch?.branch_Name}}
@@ -140,9 +137,9 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom10" class="form-label">Higher Authority Branch/Project<span
+                    <label for="higherAuthBranchProject" class="form-label">Higher Authority Branch/Project<span
                         class="text-danger">*</span></label>
-                    <select class="form-select" id="validationCustom10">
+                    <select class="form-select" id="higherAuthBranchProject">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let hBranches of higherAuthoritiesBranches" [value]="hBranches.id">
                         {{hBranches?.higherAuthority_Branch}}
@@ -150,11 +147,10 @@
                     </select>
                   </div>
                 </div>
-
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom11" class="form-label">Higher Authority</label>
-                    <select class="form-select" id="validationCustom11">
+                    <label for="EhigherAuth" class="form-label">Higher Authority</label>
+                    <select class="form-select" id="EhigherAuth">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let higherAuthority of higherAuthorities" [value]="higherAuthority.id">
                         {{higherAuthority?.higherAuthority}}
@@ -164,8 +160,8 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom12" class="form-label">Select Higher Authority Name</label>
-                    <select class="form-select" id="validationCustom12">
+                    <label for="eSelectHigher" class="form-label">Select Higher Authority Name</label>
+                    <select class="form-select" id="eSelectHigher">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let higherAuthorityN of higherAuthorityNames" [value]="higherAuthorityN.id">
                         {{higherAuthorityN?.higherAuthority_Name}}
@@ -177,8 +173,8 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom07">Date Of Joining</label>
-                    <input type="date" class="form-control" id="validationCustom013" />
+                    <label for="eDateOfJoining">Date Of Joining</label>
+                    <input type="date" class="form-control" id="eDateOfJoining" />
                     <div>
                       <span><b>Service</b>: 5 Years 2 Month 26 Days</span>
                     </div>
@@ -186,15 +182,15 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom07">Email Address</label>
-                    <input type="text" class="form-control" id="validationCustom14" placeholder="Email Address" />
+                    <label for="eEmailAddress">Email Address</label>
+                    <input type="text" class="form-control" id="eEmailAddress" placeholder="Email Address" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom15" class="form-label">Employee Type<span
+                    <label for="eEmployeeType" class="form-label">Employee Type<span
                         class="text-danger">*</span></label>
-                    <select class="form-select" id="validationCustom15">
+                    <select class="form-select" id="eEmployeeType">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let employee of employees" [value]="employee.id">
                         {{employee?.type_Name}}
@@ -207,8 +203,8 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom16">Mobile No</label>
-                    <input type="text" class="form-control" id="validationCustom16" placeholder="Mobile No">
+                    <label for="eMobileNo">Mobile No</label>
+                    <input type="text" class="form-control" id="eMobileNo" placeholder="Mobile No">
                     <!-- <div *ngIf="submit && form.mobileNo.errors" class="invalid-feedback">
                     <span *ngIf="form.mobileNo.errors.required">Please provide a valid Mobile No.</span>
                   </div> -->
@@ -218,8 +214,8 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom17" class="form-label">Third Party Type</label>
-                    <select class="form-select" id="validationCustom17" (change)="onThirdPartySelected($event)">
+                    <label for="ethirdPartyType" class="form-label">Third Party Type</label>
+                    <select class="form-select" id="ethirdPartyType" (change)="onThirdPartySelected($event)">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let tPartyType of thirdPartyType" [value]="tPartyType.id">
                         {{tPartyType?.thirdPartyType_Name}}
@@ -230,8 +226,8 @@
                 <div class="col-md-3">
                   <div class="mb-3">
 
-                    <label for="validationCustom18" class="form-label">Third Party</label>
-                    <select class="form-select" id="validationCustom18">
+                    <label for="eThirdParty" class="form-label">Third Party</label>
+                    <select class="form-select" id="eThirdParty">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let tParty of thirdPartyList" [value]="tParty.id">
                         {{tParty?.thirdParty_Name}}
@@ -242,8 +238,8 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom19" class="form-label">Working Status</label>
-                    <select class="form-select" id="validationCustom19">
+                    <label for="eWorkingStatus" class="form-label">Working Status</label>
+                    <select class="form-select" id="eWorkingStatus">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let workingStatus of workingStatus" [value]="workingStatus.id">
                         {{workingStatus?.workingStatus_Name}}
@@ -253,24 +249,23 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom20">Probatlon Perlod(Days)</label>
-                    <input type="text" class="form-control" id="validationCustom20"
-                      placeholder="Probatlon Perlod(Days)">
+                    <label for="eProbatlonPerlod">Probatlon Perlod(Days)</label>
+                    <input type="text" class="form-control" id="eProbatlonPerlod" placeholder="Probatlon Perlod(Days)">
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom21">Reference Employee Name</label>
-                    <input type="text" class="form-control" id="validationCustom21"
+                    <label for="eReferenceEmployeeName">Reference Employee Name</label>
+                    <input type="text" class="form-control" id="eReferenceEmployeeName"
                       placeholder="Reference Employee Name">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom22">Reference Phone No</label>
-                    <input type="text" class="form-control" id="validationCustom22" placeholder="Reference Phone No">
+                    <label for="eReferencePhoneNo">Reference Phone No</label>
+                    <input type="text" class="form-control" id="eReferencePhoneNo" placeholder="Reference Phone No">
                   </div>
                 </div>
               </div>
@@ -287,16 +282,16 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom27">Name<span class="text-danger">*</span></label>
+                    <label for="redName">Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" [(ngModel)]="fName" name="fName"
-                      [ngModelOptions]="{standalone: true}" id="validationCustom27" placeholder="Name">
+                      [ngModelOptions]="{standalone: true}" id="redName" placeholder="Name">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom29" class="form-label">Relationship<span
+                    <label for="eRelationshipName" class="form-label">Relationship<span
                         class="text-danger">*</span></label>
-                    <select class="form-select" id="validationCustom29" [(ngModel)]="fRelationship"
+                    <select class="form-select" id="eRelationshipName" [(ngModel)]="fRelationship"
                       [ngModelOptions]="{standalone: true}">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let relation of relationShip" [value]="relation.id">
@@ -306,15 +301,15 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom28">Date Of Birth</label>
-                    <input type="date" class="form-control" id="validationCustom28" [(ngModel)]="fDateOfBirth"
+                    <label for="DateOfBirth">Date Of Birth</label>
+                    <input type="date" class="form-control" id="DateOfBirth" [(ngModel)]="fDateOfBirth"
                       [ngModelOptions]="{standalone: true}" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom35">Aadhar No</label>
-                    <input type="text" class="form-control" id="validationCustom35" [(ngModel)]="fAadharNo"
+                    <label for="eAadharNo">Aadhar No</label>
+                    <input type="text" class="form-control" id="eAadharNo" [(ngModel)]="fAadharNo"
                       [ngModelOptions]="{standalone: true}" />
                   </div>
                 </div>
@@ -322,38 +317,38 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom30">Aadhar Status</label>
+                    <label for="eAadharStatus">Aadhar Status</label>
                     <div class="d-flex">
                       <div class="custom-control custom-radio custom-control-inline mr-5">
-                        <input type="radio" id="rdoAadhar" name="rdoAadhar" class="custom-control-input"
+                        <input type="radio" id="eAadharStatus" name="rdoAadhar" class="custom-control-input"
                           value="Verified" [(ngModel)]="fAadharStatus" [ngModelOptions]="{standalone: true}">
-                        <label class="custom-control-label" for="rdoAadhar">Verified</label>
+                        <label class="custom-control-label" for="eAadharStatus">Verified</label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="rdoAadhar1" name="rdoAadhar" checked class="custom-control-input"
+                        <input type="radio" id="eAadharStatus" name="rdoAadhar" checked class="custom-control-input"
                           value="Not Verified" [(ngModel)]="fAadharStatus" [ngModelOptions]="{standalone: true}">
-                        <label class="custom-control-label" for="rdoAadhar1">Not Verified</label>
+                        <label class="custom-control-label" for="eAadharStatus">Not Verified</label>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom31" class="form-label">Address</label>
+                    <label for="eAddress" class="form-label">Address</label>
                     <textarea class="form-control" [(ngModel)]="fAddress"
                       [ngModelOptions]="{standalone: true}"></textarea>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom32">Contact No</label>
-                    <input type="text" class="form-control" id="validationCustom28" [(ngModel)]="fContactNo"
+                    <label for="eContactNo">Contact No</label>
+                    <input type="text" class="form-control" id="eContactNo" [(ngModel)]="fContactNo"
                       [ngModelOptions]="{standalone: true}" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom33">&nbsp;</label><br>
+                    <label for="eAadharNumberCheck">&nbsp;</label><br>
                     <a href="https://resident.uidai.gov.in/aadhaarverification">Aadhar Number Check</a>
                   </div>
                 </div>
@@ -383,8 +378,7 @@
                     <td>{{i+1}}</td>
                     <td><input type="text" class="form-control" formControlName="NameNominee" readonly></td>
                     <td>
-                      <select class="form-select" id="validationCustom29" formControlName="relationshipNominee"
-                        disabled>
+                      <select class="form-select" id="familyDetails" formControlName="relationshipNominee" disabled>
                         <option *ngFor="let relation of relationShip" [value]="relation.id">
                           {{relation.relationShip_Name}}
                       </select>
@@ -395,9 +389,11 @@
                     <td><input type="text" class="form-control" formControlName="AddressNominee" readonly></td>
                     <td><input type="text" class="form-control" formControlName="ContactNominee" readonly></td>
                     <td>
-                      <i class="fa fa-edit" style="font-size:24px;color: blue;" (click)="editFamilyDetails(i)"></i>
+                      <i class="fa fa-edit" style="font-size:24px;color: blue; cursor: pointer;"
+                        (click)="editFamilyDetails(i)"></i>
                       &nbsp;
-                      <i class="fa fa-trash" style="font-size:24px;color: red;" (click)="deleteFamilyDetails(i)"></i>
+                      <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                        (click)="deleteFamilyDetails(i)"></i>
                     </td>
                   </tr>
                 </tbody>
@@ -414,8 +410,8 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom22">Date Of Birth</label>
-                    <input type="date" class="form-control" id="validationCustom22" placeholder="Date Of Birth">
+                    <label for="eDateOfBirth">Date Of Birth</label>
+                    <input type="date" class="form-control" id="eDateOfBirth" placeholder="Date Of Birth">
                   </div>
                   <div>
                     <!-- <span><b>Age : </b> 31 years 5 Month 18 Days</span> -->
@@ -423,28 +419,28 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom23">Gender</label>
+                    <label for="eGender">Gender</label>
                     <div class="d-flex">
 
                       <div class="custom-control custom-radio custom-control-inline mr-5">
-                        <input type="radio" id="rdoGender" checked name="rdoGender" class="custom-control-input">
-                        <label class="custom-control-label" for="rdoGender"> Male</label>
+                        <input type="radio" id="redMale" checked name="rdoGender" class="custom-control-input">
+                        <label class="custom-control-label" for="redMale"> Male</label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline mr-5">
-                        <input type="radio" id="rdoFemale" name="rdoGender" class="custom-control-input">
-                        <label class="custom-control-label" for="rdoFemale"> FeMale</label>
+                        <input type="radio" id="redFeMale" name="rdoGender" class="custom-control-input">
+                        <label class="custom-control-label" for="redFeMale"> FeMale</label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="rdoTransit" name="rdoGender" class="custom-control-input" checked>
-                        <label class="custom-control-label" for="rdoTransit">Transit</label>
+                        <input type="radio" id="redTransit" name="rdoGender" class="custom-control-input" checked>
+                        <label class="custom-control-label" for="redTransit">Transit</label>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom24">Nationality<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="validationCustom24" placeholder="Nationality">
+                    <label for="eNationality">Nationality<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="eNationality" placeholder="Nationality">
                     <!-- <div *ngIf="submit && form.nationality.errors" class="invalid-feedback">
 <span *ngIf="form.nationality.errors.required">Please provide a valid Nationality.</span>
 </div> -->
@@ -452,8 +448,8 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom25">Religion<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="validationCustom25" placeholder="Religion">
+                    <label for="eReligion">Religion<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="eReligion" placeholder="Religion">
                     <!-- <div *ngIf="submit && form.religion.errors" class="invalid-feedback">
 <span *ngIf="form.religion.errors.required">Please provide a valid Religion.</span>
 </div> -->
@@ -463,8 +459,8 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom26" class="form-label">Cast</label>
-                    <select class="form-select" id="validationCustom26">
+                    <label for="eCast" class="form-label">Cast</label>
+                    <select class="form-select" id="eCast">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let tcast of casts" [value]="tcast.id">
                         {{tcast.cast_Name}}
@@ -474,25 +470,24 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom27">Physical Disability</label>
+                    <label for="ePhysicalDisability">Physical Disability</label>
                     <div class="d-flex">
 
                       <div class="custom-control custom-radio custom-control-inline mr-5">
-                        <input type="radio" id="physicalRadioInline1" name="physicalYes" class="custom-control-input">
-                        <label class="custom-control-label" for="physicalRadioInline1"> Yes</label>
+                        <input type="radio" id="eYes" name="physicalYes" class="custom-control-input">
+                        <label class="custom-control-label" for="redYes"> Yes</label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="physicalRadioInline2" name="physicalNo" class="custom-control-input"
-                          checked>
-                        <label class="custom-control-label" for="physicalRadioInline2"> No</label>
+                        <input type="radio" id="eNo" name="physicalNo" class="custom-control-input" checked>
+                        <label class="custom-control-label" for="redNo"> No</label>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom28" class="form-label">Blood Group</label>
-                    <select class="form-select" id="validationCustom28">
+                    <label for="eBloodGroup" class="form-label">Blood Group</label>
+                    <select class="form-select" id="eBloodGroup">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let blood of bloodGroup" [value]="blood.id">{{blood.bloodGroup_Name}}
                       </option>
@@ -501,9 +496,9 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom34" class="form-label">Marital Status<span
+                    <label for="eMaritalStatus" class="form-label">Marital Status<span
                         class="text-danger">*</span></label>
-                    <select class="form-select" id="validationCustom34">
+                    <select class="form-select" id="eMaritalStatus">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let meritalS of meritalStatuses" [value]="meritalS.id">
                         {{meritalS.marital_Status}}
@@ -518,8 +513,8 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="identificationMark" class="form-label">Identification Mark</label>
-                    <textarea class="form-control" id="identificationMark"></textarea>
+                    <label for="eIdentificationMark" class="form-label">Identification Mark</label>
+                    <textarea class="form-control" id="eIdentificationMark"></textarea>
                   </div>
                 </div>
               </div>
@@ -535,78 +530,75 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationName">Name</label>
-                    <input type="text" class="form-control" id="validationName" placeholder="Name" [(ngModel)]="nName"
+                    <label for="eName">Name</label>
+                    <input type="text" class="form-control" id="eName" placeholder="Name" [(ngModel)]="nName"
                       [ngModelOptions]="{standalone: true}">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationRelation" class="form-label">Relationship</label>
-                    <select class="form-select" id="validationRelation" [(ngModel)]="nRelationship"
+                    <label for="eRelationship" class="form-label">Relationship</label>
+                    <select class="form-select" id="eRelationship" [(ngModel)]="nRelationship"
                       [ngModelOptions]="{standalone: true}">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let relationS of relationShip" [value]="relationS.id">
                         {{relationS.relationShip_Name}}
-
                     </select>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom03">Date Of Birth</label>
-                    <input type="date" class="form-control" id="validationCustom04" [(ngModel)]="nDateOfBirth"
+                    <label for="eDateOfBirthdate">Date Of Birth</label>
+                    <input type="date" class="form-control" id="eDateOfBirthdate" [(ngModel)]="nDateOfBirth"
                       [ngModelOptions]="{standalone: true}" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationAadharNominee">Aadhar No</label>
-                    <input type="text" class="form-control" id="validationCustom04" [(ngModel)]="nAadharNo"
+                    <label for="enAadharNo">Aadhar No</label>
+                    <input type="text" class="form-control" id="enAadharNo" [(ngModel)]="nAadharNo"
                       [ngModelOptions]="{standalone: true}" />
                   </div>
                 </div>
-
               </div>
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationAadharStatusNominee">Aadhar Status</label>
+                    <label for="enAadharStatus">Aadhar Status</label>
                     <div class="d-flex">
 
                       <div class="custom-control custom-radio custom-control-inline mr-5">
-                        <input type="radio" id="rdoAadharStatusNominee" name="rdoAadharStatusNominee1"
+                        <input type="radio" id="redAadharStatus" name="rdoAadharStatusNominee1"
                           class="custom-control-input" [(ngModel)]="nAadharStatus" value="Verified"
                           [ngModelOptions]="{standalone: true}">
-                        <label class="custom-control-label" for="rdoAadharStatusNominee">Verified</label>
+                        <label class="custom-control-label" for="redVerified">Verified</label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="rdoAadharStatusNominee1" checked name="rdoAadharStatusNominee2"
+                        <input type="radio" id="redAadharStatus" checked name="rdoAadharStatusNominee2"
                           class="custom-control-input" [(ngModel)]="nAadharStatus" value="Not Verified"
                           [ngModelOptions]="{standalone: true}">
-                        <label class="custom-control-label" for="rdoAadharStatusNominee1">Not Verified</label>
+                        <label class="custom-control-label" for="redNotVerified">Not Verified</label>
                       </div>
                     </div>
-
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationAddressNominee">Address</label>
-                    <textarea class="form-control" id="validationAddressNominee" [(ngModel)]="nAddress"
+                    <label for="redAddress">Address</label>
+                    <textarea class="form-control" id="redAddress" [(ngModel)]="nAddress"
                       [ngModelOptions]="{standalone: true}"></textarea>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationContactNominee">Contact No</label>
-                    <input type="text" class="form-control" id="validationContactNo" [(ngModel)]="nContactNo"
+                    <label for="redContactNo">Contact No</label>
+                    <input type="text" class="form-control" id="redContactNo" [(ngModel)]="nContactNo"
                       [ngModelOptions]="{standalone: true}" placeholder="Name">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationContactAadhar">&nbsp;</label><br>
+                    <label for="redAadharNumberCheck">&nbsp;</label><br>
                     <a href="https://resident.uidai.gov.in/aadhaarverification">Aadhar Number Check</a>
                   </div>
                 </div>
@@ -648,9 +640,11 @@
                     <td><input type="text" class="form-control" formControlName="AddressNominee" readonly></td>
                     <td><input type="text" class="form-control" formControlName="ContactNominee" readonly></td>
                     <td>
-                      <i class="fa fa-edit" style="font-size:24px;color: blue;" (click)="editNomineeDetails(j)"></i>
+                      <i class="fa fa-edit" style="font-size:24px;color: blue; cursor: pointer;"
+                        (click)="editNomineeDetails(j)"></i>
                       &nbsp;
-                      <i class="fa fa-trash" style="font-size:24px;color: red;" (click)="deleteNomineeDetails(j)"></i>
+                      <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                        (click)="deleteNomineeDetails(j)"></i>
                     </td>
                   </tr>
                 </tbody>
@@ -668,9 +662,9 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCountry" class="form-label">Highest Qualification<span
+                    <label for="eHighestQualification" class="form-label">Highest Qualification<span
                         class="text-danger">*</span></label>
-                    <select class="form-select" id="validationCountry" [(ngModel)]="highestQualification"
+                    <select class="form-select" id="eHighestQualification" [(ngModel)]="highestQualification"
                       [ngModelOptions]="{standalone: true}" (change)="onOptionsSelected($event)">
                       <option>Choose...</option>
                       <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
@@ -678,154 +672,145 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <table class="table table-responsive">
-                  <thead>
-                    <tr>
-                      <th>Qualification</th>
-                      <th>Year</th>
-                      <th>Specialization</th>
-                      <th>School</th>
-                      <th>Board</th>
-                      <th>Marks</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <select class="form-select" id="validationCountry" (change)="onOptionsSelected($event)"
-                          [(ngModel)]="qualification" [ngModelOptions]="{standalone: true}">
-                          <option>Choose...</option>
-                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                        </select>
-                      </td>
-                      <td>
-                        <input type="text" class="form-control" id="validationContactNo" placeholder="Year"
-                          [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
-                      </td>
-                      <td>
-                        <input type="text" class="form-control" id="validationContactNo" placeholder="Specialization"
-                          [(ngModel)]="specialization" [ngModelOptions]="{standalone: true}">
-                      </td>
-                      <td>
-                        <input type="text" class="form-control" id="validationContactNo" placeholder="School"
-                          [(ngModel)]="school" [ngModelOptions]="{standalone: true}">
-                      </td>
-                      <td>
-                        <input type="text" class="form-control" id="validationContactNo" placeholder="Board"
-                          [(ngModel)]="board" [ngModelOptions]="{standalone: true}">
-                      </td>
-                      <td>
-                        <input type="text" class="form-control" id="validationContactNo" placeholder="Marks"
-                          [(ngModel)]="marks" [ngModelOptions]="{standalone: true}">
-                      </td>
-                      <td>
-                        <input type="checkbox" [(ngModel)]="isUploaded" [ngModelOptions]="{standalone: true}"><span>
-                          Want to
-                          add Document</span> &nbsp;&nbsp;
-                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
-                          (click)="addEducationInformationArr()"></span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <table class="table" *ngIf="educationInformationArr.length > 0">
-                  <thead>
-                    <tr style="background: aliceblue;">
-                      <th>Sl.No</th>
-                      <th>Highest Qualification</th>
-                      <th>Qualification</th>
-                      <th>Year</th>
-                      <th>Specialization</th>
-                      <th>School</th>
-                      <th>Board</th>
-                      <th>Marks</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody formArrayName="educationInformation">
-                    <tr *ngFor="let educationInformation of educationInformationArr;let k=index;" [formGroupName]="k">
-                      <td>{{k+1}}</td>
-                      <td>
-                        <select class="form-select" id="validationCountry" formControlName="highestQualification"
-                          disabled>
-                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                        </select>
-                      </td>
-                      <td>
-                        <select class="form-select" id="validationCountry" formControlName="qualification">
-                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                        </select>
-                      </td>
-                      <td><input type="text" class="form-control" formControlName="year" readonly></td>
-                      <td><input type="text" class="form-control" formControlName="specialization" readonly></td>
-                      <td><input type="text" class="form-control" formControlName="school" readonly></td>
-                      <td><input type="text" class="form-control" formControlName="board" readonly></td>
-                      <td><input type="text" class="form-control" formControlName="marks" readonly></td>
-                      <td>
-                        <i class="fa fa-trash" style="font-size:24px;color: red;"
-                          (click)="deleteEducationInformation(k)"></i>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <table class="table" *ngIf="educationDocumentArr.length > 0">
-                  <thead>
-                    <tr style="background: aliceblue;">
-                      <th>Sl.No</th>
-                      <th>Course Name</th>
-                      <th>Document Type</th>
-                      <th>Upload Your Document</th>
-                      <th>Document Display</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody formArrayName="educationDocument">
-                    <tr *ngFor="let educationDocument of educationDocumentArr;let l=index;" [formGroupName]="l">
-                      <td>1</td>
-                      <td>
-                        <select class="form-select" id="validationCountry" formControlName="courseName">
-                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                        </select>
-                      </td>
-                      <td><input type="text" class="form-control" formControlName="documentType"
-                          placeholder="Document Type"></td>
-                      <td>
-                        <input type="file" class="form-control" formControlName="documentfile" name="image"
-                          (change)="fileProgress($event)">
-                        <button class="form-control btn-sm btn-primary" (click)="onSubmit(l)"
-                          *ngIf="documentfile">Upload Document</button>
-                        <div *ngIf="fileUploadProgress" style="color: green;">
-                          Upload progress: <strong> {{ fileUploadProgress }}</strong>
-                        </div>
-                      </td>
-
-                      <td>
-                        <div *ngIf="!documentfile && !documentPreviewUrl">
-                          <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
-                        </div>
-                        <div class="image-preview mb-3" *ngIf="documentPreviewUrl && documentfile">
-                          <img [src]="documentPreviewUrl" height="70" width="70" />
-                        </div>
-                      </td>
-
-                      <td>
-                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
-                          (click)="addEducationDocumentArr()"></span>
-                        &nbsp;&nbsp;
-                        <i class="fa fa-eye" style="font-size:24px;color: cadetblue;"></i>&nbsp;&nbsp;
-                        <i class="fa fa-trash" style="font-size:24px;color: red;"
-                          (click)="deleteEducationDocument(l)"></i>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table class="table table-responsive">
+                <thead>
+                  <tr>
+                    <th>Qualification</th>
+                    <th>Year</th>
+                    <th>Specialization</th>
+                    <th>School</th>
+                    <th>Board</th>
+                    <th>Marks</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <select class="form-select" id="eCountryScountryName" (change)="onOptionsSelected($event)"
+                        [(ngModel)]="qualification" [ngModelOptions]="{standalone: true}">
+                        <option>Choose...</option>
+                        <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                      </select>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" id="redyear" placeholder="Year" [(ngModel)]="year"
+                        [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" id="redspecialization" placeholder="Specialization"
+                        [(ngModel)]="specialization" [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" id="redschool" placeholder="School" [(ngModel)]="school"
+                        [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" id="redboard" placeholder="Board" [(ngModel)]="board"
+                        [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" id="redmarks" placeholder="Marks" [(ngModel)]="marks"
+                        [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <td>
+                      <input type="checkbox" [(ngModel)]="isUploaded" [ngModelOptions]="{standalone: true}"><span>
+                        Want to
+                        add Document</span> &nbsp;&nbsp;
+                      <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                        (click)="addEducationInformationArr()"></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table" *ngIf="educationInformationArr.length > 0">
+                <thead>
+                  <tr style="background: aliceblue;">
+                    <th>Sl.No</th>
+                    <th>Highest Qualification</th>
+                    <th>Qualification</th>
+                    <th>Year</th>
+                    <th>Specialization</th>
+                    <th>School</th>
+                    <th>Board</th>
+                    <th>Marks</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody formArrayName="educationInformation">
+                  <tr *ngFor="let educationInformation of educationInformationArr;let k=index;" [formGroupName]="k">
+                    <td>{{k+1}}</td>
+                    <td>
+                      <select class="form-select" id="redCountryScountryName" formControlName="highestQualification">
+                        <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                      </select>
+                    </td>
+                    <td>
+                      <select class="form-select" id="redCountryScountry" formControlName="qualification">
+                        <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                      </select>
+                    </td>
+                    <td><input type="text" class="form-control" formControlName="year" readonly></td>
+                    <td><input type="text" class="form-control" formControlName="specialization" readonly></td>
+                    <td><input type="text" class="form-control" formControlName="school" readonly></td>
+                    <td><input type="text" class="form-control" formControlName="board" readonly></td>
+                    <td><input type="text" class="form-control" formControlName="marks" readonly></td>
+                    <td>
+                      <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                        (click)="deleteEducationInformation(k)"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table" *ngIf="educationDocumentArr.length > 0">
+                <thead>
+                  <tr style="background: aliceblue;">
+                    <th>Sl.No</th>
+                    <th>Course Name</th>
+                    <th>Document Type</th>
+                    <th>Upload Your Document</th>
+                    <th>Document Display</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody formArrayName="educationDocument">
+                  <tr *ngFor="let educationDocument of educationDocumentArr;let l=index;" [formGroupName]="l">
+                    <td>1</td>
+                    <td>
+                      <select class="form-select" id="eCountryname" formControlName="courseName">
+                        <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                      </select>
+                    </td>
+                    <td><input type="text" class="form-control" formControlName="documentType"
+                        placeholder="Document Type"></td>
+                    <td>
+                      <input type="file" class="form-control" formControlName="documentfile" name="image"
+                        (change)="fileProgress($event)">
+                      <button class="form-control btn-sm btn-primary" (click)="onSubmit(l)" *ngIf="documentfile">Upload
+                        Document</button>
+                      <div *ngIf="fileUploadProgress" style="color: green;">
+                        Upload progress: <strong> {{ fileUploadProgress }}</strong>
+                      </div>
+                    </td>
+                    <td>
+                      <div *ngIf="!documentfile && !documentPreviewUrl">
+                        <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
+                      </div>
+                      <div class="image-preview mb-3" *ngIf="documentPreviewUrl && documentfile">
+                        <img [src]="documentPreviewUrl" height="70" width="70" />
+                      </div>
+                    </td>
+                    <td>
+                      <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                        (click)="addEducationDocumentArr()"></span>
+                      &nbsp;&nbsp;
+                      <i class="fa fa-eye" style="font-size:24px;color: cadetblue;"></i>&nbsp;&nbsp;
+                      <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                        (click)="deleteEducationDocument(l)"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -841,54 +826,134 @@
         </div>
       </div>
       <div class="row">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">Permanent Contact Information
-            </h4>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationAddress1" class="form-label">Address<span class="text-danger">*</span></label>
-                  <textarea class="form-control" id="validationAddress1"></textarea>
+        <div class="col-12"> 
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Permanent Contact Information
+              </h4>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eAddressInformation" class="form-label">Address<span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="eAddressInformation"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eAddress2" class="form-label">Address 1</label>
+                    <textarea class="form-control" id="eAddress2"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eCountry" class="form-label">Country<span class="text-danger">*</span></label>
+                    <select class="form-select" id="eCountry" (change)="onOptionsSelected($event)">
+                      <option selected="" disabled="" value="">Choose...</option>
+                      <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eZone" class="form-label">Zone<span class="text-danger">*</span></label>
+                    <select class="form-select" id="eZone">
+                      <option selected="" disabled="" value="">Choose...</option>
+                      <option *ngFor="let zone of countryZones" [value]="zone.id">{{zone.zone_Name}}
+                    </select>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationAddress2" class="form-label">Address 1</label>
-                  <textarea class="form-control" id="validationAddress2"></textarea>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eCity">City </label>
+                    <input type="text" class="form-control" id="validationCity" />
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCountry" class="form-label">Country<span class="text-danger">*</span></label>
-                  <select class="form-select" id="validationCountry" (change)="onOptionsSelected($event)">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationZone" class="form-label">Zone<span class="text-danger">*</span></label>
-                  <select class="form-select" id="validationZone">
-                    <option selected="" disabled="" value="">Choose...</option>
-                    <option *ngFor="let zone of countryZones" [value]="zone.id">{{zone.zone_Name}}
-
-                  </select>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="ePin">Pin <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="validationPin" />
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationCity">City </label>
-                  <input type="text" class="form-control" id="validationCity" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">
+                Corresspondance Contact Information (Same as Above)
+                <input type="checkbox">
+              </h4>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eAddresss" class="form-label">Address<span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="eAddresss"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eAddress1" class="form-label">Address 1</label>
+                    <textarea class="form-control" id="eAddress1"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="redcntcountryName" class="form-label">Country<span class="text-danger">*</span></label>
+                    <select class="form-select" id="redcntcountryName" (change)="OptionsSelected($event)">
+                      <option selected="" disabled="" value="">Choose...</option>
+                      <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
+
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="redZone" class="form-label">Zone<span class="text-danger">*</span></label>
+                    <select class="form-select" id="redZone">
+                      <option selected="" disabled="" value="">Choose...</option>
+                      <option *ngFor="let zn of corresspondCountryZone" [value]="zn.id">{{zn.zone_Name}}
+                    </select>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="mb-3">
-                  <label for="validationPin">Pin <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="validationPin" />
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="City1">City </label>
+                    <input type="text" class="form-control" id="City1" />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="ePin1">Pin <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="ePin1" />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="ePhone">Phone</label>
+                    <input type="text" class="form-control" id="validationPhone" />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eEmail">Email Address2 </label>
+                    <input type="text" class="form-control" id="eEmail" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eMobileNo2">Mobile No2 </label>
+                    <input type="text" class="form-control" id="eMobileNo2" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -899,74 +964,322 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">
-                Corresspondance Contact Information (Same as Above)
-                <input type="checkbox">
+              <h4 class="card-title">Professional Information
+              </h4>
+              <div class="row my-3">
+                <div class="col-md-2">
+                  <div class="d-flex">
+                    <label for="eStatus">Status<span class="text-danger">*</span></label>
+                    <div class="custom-control custom-radio custom-control-inline mr-5">
+                      <input type="radio" (click)="pStatus('f')" id="redFresher" checked name="rdoUserId"
+                        class="custom-control-input">
+                      <label class="custom-control-label" for="redFresher"> Fresher</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline mr-5">
+                      <input type="radio" id="redExperience" (click)="pStatus('e')" name="rdoUserId"
+                        class="custom-control-input">
+                      <label class="custom-control-label" for="redExperience"> Experience</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="isPersonalStatus">
+                <div class="col-md-12">
+                  <table class="table" style="white-space: nowrap;">
+                    <thead>
+                      <tr style="background: aliceblue;">
+                        <th>Employeer Name</th>
+                        <th>Employeer Address</th>
+                        <th>Designation</th>
+                        <th>Contact Person</th>
+                        <th>Contact No</th>
+                        <th>Email Id</th>
+                        <th>Date Of Joining</th>
+                        <th>Last Drawn Salary</th>
+                        <th>Reason for Leaving</th>
+                        <th>Date Of Leaving</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody formArrayName="professionalInformation">
+                      <tr>
+                        <td><input type="text" class="form-control" [(ngModel)]="EmployeerName"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="EmployeerAddress"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="Designation"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="ContactPerson"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="ContactNo"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="EmailId"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="date" class="form-control" id="redDateOfJoining" [(ngModel)]="DateOfJoining"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="LastDrawnSalary"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="ReasonforLeavingy"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="DateOfLeaving"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td>
+                          <input type="checkbox">&nbsp; <span>Attach Documents?</span> &nbsp;&nbsp;
+                          <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                            (click)="addProfessionalInformationArr()"></span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="table" style="white-space: nowrap;" *ngIf="professionalInformationArr.length > 0">
+                    <thead>
+                      <tr style="background: aliceblue;">
+                        <th>Employeer Name</th>
+                        <th>Employeer Address</th>
+                        <th>Designation</th>
+                        <th>Contact Person</th>
+                        <th>Contact No</th>
+                        <th>Email Id</th>
+                        <th>Date Of Joining</th>
+                        <th>Last Drawn Salary</th>
+                        <th>Reason for Leaving</th>
+                        <th>Date Of Leaving</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody formArrayName="professionalInformation">
+                      <tr *ngFor="let professionalInformation of professionalInformationArr;let q=index;"
+                        [formGroupName]="q">
+                        <td><input type="text" class="form-control" formControlName="EmployeerName" /></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="EmployeerAddress"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="Designation"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="ContactPerson"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="ContactNo"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="EmailId"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="date" class="form-control" id="reddate" formControlName="DateOfJoining" /></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="LastDrawnSalary"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="ReasonforLeavingy"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td><input type="text" class="form-control" [(ngModel)]="DateOfLeaving"
+                            [ngModelOptions]="{standalone: true}"></td>
+                        <td>
+                          <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                            (click)="deleteProfessionalInformation(q)"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Other Information
               </h4>
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationAddress1" class="form-label">Address<span class="text-danger">*</span></label>
-                    <textarea class="form-control" id="validationAddress1"></textarea>
+                    <label for="eBankName">Bank Name </label>
+                    <input type="text" class="form-control" id="eBankName" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationAddress2" class="form-label">Address 1</label>
-                    <textarea class="form-control" id="validationAddress2"></textarea>
+                    <label for="eBranchName">Branch Name </label>
+                    <input type="text" class="form-control" id="eBranchName" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCountry" class="form-label">Country<span class="text-danger">*</span></label>
-                    <select class="form-select" id="validationCountry" (change)="OptionsSelected($event)">
-                      <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
-
-                    </select>
+                    <label for="eAccountNo">Account No. </label>
+                    <input type="text" class="form-control" id="eAccountNo" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationZone" class="form-label">Zone<span class="text-danger">*</span></label>
-                    <select class="form-select" id="validationZone">
-                      <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let zn of corresspondCountryZone" [value]="zn.id">{{zn.zone_Name}}
-                    </select>
+                    <label for="eIFSCCode">IFSC Code</label>
+                    <input type="text" class="form-control" id="eIFSCCode" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-1">
+                  <label style="color: #b91d1e;"><strong>Identity Proof </strong></label>
+                </div>
+              </div>
+              <table class="table table-responsive">
+                <thead>
+                  <tr>
+                    <th>Identity Type</th>
+                    <th>Identity No</th>
+                    <th>Valid Upto</th>
+                    <th>Attachments</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <select id="eIdentityProof" class="form-select" [(ngModel)]="identityType"
+                        [ngModelOptions]="{standalone: true}">
+                        <option value="0">Choose...</option>
+                        <option value="1">PAN</option>
+                        <option value="2">VOTER CARD</option>
+                        <option value="3">AADHAR CARD</option>
+                        <option value="4">PASSPORT</option>
+                        <option value="5">UAN</option>
+                        <option value="6">ESI No</option>
+                        <option value="7">PF No</option>
+                        <option value="8">BIRTH CERTIFICATE</option>
+                        <option value="9">SCHOOL CERTIFICATE</option>
+                        <option value="10">AdmitCard</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" [(ngModel)]="identityNo"
+                        [ngModelOptions]="{standalone: true}" id="eYear" placeholder="Year">
+                    </td>
+                    <td>
+                      <input type="date" class="form-control" id="edate" [(ngModel)]="validUpto"
+                        [ngModelOptions]="{standalone: true}" />
+                    </td>
+                    <td>
+                      <input type="file" (change)="fileProgress($event)" class="form-control"
+                        id="validationPicture" />
+                    </td>
+                    <td>
+                      <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                        (click)="addIdentityProoftArr()"></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table" *ngIf="identityProofArr.length > 0">
+                <thead>
+                  <tr style="background: aliceblue;">
+                    <th>Sl.No</th>
+                    <th>Identity Type</th>
+                    <th>Identity No</th>
+                    <th>Valid Upto</th>
+                    <th>Attachments</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody formArrayName="identityProf">
+                  <tr *ngFor="let identityProf of identityProofArr;let p=index;" [formGroupName]="p">
+                    <td>{{p+1}}</td>
+                    <td>
+                      <select id="eidentityProf" class="form-select" formControlName="identityType" disabled>
+                        <option value="1">PAN</option>
+                        <option value="2">VOTER CARD</option>
+                        <option value="3">AADHAR CARD</option>
+                        <option value="4">PASSPORT</option>
+                        <option value="5">UAN</option>
+                        <option value="6">ESI No</option>
+                        <option value="7">PF No</option>
+                        <option value="8">BIRTH CERTIFICATE</option>
+                        <option value="9">SCHOOL CERTIFICATE</option>
+                        <option value="10">AdmitCard</option>
+                      </select>
+                    </td>
+                    <td><input type="text" class="form-control form-selectdisabled" formControlName="identityNo" />
+                    </td>
+                    <td>
+                      <input type="date" class="form-control form-selectdisabled" id="redidentityProf"
+                        formControlName="validUpto" />
+                    </td>
+                    <td>
+                      <div *ngIf="!attachments && !documentPreviewUrl">
+                        <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
+                      </div>
+                      <div *ngIf="documentPreviewUrl">
+                        <img height="70" width="70" [src]="getIdentityImgSrc(p)" alt="">
+                      </div>
+                    </td>
+                    <td>
+                      <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                        (click)="deleteIdentityProof(p)"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="redStatus" class="mr-5">Status </label>
+                    <input type="checkbox" id="redStatus" />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eOtherDetails">Other Details </label>
+                    <textarea class="form-control" id="eOtherDetails"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eCardNo">Card No </label>
+                    <input type="text" class="form-control" id="eCardNo" />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="eProxyNo">Proxy No </label>
+                    <input type="text" class="form-control" id="eProxyNo" />
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCity">City </label>
-                    <input type="text" class="form-control" id="validationCity" />
+                    <label for="eUserId">User Id</label>
+                    <div class="d-flex">
+                      <div class="custom-control custom-radio custom-control-inline mr-5">
+                        <input type="radio" id="redEmpCode" checked name="rdoUserId" class="custom-control-input">
+                        <label class="custom-control-label" for="redEmpCode"> Emp Code</label>
+                      </div>
+                      <div class="custom-control custom-radio custom-control-inline mr-5">
+                        <input type="radio" id="redMobileNo" name="rdoUserId" class="custom-control-input">
+                        <label class="custom-control-label" for="redMobileNo"> Mobile No </label>
+                      </div>
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="redOthers" name="rdoUserId" class="custom-control-input" checked>
+                        <label class="custom-control-label" for="redOthers">Others</label>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" id="validationUserId" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationPin">Pin <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="validationPin" />
+                    <label for="eUserType" class="form-label">User Type</label>
+                    <select class="form-select" id="eUserType">
+                      <option selected="" disabled="" value="">Choose...</option>
+                      <option *ngFor="let utype of userType" [value]="utype.id">{{utype.userType_Name}}
+                    </select>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationPhone">Phone</label>
-                    <input type="text" class="form-control" id="validationPhone" />
+                    <label for="ePicture">Picture</label>
+                    <input type="file" class="form-control" id="ePicture" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationEmail2">Email Address2 </label>
-                    <input type="text" class="form-control" id="validationEmail2" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="validationPhone2">Mobile No2 </label>
-                    <input type="text" class="form-control" id="validationPhone2" />
+                    <label for="eSignature">Signature</label>
+                    <input type="file" class="form-control" id="eSignature" />
                   </div>
                 </div>
               </div>
@@ -975,315 +1288,9 @@
         </div>
       </div>
       <div class="row">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">Professional Information
-            </h4>
-            <div class="row">
-              <div class="col-md-2">
-                <div class="d-flex">
-                  <label for="validationPhone2">Status<span class="text-danger">*</span></label>
-                  <div class="custom-control custom-radio custom-control-inline mr-5">
-                    <input type="radio" (click)="pStatus('f')" id="rdoUserId" checked name="rdoUserId"
-                      class="custom-control-input">
-                    <label class="custom-control-label" for="rdoUserId"> Fresher</label>
-                  </div>
-                  <div class="custom-control custom-radio custom-control-inline mr-5">
-                    <input type="radio" id="rdoMobile" (click)="pStatus('e')" name="rdoUserId"
-                      class="custom-control-input">
-                    <label class="custom-control-label" for="rdoMobile"> Experience</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row" *ngIf="isPersonalStatus">
-              <div class="col-md-12">
-                <table class="table" style="white-space: nowrap;">
-                  <thead>
-                    <tr style="background: aliceblue;">
-                      <th>Employeer Name</th>
-                      <th>Employeer Address</th>
-                      <th>Designation</th>
-                      <th>Contact Person</th>
-                      <th>Contact No</th>
-                      <th>Email Id</th>
-                      <th>Date Of Joining</th>
-                      <th>Last Drawn Salary</th>
-                      <th>Reason for Leaving</th>
-                      <th>Date Of Leaving</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody formArrayName="identityProf">
-                    <tr>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="date" class="form-control" id="validationCustom04"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td>
-                        <input type="checkbox">&nbsp; <span>Attach Documents?</span> &nbsp;&nbsp;
-                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;" (click)="addProfessionalInformationArr()"></span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table class="table" style="white-space: nowrap;" *ngIf="professionalInformationArr.length > 0">
-                  <thead>
-                    <tr style="background: aliceblue;">
-                      <th>Employeer Name</th>
-                      <th>Employeer Address</th>
-                      <th>Designation</th>
-                      <th>Contact Person</th>
-                      <th>Contact No</th>
-                      <th>Email Id</th>
-                      <th>Date Of Joining</th>
-                      <th>Last Drawn Salary</th>
-                      <th>Reason for Leaving</th>
-                      <th>Date Of Leaving</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody formArrayName="professionalInformation">
-                    <tr *ngFor="let professionalInformation of professionalInformationArr;let q=index;" [formGroupName]="q">
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="date" class="form-control" id="validationCustom04"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td><input type="text" class="form-control"></td>
-                      <td>
-                        <i class="fa fa-trash" style="font-size:24px;color: red;"
-                          (click)="deleteProfessionalInformation(q)"></i>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> 
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title">Other Information
-                </h4>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationBankName">Bank Name </label>
-                      <input type="text" class="form-control" id="validationBankName" />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationBranchName">Branch Name </label>
-                      <input type="text" class="form-control" id="validationBranchName" />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationAccountNo">Account No. </label>
-                      <input type="text" class="form-control" id="validationAccountNo" />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationIfscCode">IFSC Code</label>
-                      <input type="text" class="form-control" id="validationIfscCode" />
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-1">
-                    <label style="color: #b91d1e;"><strong>Identity Proof </strong></label>
-                  </div>
-                </div>
-                <table class="table table-responsive">
-                  <thead>
-                    <tr>
-                      <th>Identity Type</th>
-                      <th>Identity No</th>
-                      <th>Valid Upto</th>
-                      <th>Attachments</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <select id="validationCustom28" class="form-select" [(ngModel)]="identityType"
-                          [ngModelOptions]="{standalone: true}">
-                          <option value="0">Choose...</option>
-                          <option value="1">PAN</option>
-                          <option value="2">VOTER CARD</option>
-                          <option value="3">AADHAR CARD</option>
-                          <option value="4">PASSPORT</option>
-                          <option value="5">UAN</option>
-                          <option value="6">ESI No</option>
-                          <option value="7">PF No</option>
-                          <option value="8">BIRTH CERTIFICATE</option>
-                          <option value="9">SCHOOL CERTIFICATE</option>
-                          <option value="10">AdmitCard</option>
-                        </select>
-                      </td>
-                      <td>
-                        <input type="text" class="form-control" [(ngModel)]="identityNo"
-                          [ngModelOptions]="{standalone: true}" id="validationContactNo" placeholder="Year">
-                      </td>
-                      <td>
-                        <input type="date" class="form-control" id="validationCustom04" [(ngModel)]="validUpto"
-                          [ngModelOptions]="{standalone: true}" />
-                      </td>
-                      <td>
-                        <input type="file" (change)="fileProgress($event)" class="form-control"
-                          id="validationPicture" />
-                      </td>
-                      <td>
-                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
-                          (click)="addIdentityProoftArr()"></span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <table class="table" *ngIf="identityProofArr.length > 0">
-                  <thead>
-                    <tr style="background: aliceblue;">
-                      <th>Sl.No</th>
-                      <th>Identity Type</th>
-                      <th>Identity No</th>
-                      <th>Valid Upto</th>
-                      <th>Attachments</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody formArrayName="identityProf">
-                    <tr *ngFor="let identityProf of identityProofArr;let p=index;" [formGroupName]="p">
-                      <td>{{p+1}}</td>
-                      <td>
-                        <select id="validationCustom28" class="form-select" formControlName="identityType" disabled>
-                          <option value="1">PAN</option>
-                          <option value="2">VOTER CARD</option>
-                          <option value="3">AADHAR CARD</option>
-                          <option value="4">PASSPORT</option>
-                          <option value="5">UAN</option>
-                          <option value="6">ESI No</option>
-                          <option value="7">PF No</option>
-                          <option value="8">BIRTH CERTIFICATE</option>
-                          <option value="9">SCHOOL CERTIFICATE</option>
-                          <option value="10">AdmitCard</option>
-                        </select>
-                      </td>
-                      <td><input type="text" class="form-control form-selectdisabled" formControlName="identityNo" />
-                      </td>
-                      <td>
-                        <input type="date" class="form-control form-selectdisabled" id="validationCustom04"
-                          formControlName="validUpto" />
-                      </td>
-                      <td>
-                        <div *ngIf="!attachments && !documentPreviewUrl">
-                          <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
-                        </div>
-                        <div *ngIf="documentPreviewUrl">
-                          <img height="70" width="70" [src]="getIdentityImgSrc(p)" alt="">
-                        </div>
-                      </td>
-                      <td>
-                        <i class="fa fa-trash" style="font-size:24px;color: red;" (click)="deleteIdentityProof(p)"></i>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationStatus" class="mr-5">Status </label>
-                      <input type="checkbox" id="validationStatus" />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationOtherDetail">Other Details </label>
-                      <textarea class="form-control" id="validationOtherDetail"></textarea>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationCardNo">Card No </label>
-                      <input type="text" class="form-control" id="validationCardNo" />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationProxyNo">Proxy No </label>
-                      <input type="text" class="form-control" id="validationProxyNo" />
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationUserId">User Id</label>
-                      <div class="d-flex">
-                        <div class="custom-control custom-radio custom-control-inline mr-5">
-                          <input type="radio" id="rdoUserId" checked name="rdoUserId" class="custom-control-input">
-                          <label class="custom-control-label" for="rdoUserId"> Emp Code</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline mr-5">
-                          <input type="radio" id="rdoMobile" name="rdoUserId" class="custom-control-input">
-                          <label class="custom-control-label" for="rdoMobile"> Mobile No </label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                          <input type="radio" id="rdoOther" name="rdoUserId" class="custom-control-input" checked>
-                          <label class="custom-control-label" for="rdoOther">Others</label>
-                        </div>
-                      </div>
-                      <input type="text" class="form-control" id="validationUserId" />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationUserType" class="form-label">User Type</label>
-                      <select class="form-select" id="validationUserType">
-                        <option selected="" disabled="" value="">Choose...</option>
-                        <option *ngFor="let utype of userType" [value]="utype.id">{{utype.userType_Name}}
-
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationPicture">Picture</label>
-                      <input type="file" class="form-control" id="validationPicture" />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="mb-3">
-                      <label for="validationSignature">Signature</label>
-                      <input type="file" class="form-control" id="validationSignature" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-3">
-            <button type="submit" class="btn btn-primary mr-5">Save</button>
-            <button type="submit" class="btn btn-primary">Reset</button>
-          </div>
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary mr-5">Save</button>
+          <button type="submit" class="btn btn-primary">Reset</button>
         </div>
       </div>
     </form>

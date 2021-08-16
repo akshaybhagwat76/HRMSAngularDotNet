@@ -496,8 +496,7 @@ export class DefaultComponent implements OnInit {
   }
 
   // Add Nominee Details
-  addNomineeDetailsArr() {
-    debugger;
+  addNomineeDetailsArr() {;
     this.nomineeForm = this.formBuilder.group({
       NameNominee: [this.nName],
       dateOfBirthNominee: [this.nDateOfBirth],
@@ -562,8 +561,7 @@ export class DefaultComponent implements OnInit {
   }
 
   // Add Education Information
-  addEducationInformationArr() {
-    debugger;
+  addEducationInformationArr() {;
     this.educationForm = this.formBuilder.group({
       highestQualification: [this.highestQualification],
       qualification: [this.qualification],
@@ -665,7 +663,6 @@ export class DefaultComponent implements OnInit {
 
   // Add Identity Proof
   addIdentityProoftArr() {
-    debugger;
     this.identityProofForm = this.formBuilder.group({
       identityType: [this.identityType],
       identityNo: [this.identityNo],
@@ -813,8 +810,7 @@ export class DefaultComponent implements OnInit {
   }
 
   onThirdPartySelected(event) {
-    const value = event.target.value;
-    debugger;
+    const value = event.target.value;;
     this.thirdPartyList = this.thirdParty.filter(x => x.thirdPartyType_Id == value);
   }
 
@@ -837,8 +833,7 @@ export class DefaultComponent implements OnInit {
     }
   }
 
-  onSubmit(row) {
-    debugger;
+  onSubmit(row) {;
     const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
     const educationDocData = (<FormArray>this.hrmsForm.controls['educationInformation']).at(row);
     educationDocData.patchValue({
@@ -861,7 +856,7 @@ export class DefaultComponent implements OnInit {
     //     } else if (events.type === HttpEventType.Response) {
     //       this.fileUploadProgress = '';
     //       this.preview();
-    //       debugger;
+    //    ;
     //       const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
     //       const educationDocData = (<FormArray>this.hrmsForm.controls['educationInformation']).at(row);
     //       educationDocData.patchValue({
@@ -875,13 +870,11 @@ export class DefaultComponent implements OnInit {
   }
 
   getImgSrc(row) {
-    debugger
     const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
     return eduDocData.documentPreviewUrl;
   }
 
   getIdentityImgSrc(row) {
-    debugger
     const identityData = (<FormArray>this.hrmsForm.controls['identityProf']).at(row).value;
     return identityData.identityPreviewUrl;
   }

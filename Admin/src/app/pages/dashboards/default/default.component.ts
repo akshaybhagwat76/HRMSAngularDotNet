@@ -497,7 +497,6 @@ export class DefaultComponent implements OnInit {
 
   // Add Nominee Details
   addNomineeDetailsArr() {
-    debugger;
     this.nomineeForm = this.formBuilder.group({
       NameNominee: [this.nName],
       dateOfBirthNominee: [this.nDateOfBirth],
@@ -563,7 +562,6 @@ export class DefaultComponent implements OnInit {
 
   // Add Education Information
   addEducationInformationArr() {
-    debugger;
     this.educationForm = this.formBuilder.group({
       highestQualification: [this.highestQualification],
       qualification: [this.qualification],
@@ -813,7 +811,6 @@ export class DefaultComponent implements OnInit {
 
   onThirdPartySelected(event) {
     const value = event.target.value;
-    debugger;
     this.thirdPartyList = this.thirdParty.filter(x => x.thirdPartyType_Id == value);
   }
 
@@ -837,7 +834,6 @@ export class DefaultComponent implements OnInit {
   }
 
   onSubmit(row) {
-    debugger;
     const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
     const educationDocData = (<FormArray>this.hrmsForm.controls['educationInformation']).at(row);
     educationDocData.patchValue({
@@ -860,7 +856,7 @@ export class DefaultComponent implements OnInit {
     //     } else if (events.type === HttpEventType.Response) {
     //       this.fileUploadProgress = '';
     //       this.preview();
-    //       debugger;
+    //    
     //       const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
     //       const educationDocData = (<FormArray>this.hrmsForm.controls['educationInformation']).at(row);
     //       educationDocData.patchValue({

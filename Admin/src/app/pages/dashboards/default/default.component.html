@@ -51,7 +51,7 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eEmpCode">Employee Code<span><input type="checkbox">Auto
-                      Generation</span></label>
+                        Generation</span></label>
                     <input type="text" class="form-control" id="eEmpCode" placeholder="Employee Code">
                     <!-- <div *ngIf="submit && form.employeeCode.errors" class="invalid-feedback">
                     <span *ngIf="form.employeeCode.errors.required">Please provide a valid employee code.</span>
@@ -356,45 +356,45 @@
                   *ngIf="isFamilyEdited">Update</button>
               </div>
               <br />
-              <table class="table" *ngIf="familyDetailsArr.length > 0">
-                <thead>
-                  <tr style="background: aliceblue;">
-                    <th>Sl.No</th>
-                    <th>Name</th>
-                    <th>Relationship</th>
-                    <th>Date Of Birth</th>
-                    <th>Aadhar No</th>
-                    <th>Aadhar Status</th>
-                    <th>Address</th>
-                    <th>Contact No</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody formArrayName="familyDetails">
-                  <tr *ngFor="let familyDetails of familyDetailsArr;let i=index;" [formGroupName]="i">
-                    <td>{{i+1}}</td>
-                    <td><input type="text" class="form-control" formControlName="NameNominee" readonly></td>
-                    <td>
-                      <select class="form-select" id="familyDetails" formControlName="relationshipNominee" disabled>
-                        <option *ngFor="let relation of relationShip" [value]="relation.id">
-                          {{relation.relationShip_Name}}
-                      </select>
-                    </td>
-                    <td><input type="text" class="form-control" formControlName="dateOfBirthNominee" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="aadharNoNominee" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="AadharStatusNominee" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="AddressNominee" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="ContactNominee" readonly></td>
-                    <td>
-                      <i class="fa fa-edit" style="font-size:24px;color: blue; cursor: pointer;"
-                        (click)="editFamilyDetails(i)"></i>
-                      &nbsp;
-                      <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
-                        (click)="deleteFamilyDetails(i)"></i>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-responsive" *ngIf="familyDetailsArr.length > 0">
+                <table class="table">
+                  <thead>
+                    <tr style="background: aliceblue;">
+                      <th scope="col">SI.NO</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Relationship</th>
+                      <th scope="col">Date Of Birth</th>
+                      <th scope="col">Aadhar No</th>
+                      <th scope="col">Aadhar Status</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Contact No</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="familyDetails">
+                    <tr *ngFor="let familyDetails of familyDetailsArr;let i=index;" [formGroupName]="i">
+                      <th scope="row">{{i+1}}</th>
+                      <td><input type="text" class="form-control" formControlName="NameNominee" readonly></td>
+                      <td><select class="form-select" id="familyDetails" formControlName="relationshipNominee" disabled>
+                          <option *ngFor="let relation of relationShip" [value]="relation.id">
+                            {{relation.relationShip_Name}}
+                        </select>
+                      </td>
+                      <td><input type="text" class="form-control" formControlName="dateOfBirthNominee" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="aadharNoNominee" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="AadharStatusNominee" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="AddressNominee" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="ContactNominee" readonly></td>
+                      <td><i class="fa fa-edit" style="font-size:24px;color: blue; cursor: pointer;"
+                          (click)="editFamilyDetails(i)"></i>
+                        &nbsp;
+                        <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                          (click)="deleteFamilyDetails(i)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -606,46 +606,48 @@
                   *ngIf="isNomineeEdited">Update</button>
               </div>
               <br />
-              <table class="table" *ngIf="nomineeDetailsArr.length > 0">
-                <thead>
-                  <tr style="background: aliceblue;">
-                    <th>Sl.No</th>
-                    <th>Name</th>
-                    <th>Relationship</th>
-                    <th>Date Of Birth</th>
-                    <th>Aadhar No</th>
-                    <th>Aadhar Status</th>
-                    <th>Address</th>
-                    <th>Contact No</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody formArrayName="nomineeDetails">
-                  <tr *ngFor="let nomineeDetails of nomineeDetailsArr;let j=index;" [formGroupName]="j">
-                    <td>{{j+1}}</td>
-                    <td><input type="text" class="form-control" formControlName="NameNominee" readonly></td>
-                    <td>
-                      <select class="form-select" id="validationCustom29" formControlName="relationshipNominee"
-                        disabled>
-                        <option *ngFor="let relation of relationShip" [value]="relation.id">
-                          {{relation.relationShip_Name}}
-                      </select>
-                    </td>
-                    <td><input type="text" class="form-control" formControlName="dateOfBirthNominee" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="aadharNoNominee" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="AadharStatusNominee" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="AddressNominee" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="ContactNominee" readonly></td>
-                    <td>
-                      <i class="fa fa-edit" style="font-size:24px;color: blue; cursor: pointer;"
-                        (click)="editNomineeDetails(j)"></i>
-                      &nbsp;
-                      <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
-                        (click)="deleteNomineeDetails(j)"></i>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-responsive" *ngIf="nomineeDetailsArr.length > 0">
+                <table class="table">
+                  <thead>
+                    <tr style="background: aliceblue;">
+                      <th scope="col">SI.NO</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Relationship</th>
+                      <th scope="col">Date Of Birth</th>
+                      <th scope="col">Aadhar No</th>
+                      <th scope="col">Aadhar Status</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Contact No</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="nomineeDetails">
+                    <tr *ngFor="let nomineeDetails of nomineeDetailsArr;let j=index;" [formGroupName]="j">
+                      <th scope="row">{{j+1}}</th>
+                      <td><input type="text" class="form-control" formControlName="NameNominee" readonly></td>
+                      <td>
+                        <select class="form-select" id="validationCustom29" formControlName="relationshipNominee"
+                          disabled>
+                          <option *ngFor="let relation of relationShip" [value]="relation.id">
+                            {{relation.relationShip_Name}}
+                        </select>
+                      </td>
+                      <td><input type="text" class="form-control" formControlName="dateOfBirthNominee" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="aadharNoNominee" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="AadharStatusNominee" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="AddressNominee" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="ContactNominee" readonly></td>
+                      <td>
+                        <i class="fa fa-edit" style="font-size:24px;color: blue; cursor: pointer;"
+                          (click)="editNomineeDetails(j)"></i>
+                        &nbsp;
+                        <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                          (click)="deleteNomineeDetails(j)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -668,145 +670,152 @@
                   </div>
                 </div>
               </div>
-              <table class="table table-responsive">
-                <thead>
-                  <tr>
-                    <th>Qualification</th>
-                    <th>Year</th>
-                    <th>Specialization</th>
-                    <th>School</th>
-                    <th>Board</th>
-                    <th>Marks</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <select class="form-select" id="eCountryScountryName" (change)="onOptionsSelected($event)"
-                        [(ngModel)]="qualification" [ngModelOptions]="{standalone: true}">
-                        <option>Choose...</option>
-                        <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                      </select>
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" id="redyear" placeholder="Year" [(ngModel)]="year"
-                        [ngModelOptions]="{standalone: true}">
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" id="redspecialization" placeholder="Specialization"
-                        [(ngModel)]="specialization" [ngModelOptions]="{standalone: true}">
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" id="redschool" placeholder="School" [(ngModel)]="school"
-                        [ngModelOptions]="{standalone: true}">
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" id="redboard" placeholder="Board" [(ngModel)]="board"
-                        [ngModelOptions]="{standalone: true}">
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" id="redmarks" placeholder="Marks" [(ngModel)]="marks"
-                        [ngModelOptions]="{standalone: true}">
-                    </td>
-                    <td>
-                      <input type="checkbox" [(ngModel)]="isUploaded" [ngModelOptions]="{standalone: true}"><span>
-                        Want to
-                        add Document</span> &nbsp;&nbsp;
-                      <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
-                        (click)="addEducationInformationArr()"></span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <table class="table" *ngIf="educationInformationArr.length > 0">
-                <thead>
-                  <tr style="background: aliceblue;">
-                    <th>Sl.No</th>
-                    <th>Highest Qualification</th>
-                    <th>Qualification</th>
-                    <th>Year</th>
-                    <th>Specialization</th>
-                    <th>School</th>
-                    <th>Board</th>
-                    <th>Marks</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody formArrayName="educationInformation">
-                  <tr *ngFor="let educationInformation of educationInformationArr;let k=index;" [formGroupName]="k">
-                    <td>{{k+1}}</td>
-                    <td>
-                      <select class="form-select" id="redCountryScountryName" formControlName="highestQualification">
-                        <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                      </select>
-                    </td>
-                    <td>
-                      <select class="form-select" id="redCountryScountry" formControlName="qualification">
-                        <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                      </select>
-                    </td>
-                    <td><input type="text" class="form-control" formControlName="year" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="specialization" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="school" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="board" readonly></td>
-                    <td><input type="text" class="form-control" formControlName="marks" readonly></td>
-                    <td>
-                      <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
-                        (click)="deleteEducationInformation(k)"></i>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <table class="table" *ngIf="educationDocumentArr.length > 0">
-                <thead>
-                  <tr style="background: aliceblue;">
-                    <th>Sl.No</th>
-                    <th>Course Name</th>
-                    <th>Document Type</th>
-                    <th>Upload Your Document</th>
-                    <th>Document Display</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody formArrayName="educationDocument">
-                  <tr *ngFor="let educationDocument of educationDocumentArr;let l=index;" [formGroupName]="l">
-                    <td>1</td>
-                    <td>
-                      <select class="form-select" id="eCountryname" formControlName="courseName">
-                        <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                      </select>
-                    </td>
-                    <td><input type="text" class="form-control" formControlName="documentType"
-                        placeholder="Document Type"></td>
-                    <td>
-                      <input type="file" class="form-control" formControlName="documentfile" name="image"
-                        (change)="fileProgress($event)">
-                      <button class="form-control btn-sm btn-primary" (click)="onSubmit(l)" *ngIf="documentfile">Upload
-                        Document</button>
-                      <div *ngIf="fileUploadProgress" style="color: green;">
-                        Upload progress: <strong> {{ fileUploadProgress }}</strong>
-                      </div>
-                    </td>
-                    <td>
-                      <div *ngIf="!documentfile && !documentPreviewUrl">
-                        <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
-                      </div>
-                      <div class="image-preview mb-3" *ngIf="documentPreviewUrl && documentfile">
-                        <img [src]="documentPreviewUrl" height="70" width="70" />
-                      </div>
-                    </td>
-                    <td>
-                      <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
-                        (click)="addEducationDocumentArr()"></span>
-                      &nbsp;&nbsp;
-                      <i class="fa fa-eye" style="font-size:24px;color: cadetblue;"></i>&nbsp;&nbsp;
-                      <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
-                        (click)="deleteEducationDocument(l)"></i>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr style="background: aliceblue;">
+                      <th scope="col">Qualification</th>
+                      <th scope="col">Year</th>
+                      <th scope="col">Specialization</th>
+                      <th scope="col">School</th>
+                      <th scope="col">Board</th>
+                      <th scope="col">Marks</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="familyDetails">
+                    <tr>
+                      <td>
+                        <select class="form-select" id="eCountryScountryName" (change)="onOptionsSelected($event)"
+                          [(ngModel)]="qualification" [ngModelOptions]="{standalone: true}">
+                          <option>Choose...</option>
+                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                        </select>
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" id="redyear" placeholder="Year" [(ngModel)]="year"
+                          [ngModelOptions]="{standalone: true}">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" id="redspecialization" placeholder="Specialization"
+                          [(ngModel)]="specialization" [ngModelOptions]="{standalone: true}">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" id="redschool" placeholder="School" [(ngModel)]="school"
+                          [ngModelOptions]="{standalone: true}">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" id="redboard" placeholder="Board" [(ngModel)]="board"
+                          [ngModelOptions]="{standalone: true}">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" id="redmarks" placeholder="Marks" [(ngModel)]="marks"
+                          [ngModelOptions]="{standalone: true}">
+                      </td>
+                      <td>
+                        <input type="checkbox" [(ngModel)]="isUploaded" [ngModelOptions]="{standalone: true}"><span>
+                          Want to
+                          add Document</span> &nbsp;&nbsp;
+                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                          (click)="addEducationInformationArr()"></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="table-responsive" *ngIf="educationInformationArr.length > 0">
+                <table class="table">
+                  <thead>
+                    <tr style="background: aliceblue;">
+                      <th scope="col">Sl.No</th>
+                      <th scope="col">Highest Qualification</th>
+                      <th scope="col">Qualification</th>
+                      <th scope="col">Year</th>
+                      <th scope="col">Specialization</th>
+                      <th scope="col">School</th>
+                      <th scope="col">Board</th>
+                      <th scope="col">Marks</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="educationInformation">
+                    <tr *ngFor="let educationInformation of educationInformationArr;let k=index;" [formGroupName]="k">
+                      <td>{{k+1}}</td>
+                      <td>
+                        <select class="form-select" id="redCountryScountryName" formControlName="highestQualification">
+                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                        </select>
+                      </td>
+                      <td>
+                        <select class="form-select" id="redCountryScountry" formControlName="qualification">
+                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                        </select>
+                      </td>
+                      <td><input type="text" class="form-control" formControlName="year" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="specialization" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="school" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="board" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="marks" readonly></td>
+                      <td>
+                        <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                          (click)="deleteEducationInformation(k)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="table-responsive" *ngIf="educationDocumentArr.length > 0">
+                <table class="table">
+                  <thead>
+                    <tr style="background: aliceblue;">
+                      <th scope="col">Sl.No</th>
+                      <th scope="col">Course Name</th>
+                      <th scope="col">Document Type</th>
+                      <th scope="col">Upload Your Document</th>
+                      <th scope="col">Document Display</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="educationDocument">
+                    <tr *ngFor="let educationDocument of educationDocumentArr;let l=index;" [formGroupName]="l">
+                      <td>1</td>
+                      <td>
+                        <select class="form-select" id="eCountryname" formControlName="courseName">
+                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                        </select>
+                      </td>
+                      <td><input type="text" class="form-control" formControlName="documentType"
+                          placeholder="Document Type"></td>
+                      <td>
+                        <input type="file" class="form-control" formControlName="documentfile" name="image"
+                          (change)="fileProgress($event)">
+                        <button class="form-control btn-sm btn-primary" (click)="onSubmit(l)"
+                          *ngIf="documentfile">Upload
+                          Document</button>
+                        <div *ngIf="fileUploadProgress" style="color: green;">
+                          Upload progress: <strong> {{ fileUploadProgress }}</strong>
+                        </div>
+                      </td>
+                      <td>
+                        <div *ngIf="!documentfile && !documentPreviewUrl">
+                          <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
+                        </div>
+                        <div class="image-preview mb-3" *ngIf="documentPreviewUrl && documentfile">
+                          <img [src]="documentPreviewUrl" height="70" width="70" />
+                        </div>
+                      </td>
+                      <td>
+                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                          (click)="addEducationDocumentArr()"></span>
+                        &nbsp;&nbsp;
+                        <i class="fa fa-eye" style="font-size:24px;color: cadetblue;"></i>&nbsp;&nbsp;
+                        <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                          (click)="deleteEducationDocument(l)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -822,7 +831,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12"> 
+        <div class="col-12">
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Permanent Contact Information
@@ -830,7 +839,8 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="eAddressInformation" class="form-label">Address<span class="text-danger">*</span></label>
+                    <label for="eAddressInformation" class="form-label">Address<span
+                        class="text-danger">*</span></label>
                     <textarea class="form-control" id="eAddressInformation"></textarea>
                   </div>
                 </div>
@@ -954,7 +964,7 @@
                     <input type="text" class="form-control" id="validationPhone" />
                   </div>
                 </div>
-               
+
               </div>
               <div class="row">
                 <div class="col-md-3">
@@ -997,99 +1007,99 @@
                   </div>
                 </div>
               </div>
-              <div class="row" *ngIf="isPersonalStatus">
-                <div class="col-md-12">
-                  <table class="table" style="white-space: nowrap;">
-                    <thead>
-                      <tr style="background: aliceblue;" class="text-center">
-                        <th>Employeer Name</th>
-                        <th>Employeer Address</th>
-                        <th>Designation</th>
-                        <th>Contact Person</th>
-                        <th>Contact No</th>
-                        <th>Email Id</th>
-                        <th>Date Of Joining</th>
-                        <th>Last Drawn Salary</th>
-                        <th>Reason for Leaving</th>
-                        <th>Date Of Leaving</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody formArrayName="professionalInformation">
-                      <tr>
-                        <td><input type="text" class="form-control" [(ngModel)]="EmployeerName"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="EmployeerAddress"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="Designation"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="ContactPerson"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="ContactNo"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="EmailId"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="date" class="form-control" id="redDateOfJoining" [(ngModel)]="DateOfJoining"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="LastDrawnSalary"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="ReasonforLeavingy"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="DateOfLeaving"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td>
-                          <input type="checkbox">&nbsp; <span>Attach Documents?</span> &nbsp;&nbsp;
-                          <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
-                            (click)="addProfessionalInformationArr()"></span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <table class="table" style="white-space: nowrap;" *ngIf="professionalInformationArr.length > 0">
-                    <thead>
-                      <tr style="background: aliceblue;">
-                        <th>Employeer Name</th>
-                        <th>Employeer Address</th>
-                        <th>Designation</th>
-                        <th>Contact Person</th>
-                        <th>Contact No</th>
-                        <th>Email Id</th>
-                        <th>Date Of Joining</th>
-                        <th>Last Drawn Salary</th>
-                        <th>Reason for Leaving</th>
-                        <th>Date Of Leaving</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody formArrayName="professionalInformation">
-                      <tr *ngFor="let professionalInformation of professionalInformationArr;let q=index;"
-                        [formGroupName]="q">
-                        <td><input type="text" class="form-control" formControlName="EmployeerName" /></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="EmployeerAddress"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="Designation"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="ContactPerson"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="ContactNo"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="EmailId"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="date" class="form-control" id="reddate" formControlName="DateOfJoining" /></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="LastDrawnSalary"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="ReasonforLeavingy"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td><input type="text" class="form-control" [(ngModel)]="DateOfLeaving"
-                            [ngModelOptions]="{standalone: true}"></td>
-                        <td>
-                          <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
-                            (click)="deleteProfessionalInformation(q)"></i>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+              <div class="table-responsive" *ngIf="isPersonalStatus">
+                <table class="table">
+                  <thead>
+                    <tr style="background: aliceblue;">
+                      <th scope="col">Employeer Name</th>
+                      <th scope="col">Employeer Address</th>
+                      <th scope="col">Designation</th>
+                      <th scope="col">Contact Person</th>
+                      <th scope="col">Contact No</th>
+                      <th scope="col">Email Id</th>
+                      <th scope="col">Date Of Joining</th>
+                      <th scope="col">Last Drawn Salary</th>
+                      <th scope="col">Reason for Leaving</th>
+                      <th scope="col">Date Of Leaving</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="professionalInformation">
+                    <tr>
+                      <td><input type="text" class="form-control" [(ngModel)]="EmployeerName"
+                          [ngModelOptions]="{standalone: true}"></td>
+                      <td><input type="text" class="form-control" [(ngModel)]="EmployeerAddress"
+                          [ngModelOptions]="{standalone: true}"></td>
+                      <td><input type="text" class="form-control" [(ngModel)]="Designation"
+                          [ngModelOptions]="{standalone: true}"></td>
+                      <td><input type="text" class="form-control" [(ngModel)]="ContactPerson"
+                          [ngModelOptions]="{standalone: true}"></td>
+                      <td><input type="text" class="form-control" [(ngModel)]="ContactNo"
+                          [ngModelOptions]="{standalone: true}"></td>
+                      <td><input type="text" class="form-control" [(ngModel)]="EmailId"
+                          [ngModelOptions]="{standalone: true}"></td>
+                      <td><input type="date" class="form-control" id="redDateOfJoining" [(ngModel)]="DateOfJoining"
+                          [ngModelOptions]="{standalone: true}"></td>
+                      <td><input type="text" class="form-control" [(ngModel)]="LastDrawnSalary"
+                          [ngModelOptions]="{standalone: true}"></td>
+                      <td><input type="text" class="form-control" [(ngModel)]="ReasonforLeavingy"
+                          [ngModelOptions]="{standalone: true}"></td>
+                      <td><input type="text" class="form-control" [(ngModel)]="DateOfLeaving"
+                          [ngModelOptions]="{standalone: true}"></td>
+                      <td>
+                        <input type="checkbox">&nbsp; <span>Attach Documents?</span> &nbsp;&nbsp;
+                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                          (click)="addProfessionalInformationArr()"></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="table-responsive" *ngIf="professionalInformationArr.length > 0 && isPersonalStatus">
+                <table class="table">
+                  <thead>
+                    <tr style="background: aliceblue;">
+                      <th scope="col">Employeer Name</th>
+                      <th scope="col">Employeer Address</th>
+                      <th scope="col">Designation</th>
+                      <th scope="col">Contact Person</th>
+                      <th scope="col">Contact No</th>
+                      <th scope="col">Email Id</th>
+                      <th scope="col">Date Of Joining</th>
+                      <th scope="col">Last Drawn Salary</th>
+                      <th scope="col">Reason for Leaving</th>
+                      <th scope="col">Date Of Leaving</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="professionalInformation">
+                    <tr *ngFor="let professionalInformation of professionalInformationArr;let q=index;"
+                    [formGroupName]="q">
+                    <td><input type="text" class="form-control" formControlName="EmployeerName" /></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="EmployeerAddress"
+                        [ngModelOptions]="{standalone: true}"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="Designation"
+                        [ngModelOptions]="{standalone: true}"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="ContactPerson"
+                        [ngModelOptions]="{standalone: true}"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="ContactNo"
+                        [ngModelOptions]="{standalone: true}"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="EmailId"
+                        [ngModelOptions]="{standalone: true}"></td>
+                    <td><input type="date" class="form-control" id="reddate" formControlName="DateOfJoining" /></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="LastDrawnSalary"
+                        [ngModelOptions]="{standalone: true}"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="ReasonforLeavingy"
+                        [ngModelOptions]="{standalone: true}"></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="DateOfLeaving"
+                        [ngModelOptions]="{standalone: true}"></td>
+                    <td>
+                      <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                        (click)="deleteProfessionalInformation(q)"></i>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -1132,102 +1142,106 @@
                   <label style="color: #b91d1e;"><strong>Identity Proof </strong></label>
                 </div>
               </div>
-              <table class="table table-responsive">
-                <thead>
-                  <tr>
-                    <th>Identity Type</th>
-                    <th>Identity No</th>
-                    <th>Valid Upto</th>
-                    <th>Attachments</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <select id="eIdentityProof" class="form-select" [(ngModel)]="identityType"
-                        [ngModelOptions]="{standalone: true}">
-                        <option value="0">Choose...</option>
-                        <option value="1">PAN</option>
-                        <option value="2">VOTER CARD</option>
-                        <option value="3">AADHAR CARD</option>
-                        <option value="4">PASSPORT</option>
-                        <option value="5">UAN</option>
-                        <option value="6">ESI No</option>
-                        <option value="7">PF No</option>
-                        <option value="8">BIRTH CERTIFICATE</option>
-                        <option value="9">SCHOOL CERTIFICATE</option>
-                        <option value="10">AdmitCard</option>
-                      </select>
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" [(ngModel)]="identityNo"
-                        [ngModelOptions]="{standalone: true}" id="eYear" placeholder="Year">
-                    </td>
-                    <td>
-                      <input type="date" class="form-control" id="edate" [(ngModel)]="validUpto"
-                        [ngModelOptions]="{standalone: true}" />
-                    </td>
-                    <td>
-                      <input type="file" (change)="fileProgress($event)" class="form-control"
-                        id="validationPicture" />
-                    </td>
-                    <td>
-                      <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
-                        (click)="addIdentityProoftArr()"></span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <table class="table" *ngIf="identityProofArr.length > 0">
-                <thead>
-                  <tr style="background: aliceblue;">
-                    <th>Sl.No</th>
-                    <th>Identity Type</th>
-                    <th>Identity No</th>
-                    <th>Valid Upto</th>
-                    <th>Attachments</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody formArrayName="identityProf">
-                  <tr *ngFor="let identityProf of identityProofArr;let p=index;" [formGroupName]="p">
-                    <td>{{p+1}}</td>
-                    <td>
-                      <select id="eidentityProf" class="form-select" formControlName="identityType" disabled>
-                        <option value="1">PAN</option>
-                        <option value="2">VOTER CARD</option>
-                        <option value="3">AADHAR CARD</option>
-                        <option value="4">PASSPORT</option>
-                        <option value="5">UAN</option>
-                        <option value="6">ESI No</option>
-                        <option value="7">PF No</option>
-                        <option value="8">BIRTH CERTIFICATE</option>
-                        <option value="9">SCHOOL CERTIFICATE</option>
-                        <option value="10">AdmitCard</option>
-                      </select>
-                    </td>
-                    <td><input type="text" class="form-control form-selectdisabled" formControlName="identityNo" />
-                    </td>
-                    <td>
-                      <input type="date" class="form-control form-selectdisabled" id="redidentityProf"
-                        formControlName="validUpto" />
-                    </td>
-                    <td>
-                      <div *ngIf="!attachments && !documentPreviewUrl">
-                        <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
-                      </div>
-                      <div *ngIf="documentPreviewUrl">
-                        <img height="70" width="70" [src]="getIdentityImgSrc(p)" alt="">
-                      </div>
-                    </td>
-                    <td>
-                      <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
-                        (click)="deleteIdentityProof(p)"></i>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Identity Type</th>
+                      <th scope="col">Identity No</th>
+                      <th scope="col">Valid Upto</th>
+                      <th scope="col">Attachments</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="familyDetails">
+                    <tr>
+                      <td>
+                        <select id="eIdentityProof" class="form-select" [(ngModel)]="identityType"
+                          [ngModelOptions]="{standalone: true}">
+                          <option value="0">Choose...</option>
+                          <option value="1">PAN</option>
+                          <option value="2">VOTER CARD</option>
+                          <option value="3">AADHAR CARD</option>
+                          <option value="4">PASSPORT</option>
+                          <option value="5">UAN</option>
+                          <option value="6">ESI No</option>
+                          <option value="7">PF No</option>
+                          <option value="8">BIRTH CERTIFICATE</option>
+                          <option value="9">SCHOOL CERTIFICATE</option>
+                          <option value="10">AdmitCard</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" [(ngModel)]="identityNo"
+                          [ngModelOptions]="{standalone: true}" id="eYear" placeholder="Year">
+                      </td>
+                      <td>
+                        <input type="date" class="form-control" id="edate" [(ngModel)]="validUpto"
+                          [ngModelOptions]="{standalone: true}" />
+                      </td>
+                      <td>
+                        <input type="file" (change)="fileProgress($event)" class="form-control"
+                          id="validationPicture" />
+                      </td>
+                      <td>
+                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                          (click)="addIdentityProoftArr()"></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="table-responsive" *ngIf="identityProofArr.length > 0">
+                <table class="table">
+                  <thead>
+                    <tr style="background: aliceblue;">
+                      <th scope="col">Sl.No</th>
+                      <th scope="col">Identity Type</th>
+                      <th scope="col">Identity No</th>
+                      <th scope="col">Valid Upto</th>
+                      <th scope="col">Attachments</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="identityProf">
+                    <tr *ngFor="let identityProf of identityProofArr;let p=index;" [formGroupName]="p">
+                      <td>{{p+1}}</td>
+                      <td>
+                        <select id="eidentityProf" class="form-select" formControlName="identityType" disabled>
+                          <option value="1">PAN</option>
+                          <option value="2">VOTER CARD</option>
+                          <option value="3">AADHAR CARD</option>
+                          <option value="4">PASSPORT</option>
+                          <option value="5">UAN</option>
+                          <option value="6">ESI No</option>
+                          <option value="7">PF No</option>
+                          <option value="8">BIRTH CERTIFICATE</option>
+                          <option value="9">SCHOOL CERTIFICATE</option>
+                          <option value="10">AdmitCard</option>
+                        </select>
+                      </td>
+                      <td><input type="text" class="form-control form-selectdisabled" formControlName="identityNo" />
+                      </td>
+                      <td>
+                        <input type="date" class="form-control form-selectdisabled" id="redidentityProf"
+                          formControlName="validUpto" />
+                      </td>
+                      <td>
+                        <div *ngIf="!attachments && !documentPreviewUrl">
+                          <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
+                        </div>
+                        <div *ngIf="documentPreviewUrl">
+                          <img height="70" width="70" [src]="getIdentityImgSrc(p)" alt="">
+                        </div>
+                      </td>
+                      <td>
+                        <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                          (click)="deleteIdentityProof(p)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">

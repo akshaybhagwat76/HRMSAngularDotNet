@@ -1,15 +1,16 @@
 <div class="container-fluid">
-  <!-- start page title -->
-  <div class="row">
-    <div class="col-12">
-      <div class="page-title-box d-flex align-items-center justify-content-between">
-        <h4 class="mb-0 font-size-18">Employee</h4>
-        <div class="page-title-right">
-          <ol class="breadcrumb m-0">
-            <li class="breadcrumb-item active">Welcome to Employee Information</li>
-          </ol>
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 font-size-18">Employee</h4>
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item active">Welcome to Employee Information</li>
+                    </ol>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
   </div>
   <div *ngIf="hrmsForm">
@@ -88,8 +89,8 @@
                     <!-- <div *ngIf="submit && form.lastName.errors" class="invalid-feedback">
                     <span *ngIf="form.lastName.errors.required">Please provide a valid Last Name.</span>
                   </div> -->
-                  </div>
-                </div>
+                                    </div>
+                                </div>
 
                 <div class="col-md-3">
                   <div class="mb-3">
@@ -194,7 +195,7 @@
                         {{employee?.type_Name}}
                       </option>
                     </select>
-                    <!-- <div *ngIf="submit && form.employeeType.errors" class="invalid-feedback">
+                                        <!-- <div *ngIf="submit && form.employeeType.errors" class="invalid-feedback">
                     <span *ngIf="form.employeeType.errors.required">Please provide a valid employee type.</span>
                   </div> -->
                   </div>
@@ -219,10 +220,10 @@
                         {{tPartyType?.thirdPartyType_Name}}
                       </option>
                     </select>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
 
                     <label for="eThirdParty" class="form-label">Third Party</label>
                     <select class="form-select" id="eThirdParty">
@@ -266,7 +267,7 @@
                     <input type="text" class="form-control" id="eReferencePhoneNo" placeholder="Reference Phone No">
                   </div>
                 </div>
-              </div>
+                <!-- end col -->
             </div>
           </div>
           <!-- end card -->
@@ -432,7 +433,6 @@
                         <label class="custom-control-label" for="redTransit">Transit</label>
                       </div>
                     </div>
-                  </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
@@ -501,7 +501,7 @@
                         {{meritalS.marital_Status}}
                       </option>
                     </select>
-                    <!-- <div *ngIf="submit && form.maritalStatus.errors" class="invalid-feedback">
+                                        <!-- <div *ngIf="submit && form.maritalStatus.errors" class="invalid-feedback">
 <span *ngIf="form.maritalStatus.errors.required">Please provide a valid Marital Status.</span>
 </div> -->
                   </div>
@@ -514,7 +514,6 @@
                     <textarea class="form-control" id="eIdentificationMark"></textarea>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -979,7 +978,6 @@
                     <input type="text" class="form-control" id="eMobileNo2" />
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -1310,7 +1308,6 @@
                     <input type="file" class="form-control" id="eSignature" />
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>

@@ -36,8 +36,7 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="eEmpCatagory" class="form-label">Employee Category<span
-                        class="text-danger">*</span></label>
+                    <label for="eEmpCatagory" class="form-label">Employee Category</label>
                     <select class="form-select" id="eEmpCatagory">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let category of categories" [value]="category.id">
@@ -51,8 +50,8 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="eEmpCode">Employee Code<span class="text-danger">*<input type="checkbox">Auto
-                        Generation</span></label>
+                    <label for="eEmpCode">Employee Code<span><input type="checkbox">Auto
+                      Generation</span></label>
                     <input type="text" class="form-control" id="eEmpCode" placeholder="Employee Code">
                     <!-- <div *ngIf="submit && form.employeeCode.errors" class="invalid-feedback">
                     <span *ngIf="form.employeeCode.errors.required">Please provide a valid employee code.</span>
@@ -137,8 +136,7 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="higherAuthBranchProject" class="form-label">Higher Authority Branch/Project<span
-                        class="text-danger">*</span></label>
+                    <label for="higherAuthBranchProject" class="form-label">Higher Authority Branch/Project</label>
                     <select class="form-select" id="higherAuthBranchProject">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let hBranches of higherAuthoritiesBranches" [value]="hBranches.id">
@@ -203,7 +201,7 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="eMobileNo">Mobile No</label>
+                    <label for="eMobileNo">Mobile No<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="eMobileNo" placeholder="Mobile No">
                     <!-- <div *ngIf="submit && form.mobileNo.errors" class="invalid-feedback">
                     <span *ngIf="form.mobileNo.errors.required">Please provide a valid Mobile No.</span>
@@ -282,15 +280,14 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="redName">Name<span class="text-danger">*</span></label>
+                    <label for="redName">Name</label>
                     <input type="text" class="form-control" [(ngModel)]="fName" name="fName"
                       [ngModelOptions]="{standalone: true}" id="redName" placeholder="Name">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="eRelationshipName" class="form-label">Relationship<span
-                        class="text-danger">*</span></label>
+                    <label for="eRelationshipName" class="form-label">Relationship</label>
                     <select class="form-select" id="eRelationshipName" [(ngModel)]="fRelationship"
                       [ngModelOptions]="{standalone: true}">
                       <option selected="" disabled="" value="">Choose...</option>
@@ -662,8 +659,7 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="eHighestQualification" class="form-label">Highest Qualification<span
-                        class="text-danger">*</span></label>
+                    <label for="eHighestQualification" class="form-label">Highest Qualification</label>
                     <select class="form-select" id="eHighestQualification" [(ngModel)]="highestQualification"
                       [ngModelOptions]="{standalone: true}" (change)="onOptionsSelected($event)">
                       <option>Choose...</option>
@@ -866,6 +862,15 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
+                    <label for="redcntcountryName" class="form-label">State<span class="text-danger">*</span></label>
+                    <select class="form-select" id="redcntcountryName" (change)="OptionsSelected($event)">
+                      <option selected="" disabled="" value="">Choose...</option>
+                      <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="mb-3">
                     <label for="eCity">City </label>
                     <input type="text" class="form-control" id="validationCity" />
                   </div>
@@ -908,7 +913,6 @@
                     <select class="form-select" id="redcntcountryName" (change)="OptionsSelected($event)">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
-
                     </select>
                   </div>
                 </div>
@@ -923,6 +927,15 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-3">
+                  <div class="mb-3">
+                    <label for="redcntcountryName" class="form-label">State<span class="text-danger">*</span></label>
+                    <select class="form-select" id="redcntcountryName" (change)="OptionsSelected($event)">
+                      <option selected="" disabled="" value="">Choose...</option>
+                      <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
+                    </select>
+                  </div>
+                </div>
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="City1">City </label>
@@ -941,14 +954,15 @@
                     <input type="text" class="form-control" id="validationPhone" />
                   </div>
                 </div>
+               
+              </div>
+              <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eEmail">Email Address2 </label>
                     <input type="text" class="form-control" id="eEmail" />
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eMobileNo2">Mobile No2 </label>
@@ -987,7 +1001,7 @@
                 <div class="col-md-12">
                   <table class="table" style="white-space: nowrap;">
                     <thead>
-                      <tr style="background: aliceblue;">
+                      <tr style="background: aliceblue;" class="text-center">
                         <th>Employeer Name</th>
                         <th>Employeer Address</th>
                         <th>Designation</th>

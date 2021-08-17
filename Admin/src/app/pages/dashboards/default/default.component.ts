@@ -792,6 +792,7 @@ export class DefaultComponent implements OnInit {
       this.departments = data;
     });
   }
+  
   forHigherAuthoritiesBranches() {
     this.higherAuthoritiesBranchesService.getAll().subscribe(data => {
       console.log(data);

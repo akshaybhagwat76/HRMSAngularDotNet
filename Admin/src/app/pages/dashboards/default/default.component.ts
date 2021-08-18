@@ -134,7 +134,7 @@ export class DefaultComponent implements OnInit {
   typiesEmp: any;
   higherAuthorities: any;
   higherAuthoritiesBranches: any;
-
+  disabledEmployeeCode =false;
   thirdPartyName: any;
   thirdParty: any;
   thirdPartyType: any;
@@ -187,7 +187,7 @@ export class DefaultComponent implements OnInit {
   isUploaded: boolean;
   isEducationEdited = false;
   udatedEducationDetailsId: number;
-
+  currentDate:any;
   // Education Document
   courseName: number;
   documentType: string;
@@ -195,6 +195,13 @@ export class DefaultComponent implements OnInit {
   documentPreviewUrl: any = null;
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
+  Numberofdays:any;
+  NumberOfMonths :any;
+  NumberOfYear:any;
+
+  NumberofDate:any;
+  NumberOfMonth :any;
+  NumberOfYears:any;
 
   // Identity Proof
   identityType: number = 0;
@@ -735,6 +742,59 @@ export class DefaultComponent implements OnInit {
   validSubmit() {
     this.submit = true;
   }
+  disabledEmployee(event){
+    debugger
+    this.disabledEmployeeCode = event.target.checked;
+    if(this.disabledEmployeeCode == true)
+    {
+      (document.getElementById("validationCustom03") as HTMLInputElement).value = "";
+    }
+  }
+  CountDays(event)
+  {
+    debugger
+    const oneDay = 24 * 60 * 60 * 1000; 
+    this.currentDate = new Date();
+    var dateOfjoining = new Date(event.target.value);
+    this.Numberofdays = Math.floor((this.currentDate.getTime() - dateOfjoining.getTime()) / 1000 / 60 / 60 / 24);
+    var intvalue = (this.currentDate - dateOfjoining.getTime()) / (365 * 24 * 60 * 60 * 1000);
+    this.NumberOfYear = Math.floor(intvalue);
+    let dateOfjoiningmonth = dateOfjoining.getMonth();
+    let currentmonth = this.currentDate.getMonth();
+    let dateOfjoiningyear = dateOfjoining.getFullYear();
+    let currentyear = this.currentDate.getFullYear();
+    this.NumberOfMonths = (currentyear - dateOfjoiningyear) * 12 + (currentmonth - dateOfjoiningmonth);
+    //const diffDays = Math.round(Math.abs((dateOfjoining - this.currentDate) / oneDay));
+    //var Difference_In_Time = dateOfjoining.getTime() - currentDate.getTime();
+  
+// To calculate the no. of days between two dates
+   // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  }
+
+  DateOfBirth(event)
+  {
+    debugger
+    const oneDay = 24 * 60 * 60 * 1000; 
+    this.currentDate = new Date();
+    var dateOfjoining = new Date(event.target.value);
+    this.NumberofDate = Math.floor((this.currentDate.getTime() - dateOfjoining.getTime()) / 1000 / 60 / 60 / 24);
+    var intvalue = (this.currentDate - dateOfjoining.getTime()) / (365 * 24 * 60 * 60 * 1000);
+    this.NumberOfYears = Math.floor(intvalue);
+    if(this.NumberOfYears < 18)
+    {
+      alert("Employee Age must be greater then 18 years!");
+    }
+    let dateOfjoiningmonth = dateOfjoining.getMonth();
+    let currentmonth = this.currentDate.getMonth();
+    let dateOfjoiningyear = dateOfjoining.getFullYear();
+    let currentyear = this.currentDate.getFullYear();
+    this.NumberOfMonth = (currentyear - dateOfjoiningyear) * 12 + (currentmonth - dateOfjoiningmonth);
+    //const diffDays = Math.round(Math.abs((dateOfjoining - this.currentDate) / oneDay));
+    //var Difference_In_Time = dateOfjoining.getTime() - currentDate.getTime();
+  
+// To calculate the no. of days between two dates
+   // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  }
 
   validSubmitNominee() {
     this.submit = true;
@@ -871,13 +931,11 @@ export class DefaultComponent implements OnInit {
   }
 
   getImgSrc(row) {
-    debugger
     const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
     return eduDocData.documentPreviewUrl;
   }
 
   getIdentityImgSrc(row) {
-    debugger
     const identityData = (<FormArray>this.hrmsForm.controls['identityProf']).at(row).value;
     return identityData.identityPreviewUrl;
   }

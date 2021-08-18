@@ -24,9 +24,9 @@
                   <div class="mb-3">
                     <label for="eCompany" class="form-label">Company<span class="text-danger">*</span></label>
                     <select class="form-select" id="eCompany">
-                      <option selected="" disabled="" value="">Choose...</option>
+                      <option selected="" disabled="" value="">ISPAT DAMODAR PRIVATE LIMITED</option>
                       <option *ngFor="let company of companies" [value]="company.id">
-                        {{company?.compnay_Name}}
+                        {{company.compnay_Name}}
                       </option>
                     </select>
                     <!-- <div *ngIf="submit && form.company.errors" class="invalid-feedback">
@@ -120,7 +120,6 @@
           </select>
         </div>
       </div> -->
-
               </div>
               <div class="row">
                 <div class="col-md-3">
@@ -150,7 +149,6 @@
                     </select>
                   </div>
                 </div>
-
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eHigherAuthority" class="form-label">Higher Authority</label>
@@ -290,7 +288,8 @@
                       (change)="DateOfBirth($event)" />
                   </div>
                   <div>
-                    <span><b>Age</b>: <span>{{NumberOfYears}}</span><span>{{NumberOfMonth}}</span><span>{{NumberofDate}}</span></span>
+                    <span><b>Age</b>:
+                      <span>{{NumberOfYears}}</span><span>{{NumberOfMonth}}</span><span>{{NumberofDate}}</span></span>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -416,10 +415,11 @@
                   <div class="mb-3">
                     <label for="eRelationshipName" class="form-label">Relationship</label>
                     <select class="form-select" id="eRelationshipName" [(ngModel)]="fRelationship"
-                      [ngModelOptions]="{standalone: true}">
+                    [ngModelOptions]="{standalone: true}">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let relation of relationShip" [value]="relation.id">
                         {{relation.relationShip_Name}}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -542,11 +542,11 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="validationRelation" class="form-label">Relationship</label>
-                    <select class="form-select" id="validationRelation" [(ngModel)]="nRelationship"
-                      [ngModelOptions]="{standalone: true}">
+                    <select class="form-select" id="validationRelation" (change)="onThirdPartySelected($event)">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let relationS of relationShip" [value]="relationS.id">
-                        {{relationS.relationShip_Name}}
+                      <option *ngFor="let tPartyType of thirdPartyType" [value]="tPartyType.id">
+                        {{tPartyType?.thirdPartyType_Name}}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -632,7 +632,7 @@
                       <td>{{j+1}}</td>
                       <td><input type="text" class="form-control" formControlName="NameNominee" readonly></td>
                       <td>
-                        <select class="form-select" id="validationCustom29" formControlName="relationshipNominee"
+                        <select class="form-select" id="erelationShip_Name" formControlName="relationshipNominee"
                           disabled>
                           <option *ngFor="let relation of relationShip" [value]="relation.id">
                             {{relation.relationShip_Name}}

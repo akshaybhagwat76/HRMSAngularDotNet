@@ -134,7 +134,7 @@ export class DefaultComponent implements OnInit {
   typiesEmp: any;
   higherAuthorities: any;
   higherAuthoritiesBranches: any;
-  disabledEmployeeCode =false;
+  disabledEmployeeCode = false;
   thirdPartyName: any;
   thirdParty: any;
   thirdPartyType: any;
@@ -167,7 +167,7 @@ export class DefaultComponent implements OnInit {
 
   // Nominee Details
   nName: string;
-  nRelationship: number;
+  nRelationship: number = 0;
   nDateOfBirth: Date;
   nAadharNo: string;
   nAadharStatus: string;
@@ -187,7 +187,7 @@ export class DefaultComponent implements OnInit {
   isUploaded: boolean;
   isEducationEdited = false;
   udatedEducationDetailsId: number;
-  currentDate:any;
+  currentDate: any;
   // Education Document
   courseName: number;
   documentType: string;
@@ -195,13 +195,13 @@ export class DefaultComponent implements OnInit {
   documentPreviewUrl: any = null;
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
-  Numberofdays:any;
-  NumberOfMonths :any;
-  NumberOfYear:any;
+  Numberofdays: any;
+  NumberOfMonths: any;
+  NumberOfYear: any;
 
-  NumberofDate:any;
-  NumberOfMonth :any;
-  NumberOfYears:any;
+  NumberofDate: any;
+  NumberOfMonth: any;
+  NumberOfYears: any;
 
   // Identity Proof
   identityType: number = 0;
@@ -247,6 +247,7 @@ export class DefaultComponent implements OnInit {
     const employees = this.employesService.getAll();
     const merital = this.meritalstatusService.getAll();
     const designation = this.designationService.getAll();
+    debugger;
     forkJoin([companies, branches, contries, departments, workingStatus, categories,
       typesEmp, higherAuthority, higherAuthorityName, thirdPartyType, cast,
       state, zones, relationship, userType, employees, higherAuthoritesBranches, thirdParty, cast, bloodGroup, merital
@@ -273,6 +274,7 @@ export class DefaultComponent implements OnInit {
       this.bloodGroup = result[19];
       this.meritalStatuses = result[20];
       // this.designation = result[21];
+      debugger;
     });
 
     //this.employees = employees;
@@ -306,13 +308,15 @@ export class DefaultComponent implements OnInit {
     return (<FormArray>this.hrmsForm.get('professionalInformation')).controls;
   }
   ngOnInit() {
+    const relationship = this.relationshipService.getAll();
+    console.log("relationshipdata", relationship);
     this.fbBuilder();
     // this.forCompany();
     // this.forBranch();
     // this.forCountries();
     // this.forDepartments();
     // this.forWorkingStatus();
-    // this.forCategories();
+    //this.forCategories();
     // this.typiesEmp();
     // this.forHigherAuthorityNames();
 
@@ -680,7 +684,7 @@ export class DefaultComponent implements OnInit {
     (<FormArray>this.hrmsForm.get('identityProf')).push(this.identityProofForm);
     // this.clearEducationDocument();
   }
-  
+
   // Delete Identity Proof
   deleteIdentityProof(row) {
     const IdentityProof = <FormArray>this.hrmsForm.controls['identityProf'];
@@ -689,8 +693,8 @@ export class DefaultComponent implements OnInit {
     }
   }
 
-   // Add Professional Information
-   addProfessionalInformationArr() {
+  // Add Professional Information
+  addProfessionalInformationArr() {
     this.ProfessionalInformationForm = this.formBuilder.group({
       EmployeerName: [this.EmployeerName],
       EmployeerAddress: [this.EmployeerAddress],
@@ -707,8 +711,8 @@ export class DefaultComponent implements OnInit {
     (<FormArray>this.hrmsForm.get('professionalInformation')).push(this.ProfessionalInformationForm);
     // this.clearEducationDocument();
   }
-   // Delete Professional Information
-   deleteProfessionalInformation(row) {
+  // Delete Professional Information
+  deleteProfessionalInformation(row) {
     const ProfessionalInformation = <FormArray>this.hrmsForm.controls['professionalInformation'];
     if (ProfessionalInformation) {
       ProfessionalInformation.removeAt(row);
@@ -742,18 +746,16 @@ export class DefaultComponent implements OnInit {
   validSubmit() {
     this.submit = true;
   }
-  disabledEmployee(event){
+  disabledEmployee(event) {
     debugger
     this.disabledEmployeeCode = event.target.checked;
-    if(this.disabledEmployeeCode == true)
-    {
+    if (this.disabledEmployeeCode == true) {
       (document.getElementById("validationCustom03") as HTMLInputElement).value = "";
     }
   }
-  CountDays(event)
-  {
+  CountDays(event) {
     debugger
-    const oneDay = 24 * 60 * 60 * 1000; 
+    const oneDay = 24 * 60 * 60 * 1000;
     this.currentDate = new Date();
     var dateOfjoining = new Date(event.target.value);
     this.Numberofdays = Math.floor((this.currentDate.getTime() - dateOfjoining.getTime()) / 1000 / 60 / 60 / 24);
@@ -766,22 +768,20 @@ export class DefaultComponent implements OnInit {
     this.NumberOfMonths = (currentyear - dateOfjoiningyear) * 12 + (currentmonth - dateOfjoiningmonth);
     //const diffDays = Math.round(Math.abs((dateOfjoining - this.currentDate) / oneDay));
     //var Difference_In_Time = dateOfjoining.getTime() - currentDate.getTime();
-  
-// To calculate the no. of days between two dates
-   // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+    // To calculate the no. of days between two dates
+    // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
   }
 
-  DateOfBirth(event)
-  {
+  DateOfBirth(event) {
     debugger
-    const oneDay = 24 * 60 * 60 * 1000; 
+    const oneDay = 24 * 60 * 60 * 1000;
     this.currentDate = new Date();
     var dateOfjoining = new Date(event.target.value);
     this.NumberofDate = Math.floor((this.currentDate.getTime() - dateOfjoining.getTime()) / 1000 / 60 / 60 / 24);
     var intvalue = (this.currentDate - dateOfjoining.getTime()) / (365 * 24 * 60 * 60 * 1000);
     this.NumberOfYears = Math.floor(intvalue);
-    if(this.NumberOfYears < 18)
-    {
+    if (this.NumberOfYears < 18) {
       alert("Employee Age must be greater then 18 years!");
     }
     let dateOfjoiningmonth = dateOfjoining.getMonth();
@@ -791,9 +791,9 @@ export class DefaultComponent implements OnInit {
     this.NumberOfMonth = (currentyear - dateOfjoiningyear) * 12 + (currentmonth - dateOfjoiningmonth);
     //const diffDays = Math.round(Math.abs((dateOfjoining - this.currentDate) / oneDay));
     //var Difference_In_Time = dateOfjoining.getTime() - currentDate.getTime();
-  
-// To calculate the no. of days between two dates
-   // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+    // To calculate the no. of days between two dates
+    // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
   }
 
   validSubmitNominee() {
@@ -852,7 +852,7 @@ export class DefaultComponent implements OnInit {
       this.departments = data;
     });
   }
-  
+
   forHigherAuthoritiesBranches() {
     this.higherAuthoritiesBranchesService.getAll().subscribe(data => {
       console.log(data);

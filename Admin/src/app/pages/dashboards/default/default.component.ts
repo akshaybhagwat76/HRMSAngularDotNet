@@ -77,6 +77,7 @@ import { ThirdpartyService } from 'src/app/core/services/thirdparty.service';
 import { MeritalstatusService } from 'src/app/core/services/meritalstatus.service';
 import { DesignationService } from 'src/app/core/services/designation.service';
 import { HttpClient, HttpEventType } from '@angular/common/http';
+import { HighestQualificationService } from 'src/app/core/services/highest-qualification.service';
 
 @Component({
   moduleId: "",
@@ -114,6 +115,7 @@ export class DefaultComponent implements OnInit {
     private higherAuthorityNameService: HigherAuthorityNameService,
     private castService: CastService,
     private bloodGroupService: BloodGroupService,
+    private highestQualificationService: HighestQualificationService,
     private zoneService: ZoneService,
     private stateService: StateService,
     private relationshipService: RelationshipService,
@@ -145,7 +147,7 @@ export class DefaultComponent implements OnInit {
   zones: any;
   countryZones: any[] = [];
   corresspondCountryZone: any[] = [];
-  thirdPartyList: any[] = [];
+  thirdPartyList: any;
   relationShip: any;
   designation: any;
   userType: any;
@@ -154,7 +156,7 @@ export class DefaultComponent implements OnInit {
 
   // Family Details
   fName: string;
-  fRelationship: number;
+  fRelationship: number = 0;
   fDateOfBirth: Date;
   fAadharNo: string;
   fAadharStatus: string;
@@ -173,6 +175,8 @@ export class DefaultComponent implements OnInit {
   nContactNo: string;
   isNomineeEdited = false;
   updatedNomineeDetailsId: number;
+  highestQualifications: any;
+  designations: any;
 
   // Educational Information
   highestQualification: number;
@@ -243,11 +247,12 @@ export class DefaultComponent implements OnInit {
     const userType = this.userTypeService.getAll();
     const employees = this.employesService.getAll();
     const merital = this.meritalstatusService.getAll();
+    const highest_Qualification = this.highestQualificationService.getAll();
     const designation = this.designationService.getAll();
     debugger;
     forkJoin([companies, branches, contries, departments, workingStatus, categories,
       typesEmp, higherAuthority, higherAuthorityName, thirdPartyType, cast,
-      state, zones, relationship, userType, employees, higherAuthoritesBranches, thirdParty, cast, bloodGroup, merital
+      state, zones, relationship, userType, employees, higherAuthoritesBranches, thirdParty, cast, bloodGroup, merital, highest_Qualification
     ]).subscribe(result => {
       this.companies = result[0];
       this.branches = result[1];
@@ -266,10 +271,14 @@ export class DefaultComponent implements OnInit {
       this.userType = result[14];
       this.employees = result[15];
       this.higherAuthoritiesBranches = result[16];
-      this.thirdParty = result[17];
+      this.thirdParty = this.thirdPartyList = result[17];
       this.casts = result[18];
       this.bloodGroup = result[19];
       this.meritalStatuses = result[20];
+      this.highestQualifications = result[21];
+      this.designations = result[22];
+      // this.designations = result[22];
+
       // this.designation = result[21];
       debugger;
     });
@@ -393,48 +402,74 @@ export class DefaultComponent implements OnInit {
 
   fbBuilder() {
     this.hrmsForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      employeeCode: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      company: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      category: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      department: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      project: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      dateOfJoining: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      mobileNo: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      employeeType: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      maritalStatus: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      physicalNo: [''],
-      religion: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      nationality: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      biometricCode: [''],
-      higherAuthorityName: [''],
-      higherAuthority: [''],
-      higherAuthorityProject: [''],
-      identificationMark: [''],
-      emailAddress: [''],
-      thirdPartyType: [''],
-      thirdParty: [''],
-      workingStatus: [''],
-      probatlonPerlod: [''],
-      refName: [''],
-      refNo: [''],
-      bloodGroup: [''],
-      cast: [''],
-      physicalYes: [''],
-      dateOfBirth: [''],
-      contactNo: [''],
-      address: [''],
-      aadharNo: [''],
-      familyDateOfBirth: [''],
-      relationship: [''],
-      familyName: [''],
+      ecompany: [''],
+      employeeCategory: [''],
+      employeeCode: [''],
+      ebiometricCode: [''],
+      efirstName: [''],
+      emiddleName: [''],
+      elastName: [''],
+      eDepartment: [''],
+      eDesgination: [''],
+      eProject: [''],
+      eHigherAuthorityBranch: [''],
+      eHigherAuthority: [''],
+      eHigherAuthorityName: [''],
+      eDateOfJoining: [''],
+      eEmailAddress: [''],
+      eEmployeeType: [''],
+      eMobileNo: [''],
+      eThirdPartyType: [''],
+      eThirdParty: [''],
+      eWorkingStatus: [''],
+      eProbatlonPerlod: [''],
+      eReferenceEmployeeName: [''],
+      eReferencePhoneNo: [''],
+      pDateOfBirth: [''],
+      pGender: [''],
+      pNationality: [''],
+      pReligion: [''],
+      pCast: [''],
+      pPhysicalDisability: [''],
+      pBloodGroup: [''],
+      pMaritalStatus: [''],
+      pIdentificationMark: [''],
       familyDetails: new FormArray([]),
       nomineeDetails: new FormArray([]),
       educationInformation: new FormArray([]),
       educationDocument: new FormArray([]),
+      pciAddress: [''],
+      pciAddress1: [''],
+      pciCountry: [''],
+      pciZone: [''],
+      pciState: [''],
+      pciCity: [''],
+      pciPin: [''],
+      cciAddress: [''],
+      cciAddress1: [''],
+      cciCountry: [''],
+      cciZone: [''],
+      cciState: [''],
+      cciCity: [''],
+      cciPin: [''],
+      cciPhone: [''],
+      cciEmailAddress2: [''],
+      cciMobileNo2: [''],
+      professionalInformationStatus: [''],
+      oiBankName: [''],
+      oiBranchName: [''],
+      oiAccountNo: [''],
+      oiIFSCCode: [''],
       identityProf: new FormArray([]),
-      professionalInformation: new FormArray([])
+      professionalInformation: new FormArray([]),
+      ipStatus: [''],
+      ipOtherDetails: [''],
+      ipCardNo: [''],
+      ipProxyNo: [''],
+      ipUserId: [''],
+      ipUserType: [''],
+      ipProfile: [''],
+      ipSignature: ['']
     });
   }
 
@@ -925,6 +960,7 @@ export class DefaultComponent implements OnInit {
     //       });
     //     }
     //   })
+    console.log(this.hrmsForm);
   }
 
   getImgSrc(row) {
@@ -946,5 +982,9 @@ export class DefaultComponent implements OnInit {
     } else {
       this.isPersonalStatus = true;
     }
+  }
+
+  onSubmitHrms() {
+    console.log(this.hrmsForm.value);
   }
 }

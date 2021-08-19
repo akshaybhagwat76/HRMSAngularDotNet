@@ -415,7 +415,7 @@
                   <div class="mb-3">
                     <label for="eRelationshipName" class="form-label">Relationship</label>
                     <select class="form-select" id="eRelationshipName" [(ngModel)]="fRelationship"
-                    [ngModelOptions]="{standalone: true}">
+                      [ngModelOptions]="{standalone: true}">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let relation of relationShip" [value]="relation.id">
                         {{relation.relationShip_Name}}
@@ -541,11 +541,12 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationRelation" class="form-label">Relationship</label>
-                    <select class="form-select" id="validationRelation" (change)="onThirdPartySelected($event)">
-                      <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let tPartyType of thirdPartyType" [value]="tPartyType.id">
-                        {{tPartyType?.thirdPartyType_Name}}
+                    <label for="eRelationshipName" class="form-label">Relationship</label>
+                    <select class="form-select" id="eRelationshipName" [(ngModel)]="fRelationship"
+                      [ngModelOptions]="{standalone: true}">
+                      <option>Open this select menu</option>
+                      <option *ngFor="let relation of relationShip" [value]="relation.id">
+                        {{relation.relationShip_Name}}
                       </option>
                     </select>
                   </div>

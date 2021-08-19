@@ -78,8 +78,6 @@ import { MeritalstatusService } from 'src/app/core/services/meritalstatus.servic
 import { DesignationService } from 'src/app/core/services/designation.service';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 
-
-
 @Component({
   moduleId: "",
   selector: 'app-default',
@@ -188,6 +186,7 @@ export class DefaultComponent implements OnInit {
   isEducationEdited = false;
   udatedEducationDetailsId: number;
   currentDate: any;
+
   // Education Document
   courseName: number;
   documentType: string;
@@ -198,7 +197,6 @@ export class DefaultComponent implements OnInit {
   Numberofdays: any;
   NumberOfMonths: any;
   NumberOfYear: any;
-
   NumberofDate: any;
   NumberOfMonth: any;
   NumberOfYears: any;
@@ -222,7 +220,6 @@ export class DefaultComponent implements OnInit {
   ReasonforLeavingy: string;
   DateOfLeaving: Date;
   Professionaldocument: boolean;
-
   isPersonalStatus = false;
 
   private fetchData() {

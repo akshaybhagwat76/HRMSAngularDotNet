@@ -31,6 +31,14 @@ namespace API.Controllers
         {
             try
             {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            {
                 var cast = await _unitOfWork.Repository<Sys_Cast>().ListAllAsync();
 
                 var data = _mapper.Map<IReadOnlyList<Sys_Cast>, IReadOnlyList<Sys_CastDto>>(cast);

@@ -6,13 +6,8 @@ import { CompanyService } from 'src/app/core/services/company.service';
 import { BranchesService } from 'src/app/core/services/branches.service';
 import { ZoneService } from 'src/app/core/services/zone.service';
 import { DepartmentsService } from 'src/app/core/services/departments.service';
-import { DesignationService } from 'src/app/core/services/designation.service';
-
 import { forkJoin } from 'rxjs';
-
-
-
-
+import { DesignationsService } from 'src/app/core/services/designations.service';
 @Component({
   selector: 'app-validation',
   templateUrl: './validation.component.html',
@@ -31,7 +26,7 @@ export class ValidationComponent implements OnInit {
 
   constructor(public formBuilder: FormBuilder, private getemployeservice: GetemployeService
     , private companyservice: CompanyService, private branch: BranchesService, private department: DepartmentsService,
-    private designation: DesignationService, private zone: ZoneService
+    private zone: ZoneService, private designationSerivce: DesignationsService
   ) { }
   // bread crumb items
   breadCrumbItems: Array<{}>;
@@ -55,7 +50,7 @@ export class ValidationComponent implements OnInit {
     const companies = this.companyservice.getAll();
     const branches = this.branch.getAll();
     const department = this.department.getAll();
-    const designation = this.designation.getAll();
+    const designation = this.designationSerivce.getAll();
     const zone = this.zone.getAll();
     forkJoin([companies, branches, department, designation, zone]).subscribe(result => {
       this.companies = result[0];

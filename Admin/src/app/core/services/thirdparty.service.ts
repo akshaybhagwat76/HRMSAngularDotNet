@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import {environment} from "../../../environments/environment";
+import { environment } from "../../../environments/environment";
 import { ThirdParty } from '../models/ThirdParty.model';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ThirdpartyService {
   constructor(private http: HttpClient) {
   }

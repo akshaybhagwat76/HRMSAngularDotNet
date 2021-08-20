@@ -182,7 +182,7 @@
                     <label for="eDateOf">Date Of Joining</label>
                     <input type="date" class="form-control" formControlName="eDateOfJoining" id="eDateOf"
                       (change)="CountDays($event)" />
-                    <div>
+                    <div *ngIf="getControl('eDateOfJoining').value.length>0">
                       <span><b>Service</b>: <span>{{NumberOfYear}}</span> Years<span>{{NumberOfMonths}}</span> Month
                         <span>{{Numberofdays}}</span> Days</span>
                     </div>
@@ -266,11 +266,10 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="eDesgination" class="form-label">Desgiantions<span class="text-danger">*</span></label>
-                    <select class="form-select" id="eDesgination" formControlName="eDesgination"
-                      [(ngModel)]="designations">
+                    <label for="eDesgination" class="form-label">Designation<span class="text-danger">*</span></label>
+                    <select class="form-select" id="eDesgination" formControlName="eDesgination">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let designations of designations" [value]="designations.id">
+                      <option *ngFor="let designation of designations" [value]="designation.id">
                         {{designation?.designation_Name}}
                       </option>
                     </select>
@@ -309,7 +308,7 @@
                     <input type="date" class="form-control" formControlName="pDateOfBirth" id="eDate"
                       placeholder="Date Of Birth" (change)="DateOfBirth($event)" />
                   </div>
-                  <div>
+                  <div *ngIf="getControl('pDateOfBirth').value.length>0 && NumberOfYears >18">
                     <span><b>Age</b>:
                       <span>{{NumberOfYears}}</span> Years<span>{{NumberOfMonth}}</span>
                       Month<span>{{NumberofDate}}</span> Days</span>
@@ -698,7 +697,7 @@
                   <div class="mb-3">
                     <label for="eHighestQualification" class="form-label">Highest Qualification</label>
                     <select class="form-select" id="eHighestQualification" [(ngModel)]="highestQualification"
-                      [ngModelOptions]="{standalone: true}" (change)="onOptionsSelected($event)">
+                      [ngModelOptions]="{standalone: true}">
                       <option>Choose...</option>
                       <option *ngFor="let higesQualification of highestQualifications" [value]="higesQualification.id">
                         {{higesQualification.highest_Qualification}}
@@ -722,8 +721,8 @@
                   <tbody formArrayName="familyDetails">
                     <tr>
                       <td>
-                        <select class="form-select" id="eCountryScountryName" (change)="onOptionsSelected($event)"
-                          [(ngModel)]="qualification" [ngModelOptions]="{standalone: true}">
+                        <select class="form-select" id="eQualification" [(ngModel)]="qualification"
+                          [ngModelOptions]="{standalone: true}">
                           <option>Choose...</option>
                           <option *ngFor="let higestQualification of highestQualifications"
                             [value]="higestQualification.id">{{higestQualification.highest_Qualification}}
@@ -753,7 +752,7 @@
                         <input type="checkbox" [(ngModel)]="isUploaded" [ngModelOptions]="{standalone: true}"><span>
                           Want to
                           add Document</span> &nbsp;&nbsp;
-                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6; cursor: pointer;"
                           (click)="addEducationInformationArr()"></span>
                       </td>
                     </tr>
@@ -780,12 +779,14 @@
                       <td>{{k+1}}</td>
                       <td>
                         <select class="form-select" id="redCountryScountryName" formControlName="highestQualification">
-                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                          <option *ngFor="let higestQualification of highestQualifications"
+                            [value]="higestQualification.id">{{higestQualification.highest_Qualification}}
                         </select>
                       </td>
                       <td>
                         <select class="form-select" id="redCountryScountry" formControlName="qualification">
-                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                          <option *ngFor="let higestQualification of highestQualifications"
+                            [value]="higestQualification.id">{{higestQualification.highest_Qualification}}
                         </select>
                       </td>
                       <td><input type="text" class="form-control" formControlName="year" readonly></td>
@@ -818,7 +819,8 @@
                       <td>1</td>
                       <td>
                         <select class="form-select" id="eCountryname" formControlName="courseName">
-                          <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                          <option *ngFor="let higestQualification of highestQualifications"
+                            [value]="higestQualification.id">{{higestQualification.highest_Qualification}}
                         </select>
                       </td>
                       <td><input type="text" class="form-control" formControlName="documentType"
@@ -838,15 +840,15 @@
                           <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
                         </div>
                         <div class="image-preview mb-3" *ngIf="documentPreviewUrl && documentfile">
-                          <img [src]="documentPreviewUrl" height="70" width="70" />
+                          <img [src]="getImgSrc(l)" height="70" width="70" />
                         </div>
                       </td>
                       <td>
-                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6; cursor: pointer;"
                           (click)="addEducationDocumentArr()"></span>
                         &nbsp;&nbsp;
-                        <i class="fa fa-eye" style="font-size:24px;color: cadetblue;"></i>&nbsp;&nbsp;
-                        <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                        <i class="fa fa-eye" style="font-size:24px; color: cadetblue;" (click)="onClickDownloadDoc(l)"></i>&nbsp;&nbsp;
+                        <i class="fa fa-trash" style="font-size:24px; color: red; cursor: pointer;"
                           (click)="deleteEducationDocument(l)"></i>
                       </td>
                     </tr>
@@ -890,7 +892,7 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eCountry" class="form-label">Country<span class="text-danger">*</span></label>
-                    <select class="form-select" id="eCountry" (change)="onOptionsSelected($event)"
+                    <select class="form-select" id="eCountry" (change)="onOptionsSelected($event,'per')"
                       formControlName="pciCountry">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
@@ -900,7 +902,8 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eZone" class="form-label">Zone<span class="text-danger">*</span></label>
-                    <select class="form-select" id="eZone" formControlName="pciZone">
+                    <select class="form-select" id="eZone" formControlName="pciZone"
+                      (change)="OptionsSelected($event,'per')">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let zone of countryZones" [value]="zone.id">{{zone.zone_Name}}
                     </select>
@@ -910,11 +913,10 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="redcntcountryName" class="form-label">State<span class="text-danger">*</span></label>
-                    <select class="form-select" id="redcntcountryName" (change)="OptionsSelected($event)"
-                      formControlName="pciState">
+                    <label for="redcntstateName" class="form-label">State<span class="text-danger">*</span></label>
+                    <select class="form-select" id="redcntstateName" formControlName="pciState">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
+                      <option *ngFor="let stP of PerFilteredStates" [value]="stP.id">{{stP.state_Name}}
                     </select>
                   </div>
                 </div>
@@ -959,7 +961,7 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="redcntcountryName" class="form-label">Country<span class="text-danger">*</span></label>
-                    <select class="form-select" id="redcntcountryName" (change)="OptionsSelected($event)"
+                    <select class="form-select" id="redcntcountryName" (change)="onOptionsSelected($event,'curr')"
                       formControlName="cciCountry">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
@@ -969,7 +971,8 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="redZone" class="form-label">Zone<span class="text-danger">*</span></label>
-                    <select class="form-select" id="redZone" formControlName="cciZone">
+                    <select class="form-select" id="redZone" formControlName="cciZone"
+                      (change)="OptionsSelected($event,'curr')">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let zn of corresspondCountryZone" [value]="zn.id">{{zn.zone_Name}}
                     </select>
@@ -980,10 +983,9 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="redcntcountryName" class="form-label">State<span class="text-danger">*</span></label>
-                    <select class="form-select" id="redcntcountryName" (change)="OptionsSelected($event)"
-                      formControlName="cciState">
+                    <select class="form-select" id="redcntcountryName" formControlName="cciState">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
+                      <option *ngFor="let stC of CorrFilteredStates" [value]="stC.id">{{stC.state_Name}}
                     </select>
                   </div>
                 </div>
@@ -1089,7 +1091,7 @@
                       <td><input type="text" class="form-control" [(ngModel)]="DateOfLeaving"
                           [ngModelOptions]="{standalone: true}"></td>
                       <td>
-                        <input type="checkbox">&nbsp; <span>Attach Documents?</span> &nbsp;&nbsp;
+                        <input type="checkbox">&nbsp;<span>Attach Documents?</span> &nbsp;&nbsp;
                         <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
                           (click)="addProfessionalInformationArr()"></span>
                       </td>
@@ -1278,7 +1280,7 @@
                         </div>
                       </td>
                       <td>
-                        <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
+                        <i class="fa fa-trash" style="font-size:24px; color: red; cursor: pointer;"
                           (click)="deleteIdentityProof(p)"></i>
                       </td>
                     </tr>

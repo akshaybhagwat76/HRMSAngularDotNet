@@ -75,9 +75,9 @@ import {
 import { HigherAuthoritiesBranchesService } from 'src/app/core/services/higher-authorities-branches.service';
 import { ThirdpartyService } from 'src/app/core/services/thirdparty.service';
 import { MeritalstatusService } from 'src/app/core/services/meritalstatus.service';
-import { DesignationService } from 'src/app/core/services/designation.service';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { HighestQualificationService } from 'src/app/core/services/highest-qualification.service';
+import { DesignationsService } from 'src/app/core/services/designations.service';
 
 @Component({
   moduleId: "",
@@ -105,7 +105,6 @@ export class DefaultComponent implements OnInit {
     private branchesService: BranchesService, private contriesService: ContriesService,
     private departmentsService: DepartmentsService,
     private workingStatusService: WorkingStatusService,
-    private designationService: DesignationService,
     private categoryEmpsService: CategoryEmpsService,
     private higherAuthoritiesBranchesService: HigherAuthoritiesBranchesService,
     private typeEmpsService: TypeEmpsService,
@@ -123,6 +122,7 @@ export class DefaultComponent implements OnInit {
     private employesService: EmployeesService,
     private meritalstatusService: MeritalstatusService,
     private fb: FormBuilder,
+    private designationService: DesignationsService,
     private http: HttpClient
   ) { }
   companies: any;
@@ -144,6 +144,9 @@ export class DefaultComponent implements OnInit {
   casts: any;
   bloodGroup: any;
   states: any;
+  PerFilteredStates: any;
+  CorrFilteredStates: any;
+
   zones: any;
   countryZones: any[] = [];
   corresspondCountryZone: any[] = [];
@@ -196,6 +199,7 @@ export class DefaultComponent implements OnInit {
   documentType: string;
   documentfile: File;
   documentPreviewUrl: any = null;
+  eduDocumentPreviewUrl: any = null;
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
   Numberofdays: any;
@@ -249,10 +253,11 @@ export class DefaultComponent implements OnInit {
     const merital = this.meritalstatusService.getAll();
     const highest_Qualification = this.highestQualificationService.getAll();
     const designation = this.designationService.getAll();
-    debugger;
+
     forkJoin([companies, branches, contries, departments, workingStatus, categories,
       typesEmp, higherAuthority, higherAuthorityName, thirdPartyType, cast,
-      state, zones, relationship, userType, employees, higherAuthoritesBranches, thirdParty, cast, bloodGroup, merital, highest_Qualification
+      state, zones, relationship, userType, employees, higherAuthoritesBranches, thirdParty,
+      cast, bloodGroup, merital, highest_Qualification, designation
     ]).subscribe(result => {
       this.companies = result[0];
       this.branches = result[1];
@@ -278,9 +283,9 @@ export class DefaultComponent implements OnInit {
       this.highestQualifications = result[21];
       this.designations = result[22];
       // this.designations = result[22];
+      // this.designations = result[23];
 
       // this.designation = result[21];
-      debugger;
     });
 
     //this.employees = employees;
@@ -681,7 +686,7 @@ export class DefaultComponent implements OnInit {
       courseName: [this.qualification],
       documentType: [''],
       documentfile: [''],
-      documentPreviewUrl: ['']
+      eduDocumentPreviewUrl: ['']
     });
     (<FormArray>this.hrmsForm.get('educationDocument')).push(this.educationDocumentForm);
     // this.clearEducationDocument();
@@ -693,7 +698,7 @@ export class DefaultComponent implements OnInit {
     this.documentType = "";
     this.documentfile = null;
     this.fileUploadProgress = "";
-    this.documentPreviewUrl = "";
+    this.eduDocumentPreviewUrl = "";
   }
 
   // Delete Education Document
@@ -738,7 +743,7 @@ export class DefaultComponent implements OnInit {
       LastDrawnSalary: [this.LastDrawnSalary],
       ReasonforLeavingy: [this.ReasonforLeavingy],
       DateOfLeaving: [this.DateOfLeaving],
-      Professionaldocument: [this.Professionaldocument]
+      eduDocumentPreviewUrl: [this.Professionaldocument]
     });
     (<FormArray>this.hrmsForm.get('professionalInformation')).push(this.ProfessionalInformationForm);
     // this.clearEducationDocument();
@@ -892,15 +897,37 @@ export class DefaultComponent implements OnInit {
     });
   }
 
-  onOptionsSelected(event) {
+  onOptionsSelected(event, target) {
+    debugger
     const value = event.target.value;
-    this.countryZones = this.zones.filter(x => x.country_Id == value);
+    let zones = this.zones;
+    if (target == 'per') {
+      this.countryZones = zones.filter(x => x.id == value);
+    }
+    else {
+      this.corresspondCountryZone = zones.filter(x => x.id == value);
+    }
+  }
+  getControl(name) {
+    return this.hrmsForm.get(name);
+  }
+  OptionsSelected(event, target) {
+    const value = event.target.value;
+    let states = this.states;
+    if (target !== 'per') {
+      this.CorrFilteredStates = states.filter(x => x.zone_Id == value);
+    }
+    else {
+      this.PerFilteredStates = states.filter(x => x.zone_Id == value);
+    }
+  }
 
-  }
-  OptionsSelected(event) {
+  OptionsPersonalSelected(event) {
     const value = event.target.value;
-    this.corresspondCountryZone = this.zones.filter(x => x.country_Id == value);
+    let states = this.states;
+    this.PerFilteredStates = states.filter(x => x.zone_Id == value);
   }
+
 
   onThirdPartySelected(event) {
     const value = event.target.value;
@@ -924,6 +951,7 @@ export class DefaultComponent implements OnInit {
     reader.onload = (_event) => {
       this.documentPreviewUrl = reader.result;
     }
+    debugger;
   }
 
   onSubmit(row) {
@@ -933,7 +961,7 @@ export class DefaultComponent implements OnInit {
       'courseName': [this.courseName],
       'documentType': [this.documentType],
       'documentfile': [this.documentPreviewUrl],
-      'documentPreviewUrl': [this.documentPreviewUrl]
+      'eduDocumentPreviewUrl': [this.documentPreviewUrl]
     });
     // const formData = new FormData();
     // formData.append('file', this.documentfile);
@@ -960,12 +988,15 @@ export class DefaultComponent implements OnInit {
     //       });
     //     }
     //   })
-    console.log(this.hrmsForm);
+    // this.documentPreviewUrl = '';
+    const educationDocumentsArray = <FormArray>this.hrmsForm.controls['educationDocument'];
+    educationDocumentsArray.at(row).patchValue({ 'eduDocumentPreviewUrl': this.documentPreviewUrl });
   }
 
   getImgSrc(row) {
+    debugger;
     const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
-    return eduDocData.documentPreviewUrl;
+    return eduDocData.eduDocumentPreviewUrl;
   }
 
   getIdentityImgSrc(row) {
@@ -986,5 +1017,19 @@ export class DefaultComponent implements OnInit {
 
   onSubmitHrms() {
     console.log(this.hrmsForm.value);
+  }
+
+  downloadDoc(base64String, fileName) {
+    const source = `${base64String}`;
+    const link = document.createElement("a");
+    link.href = source;
+    link.download = `${fileName}`
+    link.click();
+  }
+
+  onClickDownloadDoc(row) {
+    const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
+    let base64String = eduDocData.eduDocumentPreviewUrl;
+    this.downloadDoc(base64String, eduDocData.documentType);
   }
 }

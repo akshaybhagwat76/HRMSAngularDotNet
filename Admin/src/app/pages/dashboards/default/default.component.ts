@@ -182,8 +182,8 @@ export class DefaultComponent implements OnInit {
   designations: any;
 
   // Educational Information
-  highestQualification: number;
-  qualification: number;
+  highestQualification: number = 0;
+  qualification: number = 0;
   year: number;
   specialization: string;
   school: string;

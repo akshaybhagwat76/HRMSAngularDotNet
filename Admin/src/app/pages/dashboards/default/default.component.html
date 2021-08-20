@@ -698,7 +698,7 @@
                     <label for="eHighestQualification" class="form-label">Highest Qualification</label>
                     <select class="form-select" id="eHighestQualification" [(ngModel)]="highestQualification"
                       [ngModelOptions]="{standalone: true}">
-                      <option>Choose...</option>
+                      <option selected="selected" disabled="" value="0">-----SELECT-----</option>
                       <option *ngFor="let higesQualification of highestQualifications" [value]="higesQualification.id">
                         {{higesQualification.highest_Qualification}}
                     </select>
@@ -723,7 +723,7 @@
                       <td>
                         <select class="form-select" id="eQualification" [(ngModel)]="qualification"
                           [ngModelOptions]="{standalone: true}">
-                          <option>Choose...</option>
+                          <option selected="selected" disabled="" value="0">MADHYAMIK</option>
                           <option *ngFor="let higestQualification of highestQualifications"
                             [value]="higestQualification.id">{{higestQualification.highest_Qualification}}
                         </select>
@@ -816,7 +816,7 @@
                   </thead>
                   <tbody formArrayName="educationDocument">
                     <tr *ngFor="let educationDocument of educationDocumentArr;let l=index;" [formGroupName]="l">
-                      <td>1</td>
+                      <td>{{l+1}}</td>
                       <td>
                         <select class="form-select" id="eCountryname" formControlName="courseName">
                           <option *ngFor="let higestQualification of highestQualifications"
@@ -847,7 +847,8 @@
                         <span class="fa fa-plus-circle fa-2x" style="color: #556ee6; cursor: pointer;"
                           (click)="addEducationDocumentArr()"></span>
                         &nbsp;&nbsp;
-                        <i class="fa fa-eye" style="font-size:24px; color: cadetblue;" (click)="onClickDownloadDoc(l)"></i>&nbsp;&nbsp;
+                        <i class="fa fa-eye" style="font-size:24px; color: cadetblue;"
+                          (click)="onClickDownloadDoc(l)"></i>&nbsp;&nbsp;
                         <i class="fa fa-trash" style="font-size:24px; color: red; cursor: pointer;"
                           (click)="deleteEducationDocument(l)"></i>
                       </td>

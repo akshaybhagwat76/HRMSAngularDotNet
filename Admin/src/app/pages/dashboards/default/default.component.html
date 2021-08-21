@@ -55,7 +55,8 @@
                           type="checkbox" (change)="disabledEmployee($event)">Auto
                         Generation</span></label>
                     <input type="text" class="form-control" id="eEmployeeCode" formControlName="employeeCode"
-                      placeholder="Employee Code" [disabled]="disabledEmployeeCode ? true :false">
+                      placeholder="Employee Code"
+                      [attr.readonly]="!hrmsForm.controls.employeeAutoGenerate.value ? null : ''">
                     <!-- <div *ngIf="submit && form.employeeCode.errors" class="invalid-feedback">
             <span *ngIf="form.employeeCode.errors.required">Please provide a valid employee code.</span>
           </div> -->
@@ -75,9 +76,9 @@
                     <label for="eFirstName">First Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="eFirstName" formControlName="efirstName"
                       placeholder="First Name">
-                    <!-- <div *ngIf="submit && form.firstName.errors" class="invalid-feedback">
-                                    <span *ngIf="form.firstName.errors.required">Please provide a valid First Name.</span>
-                                 </div> -->
+                    <div *ngIf="f.efirstName.hasError('required') && f.efirstName.touched"
+                      class="text text-danger error-div">
+                      *Enter First Name</div>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -92,9 +93,9 @@
                     <label for="eLastName">Last Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" formControlName="elastName" id="eLastName"
                       placeholder="Last Name">
-                    <!-- <div *ngIf="submit && form.lastName.errors" class="invalid-feedback">
-            <span *ngIf="form.lastName.errors.required">Please provide a valid Last Name.</span>
-          </div> -->
+                    <div *ngIf="f.elastName.hasError('required') && f.elastName.touched"
+                      class="text text-danger error-div">
+                      *Enter Last Name</div>
                   </div>
                 </div>
 
@@ -107,6 +108,9 @@
                         {{depart?.department_Name}}
                       </option>
                     </select>
+                    <div *ngIf="f.eDepartment.hasError('required') && f.eDepartment.touched"
+                      class="text text-danger error-div">
+                      *Select Department</div>
                     <!-- <div *ngIf="submit && form.department.errors" class="invalid-feedback">
             <span *ngIf="form.department.errors.required">Please provide a valid department.</span>
           </div> -->
@@ -204,9 +208,8 @@
                         {{employee?.type_Name}}
                       </option>
                     </select>
-                    <!-- <div *ngIf="submit && form.employeeType.errors" class="invalid-feedback">
-            <span *ngIf="form.employeeType.errors.required">Please provide a valid employee type.</span>
-          </div> -->
+                    <div *ngIf="f.eEmployeeType.hasError('required') && f.eEmployeeType.touched"
+                      class="text text-danger error-div">*Select Employee Type</div>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -214,9 +217,8 @@
                     <label for="eMobileNo">Mobile No</label>
                     <input type="text" formControlName="eMobileNo" class="form-control" id="eMobileNo"
                       placeholder="Mobile No">
-                    <!-- <div *ngIf="submit && form.mobileNo.errors" class="invalid-feedback">
-            <span *ngIf="form.mobileNo.errors.required">Please provide a valid Mobile No.</span>
-          </div> -->
+                    <div *ngIf="f.eMobileNo.hasError('required') && f.eMobileNo.touched"
+                      class="text text-danger error-div">*Enter Mobile</div>
                   </div>
                 </div>
               </div>
@@ -273,6 +275,8 @@
                         {{designation?.designation_Name}}
                       </option>
                     </select>
+                    <div *ngIf="f.eDesgination.hasError('required') && f.eDesgination.touched"
+                      class="text text-danger error-div">*Select Desgination</div>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -380,7 +384,7 @@
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="physicalRadioInline2" formControlName="pPhysicalDisability"
-                          name="pPhysicalDisability" class="custom-control-input" checked value="No">
+                          name="pPhysicalDisability" class="custom-control-input" value="No" checked="checked">
                         <label class="custom-control-label" for="physicalRadioInline2"> No</label>
                       </div>
                     </div>
@@ -406,9 +410,8 @@
                         {{meritalS.marital_Status}}
                       </option>
                     </select>
-                    <!-- <div *ngIf="submit && form.maritalStatus.errors" class="invalid-feedback">
-<span *ngIf="form.maritalStatus.errors.required">Please provide a valid Marital Status.</span>
-</div> -->
+                    <div *ngIf="f.pMaritalStatus.hasError('required') && f.pMaritalStatus.touched"
+                      class="text text-danger error-div">*Select Marital Status</div>
                   </div>
                 </div>
               </div>
@@ -847,7 +850,7 @@
                         <span class="fa fa-plus-circle fa-2x" style="color: #556ee6; cursor: pointer;"
                           (click)="addEducationDocumentArr()"></span>
                         &nbsp;&nbsp;
-                        <i class="fa fa-eye" style="font-size:24px; color: cadetblue;"
+                        <i class="fa fa-download" style="font-size:24px; color: cadetblue; cursor: pointer;"
                           (click)="onClickDownloadDoc(l)"></i>&nbsp;&nbsp;
                         <i class="fa fa-trash" style="font-size:24px; color: red; cursor: pointer;"
                           (click)="deleteEducationDocument(l)"></i>
@@ -882,6 +885,8 @@
                     <label for="eAddressInformation" class="form-label">Address<span
                         class="text-danger">*</span></label>
                     <textarea class="form-control" formControlName="pciAddress" id="eAddressInformation"></textarea>
+                    <div *ngIf="f.pciAddress.hasError('required') && f.pciAddress.touched"
+                      class="text text-danger error-div">*Enter Address</div>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -908,6 +913,8 @@
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let zone of countryZones" [value]="zone.id">{{zone.zone_Name}}
                     </select>
+                    <div *ngIf="f.pciZone.hasError('required') && f.pciZone.touched" class="text text-danger error-div">
+                      *Select Zone</div>
                   </div>
                 </div>
               </div>
@@ -919,18 +926,24 @@
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let stP of PerFilteredStates" [value]="stP.id">{{stP.state_Name}}
                     </select>
+                    <div *ngIf="f.pciState.hasError('required') && f.pciState.touched"
+                      class="text text-danger error-div">*Select State</div>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eCity">City </label>
                     <input type="text" formControlName="pciCity" class="form-control" id="validationCity" />
+                    <div *ngIf="f.pciCity.hasError('required') && f.pciCity.touched" class="text text-danger error-div">
+                      *Enter City</div>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="ePin">Pin <span class="text-danger">*</span></label>
                     <input type="text" formControlName="pciPin" class="form-control" id="validationPin" />
+                    <div *ngIf="f.pciPin.hasError('required') && f.pciPin.touched" class="text text-danger error-div">
+                      *Enter Pin Code</div>
                   </div>
                 </div>
               </div>
@@ -944,13 +957,15 @@
             <div class="card-body">
               <h4 class="card-title">
                 Corresspondance Contact Information (Same as Above)
-                <input type="checkbox">
+                <input type="checkbox" (change)="sameAsAbove($event)">
               </h4>
               <div class="row">
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eAddresss" class="form-label">Address<span class="text-danger">*</span></label>
                     <textarea class="form-control" formControlName="cciAddress" id="eAddresss"></textarea>
+                    <div *ngIf="f.cciAddress.hasError('required') && f.cciAddress.touched"
+                      class="text text-danger error-div">*Enter Corresspondance Address</div>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -977,6 +992,8 @@
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let zn of corresspondCountryZone" [value]="zn.id">{{zn.zone_Name}}
                     </select>
+                    <div *ngIf="f.cciZone.hasError('required') && f.cciZone.touched" class="text text-danger error-div">
+                      *Select Zone</div>
                   </div>
                 </div>
               </div>
@@ -988,18 +1005,24 @@
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let stC of CorrFilteredStates" [value]="stC.id">{{stC.state_Name}}
                     </select>
+                    <div *ngIf="f.cciState.hasError('required') && f.cciState.touched"
+                      class="text text-danger error-div">*Select State</div>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="City1">City </label>
                     <input type="text" class="form-control" formControlName="cciCity" id="City1" />
+                    <div *ngIf="f.cciCity.hasError('required') && f.cciCity.touched" class="text text-danger error-div">
+                      *Enter City</div>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="ePin1">Pin <span class="text-danger">*</span></label>
                     <input type="text" formControlName="cciPin" class="form-control" id="ePin1" />
+                    <div *ngIf="f.cciPin.hasError('required') && f.cciPin.touched" class="text text-danger error-div">
+                      *Enter Pin Code</div>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -1049,6 +1072,9 @@
                         class="custom-control-input">
                       <label class="custom-control-label" for="redExperience"> Experience</label>
                     </div>
+                    <div
+                      *ngIf="f.professionalInformationStatus.hasError('required') && f.professionalInformationStatus.touched"
+                      class="text text-danger error-div">*Check Status</div>
                   </div>
                 </div>
               </div>
@@ -1365,7 +1391,8 @@
         </div>
         <div class="row">
           <div class="col-md-3">
-            <button type="submit" class="btn btn-primary mr-5" (click)="onSubmitHrms()">Save</button>
+            <button type="submit" class="btn btn-primary mr-5" [disabled]="!hrmsForm.valid"
+              (click)="onSubmitHrms()">Save</button>
             <button type="button" class="btn btn-primary">Reset</button>
           </div>
         </div>

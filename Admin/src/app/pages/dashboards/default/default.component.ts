@@ -404,26 +404,27 @@ export class DefaultComponent implements OnInit {
     // console.warn(this.companies);
 
   }
-
+  get f() { return this.hrmsForm.controls; }
   fbBuilder() {
     this.hrmsForm = this.fb.group({
       ecompany: [''],
       employeeCategory: [''],
       employeeCode: [''],
+      employeeAutoGenerate: [false],
       ebiometricCode: [''],
-      efirstName: [''],
+      efirstName: ['', [Validators.required]],
       emiddleName: [''],
-      elastName: [''],
-      eDepartment: [''],
-      eDesgination: [''],
+      elastName: ['',[Validators.required]],
+      eDepartment: ['',[Validators.required]],
+      eDesgination: ['',[Validators.required]],
       eProject: [''],
       eHigherAuthorityBranch: [''],
       eHigherAuthority: [''],
       eHigherAuthorityName: [''],
       eDateOfJoining: [''],
       eEmailAddress: [''],
-      eEmployeeType: [''],
-      eMobileNo: [''],
+      eEmployeeType: ['',[Validators.required]],
+      eMobileNo: ['',[Validators.required]],
       eThirdPartyType: [''],
       eThirdParty: [''],
       eWorkingStatus: [''],
@@ -437,30 +438,30 @@ export class DefaultComponent implements OnInit {
       pCast: [''],
       pPhysicalDisability: [''],
       pBloodGroup: [''],
-      pMaritalStatus: [''],
+      pMaritalStatus: ['', [Validators.required]],
       pIdentificationMark: [''],
       familyDetails: new FormArray([]),
       nomineeDetails: new FormArray([]),
       educationInformation: new FormArray([]),
       educationDocument: new FormArray([]),
-      pciAddress: [''],
+      pciAddress: ['', [Validators.required]],
       pciAddress1: [''],
       pciCountry: [''],
-      pciZone: [''],
-      pciState: [''],
-      pciCity: [''],
-      pciPin: [''],
-      cciAddress: [''],
+      pciZone: ['', [Validators.required]],
+      pciState: ['', [Validators.required]],
+      pciCity: ['', [Validators.required]],
+      pciPin: ['', [Validators.required]],
+      cciAddress: ['', [Validators.required]],
       cciAddress1: [''],
       cciCountry: [''],
-      cciZone: [''],
-      cciState: [''],
-      cciCity: [''],
-      cciPin: [''],
+      cciZone: ['', [Validators.required]],
+      cciState: ['', [Validators.required]],
+      cciCity: ['', [Validators.required]],
+      cciPin: ['', [Validators.required]],
       cciPhone: [''],
       cciEmailAddress2: [''],
       cciMobileNo2: [''],
-      professionalInformationStatus: [''],
+      professionalInformationStatus: ['', [Validators.required]],
       oiBankName: [''],
       oiBranchName: [''],
       oiAccountNo: [''],
@@ -786,8 +787,11 @@ export class DefaultComponent implements OnInit {
   disabledEmployee(event) {
     debugger
     this.disabledEmployeeCode = event.target.checked;
+    this.hrmsForm.patchValue({
+      'employeeAutoGenerate': event.target.checked
+    });
     if (this.disabledEmployeeCode == true) {
-      (document.getElementById("validationCustom03") as HTMLInputElement).value = "";
+      (document.getElementById("eEmployeeCode") as HTMLInputElement).value = "";
     }
   }
   CountDays(event) {
@@ -1016,7 +1020,9 @@ export class DefaultComponent implements OnInit {
   }
 
   onSubmitHrms() {
-    console.log(this.hrmsForm.value);
+    if (this.hrmsForm.valid) {
+      console.log(this.hrmsForm.value);
+    } else { this.validateAllFormFields(this.hrmsForm); }
   }
 
   downloadDoc(base64String, fileName) {
@@ -1032,4 +1038,40 @@ export class DefaultComponent implements OnInit {
     let base64String = eduDocData.eduDocumentPreviewUrl;
     this.downloadDoc(base64String, eduDocData.documentType);
   }
+
+  sameAsAbove(event) {
+    if (event.target.checked) {
+      this.hrmsForm.patchValue({
+        'cciAddress': this.hrmsForm.get('pciAddress').value,
+        'cciAddress1': this.hrmsForm.get('pciAddress1').value,
+        'cciCountry': this.hrmsForm.get('pciCountry').value,
+        'cciZone': this.hrmsForm.get('pciZone').value,
+        'cciState': this.hrmsForm.get('pciState').value,
+        'cciCity': this.hrmsForm.get('pciCity').value,
+        'cciPin': this.hrmsForm.get('pciPin').value,
+      });
+    } else {
+      this.hrmsForm.patchValue({
+        'cciAddress': '',
+        'cciAddress1': '',
+        'cciCountry': '',
+        'cciZone': '',
+        'cciState': '',
+        'cciCity': '',
+        'cciPin': '',
+      });
+    }
+  }
+
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
+  }
+
 }

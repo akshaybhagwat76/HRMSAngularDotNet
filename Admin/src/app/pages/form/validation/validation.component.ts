@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { HttpClientService } from 'src/app/services/httpClient.service';
-
 import { MustMatch } from './validation.mustmatch';
-
+import { GetemployeService } from 'src/app/core/services/getemploye.service';
+import { CompanyService } from 'src/app/core/services/company.service';
+import { BranchesService } from 'src/app/core/services/branches.service';
+import { ZoneService } from 'src/app/core/services/zone.service';
+import { DepartmentsService } from 'src/app/core/services/departments.service';
+import { forkJoin } from 'rxjs';
+import { DesignationsService } from 'src/app/core/services/designations.service';
 @Component({
   selector: 'app-validation',
   templateUrl: './validation.component.html',
@@ -19,6 +23,11 @@ export class ValidationComponent implements OnInit {
   tooltipvalidationform: FormGroup; // bootstrap tooltip validation form
   typeValidationForm: FormGroup; // type validation form
   rangeValidationForm: FormGroup; // range validation form
+
+  constructor(public formBuilder: FormBuilder, private getemployeservice: GetemployeService
+    , private companyservice: CompanyService, private branch: BranchesService, private department: DepartmentsService,
+    private zone: ZoneService, private designationSerivce: DesignationsService
+  ) { }
   // bread crumb items
   breadCrumbItems: Array<{}>;
 
@@ -27,120 +36,35 @@ export class ValidationComponent implements OnInit {
   formsubmit: boolean;
   typesubmit: boolean;
   rangesubmit: boolean;
-  getCompanyData: any;
-  getZonesData: any;
-  getBranchesData: any;
-  getDesignationData: any;
-  getDepartmentData: any;
 
-  // companay get api cal
-  // https://pdfcoreattachment.azurewebsites.net/api/companies
-  getComapnyAPICall() {
-    try {
+  companies: any;
+  branches: any;
+  zones: any;
+  departments: any;
+  designations: any;
+  name: any;
+  employe_Code: any;
+  email: any;
 
-      this._httpClient.get('companies', 'apiDevBaseUrl').subscribe((Result: any) => {
-        console.log('>>>>>>>>>>>>..', Result);
-
-        this.getCompanyData = Result;
-      },
-        err => {
-
-          console.error(err.error.m);
-        }
-      );
-    }
-    catch (err) {
-      console.error('Catch Error Called');
-    }
+  fetchData() {
+    const companies = this.companyservice.getAll();
+    const branches = this.branch.getAll();
+    const department = this.department.getAll();
+    const designation = this.designationSerivce.getAll();
+    const zone = this.zone.getAll();
+    forkJoin([companies, branches, department, designation, zone]).subscribe(result => {
+      this.companies = result[0];
+      this.branches = result[1];
+      this.departments = result[2];
+      this.designations = result[3];
+      this.zones = result[4];
+    });
   }
-  // department get api call
-  // https://pdfcoreattachment.azurewebsites.net/api/departments
-  getDepartmentAPICall() {
-    try {
-
-      this._httpClient.get('departments', 'apiDevBaseUrl').subscribe((Result: any) => {
-        console.log('>>>>>>>>>>>>..', Result);
-
-        this.getDepartmentData = Result;
-      },
-        err => {
-
-          console.error(err.error.m);
-        }
-      );
-    }
-    catch (err) {
-      console.error('Catch Error Called');
-    }
-  }
-  // designation get api call
-  // https://pdfcoreattachment.azurewebsites.net/api/designations
-  getDesignationAPICall() {
-    try {
-
-      this._httpClient.get('designations', 'apiDevBaseUrl').subscribe((Result: any) => {
-        console.log('>>>>>>>>>>>>..', Result);
-
-        this.getDesignationData = Result;
-      },
-        err => {
-
-          console.error(err.error.m);
-        }
-      );
-    }
-    catch (err) {
-      console.error('Catch Error Called');
-    }
-  }
-  // branches get api call
-  // https://pdfcoreattachment.azurewebsites.net/api/branches
-  getBranchesAPICall() {
-    try {
-
-      this._httpClient.get('branches', 'apiDevBaseUrl').subscribe((Result: any) => {
-        console.log('>>>>>>>>>>>>..', Result);
-
-        this.getBranchesData = Result;
-      },
-        err => {
-
-          console.error(err.error.m);
-        }
-      );
-    }
-    catch (err) {
-      console.error('Catch Error Called');
-    }
-  }
-  // branches get api call
-  // https://pdfcoreattachment.azurewebsites.net/api/zones
-  getZonesAPICall() {
-    try {
-
-      this._httpClient.get('zones', 'apiDevBaseUrl').subscribe((Result: any) => {
-        console.log('>>>>>>>>>>>>..', Result);
-
-        this.getZonesData = Result;
-      },
-        err => {
-
-          console.error(err.error.m);
-        }
-      );
-    }
-    catch (err) {
-      console.error('Catch Error Called');
-    }
-  }
-  constructor(public formBuilder: FormBuilder, private _httpClient: HttpClientService) { }
 
   ngOnInit() {
-    this.getComapnyAPICall();
-    this.getBranchesAPICall();
-    this.getDepartmentAPICall();
-    this.getDesignationAPICall();
-    this.getZonesAPICall();
+
+    this.fetchData();
+
     this.breadCrumbItems = [{ label: 'Forms' }, { label: 'Form Validation', active: true }];
 
     /**
@@ -155,7 +79,9 @@ export class ValidationComponent implements OnInit {
       firstName: ['',],
       employeeCode: ['',],
       email: ['',],
-      status: ['0'],
+      rdoAll: ['',],
+      rdoInActive: ['',],
+      rdoActive: ['',],
     });
 
     /**
@@ -216,9 +142,11 @@ export class ValidationComponent implements OnInit {
   /**
    * Bootsrap validation form submit method
    */
-  validSubmit() {
+  validSubmit(value: any) {
     this.submit = true;
+    console.warn(value.company);
   }
+
 
   /**
    * returns tooltip validation form
@@ -233,7 +161,9 @@ export class ValidationComponent implements OnInit {
   formSubmit() {
     this.formsubmit = true;
   }
-
+  selectChangeHandler(i: any) {
+    console.log(i.target.value);
+  }
   /**
    * Returns the type validation form
    */
@@ -261,4 +191,7 @@ export class ValidationComponent implements OnInit {
   rangeSubmit() {
     this.rangesubmit = true;
   }
+
+
+
 }

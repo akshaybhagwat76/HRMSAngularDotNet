@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Core.Entities
 {
-
     [Table("tbl_EmployeeMaster")]
     public class Sys_EmployeeMaster : BaseEntity, IAuditableEntity
     {

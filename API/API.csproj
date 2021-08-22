@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Content\attachments\" />
+    <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
 

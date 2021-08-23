@@ -769,7 +769,7 @@
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
-                  <tbody formArrayName="educationInformation">
+                  <tbody formArrayName="sys_EducationalQualificationDto">
                     <tr *ngFor="let educationInformation of educationInformationArr;let k=index;" [formGroupName]="k">
                       <td>{{k+1}}</td>
                       <td>
@@ -1288,11 +1288,11 @@
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
-                  <tbody formArrayName="identityProf">
+                  <tbody formArrayName="sys_Identity_ProofDtos">
                     <tr *ngFor="let identityProf of identityProofArr;let p=index;" [formGroupName]="p">
                       <td>{{p+1}}</td>
                       <td>
-                        <select id="eidentityProf" class="form-select" formControlName="identityType" disabled>
+                        <select id="eidentityProf" class="form-select" formControlName="identity_Type" disabled>
                           <option value="1">PAN</option>
                           <option value="2">VOTER CARD</option>
                           <option value="3">AADHAR CARD</option>
@@ -1305,11 +1305,11 @@
                           <option value="10">AdmitCard</option>
                         </select>
                       </td>
-                      <td><input type="text" class="form-control form-selectdisabled" formControlName="identityNo" />
+                      <td><input type="text" class="form-control form-selectdisabled" formControlName="identity_No" />
                       </td>
                       <td>
                         <input type="date" class="form-control form-selectdisabled" id="redidentityProf"
-                          formControlName="validUpto" />
+                          formControlName="valid_Upto" />
                       </td>
                       <td>
                         <div *ngIf="!attachments && !documentPreviewUrl">

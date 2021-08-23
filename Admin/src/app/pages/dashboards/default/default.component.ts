@@ -707,7 +707,7 @@ export class DefaultComponent implements OnInit {
     this.educationInfoSubmit = true;
     if(this.qualification && this.year){
       this.educationForm = this.formBuilder.group({
-        educational_Qualification: [this.highestQualification],
+        highestQualification: [this.highestQualification],
         qualification: [this.qualification],
         year: [this.year],
         specialization: [this.specialization],
@@ -817,13 +817,13 @@ export class DefaultComponent implements OnInit {
       attachments: [this.attachments],
       identityPreviewUrl: [this.documentPreviewUrl]
     });
-    (<FormArray>this.hrmsForm.get('sys_Identity_ProofDtos')).push(this.identityProofForm);
+    (<FormArray>this.otherInformationForm.get('sys_Identity_ProofDtos')).push(this.identityProofForm);
     // this.clearEducationDocument();
   }
 
   // Delete Identity Proof
   deleteIdentityProof(row) {
-    const IdentityProof = <FormArray>this.hrmsForm.controls['sys_Identity_ProofDtos'];
+    const IdentityProof = <FormArray>this.otherInformationForm.controls['sys_Identity_ProofDtos'];
     if (IdentityProof) {
       IdentityProof.removeAt(row);
     }

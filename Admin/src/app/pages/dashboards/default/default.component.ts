@@ -78,6 +78,7 @@ import { MeritalstatusService } from 'src/app/core/services/meritalstatus.servic
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { HighestQualificationService } from 'src/app/core/services/highest-qualification.service';
 import { DesignationsService } from 'src/app/core/services/designations.service';
+import { EmployeeMasterService } from 'src/app/core/services/employee-master.service';
 
 @Component({
   moduleId: "",
@@ -96,10 +97,15 @@ export class DefaultComponent implements OnInit {
   familyForm: FormGroup;
   nomineeForm: FormGroup;
   educationForm: FormGroup;
+  permanentContactInformationForm: FormGroup;
+  corresspondanceContactInformationForm: FormGroup;
+  otherInformationForm: FormGroup;
   educationDocumentForm: FormGroup;
   identityProofForm: FormGroup;
   ProfessionalInformationForm: FormGroup;
   @ViewChild('content') content;
+  educationInfoSubmit: boolean;
+  professionalInfoSubmit: boolean;
 
   constructor(private modalService: NgbModal, public formBuilder: FormBuilder, private companyService: CompanyService,
     private branchesService: BranchesService, private contriesService: ContriesService,
@@ -108,6 +114,7 @@ export class DefaultComponent implements OnInit {
     private categoryEmpsService: CategoryEmpsService,
     private higherAuthoritiesBranchesService: HigherAuthoritiesBranchesService,
     private typeEmpsService: TypeEmpsService,
+    private employeeMasterService: EmployeeMasterService,
     private higherAuthorityService: HigherAuthorityService,
     private thirdPartyTypeService: ThirdPartyTypeService,
     private thirdPartyService: ThirdpartyService,
@@ -293,17 +300,17 @@ export class DefaultComponent implements OnInit {
 
   // Family Details
   get familyDetailsArr() {
-    return (<FormArray>this.hrmsForm.get('familyDetails')).controls;
+    return (<FormArray>this.hrmsForm.get('sys_FamilyDetailsDto')).controls;
   }
 
   // Nominee Details
   get nomineeDetailsArr() {
-    return (<FormArray>this.hrmsForm.get('nomineeDetails')).controls;
+    return (<FormArray>this.hrmsForm.get('tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto')).controls;
   }
 
   // Education Information
   get educationInformationArr() {
-    return (<FormArray>this.hrmsForm.get('educationInformation')).controls;
+    return (<FormArray>this.hrmsForm.get('sys_EducationalQualificationDto')).controls;
   }
 
   // Education Document
@@ -312,7 +319,7 @@ export class DefaultComponent implements OnInit {
   }
   // Identity Proof
   get identityProofArr() {
-    return (<FormArray>this.hrmsForm.get('identityProf')).controls;
+    return (<FormArray>this.otherInformationForm.get('sys_Identity_ProofDtos')).controls;
   }
   // Professional Information
   get professionalInformationArr() {
@@ -320,7 +327,7 @@ export class DefaultComponent implements OnInit {
   }
   ngOnInit() {
     const relationship = this.relationshipService.getAll();
-    console.log("relationshipdata", relationship);
+    // console.log("relationshipdata", relationship);
     this.fbBuilder();
     // this.forCompany();
     // this.forBranch();
@@ -381,7 +388,7 @@ export class DefaultComponent implements OnInit {
       thirdPartyType: [''],
       thirdParty: [''],
       workingStatus: [''],
-      probatlonPerlod: [''],
+      probationPeriod: [''],
       refName: [''],
       refNo: [''],
       bloodGroup: [''],
@@ -405,120 +412,185 @@ export class DefaultComponent implements OnInit {
 
   }
   get f() { return this.hrmsForm.controls; }
+  get pcInfo() { return this.permanentContactInformationForm.controls; }
+  get ccInfo() { return this.corresspondanceContactInformationForm.controls; }
+  get oInfo() { return this.otherInformationForm.controls; }
   fbBuilder() {
     this.hrmsForm = this.fb.group({
-      ecompany: [''],
-      employeeCategory: [''],
+      companyId: ['',[Validators.required]],
+      employeeCategoryId: [''],
       employeeCode: [''],
       employeeAutoGenerate: [false],
-      ebiometricCode: [''],
-      efirstName: ['', [Validators.required]],
-      emiddleName: [''],
-      elastName: ['',[Validators.required]],
-      eDepartment: ['',[Validators.required]],
-      eDesgination: ['',[Validators.required]],
-      eProject: [''],
-      eHigherAuthorityBranch: [''],
-      eHigherAuthority: [''],
-      eHigherAuthorityName: [''],
-      eDateOfJoining: [''],
-      eEmailAddress: [''],
-      eEmployeeType: ['',[Validators.required]],
-      eMobileNo: ['',[Validators.required]],
-      eThirdPartyType: [''],
-      eThirdParty: [''],
-      eWorkingStatus: [''],
-      eProbatlonPerlod: [''],
-      eReferenceEmployeeName: [''],
-      eReferencePhoneNo: [''],
-      pDateOfBirth: [''],
-      pGender: [''],
-      pNationality: [''],
-      pReligion: [''],
-      pCast: [''],
-      pPhysicalDisability: [''],
-      pBloodGroup: [''],
-      pMaritalStatus: ['', [Validators.required]],
-      pIdentificationMark: [''],
-      familyDetails: new FormArray([]),
-      nomineeDetails: new FormArray([]),
-      educationInformation: new FormArray([]),
+      biometricCode: [''],
+      firstName: ['', [Validators.required]],
+      middleName: [''],
+      lastName: ['',[Validators.required]],
+      departmentId: ['',[Validators.required]],
+      designationId: ['',[Validators.required]],
+      project_BranchId: [''],
+      higher_Authority_Branch_ProjectId: [''],
+      higher_AuthorityId: [''],
+      higher_Authority_NameId: [''],
+      date_Of_Joining: [''],
+      email: [''],
+      employee_TypeId: ['',[Validators.required]],
+      mobile_No: ['',[Validators.required]],
+      third_Party_Type: [''],
+      third_Party_Id: [''],
+      working_StatusId: [''],
+      probation_Period: [''],
+      referenceEmployeeName: [''],
+      reference_Phone_No: [''],
+      date_Of_Birth: [''],
+      gender: [''],
+      nationality: ['',[Validators.required]],
+      religion: ['',[Validators.required]],
+      castId: [''],
+      physicalDisability: [''],
+      blood_GroupId: [''],
+      marital_StatusId: ['', [Validators.required]],
+      identification_Mark: [''],
+      sys_FamilyDetailsDto: new FormArray([]),
+      tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto: new FormArray([]),
+      sys_EducationalQualificationDto: new FormArray([]),
       educationDocument: new FormArray([]),
-      pciAddress: ['', [Validators.required]],
-      pciAddress1: [''],
-      pciCountry: [''],
-      pciZone: ['', [Validators.required]],
-      pciState: ['', [Validators.required]],
-      pciCity: ['', [Validators.required]],
-      pciPin: ['', [Validators.required]],
-      cciAddress: ['', [Validators.required]],
-      cciAddress1: [''],
-      cciCountry: [''],
-      cciZone: ['', [Validators.required]],
-      cciState: ['', [Validators.required]],
-      cciCity: ['', [Validators.required]],
-      cciPin: ['', [Validators.required]],
-      cciPhone: [''],
-      cciEmailAddress2: [''],
-      cciMobileNo2: [''],
+      sys_PermanentContactInformationDto: new FormGroup({}),
+      sys_CorresspondanceContactInformationDto: new FormGroup({}),
+      sys_OtherInformationDto: new FormGroup({}),
+      // pciAddress: ['', [Validators.required]],
+      // pciAddress1: [''],
+      // pciCountry: ['',[Validators.required]],
+      // pciZone: ['', [Validators.required]],
+      // pciState: ['', [Validators.required]],
+      // pciCity: ['', [Validators.required]],
+      // pciPin: ['', [Validators.required]],
+      // cciAddress: ['', [Validators.required]],
+      // cciAddress1: [''],
+      // cciCountry: [''],
+      // cciZone: ['', [Validators.required]],
+      // cciState: ['', [Validators.required]],
+      // cciCity: ['', [Validators.required]],
+      // cciPin: ['', [Validators.required]],
+      // cciPhone: [''],
+      // cciEmailAddress2: [''],
+      // cciMobileNo2: [''],
       professionalInformationStatus: ['', [Validators.required]],
-      oiBankName: [''],
-      oiBranchName: [''],
-      oiAccountNo: [''],
-      oiIFSCCode: [''],
-      identityProf: new FormArray([]),
+      // bank_Name: [''],
+      // branch_Name: [''],
+      // account_No: [''],
+      // ifsC_Code: [''],
+
       professionalInformation: new FormArray([]),
-      ipStatus: [''],
-      ipOtherDetails: [''],
-      ipCardNo: [''],
-      ipProxyNo: [''],
-      ipUserId: [''],
-      ipUserType: [''],
-      ipProfile: [''],
-      ipSignature: ['']
+      // status: [''],
+      // other_Details: [''],
+      // card_No: [''],
+      // carProxy_Nod_No: [''],
+      // ipUserId: [''],
+      // ipUserType: [''],
+      // ipProfile: [''],
+      // ipSignature: ['']
     });
+    this.permanentContactInformationForm = this.fb.group({
+      address: ['', [Validators.required]],
+      address1: [''],
+      country: ['', [Validators.required]],
+      zone: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      pin: ['', [Validators.required]],
+    })
+    this.corresspondanceContactInformationForm = this.fb.group({
+      address: ['', [Validators.required]],
+      address1: [''],
+      country: ['', [Validators.required]],
+      zone: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      pin: ['', [Validators.required]],
+      phone: [],
+      email: [],
+      mobile_No: []
+    })
+    this.otherInformationForm = this.fb.group({
+      bank_Name: [''],
+      branch_Name: [''],
+      account_No: [''],
+      ifsC_Code: [''],
+      status: [''],
+      other_Details: [''],
+      card_No: [''],
+      carProxy_Nod_No: [''],
+      ipUserId: [''],
+      user_Type: [''],
+      signature: [''],
+      picture: [''],
+      sys_Identity_ProofDtos: new FormArray([]),
+    })
   }
 
   // Add Family details
   addfamilyDetailsArr() {
-    this.familyForm = this.formBuilder.group({
-      NameNominee: [this.fName],
-      dateOfBirthNominee: [this.fDateOfBirth],
-      relationshipNominee: [this.fRelationship],
-      aadharNoNominee: [this.fAadharNo],
-      AadharStatusNominee: [this.fAadharStatus],
-      ContactNominee: [this.fContactNo],
-      AddressNominee: [this.fAddress],
-    });
-    (<FormArray>this.hrmsForm.get('familyDetails')).push(this.familyForm);
-    this.clearFamilyDetails();
+    // console.log(this.fName);
+    // console.log(this.fRelationship);
+    if(this.fName && this.fRelationship){
+      this.familyForm = this.formBuilder.group({
+        name: [this.fName],
+        date_Of_Birth: [this.fDateOfBirth],
+        relationship: [this.fRelationship],
+        aadhar_No: [this.fAadharNo],
+        aadhar_Status: [this.fAadharStatus],
+        contact_No: [this.fContactNo],
+        address: [this.fAddress],
+      });
+      (<FormArray>this.hrmsForm.get('sys_FamilyDetailsDto')).push(this.familyForm);
+      this.clearFamilyDetails();
+    }else{
+      if(!(this.fName || this.fRelationship)){
+        alert(`
+        - Enter Name
+        - Select Relationship
+        `);
+      }
+      else if(!this.fName){
+        alert(`
+      - Enter Name
+      `);
+      }
+      else if(!this.fRelationship){
+        alert(`
+        - Select Relationship
+      `);
+      }
+
+    }
+
   }
 
   // Edit Family Details
   editFamilyDetails(row) {
-    const familyData = (<FormArray>this.hrmsForm.controls['familyDetails']).at(row).value;
-    this.fName = familyData.NameNominee;
-    this.fRelationship = familyData.relationshipNominee;
-    this.fDateOfBirth = familyData.dateOfBirthNominee;
-    this.fAadharNo = familyData.aadharNoNominee;
-    this.fAadharStatus = familyData.AadharStatusNominee;
-    this.fAddress = familyData.AddressNominee;
-    this.fContactNo = familyData.ContactNominee;
+    const familyData = (<FormArray>this.hrmsForm.controls['sys_FamilyDetailsDto']).at(row).value;
+    this.fName = familyData.name;
+    this.fRelationship = familyData.relationship;
+    this.fDateOfBirth = familyData.date_Of_Birth;
+    this.fAadharNo = familyData.aadhar_No;
+    this.fAadharStatus = familyData.aadhar_Status;
+    this.fAddress = familyData.address;
+    this.fContactNo = familyData.contact_No;
     this.isFamilyEdited = true;
     this.updatedFamilyDetailsId = row;
   }
 
   // Update Family Details
   updatefamilyDetailsArr() {
-    const familtyDetailsform = (<FormArray>this.hrmsForm.controls['familyDetails']).at(this.updatedFamilyDetailsId);
+    const familtyDetailsform = (<FormArray>this.hrmsForm.controls['sys_FamilyDetailsDto']).at(this.updatedFamilyDetailsId);
     familtyDetailsform.patchValue({
-      'NameNominee': [this.fName],
-      'dateOfBirthNominee': [this.fDateOfBirth],
-      'relationshipNominee': [this.fRelationship],
-      'aadharNoNominee': [this.fAadharNo],
-      'AadharStatusNominee': [this.fAadharStatus],
-      'ContactNominee': [this.fContactNo],
-      'AddressNominee': [this.fAddress],
+      'name': [this.fName],
+      'date_Of_Birth': [this.fDateOfBirth],
+      'relationship': [this.fRelationship],
+      'aadhar_No': [this.fAadharNo],
+      'aadhar_Status': [this.fAadharStatus],
+      'contact_No': [this.fContactNo],
+      'address': [this.fAddress],
     });
     this.isFamilyEdited = false;
     this.updatedFamilyDetailsId = 0;
@@ -527,7 +599,7 @@ export class DefaultComponent implements OnInit {
 
   // Delete Familt Details
   deleteFamilyDetails(row) {
-    const familyDetails = <FormArray>this.hrmsForm.controls['familyDetails'];
+    const familyDetails = <FormArray>this.hrmsForm.controls['sys_FamilyDetailsDto'];
     if (familyDetails) {
       familyDetails.removeAt(row);
     }
@@ -546,43 +618,64 @@ export class DefaultComponent implements OnInit {
 
   // Add Nominee Details
   addNomineeDetailsArr() {
-    this.nomineeForm = this.formBuilder.group({
-      NameNominee: [this.nName],
-      dateOfBirthNominee: [this.nDateOfBirth],
-      relationshipNominee: [this.nRelationship],
-      aadharNoNominee: [this.nAadharNo],
-      AadharStatusNominee: [this.nAadharStatus],
-      ContactNominee: [this.nContactNo],
-      AddressNominee: [this.nAddress],
-    });
-    (<FormArray>this.hrmsForm.get('nomineeDetails')).push(this.nomineeForm);
-    this.clearNomineeDetails();
+    if(this.nName && this.nRelationship){
+      this.nomineeForm = this.formBuilder.group({
+        nominee_Name: [this.nName],
+        nominee_DOB: [this.nDateOfBirth],
+        enum_Id_Relationship: [this.nRelationship],
+        aadharNoNominee: [this.nAadharNo],
+        AadharStatusNominee: [this.nAadharStatus],
+        nominee_Mobile: [this.nContactNo],
+        AddressNominee: [this.nAddress],
+      });
+      (<FormArray>this.hrmsForm.get('tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto')).push(this.nomineeForm);
+      this.clearNomineeDetails();
+    }
+
+    else{
+      if(!(this.nName || this.nRelationship)){
+        alert(`
+        - Enter Name
+        - Select Relationship
+        `);
+      }
+      else if(!this.nName){
+        alert(`
+      - Enter Name
+      `);
+      }
+      else if(!this.nRelationship){
+        alert(`
+        - Select Relationship
+      `);
+      }
+    }
   }
 
   // Edit Nominee Details
   editNomineeDetails(row) {
-    const nomineeData = (<FormArray>this.hrmsForm.controls['nomineeDetails']).at(row).value;
-    this.nName = nomineeData.NameNominee;
-    this.nRelationship = nomineeData.relationshipNominee;
-    this.nDateOfBirth = nomineeData.dateOfBirthNominee;
+    const nomineeData = (<FormArray>this.hrmsForm.controls['tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto']).at(row).value;
+    this.nName = nomineeData.nominee_Name;
+    this.nRelationship = nomineeData.enum_Id_Relationship;
+    this.nDateOfBirth = nomineeData.nominee_DOB;
     this.nAadharNo = nomineeData.aadharNoNominee;
     this.nAadharStatus = nomineeData.AadharStatusNominee;
     this.nAddress = nomineeData.AddressNominee;
-    this.nContactNo = nomineeData.ContactNominee;
+    this.nContactNo = nomineeData.nominee_Mobile;
     this.isNomineeEdited = true;
     this.updatedNomineeDetailsId = row;
   }
 
   // Update Nominee Details
   updateNomineeDetailsArr() {
-    const nommineeDetailsform = (<FormArray>this.hrmsForm.controls['nomineeDetails']).at(this.updatedNomineeDetailsId);
+    const nommineeDetailsform = (<FormArray>this.hrmsForm.controls['tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto']).at(this.updatedNomineeDetailsId);
     nommineeDetailsform.patchValue({
-      'NameNominee': [this.nName],
-      'dateOfBirthNominee': [this.nDateOfBirth],
-      'relationshipNominee': [this.nRelationship],
+      'nominee_Name': [this.nName],
+      'nominee_DOB': [this.nDateOfBirth],
+      'enum_Id_Relationship': [this.nRelationship],
       'aadharNoNominee': [this.nAadharNo],
       'AadharStatusNominee': [this.nAadharStatus],
-      'ContactNominee': [this.nContactNo],
+      'nominee_Mobile': [this.nContactNo],
       'AddressNominee': [this.nAddress],
     });
     this.isNomineeEdited = false;
@@ -592,7 +685,7 @@ export class DefaultComponent implements OnInit {
 
   // Delete Nominee Details
   deleteNomineeDetails(row) {
-    const nomineeDetails = <FormArray>this.hrmsForm.controls['nomineeDetails'];
+    const nomineeDetails = <FormArray>this.hrmsForm.controls['tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto'];
     if (nomineeDetails) {
       nomineeDetails.removeAt(row);
     }
@@ -611,26 +704,31 @@ export class DefaultComponent implements OnInit {
 
   // Add Education Information
   addEducationInformationArr() {
-    this.educationForm = this.formBuilder.group({
-      highestQualification: [this.highestQualification],
-      qualification: [this.qualification],
-      year: [this.year],
-      specialization: [this.specialization],
-      school: [this.school],
-      board: [this.board],
-      marks: [this.marks],
-      isUploaded: [this.isUploaded]
-    });
-    (<FormArray>this.hrmsForm.get('educationInformation')).push(this.educationForm);
-    if (this.isUploaded) {
-      this.addEducationDocumentArr();
+    this.educationInfoSubmit = true;
+    if(this.qualification && this.year){
+      this.educationForm = this.formBuilder.group({
+        educational_Qualification: [this.highestQualification],
+        qualification: [this.qualification],
+        year: [this.year],
+        specialization: [this.specialization],
+        school: [this.school],
+        board: [this.board],
+        marks: [this.marks],
+        isUploaded: [this.isUploaded]
+      });
+      (<FormArray>this.hrmsForm.get('sys_EducationalQualificationDto')).push(this.educationForm);
+      if (this.isUploaded) {
+        this.addEducationDocumentArr();
+      }
+      this.clearEducationInformation();
+      this.educationInfoSubmit = false;
     }
-    this.clearEducationInformation();
+
   }
 
   // Edit Education Information
   editEducationInformation(row) {
-    const educationData = (<FormArray>this.hrmsForm.controls['educationInformation']).at(row).value;
+    const educationData = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(row).value;
     this.highestQualification = educationData.highestQualification;
     this.qualification = educationData.qualification;
     this.year = educationData.year;
@@ -645,7 +743,7 @@ export class DefaultComponent implements OnInit {
 
   // Update Education Information
   updateEducationInformationArr() {
-    const educationInformationform = (<FormArray>this.hrmsForm.controls['educationInformation']).at(this.udatedEducationDetailsId);
+    const educationInformationform = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(this.udatedEducationDetailsId);
     educationInformationform.patchValue({
       'highestQualification': [this.highestQualification],
       'qualification': [this.qualification],
@@ -663,7 +761,7 @@ export class DefaultComponent implements OnInit {
 
   // Delete Education Information
   deleteEducationInformation(row) {
-    const educationInformation = <FormArray>this.hrmsForm.controls['educationInformation'];
+    const educationInformation = <FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto'];
     if (educationInformation) {
       educationInformation.removeAt(row);
     }
@@ -713,19 +811,19 @@ export class DefaultComponent implements OnInit {
   // Add Identity Proof
   addIdentityProoftArr() {
     this.identityProofForm = this.formBuilder.group({
-      identityType: [this.identityType],
-      identityNo: [this.identityNo],
-      validUpto: [this.validUpto],
+      identity_Type: [this.identityType],
+      identity_No: [this.identityNo],
+      valid_Upto: [this.validUpto],
       attachments: [this.attachments],
       identityPreviewUrl: [this.documentPreviewUrl]
     });
-    (<FormArray>this.hrmsForm.get('identityProf')).push(this.identityProofForm);
+    (<FormArray>this.hrmsForm.get('sys_Identity_ProofDtos')).push(this.identityProofForm);
     // this.clearEducationDocument();
   }
 
   // Delete Identity Proof
   deleteIdentityProof(row) {
-    const IdentityProof = <FormArray>this.hrmsForm.controls['identityProf'];
+    const IdentityProof = <FormArray>this.hrmsForm.controls['sys_Identity_ProofDtos'];
     if (IdentityProof) {
       IdentityProof.removeAt(row);
     }
@@ -733,20 +831,25 @@ export class DefaultComponent implements OnInit {
 
   // Add Professional Information
   addProfessionalInformationArr() {
-    this.ProfessionalInformationForm = this.formBuilder.group({
-      EmployeerName: [this.EmployeerName],
-      EmployeerAddress: [this.EmployeerAddress],
-      Designation: [this.Designation],
-      ContactPerson: [this.ContactPerson],
-      ContactNo: [this.ContactNo],
-      EmailId: [this.EmailId],
-      DateOfJoining: [this.DateOfJoining],
-      LastDrawnSalary: [this.LastDrawnSalary],
-      ReasonforLeavingy: [this.ReasonforLeavingy],
-      DateOfLeaving: [this.DateOfLeaving],
-      eduDocumentPreviewUrl: [this.Professionaldocument]
-    });
-    (<FormArray>this.hrmsForm.get('professionalInformation')).push(this.ProfessionalInformationForm);
+    this.professionalInfoSubmit = true;
+    if(this.EmployeerName && this.EmailId && this.DateOfJoining && this.LastDrawnSalary){
+      this.ProfessionalInformationForm = this.formBuilder.group({
+        EmployeerName: [this.EmployeerName],
+        EmployeerAddress: [this.EmployeerAddress],
+        Designation: [this.Designation],
+        ContactPerson: [this.ContactPerson],
+        ContactNo: [this.ContactNo],
+        EmailId: [this.EmailId],
+        DateOfJoining: [this.DateOfJoining],
+        LastDrawnSalary: [this.LastDrawnSalary],
+        ReasonforLeavingy: [this.ReasonforLeavingy],
+        // DateOfLeaving: [this.DateOfLeaving],
+        eduDocumentPreviewUrl: [this.Professionaldocument]
+      });
+      (<FormArray>this.hrmsForm.get('professionalInformation')).push(this.ProfessionalInformationForm);
+      this.professionalInfoSubmit = false;
+    }
+
     // this.clearEducationDocument();
   }
   // Delete Professional Information
@@ -944,7 +1047,7 @@ export class DefaultComponent implements OnInit {
   }
 
   preview() {
-    // Show preview 
+    // Show preview
     var mimeType = this.documentfile.type;
     if (mimeType.match(/image\/*/) == null) {
       return;
@@ -960,7 +1063,7 @@ export class DefaultComponent implements OnInit {
 
   onSubmit(row) {
     const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
-    const educationDocData = (<FormArray>this.hrmsForm.controls['educationInformation']).at(row);
+    const educationDocData = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(row);
     educationDocData.patchValue({
       'courseName': [this.courseName],
       'documentType': [this.documentType],
@@ -981,9 +1084,9 @@ export class DefaultComponent implements OnInit {
     //     } else if (events.type === HttpEventType.Response) {
     //       this.fileUploadProgress = '';
     //       this.preview();
-    //    
+    //
     //       const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
-    //       const educationDocData = (<FormArray>this.hrmsForm.controls['educationInformation']).at(row);
+    //       const educationDocData = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(row);
     //       educationDocData.patchValue({
     //         'courseName': [eduDocData.courseName],
     //         'documentType': [eduDocData.documentType],
@@ -1004,7 +1107,7 @@ export class DefaultComponent implements OnInit {
   }
 
   getIdentityImgSrc(row) {
-    const identityData = (<FormArray>this.hrmsForm.controls['identityProf']).at(row).value;
+    const identityData = (<FormArray>this.otherInformationForm.controls['sys_Identity_ProofDtos']).at(row).value;
     return identityData.identityPreviewUrl;
   }
 
@@ -1020,9 +1123,29 @@ export class DefaultComponent implements OnInit {
   }
 
   onSubmitHrms() {
+    console.log(this.hrmsForm.value);
+    console.log(this.permanentContactInformationForm.value);
+    console.log(this.corresspondanceContactInformationForm.value);
+    console.log(this.otherInformationForm.value);
+    this.hrmsForm.value.sys_PermanentContactInformationDto = this.permanentContactInformationForm.value;
+    this.hrmsForm.value.sys_CorresspondanceContactInformationDto = this.corresspondanceContactInformationForm.value;
+    this.hrmsForm.value.sys_OtherInformationDto = this.otherInformationForm.value;
+    console.log(this.hrmsForm.value);
     if (this.hrmsForm.valid) {
       console.log(this.hrmsForm.value);
-    } else { this.validateAllFormFields(this.hrmsForm); }
+      this.submitHrmsForm();
+    } else {
+      this.validateAllFormFields(this.hrmsForm);
+      this.validateAllFormFields(this.permanentContactInformationForm);
+      this.validateAllFormFields(this.corresspondanceContactInformationForm);
+      this.validateAllFormFields(this.otherInformationForm);
+    }
+  }
+
+  submitHrmsForm(){
+    this.employeeMasterService.post(this.hrmsForm.value).subscribe((resp:any) => {
+      console.log(resp);
+    })
   }
 
   downloadDoc(base64String, fileName) {
@@ -1039,26 +1162,33 @@ export class DefaultComponent implements OnInit {
     this.downloadDoc(base64String, eduDocData.documentType);
   }
 
+  changeDepartmentId(value){
+    // console.log(value);
+    // console.log(this.designations);
+    this.designations = this.designations.filter(x => x.department_Id === Number(value));
+    // console.log(this.designations);
+  }
+
   sameAsAbove(event) {
     if (event.target.checked) {
-      this.hrmsForm.patchValue({
-        'cciAddress': this.hrmsForm.get('pciAddress').value,
-        'cciAddress1': this.hrmsForm.get('pciAddress1').value,
-        'cciCountry': this.hrmsForm.get('pciCountry').value,
-        'cciZone': this.hrmsForm.get('pciZone').value,
-        'cciState': this.hrmsForm.get('pciState').value,
-        'cciCity': this.hrmsForm.get('pciCity').value,
-        'cciPin': this.hrmsForm.get('pciPin').value,
+      this.corresspondanceContactInformationForm.patchValue({
+        'address': this.permanentContactInformationForm.get('address').value,
+        'address1': this.permanentContactInformationForm.get('address1').value,
+        'country': this.permanentContactInformationForm.get('country').value,
+        'zone': this.permanentContactInformationForm.get('zone').value,
+        'state': this.permanentContactInformationForm.get('state').value,
+        'city': this.permanentContactInformationForm.get('city').value,
+        'pin': this.permanentContactInformationForm.get('pin').value,
       });
     } else {
-      this.hrmsForm.patchValue({
-        'cciAddress': '',
-        'cciAddress1': '',
-        'cciCountry': '',
-        'cciZone': '',
-        'cciState': '',
-        'cciCity': '',
-        'cciPin': '',
+      this.corresspondanceContactInformationForm.patchValue({
+        'address': '',
+        'address1': '',
+        'country': '',
+        'zone': '',
+        'state': '',
+        'city': '',
+        'pin': '',
       });
     }
   }

@@ -9,7 +9,6 @@ namespace Infrastructure.Data.Config
         {
             builder.Property(p => p.Id).IsRequired();
             builder.Property(p => p.Employee_Id).IsRequired();
-            builder.Property(p => p.Enum_Id).IsRequired();
         }
     }
 }

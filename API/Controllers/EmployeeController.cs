@@ -58,7 +58,7 @@ namespace API.Controllers
                 return BadRequest(exception.Message.ToString());
             }
         }
-
+        
         [HttpGet("GetEmployeeCode")]
         public async Task<string> GenerateEmployeeCode(string EmpName)
         {

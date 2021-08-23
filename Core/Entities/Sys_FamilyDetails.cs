@@ -2,17 +2,20 @@
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Core.Entities
 {
-    [Table("tbl_FamilyDetails")]
+    [Table("tBL_HR_EMPLOYEE_FAMILY_DETAILs")]
     public class Sys_FamilyDetails : BaseEntity, IAuditableEntity
     {
         public int Employee_Id { get; set; }
-        public string Name { get; set; }
-        public string Relationship { get; set; }
-        public string Date_Of_Birth { get; set; }
-        public string Aadhar_No { get; set; }
-        public string Aadhar_Status { get; set; }
-        public string Address { get; set; }
-        public string Contact_No { get; set; }
+        public int? FamilyDetail_RelationshipId { get; set; }
+        public string FamilyDetail_Name { get; set; }
+        public string FamilyDetail_Mobile { get; set; }
+        public string FamilyDetail_EmailId { get; set; }
+        public DateTime? FamilyDetail_DOB { get; set; }
+        public string Identity_Number { get; set; }
+        public string Nominee_Address { get; set; }
+        public bool? IsAadharStatus { get; set; }
+        public string AttachmentType_Path { get; set; }
+        public string Attachment_Type { get; set; }
         public DateTime CreatedOn_Date { get; set; }
         public int CreatedBy_Login_User_Id { get; set; }
         public int CreatedBy_Login_Session_Id { get; set; }

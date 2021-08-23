@@ -26,7 +26,7 @@ namespace Core.Entities
         public int Third_Party_Id { get; set; }
         public int Working_StatusId { get; set; }
         public int Probation_Period { get; set; }
-        public int ReferenceEmployeeName { get; set; }
+        public string ReferenceEmployeeName { get; set; }
         public string Reference_Phone_No { get; set; }
         public DateTime Date_Of_Birth { get; set; }
         public string Gender { get; set; }

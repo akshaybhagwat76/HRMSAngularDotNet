@@ -15,6 +15,10 @@ namespace Core.Entities
         public string Pin { get; set; }
         public int Status_Id { get; set; }
         public string Remarks { get; set; }
+        public string MobileNo2 { get; set; }
+        public string Phone { get; set; }
+        public string EmailAddress2 { get; set; }
+        public int Employee_Id { get; set; }
         public string Action_Remarks { get; set; }
         public DateTime CreatedOn_Date { get; set; }
         public int CreatedBy_Login_User_Id { get; set; }
@@ -28,6 +32,5 @@ namespace Core.Entities
         public string UpdatedFrom_Page { get; set; }
         public int? UpdatedFrom_Sub_Menu_Id { get; set; }
         public string UpdatedFrom_API_Name { get; set; }
-        public int Employee_Id { get; set; }
     }
 }

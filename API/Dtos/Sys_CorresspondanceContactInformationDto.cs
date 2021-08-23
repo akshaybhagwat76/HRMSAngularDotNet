@@ -9,6 +9,9 @@
         public int State { get; set; }
         public string City { get; set; }
         public string Pin { get; set; }
+        public string MobileNo2 { get; set; }
+        public string Phone { get; set; }
+        public string EmailAddress2 { get; set; }
         public int Employee_Id { get; set; }
     }
 }

@@ -39,11 +39,11 @@ namespace API.Controllers
             {
                 var img = identityProofDto.Attachments;
                 //Getting file meta data
-                var fileName = Path.GetFileName(identityProofDto.Attachments.FileName);
-                var contentType = identityProofDto.Attachments.ContentType;
-                identityProofDto.Attachments_File_Name = fileName;
-                var IdentityProoffilePath = Path.Combine("~/Content/images/IdentityProof/", fileName);
-                identityProofDto.Attachments.CopyTo(new FileStream(IdentityProoffilePath, FileMode.Create));
+                //var fileName = Path.GetFileName(identityProofDto.Attachments.FileName);
+                //var contentType = identityProofDto.Attachments.ContentType;
+                //identityProofDto.Attachments_File_Name = fileName;
+                //var IdentityProoffilePath = Path.Combine("~/Content/images/IdentityProof/", fileName);
+                //identityProofDto.Attachments.CopyTo(new FileStream(IdentityProoffilePath, FileMode.Create));
 
                 var identityProof = _mapper.Map<Sys_Identity_ProofDto, Sys_Identity_Proof>(identityProofDto);
                 _unitOfWork.Repository<Sys_Identity_Proof>().Add(identityProof);

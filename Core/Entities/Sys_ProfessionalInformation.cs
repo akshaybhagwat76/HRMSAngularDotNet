@@ -1,10 +1,24 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
-   public class Sys_ProfessionalInformation : BaseEntity, IAuditableEntity
+    [Table("tbl_ProfessionalInformation")]
+    public class Sys_ProfessionalInformation : BaseEntity, IAuditableEntity
     {
-        public string Professional_Information { get; set; }
         public int Status_Id { get; set; }
+        public string EmployeerName { get; set; }
+        public string EmployeerAddress{ get; set; }
+        public string Designation { get; set; }
+        public string ContactPerson { get; set; }
+        public string ContactNo { get; set; }
+        public string EmailId { get; set; }
+        public string AttachmentType_Path { get; set; }
+        public string Attachment_Type { get; set; }
+        public DateTime? DateOfJoining { get; set; }
+        public string LastDrawnSalary { get; set; }
+        public string ReasonForLeaving { get; set; }
+        public DateTime? DateOfLeaving{ get; set; }
         public string Remarks { get; set; }
         public string Action_Remarks { get; set; }
         public DateTime CreatedOn_Date { get; set; }
@@ -19,5 +33,6 @@ namespace Core.Entities
         public string UpdatedFrom_Page { get; set; }
         public int? UpdatedFrom_Sub_Menu_Id { get; set; }
         public string UpdatedFrom_API_Name { get; set; }
+        public int Employee_Id { get; set; }
     }
 }

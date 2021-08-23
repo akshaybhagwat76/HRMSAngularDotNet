@@ -38,25 +38,6 @@ namespace API.Controllers
         {
             try
             {
-                //Signature
-
-                var signature = OtherInformationDto.SignatureFile;
-                //Getting file meta data
-                var SignatureFileName = Path.GetFileName(OtherInformationDto.SignatureFile.FileName);
-                var contentType = OtherInformationDto.SignatureFile.ContentType;
-                OtherInformationDto.Signature = SignatureFileName;
-                var signaturefilePath = Path.Combine("~/Content/images/Signature/", SignatureFileName);
-                OtherInformationDto.SignatureFile.CopyTo(new FileStream(signaturefilePath, FileMode.Create));
-
-                //Picture
-                var Picture = OtherInformationDto.PictureFile;
-                //Getting file meta data
-                var PictureFileName = Path.GetFileName(OtherInformationDto.PictureFile.FileName);
-                var PictureFilecontentType = OtherInformationDto.PictureFile.ContentType;
-                OtherInformationDto.Picture = PictureFileName;
-                var picturefilePath = Path.Combine("~/Content/images/Picture/", SignatureFileName);
-                OtherInformationDto.SignatureFile.CopyTo(new FileStream(picturefilePath, FileMode.Create));
-
 
                 var otherInformation = _mapper.Map<Sys_OtherInformationDto, Sys_OtherInformation>(OtherInformationDto);
                 _unitOfWork.Repository<Sys_OtherInformation>().Add(otherInformation);

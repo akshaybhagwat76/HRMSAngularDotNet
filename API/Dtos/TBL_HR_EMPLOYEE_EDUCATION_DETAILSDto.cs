@@ -11,7 +11,6 @@
         public string Board { get; set; }
         public string Marks { get; set; }
         public string Remarks { get; set; }
-        public string AttachmentType_Path { get; set; }
-        public string Attachment_Type { get; set; }
+      
     }
 }

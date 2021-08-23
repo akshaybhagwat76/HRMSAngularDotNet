@@ -38,11 +38,12 @@ namespace API.Dtos
         public int Marital_StatusId { get; set; }
         public string Identification_Mark { get; set; }
         public bool Status { get; set; }
-        public List<Sys_FamilyDetailsDto> sys_FamilyDetailsDto { get; set; }
-        public List<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto> sys_EducationalQualificationDto { get; set; }
-        public List<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto> tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto { get; set; }
-        public Sys_PermanentContactInformationDto sys_PermanentContactInformationDto { get; set; } 
-        public Sys_CorresspondanceContactInformationDto sys_CorresspondanceContactInformationDto { get; set; }
-        public Sys_OtherInformationDto sys_OtherInformationDto { get; set; }
+        public List<Sys_FamilyDetailsDto> sys_FamilyDetails { get; set; }
+        public List<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto> sys_EducationalQualifications { get; set; }
+        public List<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto> tBL_HR_EMPLOYEE_NOMINEE_DETAILS { get; set; }
+        public Sys_PermanentContactInformationDto sys_PermanentContactInformation { get; set; }
+        public List<Sys_ProfessionalInformationDto> sys_ProfessionalInformations { get; set; }
+        public Sys_CorresspondanceContactInformationDto sys_CorresspondanceContactInformation { get; set; }
+        public Sys_OtherInformationDto sys_OtherInformation { get; set; }
     }
 }

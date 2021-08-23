@@ -8,6 +8,9 @@ namespace API.Helpers
         public MappingProfiles()
         {
             CreateMap<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto, TBL_HR_EMPLOYEE_EDUCATION_DETAILS>().ReverseMap();
+            CreateMap<TBL_Professional_Information_AttachementsDto, TBL_Professional_Information_Attachements>().ReverseMap();
+            CreateMap<TBL_Educational_Qualification_AttachementsDto, TBL_Educational_Qualification_Attachements>().ReverseMap();
+            CreateMap<TBL_Identity_Proof_AttachementsDto, TBL_Identity_Proof_Attachements>().ReverseMap();
             CreateMap<Sys_CompnayDto, sys_Compnays>().ReverseMap();
             CreateMap<Sys_DEPARTMENTDto, Sys_DEPARTMENT>().ReverseMap();
             CreateMap<Sys_BranchDto, Sys_Branch>().ReverseMap();
@@ -15,6 +18,8 @@ namespace API.Helpers
             CreateMap<Sys_COUNTRYDto, Sys_COUNTRY>().ReverseMap();
             CreateMap<Sys_WorkingStatusDto, Sys_WorkingStatus>().ReverseMap();
             CreateMap<Sys_HigherAuthorityDto, Sys_HigherAuthority>().ReverseMap();
+            CreateMap<Sys_OtherInformationDto, Sys_OtherInformation>().ReverseMap();
+
             CreateMap<Sys_HigherAuthorityBranchesDto, tbl_HigherAuthorityBranch>().ReverseMap();
             CreateMap<Sys_HigherAuthorityNameDto, Sys_HigherAuthorityName>().ReverseMap();
             CreateMap<Sys_ThirdPartyDto, Sys_ThirdParty>().ReverseMap();

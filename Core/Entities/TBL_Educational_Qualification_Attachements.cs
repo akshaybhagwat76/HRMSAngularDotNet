@@ -6,7 +6,7 @@ namespace Core.Entities
     [Table("TBL_Educational_Qualification_Attachements")]
     public class TBL_Educational_Qualification_Attachements : BaseEntity, IAuditableEntity
     {
-        public int Professional_Information_Attachements_Id { get; set; }
+        public int Educational_Qualification_Id { get; set; }
         public int EmployeeId { get; set; }
         public string CourseName { get; set; }
         public string DocumentType { get; set; }

@@ -929,7 +929,6 @@ export class DefaultComponent implements OnInit {
     this.submit = true;
   }
   disabledEmployee(event) {
-    debugger
     this.disabledEmployeeCode = event.target.checked;
     this.hrmsForm.patchValue({
       'employeeAutoGenerate': event.target.checked
@@ -939,7 +938,6 @@ export class DefaultComponent implements OnInit {
     }
   }
   CountDays(event) {
-    debugger
     const oneDay = 24 * 60 * 60 * 1000;
     this.currentDate = new Date();
     var dateOfjoining = new Date(event.target.value);
@@ -959,7 +957,6 @@ export class DefaultComponent implements OnInit {
   }
 
   DateOfBirth(event) {
-    debugger
     const oneDay = 24 * 60 * 60 * 1000;
     this.currentDate = new Date();
     var dateOfjoining = new Date(event.target.value);
@@ -1046,7 +1043,6 @@ export class DefaultComponent implements OnInit {
   }
 
   onOptionsSelected(event, target) {
-    debugger
     const value = event.target.value;
     let zones = this.zones;
     if (target == 'per') {
@@ -1083,7 +1079,6 @@ export class DefaultComponent implements OnInit {
   }
 
   fileProgress(fileInput: any) {
-    debugger
     this.documentfile = <File>fileInput.target.files[0];
     var _mb = this.bytesToSize(this.documentfile.size, 2);
     if (_mb > 10) {
@@ -1098,7 +1093,6 @@ export class DefaultComponent implements OnInit {
   }
 
   professionalFile(fileInput: any) {
-    debugger
     this.pidocumentfile = <File>fileInput.target.files[0];
     var _mb = this.bytesToSize(this.pidocumentfile.size, 2);
     if (_mb > 10) {
@@ -1160,7 +1154,6 @@ export class DefaultComponent implements OnInit {
   }
 
   getImgProfessionalSrc(row) {
-    debugger;
     const professionalDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row).value;
     return professionalDocData.piDocumentPreviewUrl;
   }
@@ -1182,16 +1175,11 @@ export class DefaultComponent implements OnInit {
   }
 
   onSubmitHrms() {
-    console.log(this.hrmsForm.value);
-    console.log(this.permanentContactInformationForm.value);
-    console.log(this.corresspondanceContactInformationForm.value);
-    console.log(this.otherInformationForm.value);
+    debugger;
     this.hrmsForm.value.sys_PermanentContactInformationDto = this.permanentContactInformationForm.value;
     this.hrmsForm.value.sys_CorresspondanceContactInformationDto = this.corresspondanceContactInformationForm.value;
     this.hrmsForm.value.sys_OtherInformationDto = this.otherInformationForm.value;
-    console.log(this.hrmsForm.value);
     if (this.hrmsForm.valid) {
-      console.log(this.hrmsForm.value);
       this.submitHrmsForm();
     } else {
       this.validateAllFormFields(this.hrmsForm);
@@ -1202,6 +1190,7 @@ export class DefaultComponent implements OnInit {
   }
 
   submitHrmsForm() {
+    debugger;
     this.employeeMasterService.post(this.hrmsForm.value).subscribe((resp: any) => {
       console.log(resp);
     })
@@ -1228,11 +1217,7 @@ export class DefaultComponent implements OnInit {
   }
 
   changeDepartmentId(value) {
-    // console.log(value);
-    // console.log(this.designations);
-    debugger;
     this.designationsDepartmentList = this.designations.filter(x => x.department_Id == +value);
-    // console.log(this.designations);
   }
 
   sameAsAbove(event) {

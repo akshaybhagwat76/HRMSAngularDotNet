@@ -501,9 +501,7 @@ namespace API.Controllers
         #endregion
 
         #region Add new OtherInformation
-        //[NonAction]
-        [HttpPost("AddOtherInformationAsync")]
-
+        [NonAction]
         public async Task<ActionResult<Sys_OtherInformationDto>> AddOtherInformationAsync(Sys_OtherInformationDto OtherInformationDto)
         {
             try

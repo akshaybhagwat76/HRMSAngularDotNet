@@ -529,6 +529,7 @@ namespace API.Controllers
         #endregion
 
         #region Get last record from table
+        [NonAction]
         public int GetLastRecordFromTable(string tableName)
         {
             var dbConn = _configuration.GetValue<string>("ConnectionStrings:FreelencerDB");

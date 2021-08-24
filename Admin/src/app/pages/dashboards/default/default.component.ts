@@ -103,6 +103,7 @@ export class DefaultComponent implements OnInit {
   educationDocumentForm: FormGroup;
   identityProofForm: FormGroup;
   ProfessionalInformationForm: FormGroup;
+  ProfessionalDocumentInformationForm: FormGroup;
   @ViewChild('content') content;
   educationInfoSubmit: boolean;
   professionalInfoSubmit: boolean;
@@ -169,7 +170,7 @@ export class DefaultComponent implements OnInit {
   fRelationship: number = 0;
   fDateOfBirth: Date;
   fAadharNo: string;
-  fAadharStatus: string;
+  fAadharStatus: string = "Not Verified";
   fAddress: string;
   fContactNo: string;
   isFamilyEdited = false;
@@ -180,13 +181,14 @@ export class DefaultComponent implements OnInit {
   nRelationship: number = 0;
   nDateOfBirth: Date;
   nAadharNo: string;
-  nAadharStatus: string;
+  nAadharStatus: string = "Not Verified";
   nAddress: string;
   nContactNo: string;
   isNomineeEdited = false;
   updatedNomineeDetailsId: number;
   highestQualifications: any;
   designations: any;
+  designationsDepartmentList: any;
 
   // Educational Information
   highestQualification: number = 0;
@@ -236,6 +238,16 @@ export class DefaultComponent implements OnInit {
   DateOfLeaving: Date;
   Professionaldocument: boolean;
   isPersonalStatus = false;
+  isProfessionalDocUploaded = false;
+
+  // Professional Document
+  piEmployeeName: number;
+  piDocumentType: string;
+  pidocumentfile: File;
+  _documentPreviewUrl: any = null;
+  piDocumentPreviewUrl: any = null;
+
+  isStatusVisible = false;
 
   private fetchData() {
     const companies = this.companyService.getAll();
@@ -283,7 +295,7 @@ export class DefaultComponent implements OnInit {
       this.userType = result[14];
       this.employees = result[15];
       this.higherAuthoritiesBranches = result[16];
-      this.thirdParty = this.thirdPartyList = result[17];
+      this.thirdParty = result[17];
       this.casts = result[18];
       this.bloodGroup = result[19];
       this.meritalStatuses = result[20];
@@ -323,7 +335,12 @@ export class DefaultComponent implements OnInit {
   }
   // Professional Information
   get professionalInformationArr() {
-    return (<FormArray>this.hrmsForm.get('professionalInformation')).controls;
+    return (<FormArray>this.hrmsForm.get('sys_ProfessionalInformations')).controls;
+  }
+
+  // Professional Attachment
+  get professionalDocumentArr() {
+    return (<FormArray>this.hrmsForm.get('professionalDocumentAttachment')).controls;
   }
   ngOnInit() {
     const relationship = this.relationshipService.getAll();
@@ -417,24 +434,24 @@ export class DefaultComponent implements OnInit {
   get oInfo() { return this.otherInformationForm.controls; }
   fbBuilder() {
     this.hrmsForm = this.fb.group({
-      companyId: ['',[Validators.required]],
+      companyId: ['', [Validators.required]],
       employeeCategoryId: [''],
       employeeCode: [''],
       employeeAutoGenerate: [false],
       biometricCode: [''],
       firstName: ['', [Validators.required]],
       middleName: [''],
-      lastName: ['',[Validators.required]],
-      departmentId: ['',[Validators.required]],
-      designationId: ['',[Validators.required]],
+      lastName: ['', [Validators.required]],
+      departmentId: ['', [Validators.required]],
+      designationId: ['', [Validators.required]],
       project_BranchId: [''],
       higher_Authority_Branch_ProjectId: [''],
       higher_AuthorityId: [''],
       higher_Authority_NameId: [''],
       date_Of_Joining: [''],
       email: [''],
-      employee_TypeId: ['',[Validators.required]],
-      mobile_No: ['',[Validators.required]],
+      employee_TypeId: ['', [Validators.required]],
+      mobile_No: ['', [Validators.required]],
       third_Party_Type: [''],
       third_Party_Id: [''],
       working_StatusId: [''],
@@ -442,11 +459,11 @@ export class DefaultComponent implements OnInit {
       referenceEmployeeName: [''],
       reference_Phone_No: [''],
       date_Of_Birth: [''],
-      gender: [''],
-      nationality: ['',[Validators.required]],
-      religion: ['',[Validators.required]],
+      gender: ['Male'],
+      nationality: ['', [Validators.required]],
+      religion: ['', [Validators.required]],
       castId: [''],
-      physicalDisability: [''],
+      physicalDisability: ['No'],
       blood_GroupId: [''],
       marital_StatusId: ['', [Validators.required]],
       identification_Mark: [''],
@@ -480,7 +497,8 @@ export class DefaultComponent implements OnInit {
       // account_No: [''],
       // ifsC_Code: [''],
 
-      professionalInformation: new FormArray([]),
+      sys_ProfessionalInformations: new FormArray([]),
+      professionalDocumentAttachment: new FormArray([]),
       // status: [''],
       // other_Details: [''],
       // card_No: [''],
@@ -516,11 +534,12 @@ export class DefaultComponent implements OnInit {
       branch_Name: [''],
       account_No: [''],
       ifsC_Code: [''],
-      status: [''],
+      status: [true],
       other_Details: [''],
       card_No: [''],
       carProxy_Nod_No: [''],
       ipUserId: [''],
+      ipUserData: [''],
       user_Type: [''],
       signature: [''],
       picture: [''],
@@ -532,7 +551,7 @@ export class DefaultComponent implements OnInit {
   addfamilyDetailsArr() {
     // console.log(this.fName);
     // console.log(this.fRelationship);
-    if(this.fName && this.fRelationship){
+    if (this.fName && this.fRelationship) {
       this.familyForm = this.formBuilder.group({
         name: [this.fName],
         date_Of_Birth: [this.fDateOfBirth],
@@ -544,19 +563,19 @@ export class DefaultComponent implements OnInit {
       });
       (<FormArray>this.hrmsForm.get('sys_FamilyDetailsDto')).push(this.familyForm);
       this.clearFamilyDetails();
-    }else{
-      if(!(this.fName || this.fRelationship)){
+    } else {
+      if (!(this.fName || this.fRelationship)) {
         alert(`
         - Enter Name
         - Select Relationship
         `);
       }
-      else if(!this.fName){
+      else if (!this.fName) {
         alert(`
       - Enter Name
       `);
       }
-      else if(!this.fRelationship){
+      else if (!this.fRelationship) {
         alert(`
         - Select Relationship
       `);
@@ -618,7 +637,7 @@ export class DefaultComponent implements OnInit {
 
   // Add Nominee Details
   addNomineeDetailsArr() {
-    if(this.nName && this.nRelationship){
+    if (this.nName && this.nRelationship) {
       this.nomineeForm = this.formBuilder.group({
         nominee_Name: [this.nName],
         nominee_DOB: [this.nDateOfBirth],
@@ -632,19 +651,19 @@ export class DefaultComponent implements OnInit {
       this.clearNomineeDetails();
     }
 
-    else{
-      if(!(this.nName || this.nRelationship)){
+    else {
+      if (!(this.nName || this.nRelationship)) {
         alert(`
         - Enter Name
         - Select Relationship
         `);
       }
-      else if(!this.nName){
+      else if (!this.nName) {
         alert(`
       - Enter Name
       `);
       }
-      else if(!this.nRelationship){
+      else if (!this.nRelationship) {
         alert(`
         - Select Relationship
       `);
@@ -705,7 +724,7 @@ export class DefaultComponent implements OnInit {
   // Add Education Information
   addEducationInformationArr() {
     this.educationInfoSubmit = true;
-    if(this.qualification && this.year){
+    if (this.qualification && this.year) {
       this.educationForm = this.formBuilder.group({
         highestQualification: [this.highestQualification],
         qualification: [this.qualification],
@@ -832,21 +851,24 @@ export class DefaultComponent implements OnInit {
   // Add Professional Information
   addProfessionalInformationArr() {
     this.professionalInfoSubmit = true;
-    if(this.EmployeerName && this.EmailId && this.DateOfJoining && this.LastDrawnSalary){
+    if (this.EmployeerName && this.EmailId && this.DateOfJoining && this.LastDrawnSalary) {
       this.ProfessionalInformationForm = this.formBuilder.group({
-        EmployeerName: [this.EmployeerName],
-        EmployeerAddress: [this.EmployeerAddress],
-        Designation: [this.Designation],
-        ContactPerson: [this.ContactPerson],
-        ContactNo: [this.ContactNo],
-        EmailId: [this.EmailId],
-        DateOfJoining: [this.DateOfJoining],
-        LastDrawnSalary: [this.LastDrawnSalary],
-        ReasonforLeavingy: [this.ReasonforLeavingy],
-        // DateOfLeaving: [this.DateOfLeaving],
+        employeerName: [this.EmployeerName],
+        employeerAddress: [this.EmployeerAddress],
+        designation: [this.Designation],
+        contactPerson: [this.ContactPerson],
+        contactNo: [this.ContactNo],
+        emailId: [this.EmailId],
+        dateOfJoining: [this.DateOfJoining],
+        lastDrawnSalary: [this.LastDrawnSalary],
+        reasonForLeaving: [this.ReasonforLeavingy],
+        dateOfLeaving: [this.DateOfLeaving],
         eduDocumentPreviewUrl: [this.Professionaldocument]
       });
-      (<FormArray>this.hrmsForm.get('professionalInformation')).push(this.ProfessionalInformationForm);
+      (<FormArray>this.hrmsForm.get('sys_ProfessionalInformations')).push(this.ProfessionalInformationForm);
+      if (this.isProfessionalDocUploaded) {
+        this.addProfessionalDocumentArr();
+      }
       this.professionalInfoSubmit = false;
     }
 
@@ -854,9 +876,28 @@ export class DefaultComponent implements OnInit {
   }
   // Delete Professional Information
   deleteProfessionalInformation(row) {
-    const ProfessionalInformation = <FormArray>this.hrmsForm.controls['professionalInformation'];
+    const ProfessionalInformation = <FormArray>this.hrmsForm.controls['sys_ProfessionalInformations'];
     if (ProfessionalInformation) {
       ProfessionalInformation.removeAt(row);
+    }
+  }
+
+  // Add Professional Document
+  addProfessionalDocumentArr() {
+    this.ProfessionalDocumentInformationForm = this.formBuilder.group({
+      piEmployeeName: [this.EmployeerName],
+      piDocumentType: [''],
+      pidocumentfile: [''],
+      piDocumentPreviewUrl: ['']
+    });
+    (<FormArray>this.hrmsForm.get('professionalDocumentAttachment')).push(this.ProfessionalDocumentInformationForm);
+  }
+
+  // Delete Professional
+  deleteProfessionalDoc(row) {
+    const _professionalDoc = <FormArray>this.hrmsForm.controls['professionalDocumentAttachment'];
+    if (_professionalDoc) {
+      _professionalDoc.removeAt(row);
     }
   }
 
@@ -1042,21 +1083,46 @@ export class DefaultComponent implements OnInit {
   }
 
   fileProgress(fileInput: any) {
+    debugger
     this.documentfile = <File>fileInput.target.files[0];
+    console.log(this.documentfile);
     this.preview();
   }
 
+  professionalFile(fileInput: any) {
+    debugger
+    this.pidocumentfile = <File>fileInput.target.files[0];
+    this.previewProfessional();
+  }
+
   preview() {
+    debugger;
     // Show preview
     var mimeType = this.documentfile.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
+    // if (mimeType.match(/image\/*/) == null) {
+    //   return;
+    // }
 
     var reader = new FileReader();
     reader.readAsDataURL(this.documentfile);
     reader.onload = (_event) => {
       this.documentPreviewUrl = reader.result;
+    }
+    debugger;
+  }
+
+  previewProfessional() {
+    debugger;
+    // Show preview
+    var mimeType = this.pidocumentfile.type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.readAsDataURL(this.pidocumentfile);
+    reader.onload = (_event) => {
+      this._documentPreviewUrl = reader.result;
     }
     debugger;
   }
@@ -1070,40 +1136,29 @@ export class DefaultComponent implements OnInit {
       'documentfile': [this.documentPreviewUrl],
       'eduDocumentPreviewUrl': [this.documentPreviewUrl]
     });
-    // const formData = new FormData();
-    // formData.append('file', this.documentfile);
-    // this.fileUploadProgress = '0%';
-
-    // this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', formData, {
-    //   reportProgress: true,
-    //   observe: 'events'
-    // })
-    //   .subscribe(events => {
-    //     if (events.type === HttpEventType.UploadProgress) {
-    //       this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
-    //     } else if (events.type === HttpEventType.Response) {
-    //       this.fileUploadProgress = '';
-    //       this.preview();
-    //
-    //       const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
-    //       const educationDocData = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(row);
-    //       educationDocData.patchValue({
-    //         'courseName': [eduDocData.courseName],
-    //         'documentType': [eduDocData.documentType],
-    //         'documentfile': [this.documentPreviewUrl],
-    //         'documentPreviewUrl': [this.documentPreviewUrl]
-    //       });
-    //     }
-    //   })
-    // this.documentPreviewUrl = '';
     const educationDocumentsArray = <FormArray>this.hrmsForm.controls['educationDocument'];
     educationDocumentsArray.at(row).patchValue({ 'eduDocumentPreviewUrl': this.documentPreviewUrl });
   }
 
+  onProfessionalSubmit(row) {
+    const professionalDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row);
+    professionalDocData.patchValue({
+      'piEmployeeName': [this.EmployeerName],
+      'piDocumentPreviewUrl': [this._documentPreviewUrl]
+    });
+    const professionalDocumentsArray = <FormArray>this.hrmsForm.controls['professionalDocumentAttachment'];
+    professionalDocumentsArray.at(row).patchValue({ 'piDocumentPreviewUrl': this._documentPreviewUrl });
+  }
+
   getImgSrc(row) {
-    debugger;
     const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
     return eduDocData.eduDocumentPreviewUrl;
+  }
+
+  getImgProfessionalSrc(row) {
+    debugger;
+    const professionalDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row).value;
+    return professionalDocData.piDocumentPreviewUrl;
   }
 
   getIdentityImgSrc(row) {
@@ -1142,8 +1197,8 @@ export class DefaultComponent implements OnInit {
     }
   }
 
-  submitHrmsForm(){
-    this.employeeMasterService.post(this.hrmsForm.value).subscribe((resp:any) => {
+  submitHrmsForm() {
+    this.employeeMasterService.post(this.hrmsForm.value).subscribe((resp: any) => {
       console.log(resp);
     })
   }
@@ -1162,10 +1217,17 @@ export class DefaultComponent implements OnInit {
     this.downloadDoc(base64String, eduDocData.documentType);
   }
 
-  changeDepartmentId(value){
+  onClickDownloadProfessionalDoc(row) {
+    const proDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row).value;
+    let base64String = proDocData.piDocumentPreviewUrl;
+    this.downloadDoc(base64String, proDocData.documentType);
+  }
+
+  changeDepartmentId(value) {
     // console.log(value);
     // console.log(this.designations);
-    this.designations = this.designations.filter(x => x.department_Id === Number(value));
+    debugger;
+    this.designationsDepartmentList = this.designations.filter(x => x.department_Id == +value);
     // console.log(this.designations);
   }
 
@@ -1202,6 +1264,12 @@ export class DefaultComponent implements OnInit {
         this.validateAllFormFields(control);
       }
     });
+  }
+
+  oiStatus(value) {
+    if (value == 'Others') {
+      this.isStatusVisible = true;
+    }
   }
 
 }

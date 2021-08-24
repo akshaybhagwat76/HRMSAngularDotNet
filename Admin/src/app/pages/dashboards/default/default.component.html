@@ -24,6 +24,7 @@
                   <div class="mb-3">
                     <label for="companyId" class="form-label">Company<span class="text-danger">*</span></label>
                     <select class="form-select" id="companyId" formControlName="companyId">
+                      <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let company of companies" [value]="company.id">
                         {{company.compnay_Name}}
                       </option>
@@ -112,7 +113,8 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="departmentId" class="form-label">Department<span class="text-danger">*</span></label>
-                    <select class="form-select" id="departmentId" (change)="changeDepartmentId($event.target.value)" formControlName="departmentId">
+                    <select class="form-select" id="departmentId" (change)="changeDepartmentId($event.target.value)"
+                      formControlName="departmentId">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let depart of departments" [value]="depart.id">
                         {{depart?.department_Name}}
@@ -128,10 +130,11 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="validationCustom08" class="form-label">Designation<span class="text-danger">*</span></label>
+                    <label for="validationCustom08" class="form-label">Designation<span
+                        class="text-danger">*</span></label>
                     <select class="form-select" id="validationCustom08" formControlName="designationId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let designation of designations" [value]="designation.id">
+                      <option *ngFor="let designation of designationsDepartmentList" [value]="designation.id">
                         {{designation?.designation_Name}}
                       </option>
                     </select>
@@ -145,7 +148,8 @@
                   <div class="mb-3">
                     <label for="eBranch/Project" class="form-label">Higher Authority Branch/Project<span
                         class="text-danger">*</span></label>
-                    <select class="form-select" id="eBranch/Project" formControlName="higher_Authority_Branch_ProjectId">
+                    <select class="form-select" id="eBranch/Project"
+                      formControlName="higher_Authority_Branch_ProjectId">
                       <option selected="" disabled="" value="">Choose...</option>
                       <option *ngFor="let hBranches of higherAuthoritiesBranches" [value]="hBranches.id">
                         {{hBranches?.higherAuthority_Branch}}
@@ -326,7 +330,7 @@
                     <label for="validationCustom24">Nationality<span class="text-danger">*</span></label>
                     <input type="text" formControlName="nationality" class="form-control" id="validationCustom24"
                       placeholder="Nationality">
-                      <div *ngIf="f.nationality.hasError('required') && f.nationality.touched"
+                    <div *ngIf="f.nationality.hasError('required') && f.nationality.touched"
                       class="text text-danger error-div">
                       *Enter Nationality</div>
                     <!-- <div *ngIf="submit && form.nationality.errors" class="invalid-feedback">
@@ -339,7 +343,7 @@
                     <label for="validationCustom25">Religion<span class="text-danger">*</span></label>
                     <input type="text" formControlName="religion" class="form-control" id="validationCustom25"
                       placeholder="Religion">
-                      <div *ngIf="f.religion.hasError('required') && f.religion.touched"
+                    <div *ngIf="f.religion.hasError('required') && f.religion.touched"
                       class="text text-danger error-div">
                       *Enter Religion</div>
                     <!-- <div *ngIf="submit && form.religion.errors" class="invalid-feedback">
@@ -496,7 +500,8 @@
               </div>
               <div>
                 <button class="btn btn-primary" (click)="addfamilyDetailsArr()" *ngIf="!isFamilyEdited">Add</button>
-                <button class="btn btn-primary" (click)="updatefamilyDetailsArr()" *ngIf="isFamilyEdited">Update</button>
+                <button class="btn btn-primary" (click)="updatefamilyDetailsArr()"
+                  *ngIf="isFamilyEdited">Update</button>
               </div>
               <br />
               <div class="table-responsive" *ngIf="familyDetailsArr.length > 0">
@@ -716,16 +721,19 @@
                           <option *ngFor="let higestQualification of highestQualifications"
                             [value]="higestQualification.id">{{higestQualification.highest_Qualification}}
                         </select>
-                        <div *ngIf="(qualification === undefined || qualification === null || qualification === 0) && educationInfoSubmit" class="text text-danger error-div">
+                        <div
+                          *ngIf="(qualification === undefined || qualification === null || qualification === 0) && educationInfoSubmit"
+                          class="text text-danger error-div">
                           *Select Qualification
                         </div>
                       </td>
                       <td>
                         <input type="text" class="form-control" id="redyear" placeholder="Year" [(ngModel)]="year"
                           [ngModelOptions]="{standalone: true}">
-                          <div *ngIf="(year === undefined || year === null || year === 0) && educationInfoSubmit" class="text text-danger error-div">
-                            *Enter year
-                          </div>
+                        <div *ngIf="(year === undefined || year === null || year === 0) && educationInfoSubmit"
+                          class="text text-danger error-div">
+                          *Enter year
+                        </div>
                       </td>
                       <td>
                         <input type="text" class="form-control" id="redspecialization" placeholder="Specialization"
@@ -867,185 +875,195 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <form [formGroup]="permanentContactInformationForm" name="permanentContactInformationForm" id="permanentContactInformationForm">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Permanent Contact Information
-              </h4>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eAddressInformation" class="form-label">Address<span
-                        class="text-danger">*</span></label>
-                    <textarea class="form-control" formControlName="address" id="eAddressInformation"></textarea>
-                    <div *ngIf="pcInfo.address.hasError('required') && pcInfo.address.touched"
-                      class="text text-danger error-div">*Enter Address</div>
+          <form [formGroup]="permanentContactInformationForm" name="permanentContactInformationForm"
+            id="permanentContactInformationForm">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Permanent Contact Information
+                </h4>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eAddressInformation" class="form-label">Address<span
+                          class="text-danger">*</span></label>
+                      <textarea class="form-control" formControlName="address" id="eAddressInformation"></textarea>
+                      <div *ngIf="pcInfo.address.hasError('required') && pcInfo.address.touched"
+                        class="text text-danger error-div">*Enter Address</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eAddress2" class="form-label">Address 1</label>
+                      <textarea class="form-control" formControlName="address1" id="eAddress2"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
+                      <select class="form-select" id="country" (change)="onOptionsSelected($event,'per')"
+                        formControlName="country">
+                        <option selected="" disabled="" value="">Choose...</option>
+                        <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                      </select>
+                      <div *ngIf="pcInfo.country.hasError('required') && pcInfo.country.touched"
+                        class="text text-danger error-div">
+                        *Select Country</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eZone" class="form-label">Zone<span class="text-danger">*</span></label>
+                      <select class="form-select" id="eZone" formControlName="zone"
+                        (change)="OptionsSelected($event,'per')">
+                        <option selected="" disabled="" value="">Choose...</option>
+                        <option *ngFor="let zone of countryZones" [value]="zone.id">{{zone.zone_Name}}
+                      </select>
+                      <div *ngIf="pcInfo.zone.hasError('required') && pcInfo.zone.touched"
+                        class="text text-danger error-div">
+                        *Select Zone</div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eAddress2" class="form-label">Address 1</label>
-                    <textarea class="form-control" formControlName="address1" id="eAddress2"></textarea>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="redcntstateName" class="form-label">State<span class="text-danger">*</span></label>
+                      <select class="form-select" id="redcntstateName" formControlName="state">
+                        <option selected="" disabled="" value="">Choose...</option>
+                        <option *ngFor="let stP of PerFilteredStates" [value]="stP.id">{{stP.state_Name}}
+                      </select>
+                      <div *ngIf="pcInfo.state.hasError('required') && pcInfo.state.touched"
+                        class="text text-danger error-div">*Select State</div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
-                    <select class="form-select" id="country" (change)="onOptionsSelected($event,'per')"
-                      formControlName="country">
-                      <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
-                    </select>
-                    <div *ngIf="pcInfo.country.hasError('required') && pcInfo.country.touched" class="text text-danger error-div">
-                      *Select Country</div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eCity">City </label>
+                      <input type="text" formControlName="city" class="form-control" id="validationCity" />
+                      <div *ngIf="pcInfo.city.hasError('required') && pcInfo.city.touched"
+                        class="text text-danger error-div">
+                        *Enter City</div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eZone" class="form-label">Zone<span class="text-danger">*</span></label>
-                    <select class="form-select" id="eZone" formControlName="zone"
-                      (change)="OptionsSelected($event,'per')">
-                      <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let zone of countryZones" [value]="zone.id">{{zone.zone_Name}}
-                    </select>
-                    <div *ngIf="pcInfo.zone.hasError('required') && pcInfo.zone.touched" class="text text-danger error-div">
-                      *Select Zone</div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="redcntstateName" class="form-label">State<span class="text-danger">*</span></label>
-                    <select class="form-select" id="redcntstateName" formControlName="state">
-                      <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let stP of PerFilteredStates" [value]="stP.id">{{stP.state_Name}}
-                    </select>
-                    <div *ngIf="pcInfo.state.hasError('required') && pcInfo.state.touched"
-                      class="text text-danger error-div">*Select State</div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eCity">City </label>
-                    <input type="text" formControlName="city" class="form-control" id="validationCity" />
-                    <div *ngIf="pcInfo.city.hasError('required') && pcInfo.city.touched" class="text text-danger error-div">
-                      *Enter City</div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="ePin">Pin <span class="text-danger">*</span></label>
-                    <input type="text" formControlName="pin" class="form-control" id="validationPin" />
-                    <div *ngIf="pcInfo.pin.hasError('required') && pcInfo.pin.touched" class="text text-danger error-div">
-                      *Enter Pin Code</div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="ePin">Pin <span class="text-danger">*</span></label>
+                      <input type="text" formControlName="pin" class="form-control" id="validationPin" />
+                      <div *ngIf="pcInfo.pin.hasError('required') && pcInfo.pin.touched"
+                        class="text text-danger error-div">
+                        *Enter Pin Code</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <form [formGroup]="corresspondanceContactInformationForm" name="corresspondanceContactInformationForm" id="corresspondanceContactInformationForm">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">
-                Corresspondance Contact Information (Same as Above)
-                <input type="checkbox" (change)="sameAsAbove($event)">
-              </h4>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eAddresss" class="form-label">Address<span class="text-danger">*</span></label>
-                    <textarea class="form-control" formControlName="address" id="eAddresss"></textarea>
-                    <div *ngIf="ccInfo.address.hasError('required') && ccInfo.address.touched"
-                      class="text text-danger error-div">*Enter Corresspondance Address</div>
+          <form [formGroup]="corresspondanceContactInformationForm" name="corresspondanceContactInformationForm"
+            id="corresspondanceContactInformationForm">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">
+                  Corresspondance Contact Information (Same as Above)
+                  <input type="checkbox" (change)="sameAsAbove($event)">
+                </h4>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eAddresss" class="form-label">Address<span class="text-danger">*</span></label>
+                      <textarea class="form-control" formControlName="address" id="eAddresss"></textarea>
+                      <div *ngIf="ccInfo.address.hasError('required') && ccInfo.address.touched"
+                        class="text text-danger error-div">*Enter Corresspondance Address</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eAddress1" class="form-label">Address 1</label>
+                      <textarea class="form-control" formControlName="address1" id="eAddress1"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="redcntcountryName" class="form-label">Country<span
+                          class="text-danger">*</span></label>
+                      <select class="form-select" id="redcntcountryName" (change)="onOptionsSelected($event,'curr')"
+                        formControlName="country">
+                        <option selected="" disabled="" value="">Choose...</option>
+                        <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="redZone" class="form-label">Zone<span class="text-danger">*</span></label>
+                      <select class="form-select" id="redZone" formControlName="zone"
+                        (change)="OptionsSelected($event,'curr')">
+                        <option selected="" disabled="" value="">Choose...</option>
+                        <option *ngFor="let zn of corresspondCountryZone" [value]="zn.id">{{zn.zone_Name}}
+                      </select>
+                      <div *ngIf="ccInfo.zone.hasError('required') && ccInfo.zone.touched"
+                        class="text text-danger error-div">
+                        *Select Zone</div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eAddress1" class="form-label">Address 1</label>
-                    <textarea class="form-control" formControlName="address1" id="eAddress1"></textarea>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="redcntcountryName" class="form-label">State<span class="text-danger">*</span></label>
+                      <select class="form-select" id="redcntcountryName" formControlName="state">
+                        <option selected="" disabled="" value="">Choose...</option>
+                        <option *ngFor="let stC of CorrFilteredStates" [value]="stC.id">{{stC.state_Name}}
+                      </select>
+                      <div *ngIf="ccInfo.state.hasError('required') && ccInfo.state.touched"
+                        class="text text-danger error-div">*Select State</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="City1">City </label>
+                      <input type="text" class="form-control" formControlName="city" id="City1" />
+                      <div *ngIf="ccInfo.city.hasError('required') && ccInfo.city.touched"
+                        class="text text-danger error-div">
+                        *Enter City</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="ePin1">Pin <span class="text-danger">*</span></label>
+                      <input type="text" formControlName="pin" class="form-control" id="ePin1" />
+                      <div *ngIf="ccInfo.pin.hasError('required') && ccInfo.pin.touched"
+                        class="text text-danger error-div">
+                        *Enter Pin Code</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="ePhone">Phone</label>
+                      <input type="text" formControlName="phone" class="form-control" id="validationPhone" />
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="redcntcountryName" class="form-label">Country<span class="text-danger">*</span></label>
-                    <select class="form-select" id="redcntcountryName" (change)="onOptionsSelected($event,'curr')"
-                      formControlName="country">
-                      <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
-                    </select>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eEmail">Email Address2 </label>
+                      <input type="text" formControlName="email" class="form-control" id="eEmail" />
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="redZone" class="form-label">Zone<span class="text-danger">*</span></label>
-                    <select class="form-select" id="redZone" formControlName="zone"
-                      (change)="OptionsSelected($event,'curr')">
-                      <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let zn of corresspondCountryZone" [value]="zn.id">{{zn.zone_Name}}
-                    </select>
-                    <div *ngIf="ccInfo.zone.hasError('required') && ccInfo.zone.touched" class="text text-danger error-div">
-                      *Select Zone</div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="redcntcountryName" class="form-label">State<span class="text-danger">*</span></label>
-                    <select class="form-select" id="redcntcountryName" formControlName="state">
-                      <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let stC of CorrFilteredStates" [value]="stC.id">{{stC.state_Name}}
-                    </select>
-                    <div *ngIf="ccInfo.state.hasError('required') && ccInfo.state.touched"
-                      class="text text-danger error-div">*Select State</div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="City1">City </label>
-                    <input type="text" class="form-control" formControlName="city" id="City1" />
-                    <div *ngIf="ccInfo.city.hasError('required') && ccInfo.city.touched" class="text text-danger error-div">
-                      *Enter City</div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="ePin1">Pin <span class="text-danger">*</span></label>
-                    <input type="text" formControlName="pin" class="form-control" id="ePin1" />
-                    <div *ngIf="ccInfo.pin.hasError('required') && ccInfo.pin.touched" class="text text-danger error-div">
-                      *Enter Pin Code</div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="ePhone">Phone</label>
-                    <input type="text" formControlName="phone" class="form-control" id="validationPhone" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eEmail">Email Address2 </label>
-                    <input type="text" formControlName="email" class="form-control" id="eEmail" />
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eMobileNo2">Mobile No2 </label>
-                    <input type="text" formControlName="mobile_No" class="form-control" id="eMobileNo2" />
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eMobileNo2">Mobile No2 </label>
+                      <input type="text" formControlName="mobile_No" class="form-control" id="eMobileNo2" />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
         </div>
       </div>
       <div class="row">
@@ -1089,17 +1107,20 @@
                       <th scope="col">Date Of Joining</th>
                       <th scope="col">Last Drawn Salary</th>
                       <th scope="col">Reason for Leaving</th>
-                      <!-- <th scope="col">Date Of Leaving</th> -->
+                      <th scope="col">Date Of Leaving</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
-                  <tbody formArrayName="professionalInformation">
+                  <tbody formArrayName="sys_ProfessionalInformations">
                     <tr>
                       <td><input type="text" class="form-control" [(ngModel)]="EmployeerName"
                           [ngModelOptions]="{standalone: true}">
-                          <div *ngIf="(EmployeerName === undefined || EmployeerName === null || EmployeerName === '') && professionalInfoSubmit" class="text text-danger error-div">
-                            *Enter Employeer Name
-                          </div></td>
+                        <div
+                          *ngIf="(EmployeerName === undefined || EmployeerName === null || EmployeerName === '') && professionalInfoSubmit"
+                          class="text text-danger error-div">
+                          *Enter Employeer Name
+                        </div>
+                      </td>
                       <td><input type="text" class="form-control" [(ngModel)]="EmployeerAddress"
                           [ngModelOptions]="{standalone: true}"></td>
                       <td><input type="text" class="form-control" [(ngModel)]="Designation"
@@ -1108,29 +1129,37 @@
                           [ngModelOptions]="{standalone: true}"></td>
                       <td><input type="text" class="form-control" [(ngModel)]="ContactNo"
                           [ngModelOptions]="{standalone: true}">
-                        </td>
+                      </td>
                       <td><input type="text" class="form-control" [(ngModel)]="EmailId"
                           [ngModelOptions]="{standalone: true}">
-                          <div *ngIf="(EmailId === undefined || EmailId === null || EmailId === '') && professionalInfoSubmit" class="text text-danger error-div">
-                            *Enter Email Id
-                          </div></td>
+                        <div
+                          *ngIf="(EmailId === undefined || EmailId === null || EmailId === '') && professionalInfoSubmit"
+                          class="text text-danger error-div">
+                          *Enter Email Id
+                        </div>
+                      </td>
                       <td><input type="date" class="form-control" id="redDateOfJoining" [(ngModel)]="DateOfJoining"
                           [ngModelOptions]="{standalone: true}">
-                          <div *ngIf="(DateOfJoining === undefined || DateOfJoining === null) && professionalInfoSubmit" class="text text-danger error-div">
-                            *Select Date Of Joining
-                          </div>
-                        </td>
+                        <div *ngIf="(DateOfJoining === undefined || DateOfJoining === null) && professionalInfoSubmit"
+                          class="text text-danger error-div">
+                          *Select Date Of Joining
+                        </div>
+                      </td>
                       <td><input type="text" class="form-control" [(ngModel)]="LastDrawnSalary"
                           [ngModelOptions]="{standalone: true}">
-                          <div *ngIf="(LastDrawnSalary === undefined || LastDrawnSalary === null || LastDrawnSalary === 0) && professionalInfoSubmit" class="text text-danger error-div">
-                            *Enter Last Drawn Salary
-                          </div></td>
+                        <div
+                          *ngIf="(LastDrawnSalary === undefined || LastDrawnSalary === null || LastDrawnSalary === 0) && professionalInfoSubmit"
+                          class="text text-danger error-div">
+                          *Enter Last Drawn Salary
+                        </div>
+                      </td>
                       <td><input type="text" class="form-control" [(ngModel)]="ReasonforLeavingy"
                           [ngModelOptions]="{standalone: true}"></td>
-                      <!-- <td><input type="text" class="form-control" [(ngModel)]="DateOfLeaving"
-                          [ngModelOptions]="{standalone: true}"></td> -->
+                      <td><input type="date" class="form-control" [(ngModel)]="DateOfLeaving"
+                          [ngModelOptions]="{standalone: true}"></td>
                       <td>
-                        <input type="checkbox">&nbsp;<span>Attach Documents?</span> &nbsp;&nbsp;
+                        <input type="checkbox" [(ngModel)]="isProfessionalDocUploaded"
+                          [ngModelOptions]="{standalone: true}">&nbsp;<span>Attach Documents?</span> &nbsp;&nbsp;
                         <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
                           (click)="addProfessionalInformationArr()"></span>
                       </td>
@@ -1155,31 +1184,69 @@
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
-                  <tbody formArrayName="professionalInformation">
-                    <tr *ngFor="let professionalInformation of professionalInformationArr;let q=index;"
+                  <tbody formArrayName="sys_ProfessionalInformations">
+                    <tr *ngFor="let sys_ProfessionalInformations of professionalInformationArr;let q=index;"
                       [formGroupName]="q">
-                      <td><input type="text" class="form-control" formControlName="EmployeerName" /></td>
-                      <td><input type="text" class="form-control" [(ngModel)]="EmployeerAddress"
-                          [ngModelOptions]="{standalone: true}"></td>
-                      <td><input type="text" class="form-control" [(ngModel)]="Designation"
-                          [ngModelOptions]="{standalone: true}"></td>
-                      <td><input type="text" class="form-control" [(ngModel)]="ContactPerson"
-                          [ngModelOptions]="{standalone: true}"></td>
-                      <td><input type="text" class="form-control" [(ngModel)]="ContactNo"
-                          [ngModelOptions]="{standalone: true}"></td>
-                      <td><input type="text" class="form-control" [(ngModel)]="EmailId"
-                          [ngModelOptions]="{standalone: true}"></td>
-                      <td><input type="date" class="form-control" id="reddate" formControlName="DateOfJoining" />
+                      <td><input type="text" class="form-control" formControlName="employeerName" /></td>
+                      <td><input type="text" class="form-control" formControlName="employeerAddress"></td>
+                      <td><input type="text" class="form-control" formControlName="designation"></td>
+                      <td><input type="text" class="form-control" formControlName="contactPerson"></td>
+                      <td><input type="text" class="form-control" formControlName="contactNo"></td>
+                      <td><input type="text" class="form-control" formControlName="emailId"></td>
+                      <td><input type="date" class="form-control" id="reddate" formControlName="dateOfJoining" />
                       </td>
-                      <td><input type="text" class="form-control" [(ngModel)]="LastDrawnSalary"
-                          [ngModelOptions]="{standalone: true}"></td>
-                      <td><input type="text" class="form-control" [(ngModel)]="ReasonforLeavingy"
-                          [ngModelOptions]="{standalone: true}"></td>
-                      <td><input type="text" class="form-control" [(ngModel)]="DateOfLeaving"
-                          [ngModelOptions]="{standalone: true}"></td>
+                      <td><input type="text" class="form-control" formControlName="lastDrawnSalary"></td>
+                      <td><input type="text" class="form-control" formControlName="reasonForLeaving"></td>
+                      <td><input type="text" class="form-control" formControlName="dateOfLeaving"></td>
                       <td>
                         <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
                           (click)="deleteProfessionalInformation(q)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="table-responsive" *ngIf="professionalDocumentArr.length > 0">
+                <table class="table">
+                  <thead>
+                    <tr style="background: aliceblue;">
+                      <th scope="col">Sl.No</th>
+                      <th scope="col">Employee Name</th>
+                      <th scope="col">Document Type</th>
+                      <th scope="col">Upload Your Document</th>
+                      <th scope="col">Document Display</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="professionalDocumentAttachment">
+                    <tr *ngFor="let professionalDocumentAttachment of professionalDocumentArr;let m=index;"
+                      [formGroupName]="m">
+                      <td>{{m+1}}</td>
+                      <td><input type="text" class="form-control" formControlName="piEmployeeName" /></td>
+                      <td><input type="text" class="form-control" formControlName="piDocumentType"></td>
+                      <td>
+                        <input type="file" class="form-control" formControlName="pidocumentfile" name="image"
+                          (change)="professionalFile($event)">
+                        <button class="form-control btn-sm btn-primary" (click)="onProfessionalSubmit(m)"
+                          *ngIf="pidocumentfile">Upload
+                          Document</button>
+                      </td>
+                      <td>
+                        <div *ngIf="!pidocumentfile && !_documentPreviewUrl">
+                          <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
+                        </div>
+                        <div class="image-preview mb-3" *ngIf="_documentPreviewUrl && pidocumentfile">
+                          <img [src]="getImgProfessionalSrc(m)" height="70" width="70" />
+                        </div>
+                      </td>
+                      <td>
+                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6; cursor: pointer;"
+                          (click)="addProfessionalDocumentArr()"></span>
+                        &nbsp;&nbsp;
+                        <i class="fa fa-download" style="font-size:24px; color: cadetblue; cursor: pointer;"
+                          (click)="onClickDownloadProfessionalDoc(m)"></i>&nbsp;&nbsp;
+                        <i class="fa fa-trash" style="font-size:24px; color: red; cursor: pointer;"
+                          (click)="deleteProfessionalDoc(m)"></i>
                       </td>
                     </tr>
                   </tbody>
@@ -1192,221 +1259,221 @@
       <div class="row">
         <div class="col-12">
           <form [formGroup]="otherInformationForm" name="otherInformationForm" id="otherInformationForm">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Other Information
-              </h4>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eBankName">Bank Name </label>
-                    <input type="text" formControlName="bank_Name" class="form-control" id="eBankName" />
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eBranchName">Branch Name </label>
-                    <input type="text" formControlName="branch_Name" class="form-control" id="eBranchName" />
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eAccountNo">Account No. </label>
-                    <input type="text" formControlName="account_No" class="form-control" id="eAccountNo" />
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eIFSCCode">IFSC Code</label>
-                    <input type="text" formControlName="ifsC_Code" class="form-control" id="eIFSCCode" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-1">
-                  <label style="color: #b91d1e;"><strong>Identity Proof </strong></label>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Identity Type</th>
-                      <th scope="col">Identity No</th>
-                      <th scope="col">Valid Upto</th>
-                      <th scope="col">Attachments</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody formArrayName="sys_Identity_ProofDtos">
-                    <tr>
-                      <td>
-                        <select id="eIdentityProof" class="form-select" [(ngModel)]="identityType"
-                          [ngModelOptions]="{standalone: true}">
-                          <option value="0">Choose...</option>
-                          <option value="1">PAN</option>
-                          <option value="2">VOTER CARD</option>
-                          <option value="3">AADHAR CARD</option>
-                          <option value="4">PASSPORT</option>
-                          <option value="5">UAN</option>
-                          <option value="6">ESI No</option>
-                          <option value="7">PF No</option>
-                          <option value="8">BIRTH CERTIFICATE</option>
-                          <option value="9">SCHOOL CERTIFICATE</option>
-                          <option value="10">AdmitCard</option>
-                        </select>
-                      </td>
-                      <td>
-                        <input type="text" class="form-control" [(ngModel)]="identityNo"
-                          [ngModelOptions]="{standalone: true}" id="eYear" placeholder="Year">
-                      </td>
-                      <td>
-                        <input type="date" class="form-control" id="edate" [(ngModel)]="validUpto"
-                          [ngModelOptions]="{standalone: true}" />
-                      </td>
-                      <td>
-                        <input type="file" (change)="fileProgress($event)" class="form-control"
-                          id="validationPicture" />
-                      </td>
-                      <td>
-                        <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
-                          (click)="addIdentityProoftArr()"></span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="table-responsive" *ngIf="identityProofArr.length > 0">
-                <table class="table">
-                  <thead>
-                    <tr style="background: aliceblue;">
-                      <th scope="col">Sl.No</th>
-                      <th scope="col">Identity Type</th>
-                      <th scope="col">Identity No</th>
-                      <th scope="col">Valid Upto</th>
-                      <th scope="col">Attachments</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody formArrayName="sys_Identity_ProofDtos">
-                    <tr *ngFor="let identityProf of identityProofArr;let p=index;" [formGroupName]="p">
-                      <td>{{p+1}}</td>
-                      <td>
-                        <select id="eidentityProf" class="form-select" formControlName="identity_Type" disabled>
-                          <option value="1">PAN</option>
-                          <option value="2">VOTER CARD</option>
-                          <option value="3">AADHAR CARD</option>
-                          <option value="4">PASSPORT</option>
-                          <option value="5">UAN</option>
-                          <option value="6">ESI No</option>
-                          <option value="7">PF No</option>
-                          <option value="8">BIRTH CERTIFICATE</option>
-                          <option value="9">SCHOOL CERTIFICATE</option>
-                          <option value="10">AdmitCard</option>
-                        </select>
-                      </td>
-                      <td><input type="text" class="form-control form-selectdisabled" formControlName="identity_No" />
-                      </td>
-                      <td>
-                        <input type="date" class="form-control form-selectdisabled" id="redidentityProf"
-                          formControlName="valid_Upto" />
-                      </td>
-                      <td>
-                        <div *ngIf="!attachments && !documentPreviewUrl">
-                          <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
-                        </div>
-                        <div *ngIf="documentPreviewUrl">
-                          <img height="70" width="70" [src]="getIdentityImgSrc(p)" alt="">
-                        </div>
-                      </td>
-                      <td>
-                        <i class="fa fa-trash" style="font-size:24px; color: red; cursor: pointer;"
-                          (click)="deleteIdentityProof(p)"></i>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="redStatus" class="mr-5">Status </label>
-                    <input type="checkbox" formControlName="status" id="redStatus" />
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eOtherDetails">Other Details </label>
-                    <textarea class="form-control" formControlName="other_Details" id="eOtherDetails"></textarea>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eCardNo">Card No </label>
-                    <input type="text" formControlName="card_No" class="form-control" id="eCardNo" />
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eProxyNo">Proxy No </label>
-                    <input type="text" formControlName="carProxy_Nod_No" class="form-control" id="eProxyNo" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eUserId">User Id</label>
-                    <div class="d-flex">
-                      <div class="custom-control custom-radio custom-control-inline mr-5">
-                        <input type="radio" formControlName="ipUserId" id="redEmpCode" value="Emp Code" checked
-                          name="ipUserId" class="custom-control-input">
-                        <label class="custom-control-label" for="redEmpCode"> Emp Code</label>
-                      </div>
-                      <div class="custom-control custom-radio custom-control-inline mr-5">
-                        <input type="radio" formControlName="ipUserId" value="Mobile No" id="redMobileNo"
-                          name="ipUserId" class="custom-control-input">
-                        <label class="custom-control-label" for="redMobileNo"> Mobile No </label>
-                      </div>
-                      <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" formControlName="ipUserId" value="Others" id="redOthers" name="ipUserId"
-                          class="custom-control-input" checked>
-                        <label class="custom-control-label" for="redOthers">Others</label>
-                      </div>
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Other Information
+                </h4>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eBankName">Bank Name </label>
+                      <input type="text" formControlName="bank_Name" class="form-control" id="eBankName" />
                     </div>
-                    <input type="text" class="form-control" id="validationUserId" />
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eBranchName">Branch Name </label>
+                      <input type="text" formControlName="branch_Name" class="form-control" id="eBranchName" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eAccountNo">Account No. </label>
+                      <input type="text" formControlName="account_No" class="form-control" id="eAccountNo" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eIFSCCode">IFSC Code</label>
+                      <input type="text" formControlName="ifsC_Code" class="form-control" id="eIFSCCode" />
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eUserType" class="form-label">User Type</label>
-                    <select class="form-select" id="eUserType" formControlName="user_Type">
-                      <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let utype of userType" [value]="utype.id">{{utype.userType_Name}}
-                    </select>
+                <div class="row">
+                  <div class="col-md-1">
+                    <label style="color: #b91d1e;"><strong>Identity Proof </strong></label>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="ePicture">Picture</label>
-                    <input type="file" formControlName="picture" class="form-control" id="ePicture" />
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Identity Type</th>
+                        <th scope="col">Identity No</th>
+                        <th scope="col">Valid Upto</th>
+                        <th scope="col">Attachments</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody formArrayName="sys_Identity_ProofDtos">
+                      <tr>
+                        <td>
+                          <select id="eIdentityProof" class="form-select" [(ngModel)]="identityType"
+                            [ngModelOptions]="{standalone: true}">
+                            <option value="0">Choose...</option>
+                            <option value="1">PAN</option>
+                            <option value="2">VOTER CARD</option>
+                            <option value="3">AADHAR CARD</option>
+                            <option value="4">PASSPORT</option>
+                            <option value="5">UAN</option>
+                            <option value="6">ESI No</option>
+                            <option value="7">PF No</option>
+                            <option value="8">BIRTH CERTIFICATE</option>
+                            <option value="9">SCHOOL CERTIFICATE</option>
+                            <option value="10">AdmitCard</option>
+                          </select>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" [(ngModel)]="identityNo"
+                            [ngModelOptions]="{standalone: true}" id="eYear" placeholder="Year">
+                        </td>
+                        <td>
+                          <input type="date" class="form-control" id="edate" [(ngModel)]="validUpto"
+                            [ngModelOptions]="{standalone: true}" />
+                        </td>
+                        <td>
+                          <input type="file" (change)="fileProgress($event)" class="form-control"
+                            id="validationPicture" />
+                        </td>
+                        <td>
+                          <span class="fa fa-plus-circle fa-2x" style="color: #556ee6;cursor: pointer;"
+                            (click)="addIdentityProoftArr()"></span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="table-responsive" *ngIf="identityProofArr.length > 0">
+                  <table class="table">
+                    <thead>
+                      <tr style="background: aliceblue;">
+                        <th scope="col">Sl.No</th>
+                        <th scope="col">Identity Type</th>
+                        <th scope="col">Identity No</th>
+                        <th scope="col">Valid Upto</th>
+                        <th scope="col">Attachments</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody formArrayName="sys_Identity_ProofDtos">
+                      <tr *ngFor="let identityProf of identityProofArr;let p=index;" [formGroupName]="p">
+                        <td>{{p+1}}</td>
+                        <td>
+                          <select id="eidentityProf" class="form-select" formControlName="identity_Type" disabled>
+                            <option value="1">PAN</option>
+                            <option value="2">VOTER CARD</option>
+                            <option value="3">AADHAR CARD</option>
+                            <option value="4">PASSPORT</option>
+                            <option value="5">UAN</option>
+                            <option value="6">ESI No</option>
+                            <option value="7">PF No</option>
+                            <option value="8">BIRTH CERTIFICATE</option>
+                            <option value="9">SCHOOL CERTIFICATE</option>
+                            <option value="10">AdmitCard</option>
+                          </select>
+                        </td>
+                        <td><input type="text" class="form-control form-selectdisabled" formControlName="identity_No" />
+                        </td>
+                        <td>
+                          <input type="date" class="form-control form-selectdisabled" id="redidentityProf"
+                            formControlName="valid_Upto" />
+                        </td>
+                        <td>
+                          <div *ngIf="!attachments && !documentPreviewUrl">
+                            <img height="70" width="70" src="../../../../assets/images/1.jpg" alt="">
+                          </div>
+                          <div *ngIf="documentPreviewUrl">
+                            <img height="70" width="70" [src]="getIdentityImgSrc(p)" alt="">
+                          </div>
+                        </td>
+                        <td>
+                          <i class="fa fa-trash" style="font-size:24px; color: red; cursor: pointer;"
+                            (click)="deleteIdentityProof(p)"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="redStatus" class="mr-5">Status </label>
+                      <input type="checkbox" formControlName="status" id="redStatus" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eOtherDetails">Other Details </label>
+                      <textarea class="form-control" formControlName="other_Details" id="eOtherDetails"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eCardNo">Card No </label>
+                      <input type="text" formControlName="card_No" class="form-control" id="eCardNo" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eProxyNo">Proxy No </label>
+                      <input type="text" formControlName="carProxy_Nod_No" class="form-control" id="eProxyNo" />
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="eSignature">Signature</label>
-                    <input type="file" formControlName="signature" class="form-control" id="eSignature" />
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eUserId">User Id</label>
+                      <div class="d-flex">
+                        <div class="custom-control custom-radio custom-control-inline mr-5">
+                          <input type="radio" (click)="oiStatus('Emp Code')" formControlName="ipUserId" id="redEmpCode"
+                            value="Emp Code" checked name="ipUserId" class="custom-control-input">
+                          <label class="custom-control-label" for="redEmpCode"> Emp Code</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline mr-5">
+                          <input type="radio" (click)="oiStatus('Mobile No')" formControlName="ipUserId"
+                            value="Mobile No" id="redMobileNo" name="ipUserId" class="custom-control-input">
+                          <label class="custom-control-label" for="redMobileNo"> Mobile No </label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" (click)="oiStatus('Others')" formControlName="ipUserId" value="Others"
+                            id="redOthers" name="ipUserId" class="custom-control-input" checked>
+                          <label class="custom-control-label" for="redOthers">Others</label>
+                        </div>
+                      </div>
+                      <input type="text" formControlName="ipUserData" [disabled]="!isStatusVisible" class="form-control"
+                        id="validationUserId" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eUserType" class="form-label">User Type</label>
+                      <select class="form-select" id="eUserType" formControlName="user_Type">
+                        <option selected="" disabled="" value="">Choose...</option>
+                        <option *ngFor="let utype of userType" [value]="utype.id">{{utype.userType_Name}}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="ePicture">Picture</label>
+                      <input type="file" formControlName="picture" class="form-control" id="ePicture" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="eSignature">Signature</label>
+                      <input type="file" formControlName="signature" class="form-control" id="eSignature" />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
         </div>
         <div class="row">
           <div class="col-md-3">
-            <button type="submit" class="btn btn-primary mr-5"
-              (click)="onSubmitHrms()">Save</button>
+            <button type="submit" class="btn btn-primary mr-5" (click)="onSubmitHrms()">Save</button>
             <button type="button" class="btn btn-primary">Reset</button>
           </div>
         </div>

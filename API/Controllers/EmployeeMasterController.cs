@@ -27,16 +27,14 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         readonly IConfiguration _configuration;
-        private readonly StoreContext _storeContext;
         #endregion
 
         #region Constructor
-        public EmployeeMasterController(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, StoreContext storeContext)
+        public EmployeeMasterController(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _configuration = configuration;
-            _storeContext = storeContext;
         }
         #endregion
 
@@ -44,99 +42,106 @@ namespace API.Controllers
         [HttpPost("AddOrUpdateEmployeeMaster")]
         public async Task<ActionResult<Sys_EmployeeMasterDto>> AddOrUpdateEmployeeMaster(Sys_EmployeeMasterDto EmployeeMasterDto)
         {
-            using (var context = _storeContext)
+            SqlConnection cn = null;
+            SqlTransaction tr = null;
+            var dbConn = _configuration.GetValue<string>("ConnectionStrings:FreelencerDB");
+
+            cn = new SqlConnection(dbConn);
+            tr = cn.BeginTransaction();
+            try
             {
-                using (var dbContextTransaction = context.Database.BeginTransaction())
+
+                var employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
+                employeeMaster.Status = true;
+                _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
+                var result = await _unitOfWork.Complete();
+
+                if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employeemaster"));
+                else
                 {
                     try
                     {
-                        var employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
-                        employeeMaster.Status = true;
-                        _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
-                        var result = await _unitOfWork.Complete();
-
-                        if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employeemaster"));
-                        else
+                        if (EmployeeMasterDto.sys_FamilyDetails != null && EmployeeMasterDto.sys_FamilyDetails.Count > 0)
                         {
-                            try
+                            foreach (var item in EmployeeMasterDto.sys_FamilyDetails)
                             {
-                                if (EmployeeMasterDto.sys_FamilyDetails != null && EmployeeMasterDto.sys_FamilyDetails.Count > 0)
-                                {
-                                    foreach (var item in EmployeeMasterDto.sys_FamilyDetails)
-                                    {
-                                        item.Employee_Id = employeeMaster.Id;
-                                        await AddFamilyDetailsAsync(item);
-                                    }
-                                }
+                                item.Employee_Id = employeeMaster.Id;
+                                await AddFamilyDetailsAsync(item);
                             }
-                            catch (Exception) { }
-                            try
-                            {
-                                if (EmployeeMasterDto.sys_ProfessionalInformations != null && EmployeeMasterDto.sys_ProfessionalInformations.Count > 0)
-                                {
-                                    foreach (var item in EmployeeMasterDto.sys_ProfessionalInformations)
-                                    {
-                                        item.Employee_Id = employeeMaster.Id;
-                                        await AddProfessionalInformationAsync(item);
-                                    }
-                                }
-                            }
-                            catch (Exception) { }
-                            try
-                            {
-                                if (EmployeeMasterDto.sys_EducationalQualifications != null && EmployeeMasterDto.sys_EducationalQualifications.Count > 0)
-                                {
-                                    foreach (var item in EmployeeMasterDto.sys_EducationalQualifications)
-                                    {
-                                        item.Employee_Id = employeeMaster.Id;
-                                        await AddEducationalQualificationAsync(item);
-                                    }
-                                }
-                            }
-                            catch (Exception) { }
-                            try
-                            {
-                                if (EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS != null && EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS.Count > 0)
-                                {
-                                    foreach (var item in EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS)
-                                    {
-                                        item.Employee_Id = employeeMaster.Id;
-                                        await AddNomineeAsync(item);
-                                    }
-                                }
-                            }
-                            catch (Exception) { }
-
-                            try
-                            {
-                                if (EmployeeMasterDto.sys_PermanentContactInformation != null)
-                                {
-                                    EmployeeMasterDto.sys_PermanentContactInformation.Employee_Id = employeeMaster.Id;
-                                    await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformation);
-                                }
-                            }
-                            catch (Exception) { }
-
-                            try
-                            {
-                                if (EmployeeMasterDto.sys_OtherInformation != null)
-                                {
-                                    EmployeeMasterDto.sys_OtherInformation.Employee_Id = employeeMaster.Id;
-                                    await AddOtherInformationAsync(EmployeeMasterDto.sys_OtherInformation);
-                                }
-                            }
-                            catch (Exception) { }
-                            await dbContextTransaction.CommitAsync();
-
-                            return _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(employeeMaster);
                         }
                     }
-                    catch (Exception exception)
+                    catch (Exception) { }
+                    try
                     {
-                        await dbContextTransaction.RollbackAsync();
-                        return BadRequest(exception.Message.ToString());
+                        if (EmployeeMasterDto.sys_ProfessionalInformations != null && EmployeeMasterDto.sys_ProfessionalInformations.Count > 0)
+                        {
+                            foreach (var item in EmployeeMasterDto.sys_ProfessionalInformations)
+                            {
+                                item.Employee_Id = employeeMaster.Id;
+                                await AddProfessionalInformationAsync(item);
+                            }
+                        }
                     }
+                    catch (Exception) { }
+                    try
+                    {
+                        if (EmployeeMasterDto.sys_EducationalQualifications != null && EmployeeMasterDto.sys_EducationalQualifications.Count > 0)
+                        {
+                            foreach (var item in EmployeeMasterDto.sys_EducationalQualifications)
+                            {
+                                item.Employee_Id = employeeMaster.Id;
+                                await AddEducationalQualificationAsync(item);
+                            }
+                        }
+                    }
+                    catch (Exception) { }
+                    try
+                    {
+                        if (EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS != null && EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS.Count > 0)
+                        {
+                            foreach (var item in EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS)
+                            {
+                                item.Employee_Id = employeeMaster.Id;
+                                await AddNomineeAsync(item);
+                            }
+                        }
+                    }
+                    catch (Exception) { }
+
+                    try
+                    {
+                        if (EmployeeMasterDto.sys_PermanentContactInformation != null)
+                        {
+                            EmployeeMasterDto.sys_PermanentContactInformation.Employee_Id = employeeMaster.Id;
+                            await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformation);
+                        }
+                    }
+                    catch (Exception) { }
+
+                    try
+                    {
+                        if (EmployeeMasterDto.sys_OtherInformation != null)
+                        {
+                            EmployeeMasterDto.sys_OtherInformation.Employee_Id = employeeMaster.Id;
+                            await AddOtherInformationAsync(EmployeeMasterDto.sys_OtherInformation);
+                        }
+                    }
+                    catch (Exception) { }
+                    await tr.CommitAsync();
+                    return _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(employeeMaster);
                 }
+            }
+            catch (Exception exception)
+            {
+                await tr.RollbackAsync();
+                return BadRequest(exception.Message.ToString());
+            }
+            finally
+            {
+                if (cn != null)
+                    await cn.DisposeAsync();
+                if (tr != null)
+                    await tr.DisposeAsync();
             }
         }
         #endregion

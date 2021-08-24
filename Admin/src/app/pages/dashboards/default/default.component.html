@@ -1014,7 +1014,7 @@
                       <select class="form-select" id="redZone" formControlName="zone"
                         (change)="OptionsSelected($event,'curr')">
                         <option selected="" disabled="" value="">Choose...</option>
-                        <option *ngFor="let zn of corresspondCountryZone" [value]="zn.id">{{zn.zone_Name}}
+                        <option *ngFor="let zn of countryZones" [value]="zn.id">{{zn.zone_Name}}
                       </select>
                       <div *ngIf="ccInfo.zone.hasError('required') && ccInfo.zone.touched"
                         class="text text-danger error-div">
@@ -1028,7 +1028,7 @@
                       <label for="redcntcountryName" class="form-label">State<span class="text-danger">*</span></label>
                       <select class="form-select" id="redcntcountryName" formControlName="state">
                         <option selected="" disabled="" value="">Choose...</option>
-                        <option *ngFor="let stC of CorrFilteredStates" [value]="stC.id">{{stC.state_Name}}
+                        <option *ngFor="let stC of PerFilteredStates" [value]="stC.id">{{stC.state_Name}}
                       </select>
                       <div *ngIf="ccInfo.state.hasError('required') && ccInfo.state.touched"
                         class="text text-danger error-div">*Select State</div>

@@ -197,6 +197,8 @@
                     <label for="email">Email Address</label>
                     <input type="text" class="form-control" formControlName="email" id="email"
                       placeholder="Email Address" />
+                    <div *ngIf="f.email.hasError('email')" class="text text-danger error-div">
+                      *Enter valid email Address</div>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -217,8 +219,11 @@
                     <label for="mobile_No">Mobile No</label>
                     <input type="text" formControlName="mobile_No" class="form-control" id="mobile_No"
                       placeholder="Mobile No">
-                    <div *ngIf="f.mobile_No.hasError('required') && f.mobile_No.touched"
-                      class="text text-danger error-div">*Enter Mobile</div>
+                    <div *ngIf="f.mobile_No.touched && f.mobile_No.invalid" class="text text-danger error-div">
+                      <div *ngIf="f.mobile_No.errors.required">Enter Mobile number</div>
+                      <div *ngIf="f.mobile_No.errors.pattern">Enter only number.</div>
+                    </div>
+
                   </div>
                 </div>
 
@@ -276,6 +281,11 @@
                     <label for="reference_Phone_No">Reference Phone No</label>
                     <input type="text" class="form-control" formControlName="reference_Phone_No" id="reference_Phone_No"
                       placeholder="Reference Phone No">
+                    <div *ngIf="f.reference_Phone_No.touched && f.reference_Phone_No.invalid"
+                      class="text text-danger error-div">
+                      <div *ngIf="f.reference_Phone_No.errors.required">Enter Mobile number</div>
+                      <div *ngIf="f.reference_Phone_No.errors.pattern">Enter only number.</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1426,22 +1436,24 @@
                       <label for="eUserId">User Id</label>
                       <div class="d-flex">
                         <div class="custom-control custom-radio custom-control-inline mr-5">
-                          <input type="radio" (click)="oiStatus('Emp Code')" formControlName="ipUserId" id="redEmpCode" value="Emp Code" checked
-                            name="ipUserId" class="custom-control-input">
+                          <input type="radio" (click)="oiStatus('Emp Code')" formControlName="ipUserId" id="redEmpCode"
+                            value="Emp Code" checked name="ipUserId" class="custom-control-input">
                           <label class="custom-control-label" for="redEmpCode"> Emp Code</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline mr-5">
-                          <input type="radio" (click)="oiStatus('Mobile No')" formControlName="ipUserId" value="Mobile No" id="redMobileNo"
-                            name="ipUserId" class="custom-control-input">
+                          <input type="radio" (click)="oiStatus('Mobile No')" formControlName="ipUserId"
+                            value="Mobile No" id="redMobileNo" name="ipUserId" class="custom-control-input">
                           <label class="custom-control-label" for="redMobileNo"> Mobile No </label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
-                          <input type="radio" (click)="oiStatus('Others')" formControlName="ipUserId" value="Others" id="redOthers" name="ipUserId"
-                            class="custom-control-input" checked>
+                          <input type="radio" (click)="oiStatus('Others')" formControlName="ipUserId" value="Others"
+                            id="redOthers" name="ipUserId" class="custom-control-input" checked>
                           <label class="custom-control-label" for="redOthers">Others</label>
                         </div>
                       </div>
-                      <input type="text" formControlName="ipUserData" [disabled]="!isStatusVisible" class="form-control" id="validationUserId" />
+                      <input type="text" formControlName="ipUserData"
+                        [attr.readonly]="otherInformationForm.controls.ipUserId.value == 'Others' ? null : ''"
+                        class="form-control" id="validationUserId" />
                     </div>
                   </div>
                   <div class="col-md-3">

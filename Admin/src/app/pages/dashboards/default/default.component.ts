@@ -449,15 +449,15 @@ export class DefaultComponent implements OnInit {
       higher_AuthorityId: [''],
       higher_Authority_NameId: [''],
       date_Of_Joining: [''],
-      email: [''],
+      email: ['', [Validators.email]],
       employee_TypeId: ['', [Validators.required]],
-      mobile_No: ['', [Validators.required]],
+      mobile_No: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       third_Party_Type: [''],
       third_Party_Id: [''],
       working_StatusId: [''],
       probation_Period: [''],
       referenceEmployeeName: [''],
-      reference_Phone_No: [''],
+      reference_Phone_No: ['',[Validators.pattern("^[0-9]*$")]],
       date_Of_Birth: [''],
       gender: ['Male'],
       nationality: ['', [Validators.required]],
@@ -1269,6 +1269,10 @@ export class DefaultComponent implements OnInit {
   oiStatus(value) {
     if (value == 'Others') {
       this.isStatusVisible = true;
+    } else {
+      this.otherInformationForm.patchValue({
+        'ipUserData': ''
+      });
     }
   }
 

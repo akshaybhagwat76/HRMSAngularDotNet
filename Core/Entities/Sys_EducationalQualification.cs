@@ -1,10 +1,8 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
 
 namespace Core.Entities
 {
-    [Table("tBL_HR_EMPLOYEE_EDUCATION_DETAILs")]
+    //[Table("tBL_HR_EMPLOYEE_EDUCATION_DETAILs")]
     public  class Sys_EducationalQualification : BaseEntity, IAuditableEntity
     {
         public string Educational_Qualification { get; set; }

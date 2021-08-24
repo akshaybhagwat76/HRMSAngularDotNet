@@ -449,15 +449,15 @@ export class DefaultComponent implements OnInit {
       higher_AuthorityId: [''],
       higher_Authority_NameId: [''],
       date_Of_Joining: [''],
-      email: [''],
+      email: ['', [Validators.email]],
       employee_TypeId: ['', [Validators.required]],
-      mobile_No: ['', [Validators.required]],
+      mobile_No: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       third_Party_Type: [''],
       third_Party_Id: [''],
       working_StatusId: [''],
       probation_Period: [''],
       referenceEmployeeName: [''],
-      reference_Phone_No: [''],
+      reference_Phone_No: ['', [Validators.pattern("^[0-9]*$")]],
       date_Of_Birth: [''],
       gender: ['Male'],
       nationality: ['', [Validators.required]],
@@ -526,7 +526,7 @@ export class DefaultComponent implements OnInit {
       city: ['', [Validators.required]],
       pin: ['', [Validators.required]],
       phone: [],
-      email: [],
+      email: ['', [Validators.email]],
       mobile_No: []
     })
     this.otherInformationForm = this.fb.group({
@@ -1085,6 +1085,14 @@ export class DefaultComponent implements OnInit {
   fileProgress(fileInput: any) {
     debugger
     this.documentfile = <File>fileInput.target.files[0];
+    var _mb = this.bytesToSize(this.documentfile.size, 2);
+    if (_mb > 10) {
+      alert(`
+      - The maximum supported file sizes are 10 MB
+        `);
+      this.documentfile = null;
+      return;
+    }
     console.log(this.documentfile);
     this.preview();
   }
@@ -1092,39 +1100,35 @@ export class DefaultComponent implements OnInit {
   professionalFile(fileInput: any) {
     debugger
     this.pidocumentfile = <File>fileInput.target.files[0];
+    var _mb = this.bytesToSize(this.pidocumentfile.size, 2);
+    if (_mb > 10) {
+      alert(`
+      - The maximum supported file sizes are 10 MB
+        `);
+      this.documentfile = null;
+      return;
+    }
     this.previewProfessional();
   }
 
   preview() {
-    debugger;
     // Show preview
     var mimeType = this.documentfile.type;
-    // if (mimeType.match(/image\/*/) == null) {
-    //   return;
-    // }
-
     var reader = new FileReader();
     reader.readAsDataURL(this.documentfile);
     reader.onload = (_event) => {
       this.documentPreviewUrl = reader.result;
     }
-    debugger;
   }
 
   previewProfessional() {
-    debugger;
     // Show preview
     var mimeType = this.pidocumentfile.type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
-
     var reader = new FileReader();
     reader.readAsDataURL(this.pidocumentfile);
     reader.onload = (_event) => {
       this._documentPreviewUrl = reader.result;
     }
-    debugger;
   }
 
   onSubmit(row) {
@@ -1270,6 +1274,32 @@ export class DefaultComponent implements OnInit {
     if (value == 'Others') {
       this.isStatusVisible = true;
     }
+  }
+
+  keyPressNumbers(event) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if ((charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+      return false;
+    } else {
+      this.otherInformationForm.patchValue({
+        'ipUserData': ''
+      });
+    }
+  }
+
+  bytesToSize(bytes, decimals) {
+    if (bytes === 0) return '0 Bytes';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    if (i == 1 || i == 0) {
+      return 10;
+    }
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
   }
 
 }

@@ -197,6 +197,8 @@
                     <label for="email">Email Address</label>
                     <input type="text" class="form-control" formControlName="email" id="email"
                       placeholder="Email Address" />
+                    <div *ngIf="f.email.hasError('email')" class="text text-danger error-div">
+                      *Enter valid email Address</div>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -217,8 +219,11 @@
                     <label for="mobile_No">Mobile No</label>
                     <input type="text" formControlName="mobile_No" class="form-control" id="mobile_No"
                       placeholder="Mobile No">
-                    <div *ngIf="f.mobile_No.hasError('required') && f.mobile_No.touched"
-                      class="text text-danger error-div">*Enter Mobile</div>
+                    <div *ngIf="f.mobile_No.touched && f.mobile_No.invalid" class="text text-danger error-div">
+                      <div *ngIf="f.mobile_No.errors.required">Enter Mobile number</div>
+                      <div *ngIf="f.mobile_No.errors.pattern">Enter only number.</div>
+                    </div>
+
                   </div>
                 </div>
 
@@ -276,6 +281,11 @@
                     <label for="reference_Phone_No">Reference Phone No</label>
                     <input type="text" class="form-control" formControlName="reference_Phone_No" id="reference_Phone_No"
                       placeholder="Reference Phone No">
+                    <div *ngIf="f.reference_Phone_No.touched && f.reference_Phone_No.invalid"
+                      class="text text-danger error-div">
+                      <div *ngIf="f.reference_Phone_No.errors.required">Enter Mobile number</div>
+                      <div *ngIf="f.reference_Phone_No.errors.pattern">Enter only number.</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -299,8 +309,8 @@
                   </div>
                   <div *ngIf="getControl('date_Of_Birth').value.length>0 && NumberOfYears >18">
                     <span><b>Age</b>:
-                      <span>{{NumberOfYears}}</span> Years<span>{{NumberOfMonth}}</span>
-                      Month<span>{{NumberofDate}}</span> Days</span>
+                      <span>{{NumberOfYears}}</span> Years<span> {{NumberOfMonth}}</span>
+                      Month<span> {{NumberofDate}}</span> Days</span>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -329,7 +339,7 @@
                   <div class="mb-3">
                     <label for="validationCustom24">Nationality<span class="text-danger">*</span></label>
                     <input type="text" formControlName="nationality" class="form-control" id="validationCustom24"
-                      placeholder="Nationality">
+                      placeholder="INDIAN">
                     <div *ngIf="f.nationality.hasError('required') && f.nationality.touched"
                       class="text text-danger error-div">
                       *Enter Nationality</div>
@@ -454,8 +464,8 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eAadharNo">Aadhar No</label>
-                    <input type="text" class="form-control" id="eAadharNo" [(ngModel)]="fAadharNo"
-                      [ngModelOptions]="{standalone: true}" />
+                    <input type="text" class="form-control" id="eAadharNo" (keypress)="keyPressNumbers($event)"
+                      [(ngModel)]="fAadharNo" [ngModelOptions]="{standalone: true}" />
                   </div>
                 </div>
               </div>
@@ -487,8 +497,8 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eContactNo">Contact No</label>
-                    <input type="text" class="form-control" id="eContactNo" [(ngModel)]="fContactNo"
-                      [ngModelOptions]="{standalone: true}" />
+                    <input type="text" class="form-control" (keypress)="keyPressNumbers($event)" id="eContactNo"
+                      [(ngModel)]="fContactNo" [ngModelOptions]="{standalone: true}" />
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -729,7 +739,7 @@
                       </td>
                       <td>
                         <input type="text" class="form-control" id="redyear" placeholder="Year" [(ngModel)]="year"
-                          [ngModelOptions]="{standalone: true}">
+                          [ngModelOptions]="{standalone: true}" (keypress)="keyPressNumbers($event)">
                         <div *ngIf="(year === undefined || year === null || year === 0) && educationInfoSubmit"
                           class="text text-danger error-div">
                           *Enter year
@@ -749,7 +759,7 @@
                       </td>
                       <td>
                         <input type="text" class="form-control" id="redmarks" placeholder="Marks" [(ngModel)]="marks"
-                          [ngModelOptions]="{standalone: true}">
+                          [ngModelOptions]="{standalone: true}" (keypress)="keyPressNumbers($event)">
                       </td>
                       <td>
                         <input type="checkbox" [(ngModel)]="isUploaded" [ngModelOptions]="{standalone: true}"><span>
@@ -920,7 +930,8 @@
                       </select>
                       <div *ngIf="pcInfo.zone.hasError('required') && pcInfo.zone.touched"
                         class="text text-danger error-div">
-                        *Select Zone</div>
+                        *Select Zone
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -948,7 +959,8 @@
                   <div class="col-md-3">
                     <div class="mb-3">
                       <label for="ePin">Pin <span class="text-danger">*</span></label>
-                      <input type="text" formControlName="pin" class="form-control" id="validationPin" />
+                      <input type="text" formControlName="pin" class="form-control" id="validationPin"
+                        (keypress)="keyPressNumbers($event)" />
                       <div *ngIf="pcInfo.pin.hasError('required') && pcInfo.pin.touched"
                         class="text text-danger error-div">
                         *Enter Pin Code</div>
@@ -1034,7 +1046,8 @@
                   <div class="col-md-3">
                     <div class="mb-3">
                       <label for="ePin1">Pin <span class="text-danger">*</span></label>
-                      <input type="text" formControlName="pin" class="form-control" id="ePin1" />
+                      <input type="text" formControlName="pin" class="form-control" id="ePin1"
+                        (keypress)="keyPressNumbers($event)" />
                       <div *ngIf="ccInfo.pin.hasError('required') && ccInfo.pin.touched"
                         class="text text-danger error-div">
                         *Enter Pin Code</div>
@@ -1043,7 +1056,8 @@
                   <div class="col-md-3">
                     <div class="mb-3">
                       <label for="ePhone">Phone</label>
-                      <input type="text" formControlName="phone" class="form-control" id="validationPhone" />
+                      <input type="text" formControlName="phone" class="form-control" id="validationPhone"
+                        (keypress)="keyPressNumbers($event)" />
                     </div>
                   </div>
                 </div>
@@ -1052,12 +1066,15 @@
                     <div class="mb-3">
                       <label for="eEmail">Email Address2 </label>
                       <input type="text" formControlName="email" class="form-control" id="eEmail" />
+                      <div *ngIf="ccInfo.email.hasError('email')" class="text text-danger error-div">
+                        *Enter valid email Address</div>
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="mb-3">
                       <label for="eMobileNo2">Mobile No2 </label>
-                      <input type="text" formControlName="mobile_No" class="form-control" id="eMobileNo2" />
+                      <input type="text" formControlName="mobile_No" class="form-control" id="eMobileNo2"
+                        (keypress)="keyPressNumbers($event)" />
                     </div>
                   </div>
                 </div>
@@ -1128,7 +1145,7 @@
                       <td><input type="text" class="form-control" [(ngModel)]="ContactPerson"
                           [ngModelOptions]="{standalone: true}"></td>
                       <td><input type="text" class="form-control" [(ngModel)]="ContactNo"
-                          [ngModelOptions]="{standalone: true}">
+                          [ngModelOptions]="{standalone: true}" (keypress)="keyPressNumbers($event)">
                       </td>
                       <td><input type="text" class="form-control" [(ngModel)]="EmailId"
                           [ngModelOptions]="{standalone: true}">
@@ -1146,7 +1163,7 @@
                         </div>
                       </td>
                       <td><input type="text" class="form-control" [(ngModel)]="LastDrawnSalary"
-                          [ngModelOptions]="{standalone: true}">
+                          [ngModelOptions]="{standalone: true}" (keypress)="keyPressNumbers($event)">
                         <div
                           *ngIf="(LastDrawnSalary === undefined || LastDrawnSalary === null || LastDrawnSalary === 0) && professionalInfoSubmit"
                           class="text text-danger error-div">
@@ -1279,7 +1296,8 @@
                   <div class="col-md-3">
                     <div class="mb-3">
                       <label for="eAccountNo">Account No. </label>
-                      <input type="text" formControlName="account_No" class="form-control" id="eAccountNo" />
+                      <input type="text" formControlName="account_No" class="form-control" id="eAccountNo"
+                        (keypress)="keyPressNumbers($event)" />
                     </div>
                   </div>
                   <div class="col-md-3">
@@ -1325,7 +1343,8 @@
                         </td>
                         <td>
                           <input type="text" class="form-control" [(ngModel)]="identityNo"
-                            [ngModelOptions]="{standalone: true}" id="eYear" placeholder="Year">
+                            [ngModelOptions]="{standalone: true}" id="eYear" placeholder="Year"
+                            (keypress)="keyPressNumbers($event)">
                         </td>
                         <td>
                           <input type="date" class="form-control" id="edate" [(ngModel)]="validUpto"
@@ -1372,7 +1391,8 @@
                             <option value="10">AdmitCard</option>
                           </select>
                         </td>
-                        <td><input type="text" class="form-control form-selectdisabled" formControlName="identity_No" />
+                        <td><input type="text" class="form-control form-selectdisabled" formControlName="identity_No"
+                            (keypress)="keyPressNumbers($event)" />
                         </td>
                         <td>
                           <input type="date" class="form-control form-selectdisabled" id="redidentityProf"
@@ -1410,13 +1430,15 @@
                   <div class="col-md-3">
                     <div class="mb-3">
                       <label for="eCardNo">Card No </label>
-                      <input type="text" formControlName="card_No" class="form-control" id="eCardNo" />
+                      <input type="text" formControlName="card_No" class="form-control" id="eCardNo"
+                        (keypress)="keyPressNumbers($event)" />
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="mb-3">
                       <label for="eProxyNo">Proxy No </label>
-                      <input type="text" formControlName="carProxy_Nod_No" class="form-control" id="eProxyNo" />
+                      <input type="text" formControlName="carProxy_Nod_No" class="form-control" id="eProxyNo"
+                        (keypress)="keyPressNumbers($event)" />
                     </div>
                   </div>
                 </div>
@@ -1441,8 +1463,9 @@
                           <label class="custom-control-label" for="redOthers">Others</label>
                         </div>
                       </div>
-                      <input type="text" formControlName="ipUserData" [disabled]="!isStatusVisible" class="form-control"
-                        id="validationUserId" />
+                      <input type="text" formControlName="ipUserData"
+                        [attr.readonly]="otherInformationForm.controls.ipUserId.value == 'Others' ? null : ''"
+                        class="form-control" id="validationUserId" />
                     </div>
                   </div>
                   <div class="col-md-3">

@@ -50,12 +50,21 @@ namespace API.Controllers
             tr = cn.BeginTransaction();
             try
             {
+                int result = 0;
+                Sys_EmployeeMaster employeeMaster = new Sys_EmployeeMaster();
+                if (EmployeeMasterDto.Id == 0)
+                {
 
-                var employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
-                employeeMaster.Status = true;
-                _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
-                var result = await _unitOfWork.Complete();
-
+                    employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
+                    employeeMaster.Status = true;
+                    _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
+                    result = await _unitOfWork.Complete();
+                }
+                else
+                {
+                    employeeMaster = await _unitOfWork.Repository<Sys_EmployeeMaster>().GetByIdAsync(EmployeeMasterDto.Id);
+                    _unitOfWork.Repository<Sys_EmployeeMaster>().Update(employeeMaster);
+                }
                 if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employeemaster"));
                 else
                 {
@@ -519,6 +528,7 @@ namespace API.Controllers
 
         #endregion
 
+        #region Get last record from table
         public int GetLastRecordFromTable(string tableName)
         {
             var dbConn = _configuration.GetValue<string>("ConnectionStrings:FreelencerDB");
@@ -527,10 +537,14 @@ namespace API.Controllers
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = sqlConnection;
             sqlConnection.Open();
-            SqlCommand MyCommand = new SqlCommand($"select top 1 Id from {tableName} order by Id desc", sqlConnection);
-            letestInformationId = Convert.ToInt32(MyCommand.ExecuteScalar());
+            SqlCommand command = new SqlCommand($"select top 1 Id from {tableName} order by Id desc", sqlConnection);
+            if (!string.IsNullOrEmpty(command.ExecuteScalar().ToString()))
+            {
+                letestInformationId = Convert.ToInt32(command.ExecuteScalar());
+            }
             sqlConnection.Close();
             return letestInformationId;
         }
+        #endregion
     }
 }

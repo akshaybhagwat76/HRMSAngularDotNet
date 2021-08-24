@@ -1,54 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-
-namespace API.Helpers
+﻿namespace API.Helpers
 {
-    //public static class Common
-    //{
-    //    /// <summary>
-    //    /// Filters a <see cref="IQueryable{T}"/> by given predicate if given condition is true.
-    //    /// </summary>
-    //    /// <param name="query">Queryable to apply filtering</param>
-    //    /// <param name="condition">A boolean value</param>
-    //    /// <param name="predicate">Predicate to filter the query</param>
-    //    /// <returns>Filtered or not filtered query based on <paramref name="condition"/></returns>
-    //    public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, bool>> predicate)
-    //    {
-    //        return condition
-    //            ? query.Where(predicate)
-    //            : query;
-    //    }
+    public class Common
+    {
+        /// <summary>
+        /// To demonstrate extraction of file extension from base64 string.
+        /// </summary>
+        /// <param name="base64String">base64 string.</param>
+        /// <returns>Henceforth file extension from string.</returns>
+        public string GetFileExtension(string base64String)
+        {
+            var data = base64String.Substring(0, 28).Split(",")[1];
+            switch (data.ToUpper())
+            {
+                case "IVBORW":
+                    return ".png";
+                case "/9J/4":
+                    return ".jpg";
+                case "AAAAF":
+                    return ".mp4";
+                case "JVBER":
+                    return ".pdf";
+                case "AAABA":
+                    return ".ico";
+                case "UMFYI":
+                    return ".rar";
+                case "E1XYD":
+                    return ".rtf";
+                case "U1PKC":
+                    return ".txt";
+                case "MQOWM":
+                case "77U/M":
+                    return ".srt";
+                default:
+                    return string.Empty;
+            }
+        }
+    }
 
-    //    /// <summary>
-    //    /// Filters a <see cref="IQueryable{T}"/> by given predicate if given condition is true.
-    //    /// </summary>
-    //    /// <param name="query">Queryable to apply filtering</param>
-    //    /// <param name="condition">A boolean value</param>
-    //    /// <param name="predicate">Predicate to filter the query</param>
-    //    /// <returns>Filtered or not filtered query based on <paramref name="condition"/></returns>
-    //    public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, int, bool>> predicate)
-    //    {
-    //        return condition
-    //            ? query.Where(predicate)
-    //            : query;
-    //    }
-
-    //    public static IEnumerable<TSource> WhereIf<TSource>(this IEnumerable<TSource> source, bool condition, Func<TSource, bool> predicate)
-    //    {
-    //        if (condition)
-    //            return source.Where(predicate);
-    //        else
-    //            return source;
-    //    }
-
-    //    public static IEnumerable<TSource> WhereIf<TSource>(this IEnumerable<TSource> source, bool condition, Func<TSource, int, bool> predicate)
-    //    {
-    //        if (condition)
-    //            return source.Where(predicate);
-    //        else
-    //            return source;
-    //    }
-    //}
 }

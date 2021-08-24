@@ -40,7 +40,7 @@ namespace Infrastructure.Data
         public DbSet<Sys_IdentityType> Sys_IdentityType { get; set; }
         public DbSet<Sys_CorresspondanceContactInformation> Sys_CorresspondanceContactInformation { get; set; }
 
-         public DbSet<Sys_EducationalQualification> Sys_EducationalQualification { get; set; }
+         //public DbSet<Sys_EducationalQualification> Sys_EducationalQualification { get; set; }
         public DbSet<Sys_Highest_Qualification> Sys_Highest_Qualification { get; set; }
         public DbSet<Sys_ProfessionalInformation> Sys_ProfessionalInformation { get; set; }
         public DbSet<Sys_FamilyDetails> Sys_FamilyDetails { get; set; }

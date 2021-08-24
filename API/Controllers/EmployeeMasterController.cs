@@ -27,14 +27,16 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         readonly IConfiguration _configuration;
+        private readonly StoreContext _storeContext;
         #endregion
 
         #region Constructor
-        public EmployeeMasterController(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration)
+        public EmployeeMasterController(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, StoreContext storeContext)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _configuration = configuration;
+            _storeContext = storeContext;
         }
         #endregion
 
@@ -42,81 +44,99 @@ namespace API.Controllers
         [HttpPost("AddOrUpdateEmployeeMaster")]
         public async Task<ActionResult<Sys_EmployeeMasterDto>> AddOrUpdateEmployeeMaster(Sys_EmployeeMasterDto EmployeeMasterDto)
         {
-            try
+            using (var context = _storeContext)
             {
-                var employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
-                employeeMaster.Status = true;
-                _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
-                var result = await _unitOfWork.Complete();
-
-                if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employeemaster"));
-                else
+                using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
                     try
                     {
-                        if (EmployeeMasterDto.sys_FamilyDetails != null && EmployeeMasterDto.sys_FamilyDetails.Count > 0)
-                        {
-                            foreach (var item in EmployeeMasterDto.sys_FamilyDetails)
-                            {
-                                item.Employee_Id = employeeMaster.Id;
-                                await AddFamilyDetailsAsync(item);
-                            }
-                        }
-                    }
-                    catch (Exception) { }
-                    try
-                    {
-                        if (EmployeeMasterDto.sys_ProfessionalInformations != null && EmployeeMasterDto.sys_ProfessionalInformations.Count > 0)
-                        {
-                            foreach (var item in EmployeeMasterDto.sys_ProfessionalInformations)
-                            {
-                                item.Employee_Id = employeeMaster.Id;
-                                await AddProfessionalInformationAsync(item);
-                            }
-                        }
-                    }
-                    catch (Exception) { }
-                    try
-                    {
-                        if (EmployeeMasterDto.sys_EducationalQualifications != null && EmployeeMasterDto.sys_EducationalQualifications.Count > 0)
-                        {
-                            foreach (var item in EmployeeMasterDto.sys_EducationalQualifications)
-                            {
-                                item.Employee_Id = employeeMaster.Id;
-                                await AddEducationalQualificationAsync(item);
-                            }
-                        }
-                    }
-                    catch (Exception) { }
-                    try
-                    {
-                        if (EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS != null && EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS.Count > 0)
-                        {
-                            foreach (var item in EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS)
-                            {
-                                item.Employee_Id = employeeMaster.Id;
-                                await AddNomineeAsync(item);
-                            }
-                        }
-                    }
-                    catch (Exception) { }
+                        var employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
+                        employeeMaster.Status = true;
+                        _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
+                        var result = await _unitOfWork.Complete();
 
-                    try
-                    {
-                        if (EmployeeMasterDto.sys_PermanentContactInformation != null)
+                        if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employeemaster"));
+                        else
                         {
-                            EmployeeMasterDto.sys_PermanentContactInformation.Employee_Id = employeeMaster.Id;
-                            await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformation);
+                            try
+                            {
+                                if (EmployeeMasterDto.sys_FamilyDetails != null && EmployeeMasterDto.sys_FamilyDetails.Count > 0)
+                                {
+                                    foreach (var item in EmployeeMasterDto.sys_FamilyDetails)
+                                    {
+                                        item.Employee_Id = employeeMaster.Id;
+                                        await AddFamilyDetailsAsync(item);
+                                    }
+                                }
+                            }
+                            catch (Exception) { }
+                            try
+                            {
+                                if (EmployeeMasterDto.sys_ProfessionalInformations != null && EmployeeMasterDto.sys_ProfessionalInformations.Count > 0)
+                                {
+                                    foreach (var item in EmployeeMasterDto.sys_ProfessionalInformations)
+                                    {
+                                        item.Employee_Id = employeeMaster.Id;
+                                        await AddProfessionalInformationAsync(item);
+                                    }
+                                }
+                            }
+                            catch (Exception) { }
+                            try
+                            {
+                                if (EmployeeMasterDto.sys_EducationalQualifications != null && EmployeeMasterDto.sys_EducationalQualifications.Count > 0)
+                                {
+                                    foreach (var item in EmployeeMasterDto.sys_EducationalQualifications)
+                                    {
+                                        item.Employee_Id = employeeMaster.Id;
+                                        await AddEducationalQualificationAsync(item);
+                                    }
+                                }
+                            }
+                            catch (Exception) { }
+                            try
+                            {
+                                if (EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS != null && EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS.Count > 0)
+                                {
+                                    foreach (var item in EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS)
+                                    {
+                                        item.Employee_Id = employeeMaster.Id;
+                                        await AddNomineeAsync(item);
+                                    }
+                                }
+                            }
+                            catch (Exception) { }
+
+                            try
+                            {
+                                if (EmployeeMasterDto.sys_PermanentContactInformation != null)
+                                {
+                                    EmployeeMasterDto.sys_PermanentContactInformation.Employee_Id = employeeMaster.Id;
+                                    await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformation);
+                                }
+                            }
+                            catch (Exception) { }
+
+                            try
+                            {
+                                if (EmployeeMasterDto.sys_OtherInformation != null)
+                                {
+                                    EmployeeMasterDto.sys_OtherInformation.Employee_Id = employeeMaster.Id;
+                                    await AddOtherInformationAsync(EmployeeMasterDto.sys_OtherInformation);
+                                }
+                            }
+                            catch (Exception) { }
+                            await dbContextTransaction.CommitAsync();
+
+                            return _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(employeeMaster);
                         }
                     }
-                    catch (Exception) { }
-
-                    return _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(employeeMaster);
+                    catch (Exception exception)
+                    {
+                        await dbContextTransaction.RollbackAsync();
+                        return BadRequest(exception.Message.ToString());
+                    }
                 }
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message.ToString());
             }
         }
         #endregion
@@ -396,62 +416,62 @@ namespace API.Controllers
         {
             try
             {
-                //Signature
-
-                //Getting file meta data
-                //var signature = OtherInformationDto.SignatureFile;
-                //var SignatureFileName = Path.GetFileName(OtherInformationDto.SignatureFile.FileName);
-                //var contentType = OtherInformationDto.SignatureFile.ContentType;
-                //OtherInformationDto.Signature = SignatureFileName;
-                //var signaturefilePath = Path.Combine("~/Content/images/Signature/", SignatureFileName);
-                //OtherInformationDto.SignatureFile.CopyTo(new FileStream(signaturefilePath, FileMode.Create));
-
-                //Picture
-                //Getting file meta data
-                //var Picture = OtherInformationDto.PictureFile;
-                //var PictureFileName = Path.GetFileName(OtherInformationDto.PictureFile.FileName);
-                //var PictureFilecontentType = OtherInformationDto.PictureFile.ContentType;
-                //OtherInformationDto.Picture = PictureFileName;
-                //var picturefilePath = Path.Combine("~/Content/images/Picture/", SignatureFileName);
-                //OtherInformationDto.SignatureFile.CopyTo(new FileStream(picturefilePath, FileMode.Create));
-
-
-                var otherInformation = _mapper.Map<Sys_OtherInformationDto, Sys_OtherInformation>(OtherInformationDto);
-                _unitOfWork.Repository<Sys_OtherInformation>().Add(otherInformation);
-                var result = await _unitOfWork.Complete();
-                if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating OtherInformation"));
-                var dbConn = _configuration.GetValue<string>("ConnectionStrings:FreelencerDB");
-                int letestInformationId = 0;
-                SqlConnection sqlConnection = new SqlConnection(dbConn);
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection;
-                sqlConnection.Open();
-                SqlCommand MyCommand = new SqlCommand("select top 1 Id from tbl_OtherInformation order by Id desc", sqlConnection);
-                letestInformationId = Convert.ToInt32(MyCommand.ExecuteScalar());
-                sqlConnection.Close();
-
-
-                if (OtherInformationDto.sys_Identity_Proofs != null && OtherInformationDto.sys_Identity_Proofs.Count > 0)
+                if (OtherInformationDto == null)
                 {
-                    foreach (Sys_Identity_ProofDto Sys_Identity_Proof in OtherInformationDto.sys_Identity_Proofs)
+                    return new Sys_OtherInformationDto();
+                }
+                if (OtherInformationDto.Id == 0)
+                {
+
+                    var otherInformation = _mapper.Map<Sys_OtherInformationDto, Sys_OtherInformation>(OtherInformationDto);
+                    _unitOfWork.Repository<Sys_OtherInformation>().Add(otherInformation);
+                    var result = await _unitOfWork.Complete();
+                    if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating OtherInformation"));
+
+                    int otherInformationId = GetLastRecordFromTable("tbl_OtherInformation");
+
+                    if (OtherInformationDto.sys_Identity_Proofs != null && OtherInformationDto.sys_Identity_Proofs.Count > 0)
                     {
-                       
-                        var Identity_Proof = _mapper.Map<Sys_Identity_ProofDto, Sys_Identity_Proof>(Sys_Identity_Proof);
-                        _unitOfWork.Repository<Sys_Identity_Proof>().Add(Identity_Proof);
-                        var resultIdentity_Proof = await _unitOfWork.Complete();
-                        if (resultIdentity_Proof <= 0) return BadRequest(new ApiResponse(400, "Problem creating OtherInformation"));
+                        foreach (Sys_Identity_ProofDto Sys_Identity_Proof in OtherInformationDto.sys_Identity_Proofs)
+                        {
+                            Sys_Identity_Proof.OtherInformationId = otherInformationId;
+                            var Identity_Proof = _mapper.Map<Sys_Identity_ProofDto, Sys_Identity_Proof>(Sys_Identity_Proof);
+                            _unitOfWork.Repository<Sys_Identity_Proof>().Add(Identity_Proof);
+                            var resultIdentity_Proof = await _unitOfWork.Complete();
+                            if (resultIdentity_Proof <= 0) return BadRequest(new ApiResponse(400, "Problem creating OtherInformation"));
+                        }
                     }
                 }
                 else
                 {
-                    Sys_Identity_ProofDto _Sys_Identity_ProofDto = new Sys_Identity_ProofDto();
-                    Sys_Identity_Proof Identity_Proof = await _unitOfWork.Repository<Sys_Identity_Proof>().GetByIdAsync(_Sys_Identity_ProofDto.Id);
-                    _unitOfWork.Repository<Sys_Identity_Proof>().Update(Identity_Proof);
-                    return _mapper.Map<Sys_Identity_Proof, Sys_OtherInformationDto>(Identity_Proof);
+                    Sys_OtherInformation OtherInformation = await _unitOfWork.Repository<Sys_OtherInformation>().GetByIdAsync(OtherInformationDto.Id);
+                    _unitOfWork.Repository<Sys_OtherInformation>().Update(OtherInformation);
+                    if (OtherInformationDto.sys_Identity_Proofs != null && OtherInformationDto.sys_Identity_Proofs.Count > 0)
+                    {
+                        foreach (Sys_Identity_ProofDto Sys_Identity_Proof in OtherInformationDto.sys_Identity_Proofs)
+                        {
+                            if (Sys_Identity_Proof.Id == 0 && !string.IsNullOrEmpty(Sys_Identity_Proof.Attachments) && Sys_Identity_Proof.Attachments.Length > 1000)
+                            {
+                                Sys_Identity_Proof.OtherInformationId = OtherInformation.Id;
+                                var Identity_Proof = _mapper.Map<Sys_Identity_ProofDto, Sys_Identity_Proof>(Sys_Identity_Proof);
+                                _unitOfWork.Repository<Sys_Identity_Proof>().Add(Identity_Proof);
+                                var resultIdentity_Proof = await _unitOfWork.Complete();
+                                if (resultIdentity_Proof <= 0) return BadRequest(new ApiResponse(400, "Problem creating OtherInformation"));
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(Sys_Identity_Proof.Attachments) && Sys_Identity_Proof.Attachments.Length > 1000)
+                                {
+                                    Sys_Identity_Proof Identity_Proof = await _unitOfWork.Repository<Sys_Identity_Proof>().GetByIdAsync(Sys_Identity_Proof.Id);
+                                    _unitOfWork.Repository<Sys_Identity_Proof>().Update(Identity_Proof);
+                                }
+                            }
+                        }
+                    }
+                    return _mapper.Map<Sys_OtherInformation, Sys_OtherInformationDto>(OtherInformation);
                 }
 
-                return _mapper.Map<Sys_OtherInformation, Sys_OtherInformationDto>(otherInformation);
-
+                return new Sys_OtherInformationDto();
 
             }
             catch (Exception exception)
@@ -493,5 +513,19 @@ namespace API.Controllers
 
 
         #endregion
+
+        public int GetLastRecordFromTable(string tableName)
+        {
+            var dbConn = _configuration.GetValue<string>("ConnectionStrings:FreelencerDB");
+            int letestInformationId = 0;
+            SqlConnection sqlConnection = new SqlConnection(dbConn);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = sqlConnection;
+            sqlConnection.Open();
+            SqlCommand MyCommand = new SqlCommand($"select top 1 Id from {tableName} order by Id desc", sqlConnection);
+            letestInformationId = Convert.ToInt32(MyCommand.ExecuteScalar());
+            sqlConnection.Close();
+            return letestInformationId;
+        }
     }
 }

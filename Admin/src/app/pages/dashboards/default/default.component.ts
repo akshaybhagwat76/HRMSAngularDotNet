@@ -526,7 +526,7 @@ export class DefaultComponent implements OnInit {
       city: ['', [Validators.required]],
       pin: ['', [Validators.required]],
       phone: [],
-      email: [],
+      email: ['', [Validators.email]],
       mobile_No: []
     })
     this.otherInformationForm = this.fb.group({
@@ -1269,6 +1269,15 @@ export class DefaultComponent implements OnInit {
   oiStatus(value) {
     if (value == 'Others') {
       this.isStatusVisible = true;
+    }
+  }
+
+  keyPressNumbers(event) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if ((charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+      return false;
     } else {
       this.otherInformationForm.patchValue({
         'ipUserData': ''

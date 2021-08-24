@@ -663,6 +663,7 @@ namespace API.Controllers
         }
         #endregion
 
+        [NonAction]
         public bool RemoveFile(string fileName, int employeeId)
         {
             bool isExist = false;
@@ -679,7 +680,7 @@ namespace API.Controllers
             }
             return isExist;
         }
-
+        [NonAction]
         public string UploadFile(string base64String, int employeeId)
         {
             if (!string.IsNullOrEmpty(base64String) && employeeId > 0)

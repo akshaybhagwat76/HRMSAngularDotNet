@@ -8,7 +8,6 @@ namespace Core.Entities
     [Table("tbl_OtherInformation")]
     public class Sys_OtherInformation : BaseEntity, IAuditableEntity
     {
-        public string Identity_Type { get; set; }
         public string Bank_Name { get; set; }
         public string Branch_Name { get; set; }
         public string Account_No { get; set; }

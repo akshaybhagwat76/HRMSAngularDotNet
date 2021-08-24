@@ -3,7 +3,7 @@ namespace Core.Entities
 {
     public class TBL_HR_LOGIN_USER : BaseEntity, IAuditableEntity
     {
-        public int Login_User_System_Code { get; set; }
+        public int Professional_Information_Attachements_Id { get; set; }
         public string Login_Id { get; set; }
         public string Salt_Value { get; set; }
         public string Hash_Password { get; set; }

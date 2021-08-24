@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 namespace API.Dtos
 {
     public class Sys_OtherInformationDto : BaseDto
     {
-        public string Identity_Type { get; set; }
         public string Bank_Name { get; set; }
         public string Branch_Name { get; set; }
         public string Account_No { get; set; }
@@ -16,9 +14,9 @@ namespace API.Dtos
         public string User_Type { get; set; }
         public string Signature { get; set; }
         public string Picture { get; set; }
-        public IFormFile SignatureFile { get; set; }
-        public IFormFile PictureFile { get; set; }
+        public string SignatureFile { get; set; }
+        public string PictureFile { get; set; }
         public int Employee_Id { get; set; }
-        public List<Sys_Identity_ProofDto> sys_Identity_ProofDtos { get; set; }
+        public List<Sys_Identity_ProofDto> sys_Identity_Proofs { get; set; }
     }
 }

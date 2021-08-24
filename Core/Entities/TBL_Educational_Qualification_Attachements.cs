@@ -3,23 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities
 {
-    [Table("tbl_CorresspondanceContactInformation")]
-    public class Sys_CorresspondanceContactInformation : BaseEntity, IAuditableEntity
+    [Table("TBL_Educational_Qualification_Attachements")]
+    public class TBL_Educational_Qualification_Attachements : BaseEntity, IAuditableEntity
     {
-        public string Address { get; set; }
-        public string Address1 { get; set; }
-        public int Country { get; set; }
-        public int Zone { get; set; }
-        public int State { get; set; }  
-        public string City { get; set; }
-        public string Pin { get; set; }
-        public int Status_Id { get; set; }
-        public string Remarks { get; set; }
-        public string MobileNo2 { get; set; }
-        public string Phone { get; set; }
-        public string EmailAddress2 { get; set; }
-        public int Employee_Id { get; set; }
-        public string Action_Remarks { get; set; }
+        public int Professional_Information_Attachements_Id { get; set; }
+        public int EmployeeId { get; set; }
+        public string CourseName { get; set; }
+        public string DocumentType { get; set; }
+        public string DocumentUrl { get; set; }
         public DateTime CreatedOn_Date { get; set; }
         public int CreatedBy_Login_User_Id { get; set; }
         public int CreatedBy_Login_Session_Id { get; set; }

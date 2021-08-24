@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using API.Dtos;
+using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 namespace Infrastructure.Data
@@ -9,6 +10,9 @@ namespace Infrastructure.Data
         {
         }
         public DbSet<TBL_HR_EMPLOYEE_EDUCATION_DETAILS> HR_EMPLOYEE_EDUCATION_DETAILs { get; set; }
+        public DbSet<TBL_Educational_Qualification_Attachements> TBL_Educational_Qualification_Attachements { get; set; }
+        public DbSet<TBL_Professional_Information_Attachements> TBL_Professional_Information_Attachements { get; set; }
+        public DbSet<TBL_Identity_Proof_Attachements> TBL_Identity_Proof_Attachements { get; set; }
         public DbSet<Tbl_HR_Employee> Tbl_HR_Employee { get; set; }
         public DbSet<sys_Compnays> sys_Compnays { get; set; }
         public DbSet<Sys_Branch> sys_Branches { get; set; }
@@ -36,7 +40,7 @@ namespace Infrastructure.Data
         public DbSet<Sys_IdentityType> Sys_IdentityType { get; set; }
         public DbSet<Sys_CorresspondanceContactInformation> Sys_CorresspondanceContactInformation { get; set; }
 
-        // public DbSet<Sys_EducationalQualification> Sys_EducationalQualification { get; set; }
+         public DbSet<Sys_EducationalQualification> Sys_EducationalQualification { get; set; }
         public DbSet<Sys_Highest_Qualification> Sys_Highest_Qualification { get; set; }
         public DbSet<Sys_ProfessionalInformation> Sys_ProfessionalInformation { get; set; }
         public DbSet<Sys_FamilyDetails> Sys_FamilyDetails { get; set; }

@@ -17,5 +17,11 @@
         public const string tbl_OtherInformation = "tbl_OtherInformation";
         public const string tbl_PermanentContactInformation = "tbl_PermanentContactInformation";
         public const string tbl_ProfessionalInformation = "tbl_ProfessionalInformation";
+        public const string attachments = "attachments";
+        public const string images = "images";
+        public const string wwwroot = "wwwroot";
+        public const string assethr = "/assets/hr";
+        public const string assets= "/assets";
+
     }
 }

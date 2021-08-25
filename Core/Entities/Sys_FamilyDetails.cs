@@ -12,7 +12,6 @@ namespace Core.Entities
         public string FamilyDetail_EmailId { get; set; }
         public DateTime? FamilyDetail_DOB { get; set; }
         public string Identity_Number { get; set; }
-        public string Nominee_Address { get; set; }
         public bool? IsAadharStatus { get; set; }
         public string AttachmentType_Path { get; set; }
         public string Attachment_Type { get; set; }

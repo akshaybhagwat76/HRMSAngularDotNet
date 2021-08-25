@@ -1160,7 +1160,6 @@ export class DefaultComponent implements OnInit {
   }
 
   getImgProfessionalSrc(row) {
-    ;
     const professionalDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row).value;
     return professionalDocData.piDocumentPreviewUrl;
   }
@@ -1182,17 +1181,11 @@ export class DefaultComponent implements OnInit {
   }
 
   onSubmitHrms() {
-    debugger
-    console.log(this.hrmsForm.value);
-    console.log(this.permanentContactInformationForm.value);
-    console.log(this.corresspondanceContactInformationForm.value);
-    console.log(this.otherInformationForm.value);
+    debugger;
     this.hrmsForm.value.sys_PermanentContactInformationDto = this.permanentContactInformationForm.value;
     this.hrmsForm.value.sys_CorresspondanceContactInformationDto = this.corresspondanceContactInformationForm.value;
     this.hrmsForm.value.sys_OtherInformationDto = this.otherInformationForm.value;
-    console.log(this.hrmsForm.value);
     if (this.hrmsForm.valid) {
-      console.log(this.hrmsForm.value);
       this.submitHrmsForm();
     } else {
       this.validateAllFormFields(this.hrmsForm);
@@ -1274,7 +1267,7 @@ export class DefaultComponent implements OnInit {
   }
 
   submitHrmsForm() {
-    debugger
+    debugger;
     this.employeeMasterService.post(this.hrmsForm.value).subscribe((resp: any) => {
       console.log(resp);
     })
@@ -1301,10 +1294,7 @@ export class DefaultComponent implements OnInit {
   }
 
   changeDepartmentId(value) {
-    // console.log(value);
-    // console.log(this.designations);;
     this.designationsDepartmentList = this.designations.filter(x => x.department_Id == +value);
-    // console.log(this.designations);
   }
 
   sameAsAbove(event) {

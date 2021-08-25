@@ -9,32 +9,88 @@
         /// <returns>Henceforth file extension from string.</returns>
         public string GetFileExtension(string base64String)
         {
-            var data = base64String.Substring(0, 28).Split(",")[1];
-            switch (data.ToUpper())
+            if (string.IsNullOrEmpty(base64String))
             {
-                case "IVBORW":
-                    return ".png";
-                case "/9J/4":
-                    return ".jpg";
-                case "AAAAF":
-                    return ".mp4";
-                case "JVBER":
-                    return ".pdf";
-                case "AAABA":
-                    return ".ico";
-                case "UMFYI":
-                    return ".rar";
-                case "E1XYD":
-                    return ".rtf";
-                case "U1PKC":
-                    return ".txt";
-                case "MQOWM":
-                case "77U/M":
-                    return ".srt";
-                default:
-                    return string.Empty;
+                return string.Empty;
             }
+
+            var data = base64String.Split(",")[1].ToUpper();
+            string dataBase64Prefix = base64String.Split(";")[0];
+            string mimeContent = dataBase64Prefix.Split("/")[1];
+
+            if (!string.IsNullOrEmpty(data))
+            {
+                data = data.ToUpper();
+                if (data.StartsWith("IVBORW"))
+                {
+                    return ".png";
+                }
+                else if (data.StartsWith("/9J/4"))
+                {
+                    return ".jpg";
+                }
+                else if (data.StartsWith("AAAAF"))
+                {
+                    return ".mp4";
+                }
+                else if (data.StartsWith("JVBER"))
+                {
+                    return ".pdf";
+                }
+                else if (data.StartsWith("R0AAG"))
+                {
+                    return ".txt";
+                }
+                else if (data.StartsWith("AAABA"))
+                {
+                    return ".ico";
+                }
+                else if (data.StartsWith("UMFYI"))
+                {
+                    return ".rar";
+                }
+                else if (data.StartsWith("E1XYD"))
+                {
+                    return ".rtf";
+                }
+                else if (data.StartsWith("U1PKC"))
+                {
+                    return ".txt";
+                }
+                else if (data.StartsWith("UESDB"))
+                {
+                    if (!string.IsNullOrEmpty(mimeContent) && mimeContent.Contains("zip"))
+                    {
+                        return ".zip";
+                    }
+                    else if (!string.IsNullOrEmpty(mimeContent) && mimeContent.Contains("document"))
+                    {
+                        return ".docx";
+                    }
+                    else if (!string.IsNullOrEmpty(mimeContent) && mimeContent.Contains("sheet"))
+                    {
+                        return ".xlsx";
+                    }
+                    else if (!string.IsNullOrEmpty(mimeContent) && mimeContent.Contains("presentation"))
+                    {
+                        return ".pptx";
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }
+
+                else if (data.StartsWith("R0LGO"))
+                {
+                    return ".gif";
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            return string.Empty;
         }
     }
-
 }

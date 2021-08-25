@@ -10,7 +10,7 @@ export class EmployeeMasterService {
   constructor(private http : HttpClient) { }
 
   post(data) {
-    //
+    debugger;
     return this.http.post<any>(`${environment.url}/api/AddEmployeeMaster`,data);
 }
 }

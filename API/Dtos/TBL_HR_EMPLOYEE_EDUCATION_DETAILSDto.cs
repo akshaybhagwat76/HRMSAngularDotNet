@@ -11,6 +11,9 @@
         public string Board { get; set; }
         public string Marks { get; set; }
         public string Remarks { get; set; }
-      
+        public string Attachments { get; set; }
+
+
+
     }
 }

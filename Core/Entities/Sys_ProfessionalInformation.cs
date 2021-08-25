@@ -8,7 +8,7 @@ namespace Core.Entities
     {
         public int Status_Id { get; set; }
         public string EmployeerName { get; set; }
-        public string EmployeerAddress{ get; set; }
+        public string EmployeerAddress { get; set; }
         public string Designation { get; set; }
         public string ContactPerson { get; set; }
         public string ContactNo { get; set; }
@@ -18,7 +18,7 @@ namespace Core.Entities
         public DateTime? DateOfJoining { get; set; }
         public string LastDrawnSalary { get; set; }
         public string ReasonForLeaving { get; set; }
-        public DateTime? DateOfLeaving{ get; set; }
+        public DateTime? DateOfLeaving { get; set; }
         public string Remarks { get; set; }
         public string Action_Remarks { get; set; }
         public DateTime CreatedOn_Date { get; set; }

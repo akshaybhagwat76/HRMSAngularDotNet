@@ -79,6 +79,7 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 import { HighestQualificationService } from 'src/app/core/services/highest-qualification.service';
 import { DesignationsService } from 'src/app/core/services/designations.service';
 import { EmployeeMasterService } from 'src/app/core/services/employee-master.service';
+import { IdentityTypeService } from 'src/app/core/services/identity-type.service';
 
 @Component({
   moduleId: "",
@@ -131,6 +132,7 @@ export class DefaultComponent implements OnInit {
     private meritalstatusService: MeritalstatusService,
     private fb: FormBuilder,
     private designationService: DesignationsService,
+    private identityService: IdentityTypeService,
     private http: HttpClient
   ) { }
   companies: any;
@@ -188,6 +190,7 @@ export class DefaultComponent implements OnInit {
   updatedNomineeDetailsId: number;
   highestQualifications: any;
   designations: any;
+  identityList: any;
   designationsDepartmentList: any;
 
   // Educational Information
@@ -272,11 +275,12 @@ export class DefaultComponent implements OnInit {
     const merital = this.meritalstatusService.getAll();
     const highest_Qualification = this.highestQualificationService.getAll();
     const designation = this.designationService.getAll();
+    const identity = this.identityService.getAll();
 
     forkJoin([companies, branches, contries, departments, workingStatus, categories,
       typesEmp, higherAuthority, higherAuthorityName, thirdPartyType, cast,
       state, zones, relationship, userType, employees, higherAuthoritesBranches, thirdParty,
-      cast, bloodGroup, merital, highest_Qualification, designation
+      cast, bloodGroup, merital, highest_Qualification, designation, identity
     ]).subscribe(result => {
       this.companies = result[0];
       this.branches = result[1];
@@ -301,6 +305,8 @@ export class DefaultComponent implements OnInit {
       this.meritalStatuses = result[20];
       this.highestQualifications = result[21];
       this.designations = result[22];
+      this.identityList = result[23];
+      ;
       // this.designations = result[22];
       // this.designations = result[23];
 
@@ -929,7 +935,6 @@ export class DefaultComponent implements OnInit {
     this.submit = true;
   }
   disabledEmployee(event) {
-    debugger
     this.disabledEmployeeCode = event.target.checked;
     this.hrmsForm.patchValue({
       'employeeAutoGenerate': event.target.checked
@@ -939,7 +944,6 @@ export class DefaultComponent implements OnInit {
     }
   }
   CountDays(event) {
-    debugger
     const oneDay = 24 * 60 * 60 * 1000;
     this.currentDate = new Date();
     var dateOfjoining = new Date(event.target.value);
@@ -959,7 +963,6 @@ export class DefaultComponent implements OnInit {
   }
 
   DateOfBirth(event) {
-    debugger
     const oneDay = 24 * 60 * 60 * 1000;
     this.currentDate = new Date();
     var dateOfjoining = new Date(event.target.value);
@@ -1046,7 +1049,6 @@ export class DefaultComponent implements OnInit {
   }
 
   onOptionsSelected(event, target) {
-    debugger
     const value = event.target.value;
     let zones = this.zones;
     if (target == 'per') {
@@ -1083,7 +1085,6 @@ export class DefaultComponent implements OnInit {
   }
 
   fileProgress(fileInput: any) {
-    debugger
     this.documentfile = <File>fileInput.target.files[0];
     var _mb = this.bytesToSize(this.documentfile.size, 2);
     if (_mb > 10) {
@@ -1098,7 +1099,6 @@ export class DefaultComponent implements OnInit {
   }
 
   professionalFile(fileInput: any) {
-    debugger
     this.pidocumentfile = <File>fileInput.target.files[0];
     var _mb = this.bytesToSize(this.pidocumentfile.size, 2);
     if (_mb > 10) {
@@ -1160,7 +1160,7 @@ export class DefaultComponent implements OnInit {
   }
 
   getImgProfessionalSrc(row) {
-    debugger;
+    ;
     const professionalDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row).value;
     return professionalDocData.piDocumentPreviewUrl;
   }
@@ -1182,6 +1182,7 @@ export class DefaultComponent implements OnInit {
   }
 
   onSubmitHrms() {
+    debugger
     console.log(this.hrmsForm.value);
     console.log(this.permanentContactInformationForm.value);
     console.log(this.corresspondanceContactInformationForm.value);
@@ -1200,8 +1201,80 @@ export class DefaultComponent implements OnInit {
       this.validateAllFormFields(this.otherInformationForm);
     }
   }
+  resetHrmsForm() {
+    if (this.hrmsForm != undefined) {
+      this.hrmsForm.reset();
+    }
+    if (this.familyForm != undefined) {
+      this.familyForm.reset();
+      const control = <FormArray>this.hrmsForm.controls['sys_FamilyDetailsDto'];
+      (this.hrmsForm.controls['sys_FamilyDetailsDto'] as FormArray).controls = [];
+      (this.hrmsForm.controls['sys_FamilyDetailsDto'] as FormArray).clear();
+
+      // for (let i = control.length - 1; i >= 0; i--) {
+      //   control.removeAt(i)
+      // }
+    }
+    if (this.nomineeForm != undefined) {
+      this.nomineeForm.reset();
+      const control = <FormArray>this.hrmsForm.controls['tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto'];
+      for (let i = control.length - 1; i >= 0; i--) {
+        control.removeAt(i)
+      }
+    }
+    if (this.educationForm != undefined) {
+      this.educationForm.reset();
+      const control = <FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto'];
+      for (let i = control.length - 1; i >= 0; i--) {
+        control.removeAt(i)
+      }
+      const control1 = <FormArray>this.hrmsForm.controls['educationDocument'];
+      for (let i = control1.length - 1; i >= 0; i--) {
+        control1.removeAt(i)
+      }
+    }
+    if (this.permanentContactInformationForm != undefined) {
+      this.permanentContactInformationForm.reset();
+    }
+    if (this.corresspondanceContactInformationForm != undefined) {
+      this.corresspondanceContactInformationForm.reset();
+      const control = <FormArray>this.hrmsForm.controls['sys_PermanentContactInformationDto'];
+      for (let i = control.length - 1; i >= 0; i--) {
+        control.removeAt(i)
+      }
+    }
+    if (this.otherInformationForm != undefined) {
+      this.otherInformationForm.reset();
+      const control = <FormArray>this.hrmsForm.controls['sys_CorresspondanceContactInformationDto'];
+      for (let i = control.length - 1; i >= 0; i--) {
+        control.removeAt(i)
+      }
+    }
+    if (this.educationDocumentForm != undefined) {
+      this.educationDocumentForm.reset();
+    }
+    if (this.identityProofForm != undefined) {
+      this.identityProofForm.reset();
+
+    }
+    if (this.ProfessionalInformationForm != undefined) {
+      this.ProfessionalInformationForm.reset();
+      const control = <FormArray>this.hrmsForm.controls['sys_ProfessionalInformations'];
+      for (let i = control.length - 1; i >= 0; i--) {
+        control.removeAt(i)
+      }
+    }
+    if (this.ProfessionalDocumentInformationForm != undefined) {
+      this.ProfessionalDocumentInformationForm.reset();
+      const control = <FormArray>this.hrmsForm.controls['professionalDocumentAttachment'];
+      for (let i = control.length - 1; i >= 0; i--) {
+        control.removeAt(i)
+      }
+    }
+  }
 
   submitHrmsForm() {
+    debugger
     this.employeeMasterService.post(this.hrmsForm.value).subscribe((resp: any) => {
       console.log(resp);
     })
@@ -1229,8 +1302,7 @@ export class DefaultComponent implements OnInit {
 
   changeDepartmentId(value) {
     // console.log(value);
-    // console.log(this.designations);
-    debugger;
+    // console.log(this.designations);;
     this.designationsDepartmentList = this.designations.filter(x => x.department_Id == +value);
     // console.log(this.designations);
   }

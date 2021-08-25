@@ -20,12 +20,16 @@ namespace Infrastructure.Data
         {
             return await _context.Set<T>().FindAsync(id);
         }
-        
+
         public async Task<IReadOnlyList<T>> ListAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }
 
+        public async Task<IReadOnlyList<T>> Where(int id)
+        {
+            return await _context.Set<T>().Where(x => x.Id == id).ToListAsync();
+        }
         public async Task<T> GetEntityWithSpec(ISpecification<T> spec)
         {
             return await ApplySpecification(spec).FirstOrDefaultAsync();

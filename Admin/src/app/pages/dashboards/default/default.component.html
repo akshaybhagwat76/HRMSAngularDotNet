@@ -186,7 +186,7 @@
                     <label for="eDateOf">Date Of Joining</label>
                     <input type="date" class="form-control" formControlName="date_Of_Joining" id="eDateOf"
                       (change)="CountDays($event)" />
-                    <div *ngIf="getControl('date_Of_Joining').value.length>0">
+                    <div *ngIf="getControl('date_Of_Joining') && getControl('date_Of_Joining').value.length>0">
                       <span><b>Service</b>: <span>{{NumberOfYear}}</span> Years<span>{{NumberOfMonths}}</span> Month
                         <span>{{Numberofdays}}</span> Days</span>
                     </div>
@@ -218,7 +218,7 @@
                   <div class="mb-3">
                     <label for="mobile_No">Mobile No</label>
                     <input type="text" formControlName="mobile_No" class="form-control" id="mobile_No"
-                      placeholder="Mobile No">
+                      placeholder="Mobile No" (keypress)="keyPressNumbers($event)">
                     <div *ngIf="f.mobile_No.touched && f.mobile_No.invalid" class="text text-danger error-div">
                       <div *ngIf="f.mobile_No.errors.required">Enter Mobile number</div>
                       <div *ngIf="f.mobile_No.errors.pattern">Enter only number.</div>
@@ -265,7 +265,7 @@
                   <div class="mb-3">
                     <label for="probation_Period(Days)">Probation Period(Days)</label>
                     <input type="text" class="form-control" formControlName="probation_Period" id="probation_Period"
-                      placeholder="Probation Period(Days)">
+                      placeholder="Probation Period(Days)" (keypress)="keyPressNumbers($event)">
                   </div>
                 </div>
 
@@ -280,7 +280,7 @@
                   <div class="mb-3">
                     <label for="reference_Phone_No">Reference Phone No</label>
                     <input type="text" class="form-control" formControlName="reference_Phone_No" id="reference_Phone_No"
-                      placeholder="Reference Phone No">
+                      placeholder="Reference Phone No" (keypress)="keyPressNumbers($event)">
                     <div *ngIf="f.reference_Phone_No.touched && f.reference_Phone_No.invalid"
                       class="text text-danger error-div">
                       <div *ngIf="f.reference_Phone_No.errors.required">Enter Mobile number</div>
@@ -380,12 +380,12 @@
                     <div class="d-flex">
                       <div class="custom-control custom-radio custom-control-inline mr-5">
                         <input type="radio" id="physicalRadioInline1" formControlName="physicalDisability"
-                          name="physicalDisability" class="custom-control-input" value="Yes">
+                          name="physicalDisability" class="custom-control-input" value="true">
                         <label class="custom-control-label" for="physicalRadioInline1"> Yes</label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="physicalRadioInline2" formControlName="physicalDisability"
-                          name="physicalDisability" class="custom-control-input" value="No" checked="checked">
+                          name="physicalDisability" class="custom-control-input" value="false" checked="checked">
                         <label class="custom-control-label" for="physicalRadioInline2"> No</label>
                       </div>
                     </div>
@@ -593,7 +593,7 @@
                   <div class="mb-3">
                     <label for="validationAadharNominee">Aadhar No</label>
                     <input type="text" class="form-control" id="validationCustom04" [(ngModel)]="nAadharNo"
-                      [ngModelOptions]="{standalone: true}" />
+                      [ngModelOptions]="{standalone: true}" (keypress)="keyPressNumbers($event)" />
                   </div>
                 </div>
               </div>
@@ -628,7 +628,7 @@
                   <div class="mb-3">
                     <label for="validationContactNominee">Contact No</label>
                     <input type="text" class="form-control" id="validationContactNo" [(ngModel)]="nContactNo"
-                      [ngModelOptions]="{standalone: true}">
+                      [ngModelOptions]="{standalone: true}" (keypress)="keyPressNumbers($event)">
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -1328,17 +1328,8 @@
                         <td>
                           <select id="eIdentityProof" class="form-select" [(ngModel)]="identityType"
                             [ngModelOptions]="{standalone: true}">
-                            <option value="0">Choose...</option>
-                            <option value="1">PAN</option>
-                            <option value="2">VOTER CARD</option>
-                            <option value="3">AADHAR CARD</option>
-                            <option value="4">PASSPORT</option>
-                            <option value="5">UAN</option>
-                            <option value="6">ESI No</option>
-                            <option value="7">PF No</option>
-                            <option value="8">BIRTH CERTIFICATE</option>
-                            <option value="9">SCHOOL CERTIFICATE</option>
-                            <option value="10">AdmitCard</option>
+                            <option *ngFor="let identityobj of identityList" [value]="identityobj.id">
+                              {{identityobj.identity_Type}}</option>
                           </select>
                         </td>
                         <td>
@@ -1379,16 +1370,8 @@
                         <td>{{p+1}}</td>
                         <td>
                           <select id="eidentityProf" class="form-select" formControlName="identity_Type" disabled>
-                            <option value="1">PAN</option>
-                            <option value="2">VOTER CARD</option>
-                            <option value="3">AADHAR CARD</option>
-                            <option value="4">PASSPORT</option>
-                            <option value="5">UAN</option>
-                            <option value="6">ESI No</option>
-                            <option value="7">PF No</option>
-                            <option value="8">BIRTH CERTIFICATE</option>
-                            <option value="9">SCHOOL CERTIFICATE</option>
-                            <option value="10">AdmitCard</option>
+                            <option *ngFor="let identityobj of identityList" [value]="identityobj.id">
+                              {{identityobj.identity_Type}}</option>
                           </select>
                         </td>
                         <td><input type="text" class="form-control form-selectdisabled" formControlName="identity_No"
@@ -1497,7 +1480,7 @@
         <div class="row">
           <div class="col-md-3">
             <button type="submit" class="btn btn-primary mr-5" (click)="onSubmitHrms()">Save</button>
-            <button type="button" class="btn btn-primary">Reset</button>
+            <button type="button" class="btn btn-primary" (click)="resetHrmsForm()">Reset</button>
           </div>
         </div>
       </div>

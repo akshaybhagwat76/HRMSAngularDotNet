@@ -24,7 +24,7 @@
                   <div class="mb-3">
                     <label for="companyId" class="form-label">Company<span class="text-danger">*</span></label>
                     <select class="form-select" id="companyId" formControlName="companyId">
-                      <option selected="" disabled="" value="">Choose...</option>
+                      <option value="0">Choose...</option>
                       <option *ngFor="let company of companies" [ngValue]="company.id">
                         {{company.compnay_Name}}
                       </option>
@@ -379,13 +379,12 @@
                     <label for="validationCustom27">Physical Disability</label>
                     <div class="d-flex">
                       <div class="custom-control custom-radio custom-control-inline mr-5">
-                        <input type="radio" id="physicalRadioInline1" formControlName="physicalDisability"
-                          name="physicalDisability" class="custom-control-input" value="true">
+                        <input type="radio" id="physicalRadioInline1" name="physicalYes" class="custom-control-input">
                         <label class="custom-control-label" for="physicalRadioInline1"> Yes</label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="physicalRadioInline2" formControlName="physicalDisability"
-                          name="physicalDisability" class="custom-control-input" value="false" checked="checked">
+                        <input type="radio" id="physicalRadioInline2" name="physicalNo" class="custom-control-input"
+                          checked>
                         <label class="custom-control-label" for="physicalRadioInline2"> No</label>
                       </div>
                     </div>
@@ -1002,8 +1001,8 @@
                     <div class="mb-3">
                       <label for="redcntcountryName" class="form-label">Country<span
                           class="text-danger">*</span></label>
-                      <select class="form-select" id="redcntcountryName" (ngModelChange)="onOptionsSelected($event,'curr')"
-                        formControlName="country">
+                      <select class="form-select" id="redcntcountryName"
+                        (ngModelChange)="onOptionsSelected($event,'curr')" formControlName="country">
                         <option selected="" disabled="" value="">Choose...</option>
                         <option *ngFor="let cnt of contries" [ngValue]="cnt.id">{{cnt.country_Name}}
                       </select>

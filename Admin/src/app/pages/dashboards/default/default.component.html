@@ -264,7 +264,7 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="probation_Period(Days)">Probation Period(Days)</label>
-                    <input type="text" autocomplete="off" class="form-control" formControlName="probation_Period"
+                    <input type="number" autocomplete="off" class="form-control" formControlName="probation_Period"
                       id="probation_Period" placeholder="Probation Period(Days)" (keypress)="keyPressNumbers($event)">
                   </div>
                 </div>
@@ -379,11 +379,11 @@
                     <label for="validationCustom27">Physical Disability</label>
                     <div class="d-flex">
                       <div class="custom-control custom-radio custom-control-inline mr-5">
-                        <input type="radio" id="physicalRadioInline1" name="physicalYes" class="custom-control-input">
+                        <input type="radio" id="physicalRadioInline1" [value]="true" formControlName="physicalDisability" name="physicalDisability" class="custom-control-input">
                         <label class="custom-control-label" for="physicalRadioInline1"> Yes</label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="physicalRadioInline2" name="physicalNo" class="custom-control-input"
+                        <input type="radio" id="physicalRadioInline2" [value]="false" formControlName="physicalDisability" name="physicalDisability" class="custom-control-input"
                           checked>
                         <label class="custom-control-label" for="physicalRadioInline2"> No</label>
                       </div>
@@ -476,12 +476,12 @@
                     <div class="d-flex">
                       <div class="custom-control custom-radio custom-control-inline mr-5">
                         <input type="radio" id="eAadharStatus" name="rdoAadhar" class="custom-control-input"
-                          value="Verified" [(ngModel)]="fAadharStatus" [ngModelOptions]="{standalone: true}">
+                          [value]="true" [(ngModel)]="fAadharStatus" [ngModelOptions]="{standalone: true}">
                         <label class="custom-control-label" for="eAadharStatus">Verified</label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="eAadharStatus" name="rdoAadhar" checked class="custom-control-input"
-                          value="Not Verified" [(ngModel)]="fAadharStatus" [ngModelOptions]="{standalone: true}">
+                          [value]="false" [(ngModel)]="fAadharStatus" [ngModelOptions]="{standalone: true}">
                         <label class="custom-control-label" for="eAadharStatus">Not Verified</label>
                       </div>
                     </div>
@@ -605,13 +605,13 @@
                     <div class="d-flex">
                       <div class="custom-control custom-radio custom-control-inline mr-5">
                         <input type="radio" id="rdoAadharStatusNominee" name="rdoAadharStatusNominee1"
-                          class="custom-control-input" [(ngModel)]="nAadharStatus" value="Verified"
+                          class="custom-control-input" [(ngModel)]="nAadharStatus" [value]="true"
                           [ngModelOptions]="{standalone: true}">
                         <label class="custom-control-label" for="rdoAadharStatusNominee">Verified</label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="rdoAadharStatusNominee1" checked name="rdoAadharStatusNominee2"
-                          class="custom-control-input" [(ngModel)]="nAadharStatus" value="Not Verified"
+                          class="custom-control-input" [(ngModel)]="nAadharStatus" [value]="false"
                           [ngModelOptions]="{standalone: true}">
                         <label class="custom-control-label" for="rdoAadharStatusNominee1">Not Verified</label>
                       </div>
@@ -706,7 +706,7 @@
                       [ngModelOptions]="{standalone: true}">
                       <option selected="selected" disabled="" value="0">-----SELECT-----</option>
                       <option *ngFor="let higesQualification of highestQualifications"
-                        [ngValue]="higesQualification.id">
+                        [ngValue]="higesQualification.highest_Qualification">
                         {{higesQualification.highest_Qualification}}
                     </select>
                   </div>
@@ -732,16 +732,16 @@
                           [ngModelOptions]="{standalone: true}">
                           <option selected="selected" disabled="" value="0">MADHYAMIK</option>
                           <option *ngFor="let higestQualification of highestQualifications"
-                            [ngValue]="higestQualification.id">{{higestQualification.highest_Qualification}}
+                            [ngValue]="higestQualification.highest_Qualification">{{higestQualification.highest_Qualification}}
                         </select>
                         <div
-                          *ngIf="(qualification === undefined || qualification === null || qualification === 0) && educationInfoSubmit"
+                          *ngIf="(qualification === undefined || qualification === null || qualification === '') && educationInfoSubmit"
                           class="text text-danger error-div">
                           *Select Qualification
                         </div>
                       </td>
                       <td>
-                        <input type="text" autocomplete ="off" class="form-control" id="redyear" placeholder="Year" [(ngModel)]="year"
+                        <input type="number" autocomplete ="off" class="form-control" id="redyear" placeholder="Year" [(ngModel)]="year"
                           [ngModelOptions]="{standalone: true}" (keypress)="keyPressNumbers($event)">
                         <div *ngIf="(year === undefined || year === null || year === 0) && educationInfoSubmit"
                           class="text text-danger error-div">
@@ -796,13 +796,13 @@
                       <td>
                         <select class="form-select" id="redCountryScountryName" >
                           <option *ngFor="let higestQualification of highestQualifications"
-                            [ngValue]="higestQualification.id">{{higestQualification.highest_Qualification}}
+                            [ngValue]="higestQualification.highest_Qualification">{{higestQualification.highest_Qualification}}
                         </select>
                       </td>
                       <td>
                         <select class="form-select" id="redCountryScountry" formControlName="Qualification">
                           <option *ngFor="let higestQualification of highestQualifications"
-                            [ngValue]="higestQualification.id">{{higestQualification.highest_Qualification}}
+                            [ngValue]="higestQualification.highest_Qualification">{{higestQualification.highest_Qualification}}
                         </select>
                       </td>
                       <td><input type="text" class="form-control" formControlName="Emp_Year_OF_Passing" readonly></td>
@@ -836,7 +836,7 @@
                       <td>
                         <select class="form-select" id="eCountryname" formControlName="courseName">
                           <option *ngFor="let higestQualification of highestQualifications"
-                            [value]="higestQualification.id">{{higestQualification.highest_Qualification}}
+                            [value]="higestQualification.highest_Qualification">{{higestQualification.highest_Qualification}}
                         </select>
                       </td>
                       <td><input type="text" class="form-control" formControlName="documentType"
@@ -888,8 +888,8 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <form [formGroup]="permanentContactInformationForm" name="permanentContactInformationForm"
-            id="permanentContactInformationForm">
+          <form formGroupName="sys_PermanentContactInformationDto" name="sys_PermanentContactInformationDto"
+            id="sys_PermanentContactInformationDto">
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">Permanent Contact Information
@@ -977,8 +977,8 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <form [formGroup]="corresspondanceContactInformationForm" name="corresspondanceContactInformationForm"
-            id="corresspondanceContactInformationForm">
+          <form formGroupName="sys_CorresspondanceContactInformationDto" name="sys_CorresspondanceContactInformationDto"
+            id="sys_CorresspondanceContactInformationDto">
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">
@@ -1207,17 +1207,17 @@
                   <tbody formArrayName="sys_ProfessionalInformations">
                     <tr *ngFor="let sys_ProfessionalInformations of professionalInformationArr;let q=index;"
                       [formGroupName]="q">
-                      <td><input type="text" class="form-control" formControlName="employeerName" /></td>
-                      <td><input type="text" class="form-control" formControlName="employeerAddress"></td>
-                      <td><input type="text" class="form-control" formControlName="designation"></td>
-                      <td><input type="text" class="form-control" formControlName="contactPerson"></td>
-                      <td><input type="text" class="form-control" formControlName="contactNo"></td>
-                      <td><input type="text" class="form-control" formControlName="emailId"></td>
-                      <td><input type="date" class="form-control" id="reddate" formControlName="dateOfJoining" />
+                      <td><input type="text" class="form-control" formControlName="EmployeerName" /></td>
+                      <td><input type="text" class="form-control" formControlName="EmployeerAddress"></td>
+                      <td><input type="text" class="form-control" formControlName="Designation"></td>
+                      <td><input type="text" class="form-control" formControlName="ContactPerson"></td>
+                      <td><input type="text" class="form-control" formControlName="ContactNo"></td>
+                      <td><input type="text" class="form-control" formControlName="EmailId"></td>
+                      <td><input type="date" class="form-control" id="reddate" formControlName="DateOfJoining" />
                       </td>
-                      <td><input type="text" class="form-control" formControlName="lastDrawnSalary"></td>
-                      <td><input type="text" class="form-control" formControlName="reasonForLeaving"></td>
-                      <td><input type="text" class="form-control" formControlName="dateOfLeaving"></td>
+                      <td><input type="text" class="form-control" formControlName="LastDrawnSalary"></td>
+                      <td><input type="text" class="form-control" formControlName="ReasonForLeaving"></td>
+                      <td><input type="text" class="form-control" formControlName="DateOfLeaving"></td>
                       <td>
                         <i class="fa fa-trash" style="font-size:24px;color: red; cursor: pointer;"
                           (click)="deleteProfessionalInformation(q)"></i>
@@ -1278,7 +1278,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <form [formGroup]="otherInformationForm" name="otherInformationForm" id="otherInformationForm">
+          <form formGroupName="sys_OtherInformationDto" name="sys_OtherInformationDto" id="sys_OtherInformationDto">
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">Other Information
@@ -1450,7 +1450,7 @@
                         </div>
                       </div>
                       <!-- <input type="text" 
-                        [attr.readonly]="otherInformationForm.controls.ipUserId.value == 'Others' ? null : ''"
+                        [attr.readonly]="sys_OtherInformationDto.controls.ipUserId.value == 'Others' ? null : ''"
                         class="form-control" id="validationUserId" /> -->
                     </div>
                   </div>

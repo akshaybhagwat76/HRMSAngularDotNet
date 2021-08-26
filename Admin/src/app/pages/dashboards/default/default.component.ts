@@ -100,9 +100,9 @@ export class DefaultComponent implements OnInit {
   familyForm: FormGroup;
   nomineeForm: FormGroup;
   educationForm: FormGroup;
-  permanentContactInformationForm: FormGroup;
-  corresspondanceContactInformationForm: FormGroup;
-  otherInformationForm: FormGroup;
+  // permanentContactInformationForm: FormGroup;
+  // corresspondanceContactInformationForm: FormGroup;
+  // otherInformationForm: FormGroup;
   educationDocumentForm: FormGroup;
   identityProofForm: FormGroup;
   ProfessionalInformationForm: FormGroup;
@@ -173,7 +173,7 @@ export class DefaultComponent implements OnInit {
   FamilyDetail_RelationshipId: number = 0;
   FamilyDetail_DOB: Date;
   fAadharNo: string;
-  fAadharStatus: string = "Not Verified";
+  fAadharStatus: Boolean = false;
   fAddress: string;
   fContactNo: string;
   isFamilyEdited = false;
@@ -184,7 +184,7 @@ export class DefaultComponent implements OnInit {
   nRelationship: number = 0;
   nDateOfBirth: Date;
   nAadharNo: string;
-  nAadharStatus: string = "Not Verified";
+  nAadharStatus: boolean = false;
   nAddress: string;
   nContactNo: string;
   isNomineeEdited = false;
@@ -195,8 +195,8 @@ export class DefaultComponent implements OnInit {
   designationsDepartmentList: any;
 
   // Educational Information
-  highestQualification: number = 0;
-  qualification: number = 0;
+  highestQualification: string;
+  qualification: string;
   year: number;
   specialization: string;
   school: string;
@@ -340,7 +340,8 @@ export class DefaultComponent implements OnInit {
   }
   // Identity Proof
   get identityProofArr() {
-    return (<FormArray>this.otherInformationForm.get('sys_Identity_ProofDtos')).controls;
+    //  return return (<FormArray>this.hrmsForm.get('sys_OtherInformationDto')).controls;
+    return this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_ProofDtos') as FormArray;
   }
   // Professional Information
   get professionalInformationArr() {
@@ -438,9 +439,17 @@ export class DefaultComponent implements OnInit {
 
   }
   get f() { return this.hrmsForm.controls; }
-  get pcInfo() { return this.permanentContactInformationForm.controls; }
-  get ccInfo() { return this.corresspondanceContactInformationForm.controls; }
-  get oInfo() { return this.otherInformationForm.controls; }
+
+  get pcInfo() {
+    return (<FormGroup>this.hrmsForm.get('sys_PermanentContactInformationDto')).controls; 
+  }
+  get ccInfo() {
+    return (<FormGroup>this.hrmsForm.get('sys_CorresspondanceContactInformationDto')).controls; 
+
+  }
+  get oInfo() {
+    return (<FormGroup>this.hrmsForm.get('sys_OtherInformationDto')).controls; 
+  }
   fbBuilder() {
     this.hrmsForm = this.fb.group({
       companyId: [this.companyMaster.CompanyId, [Validators.required]],
@@ -464,7 +473,7 @@ export class DefaultComponent implements OnInit {
       third_Party_Type: [''],
       third_Party_Id: [''],
       working_StatusId: [''],
-      probation_Period: [''],
+      probation_Period: [0],
       referenceEmployeeName: [''],
       reference_Phone_No: ['', [Validators.pattern("^[0-9]*$")]],
       date_Of_Birth: [''],
@@ -472,7 +481,7 @@ export class DefaultComponent implements OnInit {
       nationality: ['', [Validators.required]],
       religion: ['', [Validators.required]],
       castId: [''],
-      physicalDisability: ['No'],
+      physicalDisability: [false],
       blood_GroupId: [''],
       marital_StatusId: ['', [Validators.required]],
       identification_Mark: [''],
@@ -480,56 +489,93 @@ export class DefaultComponent implements OnInit {
       tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto: new FormArray([]),
       sys_EducationalQualificationDto: new FormArray([]),
       educationDocument: new FormArray([]),
-      sys_PermanentContactInformationDto: new FormGroup({}),
-      sys_CorresspondanceContactInformationDto: new FormGroup({}),
-      sys_OtherInformationDto: new FormGroup({}),
+      sys_PermanentContactInformationDto: this.fb.group({
+        Address: ['', [Validators.required]],
+        Address1: [''],
+        Country: ['', [Validators.required]],
+        Zone: ['', [Validators.required]],
+        State: ['', [Validators.required]],
+        City: ['', [Validators.required]],
+        Pin: ['', [Validators.required]],
+        Employee_Id: [0]
+      }),
+      sys_CorresspondanceContactInformationDto: this.fb.group({
+        Address: ['', [Validators.required]],
+        Address1: [''],
+        Country: ['', [Validators.required]],
+        Zone: ['', [Validators.required]],
+        State: ['', [Validators.required]],
+        City: ['', [Validators.required]],
+        Pin: ['', [Validators.required]],
+        Phone: [],
+        EmailAddress2: ['', [Validators.email]],
+        MobileNo2: [],
+        Employee_Id: [0]
+
+      }),
+      sys_OtherInformationDto: this.fb.group({
+        Bank_Name: [''],
+        Branch_Name: [''],
+        Account_No: [''],
+        IFSC_Code: [''],
+        Status: [true],
+        Other_Details: [''],
+        Card_No: [''],
+        CarProxy_Nod_No: [''],
+        // IpUserId: [''],
+        // IpUserData: [''],
+        User_Type: [''],
+        SignatureFile: [''],
+        PictureFile: [''],
+        Employee_Id: [0],
+        sys_Identity_ProofDtos: new FormArray([]),
+      }),
       professionalInformationStatus: ['', [Validators.required]],
       sys_ProfessionalInformations: new FormArray([]),
       professionalDocumentAttachment: new FormArray([]),
       Status_Id: 1
     });
-    this.permanentContactInformationForm = this.fb.group({
-      Address: ['', [Validators.required]],
-      Address1: [''],
-      Country: ['', [Validators.required]],
-      Zone: ['', [Validators.required]],
-      State: ['', [Validators.required]],
-      City: ['', [Validators.required]],
-      Pin: ['', [Validators.required]],
-      Employee_Id:[]
+    // this.permanentContactInformationForm = this.fb.group({
+    //   Address: ['', [Validators.required]],
+    //   Address1: [''],
+    //   Country: ['', [Validators.required]],
+    //   Zone: ['', [Validators.required]],
+    //   State: ['', [Validators.required]],
+    //   City: ['', [Validators.required]],
+    //   Pin: ['', [Validators.required]],
+    //   Employee_Id: [0]
+    // })
+    // this.corresspondanceContactInformationForm = this.fb.group({
+    //   Address: ['', [Validators.required]],
+    //   Address1: [''],
+    //   Country: ['', [Validators.required]],
+    //   Zone: ['', [Validators.required]],
+    //   State: ['', [Validators.required]],
+    //   City: ['', [Validators.required]],
+    //   Pin: ['', [Validators.required]],
+    //   Phone: [],
+    //   EmailAddress2: ['', [Validators.email]],
+    //   MobileNo2: [],
+    //   Employee_Id: [0]
 
-    })
-    this.corresspondanceContactInformationForm = this.fb.group({
-      Address: ['', [Validators.required]],
-      Address1: [''],
-      Country: ['', [Validators.required]],
-      Zone: ['', [Validators.required]],
-      State: ['', [Validators.required]],
-      City: ['', [Validators.required]],
-      Pin: ['', [Validators.required]],
-      Phone: [],
-      EmailAddress2: ['', [Validators.email]],
-      MobileNo2: [],
-      Employee_Id:[]
-
-    })
-    this.otherInformationForm = this.fb.group({
-      Bank_Name: [''],
-      Branch_Name: [''],
-      Account_No: [''],
-      IFSC_Code: [''],
-      Status: [true],
-      Other_Details: [''],
-      Card_No: [''],
-      CarProxy_Nod_No: [''],
-      // IpUserId: [''],
-      // IpUserData: [''],
-      User_Type: [''],
-      SignatureFile: [''],
-      PictureFile: [''],
-      Employee_Id:[],
-      sys_Identity_ProofDtos: new FormArray([]),
-    })
+    // })
+    // this.otherInformationForm = this.fb.group({
+    //   Bank_Name: [''],
+    //   Branch_Name: [''],
+    //   Account_No: [''],
+    //   IFSC_Code: [''],
+    //   Status: [true],
+    //   Other_Details: [''],
+    //   Card_No: [''],
+    //   CarProxy_Nod_No: [''],
+    //   // IpUserId: [''],
+    //   // IpUserData: [''],
+    //   User_Type: [''],
+    //   SignatureFile: [''],
+    //   PictureFile: [''],
+    //   Employee_Id: [0],
+    //   sys_Identity_ProofDtos: new FormArray([]),
+    // })
   }
 
   // Add Family details
@@ -545,7 +591,7 @@ export class DefaultComponent implements OnInit {
         IsAadharStatus: [this.fAadharStatus],
         FamilyDetail_Mobile: [this.fContactNo],
         Nominee_Address: [this.fAddress],
-        Employee_Id:[]
+        Employee_Id: [0]
       });
       (<FormArray>this.hrmsForm.get('sys_FamilyDetailsDto')).push(this.familyForm);
       this.clearFamilyDetails();
@@ -616,7 +662,7 @@ export class DefaultComponent implements OnInit {
     this.FamilyDetail_RelationshipId = null;
     this.FamilyDetail_DOB = null;
     this.fAadharNo = "";
-    this.fAadharStatus = "";
+    this.fAadharStatus = false;
     this.fAddress = "";
     this.fContactNo = "";
   }
@@ -632,7 +678,7 @@ export class DefaultComponent implements OnInit {
         IsAadharStatus: [this.nAadharStatus],
         Nominee_Mobile: [this.nContactNo],
         Nominee_Address: [this.nAddress],
-        Employee_Id: []
+        Employee_Id: [0]
       });
       (<FormArray>this.hrmsForm.get('tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto')).push(this.nomineeForm);
       this.clearNomineeDetails();
@@ -703,7 +749,7 @@ export class DefaultComponent implements OnInit {
     this.nRelationship = null;
     this.nDateOfBirth = null;
     this.nAadharNo = "";
-    this.nAadharStatus = "";
+    this.nAadharStatus = false;
     this.nAddress = "";
     this.nContactNo = "";
   }
@@ -720,8 +766,8 @@ export class DefaultComponent implements OnInit {
         School: [this.school],
         Board: [this.board],
         Marks: [this.marks],
-        Attachments: [this.isUploaded],
-        Employee_Id:[]
+        Attachments: [''],
+        Employee_Id: [0]
       });
       (<FormArray>this.hrmsForm.get('sys_EducationalQualificationDto')).push(this.educationForm);
       if (this.isUploaded) {
@@ -759,7 +805,7 @@ export class DefaultComponent implements OnInit {
       'School': [this.school],
       'Board': [this.board],
       'Marks': [this.marks],
-      'Attachments': [this.isUploaded],
+      'Attachments': [''],
     });
     this.isEducationEdited = false;
     this.udatedEducationDetailsId = 0;
@@ -777,7 +823,7 @@ export class DefaultComponent implements OnInit {
   // Clear Education Information
   clearEducationInformation() {
     this.highestQualification = null;
-    this.qualification = null;
+    this.qualification = "";
     this.year = null;
     this.specialization = "";
     this.school = "";
@@ -824,13 +870,14 @@ export class DefaultComponent implements OnInit {
       attachments: [this.attachments],
       identityPreviewUrl: [this.documentPreviewUrl]
     });
-    (<FormArray>this.otherInformationForm.get('sys_Identity_ProofDtos')).push(this.identityProofForm);
+    (<FormArray>this.hrmsForm.get('sys_OtherInformationDto').get('sys_Identity_ProofDtos')).push(this.identityProofForm);
     // this.clearEducationDocument();
   }
 
   // Delete Identity Proof
   deleteIdentityProof(row) {
-    const IdentityProof = <FormArray>this.otherInformationForm.controls['sys_Identity_ProofDtos'];
+
+    const IdentityProof = this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_ProofDtos') as FormArray;
     if (IdentityProof) {
       IdentityProof.removeAt(row);
     }
@@ -841,17 +888,18 @@ export class DefaultComponent implements OnInit {
     this.professionalInfoSubmit = true;
     if (this.EmployeerName && this.EmailId && this.DateOfJoining && this.LastDrawnSalary) {
       this.ProfessionalInformationForm = this.formBuilder.group({
-        employeerName: [this.EmployeerName],
-        employeerAddress: [this.EmployeerAddress],
-        designation: [this.Designation],
-        contactPerson: [this.ContactPerson],
-        contactNo: [this.ContactNo],
-        emailId: [this.EmailId],
-        dateOfJoining: [this.DateOfJoining],
-        lastDrawnSalary: [this.LastDrawnSalary],
-        reasonForLeaving: [this.ReasonforLeavingy],
-        dateOfLeaving: [this.DateOfLeaving],
-        eduDocumentPreviewUrl: [this.Professionaldocument]
+        EmployeerName: [this.EmployeerName],
+        EmployeerAddress: [this.EmployeerAddress],
+        Designation: [this.Designation],
+        ContactPerson: [this.ContactPerson],
+        ContactNo: [this.ContactNo],
+        EmailId: [this.EmailId],
+        DateOfJoining: [this.DateOfJoining],
+        LastDrawnSalary: [this.LastDrawnSalary],
+        ReasonForLeaving: [this.ReasonforLeavingy],
+        DateOfLeaving: [this.DateOfLeaving],
+        AttachmentType_Path: [this.Professionaldocument],
+        Employee_Id: [0]
       });
       (<FormArray>this.hrmsForm.get('sys_ProfessionalInformations')).push(this.ProfessionalInformationForm);
       if (this.isProfessionalDocUploaded) {
@@ -1143,7 +1191,9 @@ export class DefaultComponent implements OnInit {
   }
 
   getIdentityImgSrc(row) {
-    const identityData = (<FormArray>this.otherInformationForm.controls['sys_Identity_ProofDtos']).at(row).value;
+
+
+    const identityData = (this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_ProofDtos') as FormArray).at(row).value;
     return identityData.identityPreviewUrl;
   }
 
@@ -1206,18 +1256,18 @@ export class DefaultComponent implements OnInit {
         control1.removeAt(i)
       }
     }
-    if (this.permanentContactInformationForm != undefined) {
-      this.permanentContactInformationForm.reset();
+    if (this.hrmsForm.get('sys_PermanentContactInformationDto') != undefined) {
+      this.hrmsForm.get('sys_PermanentContactInformationDto').reset();
     }
-    if (this.corresspondanceContactInformationForm != undefined) {
-      this.corresspondanceContactInformationForm.reset();
-      const control = <FormArray>this.hrmsForm.controls['sys_PermanentContactInformationDto'];
+    if (this.hrmsForm.get('sys_CorresspondanceContactInformationDto') != undefined) {
+      this.hrmsForm.get('sys_CorresspondanceContactInformationDto').reset();
+      const control = <FormArray>this.hrmsForm.controls['sys_CorresspondanceContactInformationDto'];
       for (let i = control.length - 1; i >= 0; i--) {
         control.removeAt(i)
       }
     }
-    if (this.otherInformationForm != undefined) {
-      this.otherInformationForm.reset();
+    if (this.hrmsForm.get('sys_OtherInformationDto') != undefined) {
+      this.hrmsForm.get('sys_OtherInformationDto').reset();
       const control = <FormArray>this.hrmsForm.controls['sys_CorresspondanceContactInformationDto'];
       for (let i = control.length - 1; i >= 0; i--) {
         control.removeAt(i)
@@ -1280,17 +1330,17 @@ export class DefaultComponent implements OnInit {
 
   sameAsAbove(event) {
     if (event.target.checked) {
-      this.corresspondanceContactInformationForm.patchValue({
-        'Address': this.permanentContactInformationForm.get('Address').value,
-        'Address1': this.permanentContactInformationForm.get('Address1').value,
-        'Country': this.permanentContactInformationForm.get('Country').value,
-        'Zone': this.permanentContactInformationForm.get('Zone').value,
-        'State': this.permanentContactInformationForm.get('State').value,
-        'City': this.permanentContactInformationForm.get('City').value,
-        'Pin': this.permanentContactInformationForm.get('Pin').value,
+      this.hrmsForm.get('sys_CorresspondanceContactInformationDto').patchValue({
+        'Address': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('Address').value,
+        'Address1': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('Address1').value,
+        'Country': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('Country').value,
+        'Zone': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('Zone').value,
+        'State': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('State').value,
+        'City': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('City').value,
+        'Pin': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('Pin').value,
       });
     } else {
-      this.corresspondanceContactInformationForm.patchValue({
+      this.hrmsForm.get('sys_CorresspondanceContactInformationDto').patchValue({
         'Address': '',
         'Address1': '',
         'Country': '',
@@ -1326,7 +1376,7 @@ export class DefaultComponent implements OnInit {
       event.preventDefault();
       return false;
     } else {
-      this.otherInformationForm.patchValue({
+      this.hrmsForm.get('sys_OtherInformationDto').patchValue({
         'ipUserData': ''
       });
     }

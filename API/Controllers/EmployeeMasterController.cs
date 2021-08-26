@@ -47,7 +47,7 @@ namespace API.Controllers
         public async Task<ActionResult<Sys_EmployeeMasterDto>> AddOrUpdateEmployeeMaster(Sys_EmployeeMasterDto EmployeeMasterDto)
         {
             SqlTransaction tr = null;
-
+            await cn.OpenAsync();
             tr = cn.BeginTransaction();
             try
             {
@@ -156,7 +156,7 @@ namespace API.Controllers
         #endregion
 
         #region Get methods
-        [HttpGet("SearchEmployee")]
+        [HttpPost("SearchEmployee")]
         public async Task<ActionResult<List<Sys_EmployeeMasterDto>>> GetEmployees(EmployeeSearchDTO employeeSearchDTO)
         {
             try
@@ -166,6 +166,7 @@ namespace API.Controllers
 
                 if (tbl_Employees.Count > 0 && employeeSearchDTO != null)
                 {
+                    tbl_Employees = tbl_Employees.Where(x => x.Status).ToList();
                     tbl_Employees.WhereIf(employeeSearchDTO.CompanyId > 0, x => x.CompanyId == employeeSearchDTO.CompanyId)
                                  .WhereIf(employeeSearchDTO.DepartmentId > 0, x => x.DepartmentId == employeeSearchDTO.DepartmentId)
                                  .WhereIf(employeeSearchDTO.Project_BranchId > 0, x => x.Project_BranchId == employeeSearchDTO.Project_BranchId)
@@ -197,7 +198,6 @@ namespace API.Controllers
                             {
                                 tbl_Employees = tbl_Employees.Where(x => x.Id == item.Employee_Id).ToList();
                             }
-
                         }
                         if (permanentContactInformation != null && permanentContactInformation.Count > 0)
                         {
@@ -219,8 +219,6 @@ namespace API.Controllers
                             }
                         }
                     }
-
-
                 }
 
                 return Ok(tbl_Employees);
@@ -232,13 +230,25 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult> DeleteEmployee(int employeeId)
+        {
+            if (employeeId > 0)
+            {
+                Sys_EmployeeMaster sys_EmployeeMaster = await _storeContext.Sys_EmployeeMaster.FindAsync(employeeId);
+                sys_EmployeeMaster.Status = false;
+                return Ok(await _storeContext.SaveChangesAsync());
+            }
+            else { return BadRequest(); }
+        }
+
+        [HttpGet]
         public async Task<ActionResult<Sys_EmployeeMasterDto>> GetEmployee(int employeeId)
         {
             Sys_EmployeeMasterDto sys_EmployeeMaster = new Sys_EmployeeMasterDto();
             try
             {
 
-                sys_EmployeeMaster = _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(await _storeContext.Sys_EmployeeMaster.Where(x => x.Id == employeeId).FirstOrDefaultAsync());
+                sys_EmployeeMaster = _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(await _storeContext.Sys_EmployeeMaster.Where(x => x.Id == employeeId && x.Status).FirstOrDefaultAsync());
                 var familyDetail = await _storeContext.Sys_FamilyDetails.Where(x => x.Employee_Id == employeeId).ToListAsync();
 
                 sys_EmployeeMaster.sys_FamilyDetails = _mapper.Map<List<Sys_FamilyDetails>, List<Sys_FamilyDetailsDto>>(familyDetail);
@@ -285,18 +295,23 @@ namespace API.Controllers
                 }
                 var OtherInformation = await _storeContext.Sys_OtherInformation.Where(x => x.Employee_Id == employeeId).FirstOrDefaultAsync();
                 sys_EmployeeMaster.sys_OtherInformation = _mapper.Map<Sys_OtherInformation, Sys_OtherInformationDto>(OtherInformation);
-                if (sys_EmployeeMaster.sys_OtherInformation != null && sys_EmployeeMaster.sys_OtherInformation.Id > 0 && sys_EmployeeMaster.sys_OtherInformation.sys_Identity_Proofs != null && sys_EmployeeMaster.sys_OtherInformation.sys_Identity_Proofs.Count > 0)
+                if (sys_EmployeeMaster.sys_OtherInformation != null && sys_EmployeeMaster.sys_OtherInformation.Id > 0)
                 {
-                    foreach (Sys_ProfessionalInformationDto Sys_ProfessionalInformation in sys_EmployeeMaster.sys_ProfessionalInformations)
+                    List<Sys_Identity_Proof> Sys_Identity_Proofs = await _storeContext.Sys_Identity_Proof.Where(x => x.OtherInformationId == sys_EmployeeMaster.sys_OtherInformation.Id).ToListAsync();
+                    if (Sys_Identity_Proofs != null && Sys_Identity_Proofs.Count > 0)
                     {
-                        TBL_Professional_Information_Attachements TBL_Professional_Information_Attachement = _storeContext.TBL_Professional_Information_Attachements.Where(x => x.EmployeeId == employeeId && x.Professional_Information_Id == Sys_ProfessionalInformation.Id).FirstOrDefault();
-                        if (TBL_Professional_Information_Attachement != null && !string.IsNullOrEmpty(TBL_Professional_Information_Attachement.DocumentUrl))
+                        sys_EmployeeMaster.sys_OtherInformation.sys_Identity_Proofs = _mapper.Map<List<Sys_Identity_Proof>, List<Sys_Identity_ProofDto>>(Sys_Identity_Proofs);
+
+                        foreach (Sys_Identity_ProofDto Sys_Identity_Proof in sys_EmployeeMaster.sys_OtherInformation.sys_Identity_Proofs)
                         {
-                            Sys_ProfessionalInformation.AttachmentType_Path = TBL_Professional_Information_Attachement.DocumentUrl;
+                            TBL_Identity_Proof_Attachements TBL_Identity_Proof_Attachement = _storeContext.TBL_Identity_Proof_Attachements.Where(x => x.EmployeeId == employeeId && x.Identity_Proof_Id == Sys_Identity_Proof.Id).FirstOrDefault();
+                            if (TBL_Identity_Proof_Attachement != null && !string.IsNullOrEmpty(TBL_Identity_Proof_Attachement.DocumentUrl))
+                            {
+                                Sys_Identity_Proof.Attachments = TBL_Identity_Proof_Attachement.DocumentUrl;
+                            }
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -722,7 +737,6 @@ namespace API.Controllers
         [NonAction]
         public int GetLastRecordFromTable(string tableName)
         {
-            var dbConn = _configuration.GetValue<string>("ConnectionStrings:FreelencerDB");
             int letestInformationId = 0;
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
@@ -732,7 +746,6 @@ namespace API.Controllers
             {
                 letestInformationId = Convert.ToInt32(command.ExecuteScalar());
             }
-            cn.Close();
             return letestInformationId;
         }
         #endregion

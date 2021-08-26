@@ -444,7 +444,7 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eRelationshipName" class="form-label">Relationship</label>
-                    <select class="form-select" id="eRelationshipName" [(ngModel)]="fRelationship"
+                    <select class="form-select" id="eRelationshipName" [(ngModel)]="FamilyDetail_RelationshipId"
                       [ngModelOptions]="{standalone: true}">
                       <option selected="selected" disabled="" value="0">Choose...</option>
                       <option *ngFor="let relation of relationShip" [ngValue]="relation.id">
@@ -456,7 +456,7 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="DateOfBirth">Date Of Birth</label>
-                    <input type="date" class="form-control" id="DateOfBirth" [(ngModel)]="fDateOfBirth"
+                    <input type="date" class="form-control" id="DateOfBirth" [(ngModel)]="FamilyDetail_DOB"
                       [ngModelOptions]="{standalone: true}" />
                   </div>
                 </div>
@@ -532,17 +532,17 @@
                   <tbody formArrayName="sys_FamilyDetailsDto">
                     <tr *ngFor="let familyDetails of familyDetailsArr;let i=index;" [formGroupName]="i">
                       <th scope="row">{{i+1}}</th>
-                      <td><input type="text" class="form-control" formControlName="name" readonly></td>
-                      <td><select class="form-select" id="familyDetails" formControlName="relationship" disabled>
+                      <td><input type="text" class="form-control" formControlName="FamilyDetail_Name" readonly></td>
+                      <td><select class="form-select" id="familyDetails" formControlName="FamilyDetail_RelationshipId" disabled>
                           <option *ngFor="let relation of relationShip" [ngValue]="relation.id">
                             {{relation.relationShip_Name}}
                         </select>
                       </td>
-                      <td><input type="text" class="form-control" formControlName="date_Of_Birth" readonly></td>
-                      <td><input type="text" class="form-control" formControlName="aadhar_No" readonly></td>
-                      <td><input type="text" class="form-control" formControlName="aadhar_Status" readonly></td>
-                      <td><input type="text" class="form-control" formControlName="address" readonly></td>
-                      <td><input type="text" class="form-control" formControlName="contact_No" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="FamilyDetail_DOB" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="Identity_Number" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="IsAadharStatus" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="Nominee_Address" readonly></td>
+                      <td><input type="text" class="form-control" formControlName="FamilyDetail_Mobile" readonly></td>
                       <td><i class="fa fa-edit" style="font-size:24px;color: blue; cursor: pointer;"
                           (click)="editFamilyDetails(i)"></i>
                         &nbsp;
@@ -725,7 +725,7 @@
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
-                  <tbody formArrayName="sys_FamilyDetailsDto">
+                  <tbody formArrayName="sys_EducationalQualificationDto">
                     <tr>
                       <td>
                         <select class="form-select" id="eQualification" [(ngModel)]="qualification"

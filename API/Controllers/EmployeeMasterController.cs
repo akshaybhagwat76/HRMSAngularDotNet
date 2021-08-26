@@ -229,18 +229,6 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("DeleteEmployee")]
-        public async Task<ActionResult> DeleteEmployee(int employeeId)
-        {
-            if (employeeId > 0)
-            {
-                Sys_EmployeeMaster sys_EmployeeMaster = await _storeContext.Sys_EmployeeMaster.FindAsync(employeeId);
-                sys_EmployeeMaster.Status = false;
-                return Ok(await _storeContext.SaveChangesAsync());
-            }
-            else { return BadRequest(); }
-        }
-
         [HttpGet("GetEmployee")]
 
         public async Task<ActionResult<Sys_EmployeeMasterDto>> GetEmployee(int employeeId)
@@ -725,6 +713,17 @@ namespace API.Controllers
 
         #region Delete Employee Master
 
+        [HttpGet("DeleteEmployee")]
+        public async Task<ActionResult> DeleteEmployee(int employeeId)
+        {
+            if (employeeId > 0)
+            {
+                Sys_EmployeeMaster sys_EmployeeMaster = await _storeContext.Sys_EmployeeMaster.FindAsync(employeeId);
+                sys_EmployeeMaster.Status = false;
+                return Ok(await _storeContext.SaveChangesAsync());
+            }
+            else { return BadRequest(); }
+        }
 
         #endregion
 

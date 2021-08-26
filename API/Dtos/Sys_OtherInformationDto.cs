@@ -11,6 +11,9 @@ namespace API.Dtos
         public string Other_Details { get; set; }
         public string Card_No { get; set; }
         public string CarProxy_Nod_No { get; set; }
+        public string User_Type { get; set; }
+        public string User_Id { get; set; }
+        public string User_Data { get; set; }
         public int User_Type { get; set; }
         public string Signature { get; set; }
         public string Picture { get; set; }

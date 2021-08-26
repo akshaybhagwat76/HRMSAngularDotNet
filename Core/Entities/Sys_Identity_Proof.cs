@@ -8,10 +8,8 @@ namespace Core.Entities
     [Table("tbl_Identity_Proof")]
     public class Sys_Identity_Proof : BaseEntity, IAuditableEntity
     {
-
         public string Identity_Type { get; set; }
         public string Identity_No { get; set; }
-        public string Attachments_File_Name { get; set; }
         public DateTime Valid_Upto { get; set; }
         public int Status_Id { get; set; }
         public string Remarks { get; set; }
@@ -29,6 +27,5 @@ namespace Core.Entities
         public int? UpdatedFrom_Sub_Menu_Id { get; set; }
         public string UpdatedFrom_API_Name { get; set; }
         public int OtherInformationId { get; set; }
-
     }
 }

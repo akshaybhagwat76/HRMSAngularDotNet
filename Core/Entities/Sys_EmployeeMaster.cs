@@ -51,5 +51,7 @@ namespace Core.Entities
         public string UpdatedFrom_API_Name { get; set; }
         public bool Status { get; set; }
         public int Status_Id { get; set; }
+        public string ProfessionalInformation { get; set; }
+        public string HighestQualification { get; set; }
     }
 }

@@ -63,6 +63,8 @@ namespace API.Controllers
                 else
                 {
                     employeeMaster = await _unitOfWork.Repository<Sys_EmployeeMaster>().GetByIdAsync(EmployeeMasterDto.Id);
+                    employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
+
                     _unitOfWork.Repository<Sys_EmployeeMaster>().Update(employeeMaster);
                 }
                 if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employeemaster"));
@@ -123,6 +125,16 @@ namespace API.Controllers
                         {
                             EmployeeMasterDto.sys_PermanentContactInformationDto.Employee_Id = employeeMaster.Id;
                             await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformationDto);
+                        }
+                    }
+                    catch (Exception) { }
+
+                    try
+                    {
+                        if (EmployeeMasterDto.sys_CorresspondanceContactInformationDto != null)
+                        {
+                            EmployeeMasterDto.sys_CorresspondanceContactInformationDto.Employee_Id = employeeMaster.Id;
+                            await AddCorresspondanceContactInformationAsync(EmployeeMasterDto.sys_CorresspondanceContactInformationDto);
                         }
                     }
                     catch (Exception) { }
@@ -323,6 +335,8 @@ namespace API.Controllers
                 else
                 {
                     Sys_FamilyDetails familyDetail = await _unitOfWork.Repository<Sys_FamilyDetails>().GetByIdAsync(familyDetailsDto.Id);
+                    familyDetail = _mapper.Map<Sys_FamilyDetailsDto, Sys_FamilyDetails>(familyDetailsDto);
+
                     _unitOfWork.Repository<Sys_FamilyDetails>().Update(familyDetail);
                     return _mapper.Map<Sys_FamilyDetails, Sys_FamilyDetailsDto>(familyDetail);
                 }
@@ -373,6 +387,8 @@ namespace API.Controllers
                 else
                 {
                     TBL_HR_EMPLOYEE_EDUCATION_DETAILS educationQuilificationDto = await _unitOfWork.Repository<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>().GetByIdAsync(EducationQuilificationDto.Id);
+                    educationQuilificationDto = _mapper.Map<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto, TBL_HR_EMPLOYEE_EDUCATION_DETAILS>(EducationQuilificationDto);
+
                     _unitOfWork.Repository<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>().Update(educationQuilificationDto);
 
                     if (EducationQuilificationDto.Attachments != null && EducationQuilificationDto.Attachments.Count > 0)
@@ -523,6 +539,7 @@ namespace API.Controllers
                     else
                     {
                         TBL_HR_EMPLOYEE_NOMINEE_DETAILS employeeNonimee = await _unitOfWork.Repository<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>().GetByIdAsync(NomineeDto.Id);
+                        employeeNonimee = _mapper.Map<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto, TBL_HR_EMPLOYEE_NOMINEE_DETAILS>(NomineeDto);
                         _unitOfWork.Repository<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>().Update(employeeNonimee);
                         return _mapper.Map<TBL_HR_EMPLOYEE_NOMINEE_DETAILS, TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>(employeeNonimee);
                     }
@@ -539,7 +556,7 @@ namespace API.Controllers
         }
         #endregion
 
-        #region Add new Permanent Contact Informations
+        #region Add new Permanent Contact Information
         [NonAction]
         public async Task<ActionResult<Sys_PermanentContactInformationDto>> AddPermanentContactInformationAsync(Sys_PermanentContactInformationDto permanentContactInformationDto)
         {
@@ -561,6 +578,7 @@ namespace API.Controllers
                 else
                 {
                     Sys_PermanentContactInformation permanentContactInformation = await _unitOfWork.Repository<Sys_PermanentContactInformation>().GetByIdAsync(permanentContactInformationDto.Id);
+                    permanentContactInformation = _mapper.Map<Sys_PermanentContactInformationDto, Sys_PermanentContactInformation>(permanentContactInformationDto);
                     _unitOfWork.Repository<Sys_PermanentContactInformation>().Update(permanentContactInformation);
                     return _mapper.Map<Sys_PermanentContactInformation, Sys_PermanentContactInformationDto>(permanentContactInformation);
                 }
@@ -572,18 +590,33 @@ namespace API.Controllers
         }
         #endregion
 
-        #region Add new employee
+        #region Add new Corresspondance Contact Information
         [NonAction]
-        public async Task<ActionResult<Sys_CorresspondanceContactInformationDto>> AddCorresspondanceContactInformationAsync(Sys_CorresspondanceContactInformationDto familyDetailsDto)
+        public async Task<ActionResult<Sys_CorresspondanceContactInformationDto>> AddCorresspondanceContactInformationAsync(Sys_CorresspondanceContactInformationDto corresspondanceContactInformationDto)
         {
             try
             {
-                var corresspondanceContactInformation = _mapper.Map<Sys_CorresspondanceContactInformationDto, Sys_CorresspondanceContactInformation>(familyDetailsDto);
-                _unitOfWork.Repository<Sys_CorresspondanceContactInformation>().Add(corresspondanceContactInformation);
-                var result = await _unitOfWork.Complete();
+                if (corresspondanceContactInformationDto == null)
+                {
+                    return new Sys_CorresspondanceContactInformationDto();
+                }
+                if (corresspondanceContactInformationDto.Id == 0)
+                {
+                    var corresspondanceContactInformation = _mapper.Map<Sys_CorresspondanceContactInformationDto, Sys_CorresspondanceContactInformation>(corresspondanceContactInformationDto);
+                    _unitOfWork.Repository<Sys_CorresspondanceContactInformation>().Add(corresspondanceContactInformation);
+                    var result = await _unitOfWork.Complete();
 
-                if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employee"));
-                return _mapper.Map<Sys_CorresspondanceContactInformation, Sys_CorresspondanceContactInformationDto>(corresspondanceContactInformation);
+                    if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employee"));
+                    return _mapper.Map<Sys_CorresspondanceContactInformation, Sys_CorresspondanceContactInformationDto>(corresspondanceContactInformation);
+                }
+                else
+                {
+                    Sys_CorresspondanceContactInformation corresspondanceContactInformation = await _unitOfWork.Repository<Sys_CorresspondanceContactInformation>().GetByIdAsync(corresspondanceContactInformationDto.Id);
+                    corresspondanceContactInformation = _mapper.Map<Sys_CorresspondanceContactInformationDto, Sys_CorresspondanceContactInformation>(corresspondanceContactInformationDto);
+                    _unitOfWork.Repository<Sys_CorresspondanceContactInformation>().Update(corresspondanceContactInformation);
+                    return _mapper.Map<Sys_CorresspondanceContactInformation, Sys_CorresspondanceContactInformationDto>(corresspondanceContactInformation);
+                }
+
             }
             catch (Exception exception)
             {
@@ -646,6 +679,7 @@ namespace API.Controllers
                 else
                 {
                     Sys_OtherInformation OtherInformation = await _unitOfWork.Repository<Sys_OtherInformation>().GetByIdAsync(OtherInformationDto.Id);
+                    OtherInformation = _mapper.Map<Sys_OtherInformationDto, Sys_OtherInformation>(OtherInformationDto);
                     _unitOfWork.Repository<Sys_OtherInformation>().Update(OtherInformation);
 
                     if (OtherInformationDto.sys_Identity_Proofs != null && OtherInformationDto.sys_Identity_Proofs.Count > 0)

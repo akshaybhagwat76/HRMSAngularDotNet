@@ -336,12 +336,12 @@ export class DefaultComponent implements OnInit {
 
   // Education Document
   get educationDocumentArr() {
-    return (<FormArray>this.hrmsForm.get('educationDocument')).controls;
+    return this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments')['controls'] as FormArray;
   }
   // Identity Proof
   get identityProofArr() {
     //  return return (<FormArray>this.hrmsForm.get('sys_OtherInformationDto')).controls;
-    return this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_ProofDtos') as FormArray;
+    return this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_ProofDtos')['controls'] as FormArray;
   }
   // Professional Information
   get professionalInformationArr() {
@@ -488,7 +488,7 @@ export class DefaultComponent implements OnInit {
       sys_FamilyDetailsDto: new FormArray([]),
       tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto: new FormArray([]),
       sys_EducationalQualificationDto: new FormArray([]),
-      educationDocument: new FormArray([]),
+      // educationDocument: new FormArray([]),
       sys_PermanentContactInformationDto: this.fb.group({
         Address: ['', [Validators.required]],
         Address1: [''],
@@ -766,7 +766,7 @@ export class DefaultComponent implements OnInit {
         School: [this.school],
         Board: [this.board],
         Marks: [this.marks],
-        Attachments: [''],
+        // Attachments: [''],
         Employee_Id: [0]
       });
       (<FormArray>this.hrmsForm.get('sys_EducationalQualificationDto')).push(this.educationForm);
@@ -840,7 +840,8 @@ export class DefaultComponent implements OnInit {
       documentfile: [''],
       eduDocumentPreviewUrl: ['']
     });
-    (<FormArray>this.hrmsForm.get('educationDocument')).push(this.educationDocumentForm);
+    // (<FormArray>this.hrmsForm.get('educationDocument')).push(this.educationDocumentForm);
+    (<FormArray>this.hrmsForm.get('sys_EducationalQualificationDto').get('Attachments')).push(this.educationDocumentForm);
     // this.clearEducationDocument();
   }
 
@@ -855,7 +856,7 @@ export class DefaultComponent implements OnInit {
 
   // Delete Education Document
   deleteEducationDocument(row) {
-    const educationDocument = <FormArray>this.hrmsForm.controls['educationDocument'];
+    const educationDocument = this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments') as FormArray;
     if (educationDocument) {
       educationDocument.removeAt(row);
     }
@@ -1158,15 +1159,14 @@ export class DefaultComponent implements OnInit {
   }
 
   onSubmit(row) {
-    const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
-    const educationDocData = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(row);
+    const educationDocData = (this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments') as FormArray).at(row);
     educationDocData.patchValue({
       'courseName': [this.courseName],
       'documentType': [this.documentType],
       'documentfile': [this.documentPreviewUrl],
       'eduDocumentPreviewUrl': [this.documentPreviewUrl]
     });
-    const educationDocumentsArray = <FormArray>this.hrmsForm.controls['educationDocument'];
+    const educationDocumentsArray = this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments')['controls'] as FormArray;;
     educationDocumentsArray.at(row).patchValue({ 'eduDocumentPreviewUrl': this.documentPreviewUrl });
   }
 
@@ -1181,7 +1181,7 @@ export class DefaultComponent implements OnInit {
   }
 
   getImgSrc(row) {
-    const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
+    const eduDocData = (this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments') as FormArray).at(row).value;
     return eduDocData.eduDocumentPreviewUrl;
   }
 
@@ -1251,7 +1251,7 @@ export class DefaultComponent implements OnInit {
       for (let i = control.length - 1; i >= 0; i--) {
         control.removeAt(i)
       }
-      const control1 = <FormArray>this.hrmsForm.controls['educationDocument'];
+      const control1 = this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments')['controls'] as FormArray;
       for (let i = control1.length - 1; i >= 0; i--) {
         control1.removeAt(i)
       }
@@ -1312,7 +1312,7 @@ export class DefaultComponent implements OnInit {
   }
 
   onClickDownloadDoc(row) {
-    const eduDocData = (<FormArray>this.hrmsForm.controls['educationDocument']).at(row).value;
+    const eduDocData = (this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments') as FormArray).at(row).value;
     let base64String = eduDocData.eduDocumentPreviewUrl;
     this.downloadDoc(base64String, eduDocData.documentType);
   }

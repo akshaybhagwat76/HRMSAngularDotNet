@@ -38,6 +38,8 @@ namespace API.Dtos
         public int Marital_StatusId { get; set; }
         public string Identification_Mark { get; set; }
         public bool Status { get; set; }
+        public string ProfessionalInformation { get; set; }
+        public string HighestQualification { get; set; }
         public List<Sys_FamilyDetailsDto> sys_FamilyDetailsDto { get; set; }
         public List<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto> sys_EducationalQualificationDto { get; set; }
         public List<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto> tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto { get; set; }

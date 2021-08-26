@@ -252,11 +252,8 @@ namespace API.Controllers
                 {
                     foreach (TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto TBL_HR_EMPLOYEE_EDUCATION_DETAIL in sys_EmployeeMaster.sys_EducationalQualificationDto)
                     {
-                        TBL_Educational_Qualification_Attachements tBL_Educational_Qualification_Attachement = _storeContext.TBL_Educational_Qualification_Attachements.Where(x => x.EmployeeId == employeeId && x.Educational_Qualification_Id == TBL_HR_EMPLOYEE_EDUCATION_DETAIL.Id).FirstOrDefault();
-                        if (tBL_Educational_Qualification_Attachement != null && !string.IsNullOrEmpty(tBL_Educational_Qualification_Attachement.DocumentUrl))
-                        {
-                            TBL_HR_EMPLOYEE_EDUCATION_DETAIL.Attachments = tBL_Educational_Qualification_Attachement.DocumentUrl;
-                        }
+                        List<TBL_Educational_Qualification_Attachements> LstTBL_Educational_Qualification_Attachement = await _storeContext.TBL_Educational_Qualification_Attachements.Where(x => x.EmployeeId == employeeId && x.Educational_Qualification_Id == TBL_HR_EMPLOYEE_EDUCATION_DETAIL.Id).ToListAsync();
+                        TBL_HR_EMPLOYEE_EDUCATION_DETAIL.Attachments = _mapper.Map<List<TBL_Educational_Qualification_Attachements>, List<TBL_Educational_Qualification_AttachementsDto>>(LstTBL_Educational_Qualification_Attachement);
                     }
                 }
 
@@ -275,24 +272,23 @@ namespace API.Controllers
                 {
                     foreach (Sys_ProfessionalInformationDto Sys_ProfessionalInformation in sys_EmployeeMaster.sys_ProfessionalInformations)
                     {
-                        TBL_Professional_Information_Attachements TBL_Professional_Information_Attachement = _storeContext.TBL_Professional_Information_Attachements.Where(x => x.EmployeeId == employeeId && x.Professional_Information_Id == Sys_ProfessionalInformation.Id).FirstOrDefault();
-                        if (TBL_Professional_Information_Attachement != null && !string.IsNullOrEmpty(TBL_Professional_Information_Attachement.DocumentUrl))
-                        {
-                            Sys_ProfessionalInformation.AttachmentType_Path = TBL_Professional_Information_Attachement.DocumentUrl;
-                        }
+                        List<TBL_Professional_Information_Attachements> LstTBL_Professional_Information_Attachement = await _storeContext.TBL_Professional_Information_Attachements.Where(x => x.EmployeeId == employeeId && x.Professional_Information_Id == Sys_ProfessionalInformation.Id).ToListAsync();
+                        Sys_ProfessionalInformation.Attachments = _mapper.Map<List<TBL_Professional_Information_Attachements>, List<TBL_Professional_Information_AttachementsDto>>(LstTBL_Professional_Information_Attachement);
                     }
                 }
+
                 var OtherInformation = await _storeContext.Sys_OtherInformation.Where(x => x.Employee_Id == employeeId).FirstOrDefaultAsync();
                 sys_EmployeeMaster.sys_OtherInformationDto = _mapper.Map<Sys_OtherInformation, Sys_OtherInformationDto>(OtherInformation);
-                if (sys_EmployeeMaster.sys_OtherInformationDto != null && sys_EmployeeMaster.sys_OtherInformationDto.Id > 0 && sys_EmployeeMaster.sys_OtherInformationDto.sys_Identity_Proofs != null && sys_EmployeeMaster.sys_OtherInformationDto.sys_Identity_Proofs.Count > 0)
+
+                if (sys_EmployeeMaster.sys_OtherInformationDto != null && sys_EmployeeMaster.sys_OtherInformationDto.Id > 0)
                 {
-                    foreach (Sys_ProfessionalInformationDto Sys_ProfessionalInformation in sys_EmployeeMaster.sys_ProfessionalInformations)
+                    List<Sys_Identity_Proof> LstSys_IdentityProof = await _storeContext.Sys_Identity_Proof.Where(x => x.OtherInformationId == sys_EmployeeMaster.sys_OtherInformationDto.Id).ToListAsync();
+                    sys_EmployeeMaster.sys_OtherInformationDto.sys_Identity_Proofs = _mapper.Map<List<Sys_Identity_Proof>, List<Sys_Identity_ProofDto>>(LstSys_IdentityProof);
+
+                    foreach (Sys_Identity_ProofDto sys_Identity_Proof in sys_EmployeeMaster.sys_OtherInformationDto.sys_Identity_Proofs)
                     {
-                        TBL_Professional_Information_Attachements TBL_Professional_Information_Attachement = _storeContext.TBL_Professional_Information_Attachements.Where(x => x.EmployeeId == employeeId && x.Professional_Information_Id == Sys_ProfessionalInformation.Id).FirstOrDefault();
-                        if (TBL_Professional_Information_Attachement != null && !string.IsNullOrEmpty(TBL_Professional_Information_Attachement.DocumentUrl))
-                        {
-                            Sys_ProfessionalInformation.AttachmentType_Path = TBL_Professional_Information_Attachement.DocumentUrl;
-                        }
+                        List<TBL_Identity_Proof_Attachements> LstTBL_Identity_Proof_Attachement = await _storeContext.TBL_Identity_Proof_Attachements.Where(x => x.EmployeeId == employeeId && x.Identity_Proof_Id == sys_Identity_Proof.Id).ToListAsync();
+                        sys_Identity_Proof.Attachments = _mapper.Map<List<TBL_Identity_Proof_Attachements>, List<TBL_Identity_Proof_AttachementsDto>>(LstTBL_Identity_Proof_Attachement);
                     }
                 }
             }
@@ -350,52 +346,63 @@ namespace API.Controllers
                 }
                 if (EducationQuilificationDto.Id == 0)
                 {
-                    var educationQuilificationDto = _mapper.Map<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto, TBL_HR_EMPLOYEE_EDUCATION_DETAILS>(EducationQuilificationDto);
+                    var educationQualificationDto = _mapper.Map<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto, TBL_HR_EMPLOYEE_EDUCATION_DETAILS>(EducationQuilificationDto);
 
-                    _unitOfWork.Repository<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>().Add(educationQuilificationDto);
+                    _unitOfWork.Repository<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>().Add(educationQualificationDto);
                     var result = await _unitOfWork.Complete();
                     if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating education quilification"));
                     int EducationQuilificationId = GetLastRecordFromTable(Messages.tBL_HR_EMPLOYEE_EDUCATION_DETAILs);
 
-                    if (!string.IsNullOrEmpty(EducationQuilificationDto.Attachments) && EducationQuilificationDto.Attachments.Length > 1000)
+                    if (EducationQuilificationDto.Attachments != null && EducationQuilificationDto.Attachments.Count > 0)
                     {
-                        string docUrl = UploadFile(EducationQuilificationDto.Attachments, EducationQuilificationDto.Employee_Id);
-                        TBL_Educational_Qualification_AttachementsDto Educational_Qualification_AttachementsDto = new TBL_Educational_Qualification_AttachementsDto() { EmployeeId = EducationQuilificationDto.Employee_Id, DocumentType = educationQuilificationDto.Qualification, Educational_Qualification_Id = EducationQuilificationId, DocumentUrl = docUrl };
-                        var Educational_Qualification_Attachement = _mapper.Map<TBL_Educational_Qualification_AttachementsDto, TBL_Educational_Qualification_Attachements>(Educational_Qualification_AttachementsDto);
-                        _unitOfWork.Repository<TBL_Educational_Qualification_Attachements>().Add(Educational_Qualification_Attachement);
-                        var resultEducational_Qualification_Attachement = await _unitOfWork.Complete();
+                        foreach (TBL_Educational_Qualification_AttachementsDto TBL_Educational_Qualification_Attachement in EducationQuilificationDto.Attachments)
+                        {
+                            if (!string.IsNullOrEmpty(TBL_Educational_Qualification_Attachement.DocumentType) && !string.IsNullOrEmpty(TBL_Educational_Qualification_Attachement.DocumentUrl) && TBL_Educational_Qualification_Attachement.DocumentUrl.Length > 1000)
+                            {
+                                string docUrl = UploadFile(TBL_Educational_Qualification_Attachement.DocumentUrl, EducationQuilificationDto.Employee_Id);
+                                TBL_Educational_Qualification_AttachementsDto Educational_Qualification_AttachementsDto = new TBL_Educational_Qualification_AttachementsDto() { EmployeeId = EducationQuilificationDto.Employee_Id, DocumentType = TBL_Educational_Qualification_Attachement.DocumentType, Educational_Qualification_Id = EducationQuilificationId, DocumentUrl = docUrl };
+                                var Educational_Qualification_Attachement = _mapper.Map<TBL_Educational_Qualification_AttachementsDto, TBL_Educational_Qualification_Attachements>(Educational_Qualification_AttachementsDto);
+                                _unitOfWork.Repository<TBL_Educational_Qualification_Attachements>().Add(Educational_Qualification_Attachement);
+                                var resultEducational_Qualification_Attachement = await _unitOfWork.Complete();
+                            }
+                        }
+
                     }
-                    return _mapper.Map<TBL_HR_EMPLOYEE_EDUCATION_DETAILS, TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>(educationQuilificationDto);
+                    return _mapper.Map<TBL_HR_EMPLOYEE_EDUCATION_DETAILS, TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>(educationQualificationDto);
                 }
                 else
                 {
                     TBL_HR_EMPLOYEE_EDUCATION_DETAILS educationQuilificationDto = await _unitOfWork.Repository<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>().GetByIdAsync(EducationQuilificationDto.Id);
                     _unitOfWork.Repository<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>().Update(educationQuilificationDto);
 
-                    if (!string.IsNullOrEmpty(EducationQuilificationDto.Attachments) && EducationQuilificationDto.Attachments.Length > 1000)
+                    if (EducationQuilificationDto.Attachments != null && EducationQuilificationDto.Attachments.Count > 0)
                     {
-                        string docUrl = UploadFile(EducationQuilificationDto.Attachments, EducationQuilificationDto.Employee_Id);
-                        TBL_Educational_Qualification_AttachementsDto Educational_Qualification_AttachementsDto = new TBL_Educational_Qualification_AttachementsDto() { EmployeeId = EducationQuilificationDto.Employee_Id, DocumentType = educationQuilificationDto.Qualification, Educational_Qualification_Id = educationQuilificationDto.Id, DocumentUrl = docUrl };
-                        var Educational_Qualification_Attachement = _mapper.Map<TBL_Educational_Qualification_AttachementsDto, TBL_Educational_Qualification_Attachements>(Educational_Qualification_AttachementsDto);
-                        _unitOfWork.Repository<TBL_Educational_Qualification_Attachements>().Add(Educational_Qualification_Attachement);
-                        var resultEducational_Qualification_Attachement = await _unitOfWork.Complete();
-                    }
-                    else
-                    {
-                        var lstEducational_Qualification_Attachements = await _unitOfWork.Repository<TBL_Educational_Qualification_Attachements>().ListAllAsync();
-                        lstEducational_Qualification_Attachements = lstEducational_Qualification_Attachements.Where(x => x.Educational_Qualification_Id == educationQuilificationDto.Id).ToList();
-                        if (lstEducational_Qualification_Attachements != null && lstEducational_Qualification_Attachements.Count > 0)
+                        foreach (TBL_Educational_Qualification_AttachementsDto TBL_Educational_Qualification_Attachement in EducationQuilificationDto.Attachments)
                         {
-                            foreach (TBL_Educational_Qualification_Attachements Educational_Qualification_Attachement in lstEducational_Qualification_Attachements)
+                            if (!string.IsNullOrEmpty(TBL_Educational_Qualification_Attachement.DocumentType) && !string.IsNullOrEmpty(TBL_Educational_Qualification_Attachement.DocumentUrl) && TBL_Educational_Qualification_Attachement.DocumentUrl.Length > 1000)
                             {
-                                if (Educational_Qualification_Attachement != null && !string.IsNullOrEmpty(Educational_Qualification_Attachement.DocumentUrl) && string.IsNullOrEmpty(EducationQuilificationDto.Attachments))
+                                string docUrl = UploadFile(TBL_Educational_Qualification_Attachement.DocumentUrl, EducationQuilificationDto.Employee_Id);
+                                TBL_Educational_Qualification_AttachementsDto Educational_Qualification_AttachementsDto = new TBL_Educational_Qualification_AttachementsDto() { EmployeeId = EducationQuilificationDto.Employee_Id, DocumentType = TBL_Educational_Qualification_Attachement.DocumentType, Educational_Qualification_Id = educationQuilificationDto.Id, DocumentUrl = docUrl };
+                                var Educational_Qualification_Attachement = _mapper.Map<TBL_Educational_Qualification_AttachementsDto, TBL_Educational_Qualification_Attachements>(Educational_Qualification_AttachementsDto);
+
+                                if (TBL_Educational_Qualification_Attachement.Id == 0)
                                 {
-                                    if (RemoveFile(Educational_Qualification_Attachement.DocumentUrl, educationQuilificationDto.Employee_Id))
-                                    {
-                                        _unitOfWork.Repository<TBL_Educational_Qualification_Attachements>().Delete(Educational_Qualification_Attachement);
-                                        var resultEducational_Qualification_Attachement = await _unitOfWork.Complete();
-                                        if (resultEducational_Qualification_Attachement <= 0) return BadRequest(new ApiResponse(400, "Problem deleting Educational_Qualification_Attachement"));
-                                    }
+                                    _unitOfWork.Repository<TBL_Educational_Qualification_Attachements>().Add(Educational_Qualification_Attachement);
+                                }
+                                else
+                                {
+                                    _unitOfWork.Repository<TBL_Educational_Qualification_Attachements>().Update(Educational_Qualification_Attachement);
+                                }
+                                var resultEducational_Qualification_Attachement = await _unitOfWork.Complete();
+                            }
+                            if (string.IsNullOrEmpty(TBL_Educational_Qualification_Attachement.DocumentUrl))
+                            {
+                                var Educational_Qualification_Attachement = await _unitOfWork.Repository<TBL_Educational_Qualification_Attachements>().GetByIdAsync(TBL_Educational_Qualification_Attachement.Id);
+                                if (RemoveFile(Educational_Qualification_Attachement.DocumentUrl, educationQuilificationDto.Employee_Id))
+                                {
+                                    _unitOfWork.Repository<TBL_Educational_Qualification_Attachements>().Delete(Educational_Qualification_Attachement);
+                                    var resultEducational_Qualification_Attachement = await _unitOfWork.Complete();
+                                    if (resultEducational_Qualification_Attachement <= 0) return BadRequest(new ApiResponse(400, "Problem deleting Educational_Qualification_Attachement"));
                                 }
                             }
                         }
@@ -429,50 +436,61 @@ namespace API.Controllers
                     var result = await _unitOfWork.Complete();
                     int ProfessionalInformationId = GetLastRecordFromTable(Messages.tbl_ProfessionalInformation);
 
-                    if (!string.IsNullOrEmpty(ProfessionalInformationDto.AttachmentType_Path) && ProfessionalInformationDto.AttachmentType_Path.Length > 1000)
+                    if (ProfessionalInformationDto.Attachments != null && ProfessionalInformationDto.Attachments.Count > 0)
                     {
-                        string docUrl = UploadFile(ProfessionalInformationDto.AttachmentType_Path, ProfessionalInformationDto.Employee_Id);
-                        TBL_Professional_Information_AttachementsDto Professional_Information_AttachementsDto = new TBL_Professional_Information_AttachementsDto() { EmployeeId = ProfessionalInformationDto.Employee_Id, DocumentType = ProfessionalInformationDto.EmployeerName, Professional_Information_Attachements_Id = ProfessionalInformationId, DocumentUrl = docUrl };
-                        var ProfessionalInformation_Attachement = _mapper.Map<TBL_Professional_Information_AttachementsDto, TBL_Professional_Information_Attachements>(Professional_Information_AttachementsDto);
-                        _unitOfWork.Repository<TBL_Professional_Information_Attachements>().Add(ProfessionalInformation_Attachement);
-                        var resultEducational_Qualification_Attachement = await _unitOfWork.Complete();
+                        foreach (TBL_Professional_Information_AttachementsDto TBL_Professional_Information_Attachement in ProfessionalInformationDto.Attachments)
+                        {
+                            if (!string.IsNullOrEmpty(TBL_Professional_Information_Attachement.DocumentType) && !string.IsNullOrEmpty(TBL_Professional_Information_Attachement.DocumentUrl) && TBL_Professional_Information_Attachement.DocumentUrl.Length > 1000)
+                            {
+                                string docUrl = UploadFile(TBL_Professional_Information_Attachement.DocumentUrl, ProfessionalInformationDto.Employee_Id);
+                                TBL_Professional_Information_AttachementsDto Professional_Information_AttachementsDto = new TBL_Professional_Information_AttachementsDto() { EmployeeId = ProfessionalInformationDto.Employee_Id, DocumentType = TBL_Professional_Information_Attachement.DocumentType, Professional_Information_Id = ProfessionalInformationId, DocumentUrl = docUrl };
+                                var Professional_Information_Attachement = _mapper.Map<TBL_Professional_Information_AttachementsDto, TBL_Professional_Information_Attachements>(TBL_Professional_Information_Attachement);
+                                _unitOfWork.Repository<TBL_Professional_Information_Attachements>().Add(Professional_Information_Attachement);
+                                var resultProfessional_Information_Attachement = await _unitOfWork.Complete();
+                            }
+                        }
+
                     }
                     return _mapper.Map<Sys_ProfessionalInformation, Sys_ProfessionalInformationDto>(professionalInformationDto);
                 }
                 else
                 {
                     Sys_ProfessionalInformation professionalInformationDto = await _unitOfWork.Repository<Sys_ProfessionalInformation>().GetByIdAsync(ProfessionalInformationDto.Id);
+                    professionalInformationDto = _mapper.Map<Sys_ProfessionalInformationDto, Sys_ProfessionalInformation>(ProfessionalInformationDto);
                     _unitOfWork.Repository<Sys_ProfessionalInformation>().Update(professionalInformationDto);
 
-                    if (!string.IsNullOrEmpty(ProfessionalInformationDto.AttachmentType_Path) && ProfessionalInformationDto.AttachmentType_Path.Length > 1000)
+                    if (ProfessionalInformationDto.Attachments != null && ProfessionalInformationDto.Attachments.Count > 0)
                     {
-                        string docUrl = UploadFile(ProfessionalInformationDto.AttachmentType_Path, ProfessionalInformationDto.Employee_Id);
-                        TBL_Professional_Information_AttachementsDto Professional_Information_AttachementsDto = new TBL_Professional_Information_AttachementsDto() { EmployeeId = ProfessionalInformationDto.Employee_Id, DocumentType = ProfessionalInformationDto.EmployeerName, Professional_Information_Attachements_Id = professionalInformationDto.Id, DocumentUrl = docUrl };
-                        var Professional_Information_Attachement = _mapper.Map<TBL_Professional_Information_AttachementsDto, TBL_Professional_Information_Attachements>(Professional_Information_AttachementsDto);
-                        _unitOfWork.Repository<TBL_Professional_Information_Attachements>().Add(Professional_Information_Attachement);
-                        var resultProfessional_Information_Attachement = await _unitOfWork.Complete();
-                    }
-                    else
-                    {
-                        var lstProfessional_Information_Attachements = await _unitOfWork.Repository<TBL_Professional_Information_Attachements>().ListAllAsync();
-                        lstProfessional_Information_Attachements = lstProfessional_Information_Attachements.Where(x => x.Professional_Information_Id == professionalInformationDto.Id).ToList();
-                        if (lstProfessional_Information_Attachements != null && lstProfessional_Information_Attachements.Count > 0)
+                        foreach (TBL_Professional_Information_AttachementsDto TBL_Professional_Information_Attachements in ProfessionalInformationDto.Attachments)
                         {
-                            foreach (TBL_Professional_Information_Attachements Professional_Information_Attachements in lstProfessional_Information_Attachements)
+                            if (!string.IsNullOrEmpty(TBL_Professional_Information_Attachements.DocumentType) && !string.IsNullOrEmpty(TBL_Professional_Information_Attachements.DocumentUrl) && TBL_Professional_Information_Attachements.DocumentUrl.Length > 1000)
                             {
-                                if (Professional_Information_Attachements != null && !string.IsNullOrEmpty(Professional_Information_Attachements.DocumentUrl) && string.IsNullOrEmpty(ProfessionalInformationDto.AttachmentType_Path))
+                                string docUrl = UploadFile(TBL_Professional_Information_Attachements.DocumentUrl, professionalInformationDto.Employee_Id);
+                                TBL_Professional_Information_AttachementsDto Professional_Information_AttachementsDto = new TBL_Professional_Information_AttachementsDto() { EmployeeId = professionalInformationDto.Employee_Id, DocumentType = TBL_Professional_Information_Attachements.DocumentType, Professional_Information_Id = professionalInformationDto.Id, DocumentUrl = docUrl };
+                                var professional_Information_Attachement = _mapper.Map<TBL_Professional_Information_AttachementsDto, TBL_Professional_Information_Attachements>(Professional_Information_AttachementsDto);
+
+                                if (TBL_Professional_Information_Attachements.Id == 0)
                                 {
-                                    if (RemoveFile(Professional_Information_Attachements.DocumentUrl, professionalInformationDto.Employee_Id))
-                                    {
-                                        _unitOfWork.Repository<TBL_Professional_Information_Attachements>().Delete(Professional_Information_Attachements);
-                                        var resultProfessional_Information_Attachement = await _unitOfWork.Complete();
-                                        if (resultProfessional_Information_Attachement <= 0) return BadRequest(new ApiResponse(400, "Problem deleting Professional_Information_Attachement"));
-                                    }
+                                    _unitOfWork.Repository<TBL_Professional_Information_Attachements>().Add(professional_Information_Attachement);
+                                }
+                                else
+                                {
+                                    _unitOfWork.Repository<TBL_Professional_Information_Attachements>().Update(professional_Information_Attachement);
+                                }
+                                var resultProfessional_InformationAttachment = await _unitOfWork.Complete();
+                            }
+                            if (string.IsNullOrEmpty(TBL_Professional_Information_Attachements.DocumentUrl))
+                            {
+                                var Professional_Information_Attachement = await _unitOfWork.Repository<TBL_Professional_Information_Attachements>().GetByIdAsync(TBL_Professional_Information_Attachements.Id);
+                                if (RemoveFile(Professional_Information_Attachement.DocumentUrl, professionalInformationDto.Employee_Id))
+                                {
+                                    _unitOfWork.Repository<TBL_Professional_Information_Attachements>().Delete(Professional_Information_Attachement);
+                                    var resultProfessional_InformationAttachment = await _unitOfWork.Complete();
+                                    if (resultProfessional_InformationAttachment <= 0) return BadRequest(new ApiResponse(400, "Problem deleting Educational_Qualification_Attachement"));
                                 }
                             }
                         }
                     }
-
 
                     return _mapper.Map<Sys_ProfessionalInformation, Sys_ProfessionalInformationDto>(professionalInformationDto);
                 }
@@ -605,13 +623,20 @@ namespace API.Controllers
                             else
                             {
                                 int identityProofId = GetLastRecordFromTable(Messages.tBL_HR_EMPLOYEE_IDENTITYPROOF_DETAILs);
-                                if (!string.IsNullOrEmpty(Sys_Identity_Proof.Attachments) && Sys_Identity_Proof.Attachments.Length > 1000)
+                                if (Sys_Identity_Proof.Attachments != null && Sys_Identity_Proof.Attachments.Count > 0)
                                 {
-                                    string docUrl = UploadFile(Sys_Identity_Proof.Attachments, otherInformation.Employee_Id);
-                                    TBL_Identity_Proof_AttachementsDto Identity_ProofAttachementDto = new TBL_Identity_Proof_AttachementsDto() { EmployeeId = otherInformation.Employee_Id, DocumentType = Identity_Proof.Identity_Type, Identity_Proof_Id = identityProofId, DocumentUrl = docUrl };
-                                    var Identity_ProofAttachement = _mapper.Map<TBL_Identity_Proof_AttachementsDto, TBL_Identity_Proof_Attachements>(Identity_ProofAttachementDto);
-                                    _unitOfWork.Repository<TBL_Identity_Proof_Attachements>().Add(Identity_ProofAttachement);
-                                    var resultIdentity_ProofAttachement = await _unitOfWork.Complete();
+                                    foreach (TBL_Identity_Proof_AttachementsDto TBL_Identity_Proof_Attachements in Sys_Identity_Proof.Attachments)
+                                    {
+                                        if (!string.IsNullOrEmpty(TBL_Identity_Proof_Attachements.DocumentType) && !string.IsNullOrEmpty(TBL_Identity_Proof_Attachements.DocumentUrl) && TBL_Identity_Proof_Attachements.DocumentUrl.Length > 1000)
+                                        {
+                                            string docUrl = UploadFile(TBL_Identity_Proof_Attachements.DocumentUrl, OtherInformationDto.Employee_Id);
+                                            TBL_Identity_Proof_AttachementsDto Identity_ProofAttachementDto = new TBL_Identity_Proof_AttachementsDto() { EmployeeId = otherInformation.Employee_Id, DocumentType = Identity_Proof.Identity_Type, Identity_Proof_Id = identityProofId, DocumentUrl = docUrl };
+                                            var Identity_ProofAttachement = _mapper.Map<TBL_Identity_Proof_AttachementsDto, TBL_Identity_Proof_Attachements>(Identity_ProofAttachementDto);
+                                            _unitOfWork.Repository<TBL_Identity_Proof_Attachements>().Add(Identity_ProofAttachement);
+                                            var resultIdentity_ProofAttachement = await _unitOfWork.Complete();
+                                        }
+                                    }
+
                                 }
 
                             };
@@ -622,54 +647,64 @@ namespace API.Controllers
                 {
                     Sys_OtherInformation OtherInformation = await _unitOfWork.Repository<Sys_OtherInformation>().GetByIdAsync(OtherInformationDto.Id);
                     _unitOfWork.Repository<Sys_OtherInformation>().Update(OtherInformation);
+
                     if (OtherInformationDto.sys_Identity_Proofs != null && OtherInformationDto.sys_Identity_Proofs.Count > 0)
                     {
-                        foreach (Sys_Identity_ProofDto Sys_Identity_Proof in OtherInformationDto.sys_Identity_Proofs)
+                        foreach (Sys_Identity_ProofDto Sys_Identity_ProofDto in OtherInformationDto.sys_Identity_Proofs)
                         {
-                            if (Sys_Identity_Proof.Id == 0 && !string.IsNullOrEmpty(Sys_Identity_Proof.Attachments) && Sys_Identity_Proof.Attachments.Length > 1000)
+                            var Identity_Proof = new Sys_Identity_Proof();
+                            if (Sys_Identity_ProofDto.Id == 0)
                             {
-                                Sys_Identity_Proof.OtherInformationId = OtherInformation.Id;
-                                var Identity_Proof = _mapper.Map<Sys_Identity_ProofDto, Sys_Identity_Proof>(Sys_Identity_Proof);
+                                Sys_Identity_ProofDto.OtherInformationId = OtherInformation.Id;
+                                Identity_Proof = _mapper.Map<Sys_Identity_ProofDto, Sys_Identity_Proof>(Sys_Identity_ProofDto);
                                 _unitOfWork.Repository<Sys_Identity_Proof>().Add(Identity_Proof);
                                 var resultIdentity_Proof = await _unitOfWork.Complete();
                                 if (resultIdentity_Proof <= 0) return BadRequest(new ApiResponse(400, "Problem creating OtherInformation"));
                             }
                             else
                             {
-                                Sys_Identity_Proof Identity_Proof = await _unitOfWork.Repository<Sys_Identity_Proof>().GetByIdAsync(Sys_Identity_Proof.Id);
-                                if (!string.IsNullOrEmpty(Sys_Identity_Proof.Attachments) && Sys_Identity_Proof.Attachments.Length > 1000)
-                                {
-                                    string docUrl = UploadFile(Sys_Identity_Proof.Attachments, OtherInformation.Employee_Id);
-                                    TBL_Identity_Proof_AttachementsDto Identity_ProofAttachementDto = new TBL_Identity_Proof_AttachementsDto() { EmployeeId = OtherInformation.Employee_Id, DocumentType = Identity_Proof.Identity_Type, Identity_Proof_Id = Sys_Identity_Proof.Id, DocumentUrl = docUrl };
-                                    var Identity_ProofAttachement = _mapper.Map<TBL_Identity_Proof_AttachementsDto, TBL_Identity_Proof_Attachements>(Identity_ProofAttachementDto);
-                                    _unitOfWork.Repository<TBL_Identity_Proof_Attachements>().Add(Identity_ProofAttachement);
-                                    var resultIdentity_ProofAttachement = await _unitOfWork.Complete();
+                                Identity_Proof = await _unitOfWork.Repository<Sys_Identity_Proof>().GetByIdAsync(Sys_Identity_ProofDto.Id);
+                                Identity_Proof = _mapper.Map<Sys_Identity_ProofDto, Sys_Identity_Proof>(Sys_Identity_ProofDto);
+                                _unitOfWork.Repository<Sys_Identity_Proof>().Update(Identity_Proof);
+                            }
 
-                                    _unitOfWork.Repository<Sys_Identity_Proof>().Update(Identity_Proof);
-                                }
-                                else
+                            var lstTBL_Identity_Proof_Attachements = await _unitOfWork.Repository<TBL_Identity_Proof_Attachements>().ListAllAsync();
+                            lstTBL_Identity_Proof_Attachements = lstTBL_Identity_Proof_Attachements.Where(x => x.Identity_Proof_Id == Identity_Proof.Id).ToList();
+
+                            foreach (TBL_Identity_Proof_Attachements Identity_Proof_Attachements in lstTBL_Identity_Proof_Attachements)
+                            {
+
+                                if (!string.IsNullOrEmpty(Identity_Proof_Attachements.DocumentType) && !string.IsNullOrEmpty(Identity_Proof_Attachements.DocumentUrl) && Identity_Proof_Attachements.DocumentUrl.Length > 1000)
                                 {
-                                    var lstTBL_Identity_Proof_Attachements = await _unitOfWork.Repository<TBL_Identity_Proof_Attachements>().ListAllAsync();
-                                    lstTBL_Identity_Proof_Attachements = lstTBL_Identity_Proof_Attachements.Where(x => x.Identity_Proof_Id == Identity_Proof.Id).ToList();
-                                    if (lstTBL_Identity_Proof_Attachements != null && lstTBL_Identity_Proof_Attachements.Count > 0)
+                                    string docUrl = UploadFile(Identity_Proof_Attachements.DocumentUrl, OtherInformation.Employee_Id);
+                                    TBL_Identity_Proof_AttachementsDto TBL_Identity_Proof_AttachementsDto = new TBL_Identity_Proof_AttachementsDto() { EmployeeId = OtherInformation.Employee_Id, DocumentType = Identity_Proof_Attachements.DocumentType, Identity_Proof_Id = Sys_Identity_ProofDto.Id, DocumentUrl = docUrl };
+                                    var tblIdentity_Proof_Attachement = _mapper.Map<TBL_Identity_Proof_AttachementsDto, TBL_Identity_Proof_Attachements>(TBL_Identity_Proof_AttachementsDto);
+
+                                    if (tblIdentity_Proof_Attachement.Id == 0)
                                     {
-                                        foreach (TBL_Identity_Proof_Attachements Identity_Proof_Attachements in lstTBL_Identity_Proof_Attachements)
-                                        {
-                                            if (Identity_Proof_Attachements != null && !string.IsNullOrEmpty(Identity_Proof_Attachements.DocumentUrl) && string.IsNullOrEmpty(Sys_Identity_Proof.Attachments))
-                                            {
-                                                if (RemoveFile(Identity_Proof_Attachements.DocumentUrl, OtherInformation.Employee_Id))
-                                                {
-                                                    _unitOfWork.Repository<TBL_Identity_Proof_Attachements>().Delete(Identity_Proof_Attachements);
-                                                    var resultIdentity_Proof_Attachements = await _unitOfWork.Complete();
-                                                    if (resultIdentity_Proof_Attachements <= 0) return BadRequest(new ApiResponse(400, "Problem deleting Identity_Proof_Attachements"));
-                                                }
-                                            }
-                                        }
+                                        _unitOfWork.Repository<TBL_Identity_Proof_Attachements>().Add(tblIdentity_Proof_Attachement);
+                                    }
+                                    else
+                                    {
+                                        _unitOfWork.Repository<TBL_Identity_Proof_Attachements>().Update(tblIdentity_Proof_Attachement);
+                                    }
+                                    var resultProfessional_InformationAttachment = await _unitOfWork.Complete();
+                                }
+                                if (string.IsNullOrEmpty(Identity_Proof_Attachements.DocumentUrl))
+                                {
+                                    var Identity_Proof_Attachement = await _unitOfWork.Repository<TBL_Identity_Proof_Attachements>().GetByIdAsync(Identity_Proof_Attachements.Id);
+                                    if (RemoveFile(Identity_Proof_Attachements.DocumentUrl, OtherInformation.Employee_Id))
+                                    {
+                                        _unitOfWork.Repository<TBL_Identity_Proof_Attachements>().Delete(Identity_Proof_Attachements);
+                                        var resultIdentity_Proof_Attachement = await _unitOfWork.Complete();
+                                        if (resultIdentity_Proof_Attachement <= 0) return BadRequest(new ApiResponse(400, "Problem deleting Educational_Qualification_Attachement"));
                                     }
                                 }
+
                             }
                         }
                     }
+
                     return _mapper.Map<Sys_OtherInformation, Sys_OtherInformationDto>(OtherInformation);
                 }
 

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-
 namespace Core.Entities
 {
     [Table("tbl_OtherInformation")]
@@ -18,6 +15,8 @@ namespace Core.Entities
         public string CarProxy_Nod_No { get; set; }
         public string User_Type { get; set; }
         public string Signature { get; set; }
+        public string User_Id { get; set; }
+        public string User_Data { get; set; }
         public string Picture { get; set; }
         public int Status_Id { get; set; }
         public string Remarks { get; set; }

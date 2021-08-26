@@ -94,6 +94,7 @@ export class DefaultComponent implements OnInit {
   validationformNominee: FormGroup;
   validationFamily: FormGroup;
   // Form submition
+
   submit: boolean;
   hrmsForm: FormGroup;
   familyForm: FormGroup;
@@ -167,7 +168,6 @@ export class DefaultComponent implements OnInit {
   userType: any;
   employees: any;
   meritalStatuses: any;
-
   // Family Details
   fName: string;
   FamilyDetail_RelationshipId: number = 0;

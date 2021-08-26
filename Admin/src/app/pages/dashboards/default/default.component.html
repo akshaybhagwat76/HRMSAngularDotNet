@@ -53,8 +53,8 @@
                     <label for="eEmployeeCode">Employee Code<span class="text-danger">*</span><span><input
                           type="checkbox" (change)="disabledEmployee($event)">Auto
                         Generation</span></label>
-                    <input type="text" class="form-control" id="eEmployeeCode" formControlName="employeeCode"
-                      placeholder="Employee Code"
+                    <input type="text" autocomplete="off" class="form-control" id="eEmployeeCode"
+                      formControlName="employeeCode" placeholder="Employee Code"
                       [attr.readonly]="!hrmsForm.controls.employeeAutoGenerate.value ? null : ''">
                     <!-- <div *ngIf="submit && form.employeeCode.errors" class="invalid-feedback">
             <span *ngIf="form.employeeCode.errors.required">Please provide a valid employee code.</span>
@@ -64,16 +64,16 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eBiometricCode">Biometric Code</label>
-                    <input type="text" class="form-control" formControlName="biometricCode" id="validationCustom04"
-                      placeholder="Biometric Code" />
+                    <input type="text" autocomplete="off" class="form-control" formControlName="biometricCode"
+                      id="validationCustom04" placeholder="Biometric Code" />
                   </div>
                 </div>
 
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eFirstName">First Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="eFirstName" formControlName="firstName"
-                      placeholder="First Name">
+                    <input type="text" autocomplete="off" class="form-control" id="eFirstName"
+                      formControlName="firstName" placeholder="First Name">
                     <div *ngIf="f.firstName.hasError('required') && f.firstName.touched"
                       class="text text-danger error-div">
                       *Enter First Name</div>
@@ -82,14 +82,14 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eMiddleName">Middle Name</label>
-                    <input type="text" class="form-control" formControlName="middleName" id="eMiddleName"
-                      placeholder="Middle Name" />
+                    <input type="text" autocomplete="off" class="form-control" formControlName="middleName"
+                      id="eMiddleName" placeholder="Middle Name" />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="lastName">Last Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" formControlName="lastName" id="lastName"
+                    <input type="text" autocomplete="off" class="form-control" formControlName="lastName" id="lastName"
                       placeholder="Last Name">
                     <div *ngIf="f.lastName.hasError('required') && f.lastName.touched"
                       class="text text-danger error-div">
@@ -195,7 +195,7 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="email">Email Address</label>
-                    <input type="text" class="form-control" formControlName="email" id="email"
+                    <input type="text" autocomplete="off" class="form-control" formControlName="email" id="email"
                       placeholder="Email Address" />
                     <div *ngIf="f.email.hasError('email')" class="text text-danger error-div">
                       *Enter valid email Address</div>
@@ -217,8 +217,8 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="mobile_No">Mobile No</label>
-                    <input type="text" formControlName="mobile_No" class="form-control" id="mobile_No"
-                      placeholder="Mobile No" (keypress)="keyPressNumbers($event)">
+                    <input type="text" autocomplete="off" formControlName="mobile_No" class="form-control"
+                      id="mobile_No" placeholder="Mobile No" (keypress)="keyPressNumbers($event)">
                     <div *ngIf="f.mobile_No.touched && f.mobile_No.invalid" class="text text-danger error-div">
                       <div *ngIf="f.mobile_No.errors.required">Enter Mobile number</div>
                       <div *ngIf="f.mobile_No.errors.pattern">Enter only number.</div>
@@ -264,23 +264,23 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="probation_Period(Days)">Probation Period(Days)</label>
-                    <input type="text" class="form-control" formControlName="probation_Period" id="probation_Period"
-                      placeholder="Probation Period(Days)" (keypress)="keyPressNumbers($event)">
+                    <input type="text" autocomplete="off" class="form-control" formControlName="probation_Period"
+                      id="probation_Period" placeholder="Probation Period(Days)" (keypress)="keyPressNumbers($event)">
                   </div>
                 </div>
 
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eReferenceEmployee">Reference Employee Name</label>
-                    <input type="text" class="form-control" formControlName="referenceEmployeeName"
+                    <input type="text" autocomplete="off" class="form-control" formControlName="referenceEmployeeName"
                       id="eReferenceEmployee" placeholder="Reference Employee Name">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="reference_Phone_No">Reference Phone No</label>
-                    <input type="text" class="form-control" formControlName="reference_Phone_No" id="reference_Phone_No"
-                      placeholder="Reference Phone No" (keypress)="keyPressNumbers($event)">
+                    <input type="text" class="form-control" autocomplete="off" formControlName="reference_Phone_No"
+                      id="reference_Phone_No" placeholder="Reference Phone No" (keypress)="keyPressNumbers($event)">
                     <div *ngIf="f.reference_Phone_No.touched && f.reference_Phone_No.invalid"
                       class="text text-danger error-div">
                       <div *ngIf="f.reference_Phone_No.errors.required">Enter Mobile number</div>
@@ -338,8 +338,8 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="validationCustom24">Nationality<span class="text-danger">*</span></label>
-                    <input type="text" formControlName="nationality" class="form-control" id="validationCustom24"
-                      placeholder="INDIAN">
+                    <input type="text" autocomplete="off" formControlName="nationality" class="form-control"
+                      id="validationCustom24" placeholder="INDIAN">
                     <div *ngIf="f.nationality.hasError('required') && f.nationality.touched"
                       class="text text-danger error-div">
                       *Enter Nationality</div>
@@ -351,8 +351,8 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="validationCustom25">Religion<span class="text-danger">*</span></label>
-                    <input type="text" formControlName="religion" class="form-control" id="validationCustom25"
-                      placeholder="Religion">
+                    <input type="text" autocomplete="off" formControlName="religion" class="form-control"
+                      id="validationCustom25" placeholder="Religion">
                     <div *ngIf="f.religion.hasError('required') && f.religion.touched"
                       class="text text-danger error-div">
                       *Enter Religion</div>
@@ -379,13 +379,12 @@
                     <label for="validationCustom27">Physical Disability</label>
                     <div class="d-flex">
                       <div class="custom-control custom-radio custom-control-inline mr-5">
-                        <input type="radio" id="physicalRadioInline1" formControlName="physicalDisability"
-                          name="physicalDisability" class="custom-control-input" value="true">
+                        <input type="radio" id="physicalRadioInline1" name="physicalYes" class="custom-control-input">
                         <label class="custom-control-label" for="physicalRadioInline1"> Yes</label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="physicalRadioInline2" formControlName="physicalDisability"
-                          name="physicalDisability" class="custom-control-input" value="false" checked="checked">
+                        <input type="radio" id="physicalRadioInline2" name="physicalNo" class="custom-control-input"
+                          checked>
                         <label class="custom-control-label" for="physicalRadioInline2"> No</label>
                       </div>
                     </div>
@@ -438,7 +437,7 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="redName">Name</label>
-                    <input type="text" class="form-control" [(ngModel)]="fName" name="fName"
+                    <input type="text" autocomplete="off" class="form-control" [(ngModel)]="fName" name="fName"
                       [ngModelOptions]="{standalone: true}" id="redName" placeholder="Name">
                   </div>
                 </div>
@@ -464,8 +463,9 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eAadharNo">Aadhar No</label>
-                    <input type="text" class="form-control" id="eAadharNo" (keypress)="keyPressNumbers($event)"
-                      [(ngModel)]="fAadharNo" [ngModelOptions]="{standalone: true}" />
+                    <input type="text" class="form-control" autocomplete="off" id="eAadharNo"
+                      (keypress)="keyPressNumbers($event)" [(ngModel)]="fAadharNo"
+                      [ngModelOptions]="{standalone: true}" />
                   </div>
                 </div>
               </div>
@@ -497,8 +497,8 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="eContactNo">Contact No</label>
-                    <input type="text" class="form-control" (keypress)="keyPressNumbers($event)" id="eContactNo"
-                      [(ngModel)]="fContactNo" [ngModelOptions]="{standalone: true}" />
+                    <input type="text" class="form-control" autocomplete="off" (keypress)="keyPressNumbers($event)"
+                      id="eContactNo" [(ngModel)]="fContactNo" [ngModelOptions]="{standalone: true}" />
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -592,8 +592,9 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="validationAadharNominee">Aadhar No</label>
-                    <input type="text" class="form-control" id="validationCustom04" [(ngModel)]="nAadharNo"
-                      [ngModelOptions]="{standalone: true}" (keypress)="keyPressNumbers($event)" />
+                    <input type="text" class="form-control" autocomplete="off" id="validationCustom04"
+                      [(ngModel)]="nAadharNo" [ngModelOptions]="{standalone: true}"
+                      (keypress)="keyPressNumbers($event)" />
                   </div>
                 </div>
               </div>
@@ -627,8 +628,9 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="validationContactNominee">Contact No</label>
-                    <input type="text" class="form-control" id="validationContactNo" [(ngModel)]="nContactNo"
-                      [ngModelOptions]="{standalone: true}" (keypress)="keyPressNumbers($event)">
+                    <input type="text" class="form-control" autocomplete="off" id="validationContactNo"
+                      [(ngModel)]="nContactNo" [ngModelOptions]="{standalone: true}"
+                      (keypress)="keyPressNumbers($event)">
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -739,7 +741,7 @@
                         </div>
                       </td>
                       <td>
-                        <input type="text" class="form-control" id="redyear" placeholder="Year" [(ngModel)]="year"
+                        <input type="text" autocomplete ="off" class="form-control" id="redyear" placeholder="Year" [(ngModel)]="year"
                           [ngModelOptions]="{standalone: true}" (keypress)="keyPressNumbers($event)">
                         <div *ngIf="(year === undefined || year === null || year === 0) && educationInfoSubmit"
                           class="text text-danger error-div">
@@ -1334,7 +1336,7 @@
                           </select>
                         </td>
                         <td>
-                          <input type="text" class="form-control" [(ngModel)]="identityNo"
+                          <input type="text" autocomplete="off" class="form-control" [(ngModel)]="identityNo"
                             [ngModelOptions]="{standalone: true}" id="eYear" placeholder="Year"
                             (keypress)="keyPressNumbers($event)">
                         </td>

@@ -489,40 +489,45 @@ export class DefaultComponent implements OnInit {
       Status_Id: 1
     });
     this.permanentContactInformationForm = this.fb.group({
-      address: ['', [Validators.required]],
-      address1: [''],
-      country: ['', [Validators.required]],
-      zone: ['', [Validators.required]],
-      state: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      pin: ['', [Validators.required]],
+      Address: ['', [Validators.required]],
+      Address1: [''],
+      Country: ['', [Validators.required]],
+      Zone: ['', [Validators.required]],
+      State: ['', [Validators.required]],
+      City: ['', [Validators.required]],
+      Pin: ['', [Validators.required]],
+      Employee_Id:[]
+
     })
     this.corresspondanceContactInformationForm = this.fb.group({
-      address: ['', [Validators.required]],
-      address1: [''],
-      country: ['', [Validators.required]],
-      zone: ['', [Validators.required]],
-      state: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      pin: ['', [Validators.required]],
-      phone: [],
-      email: ['', [Validators.email]],
-      mobile_No: []
+      Address: ['', [Validators.required]],
+      Address1: [''],
+      Country: ['', [Validators.required]],
+      Zone: ['', [Validators.required]],
+      State: ['', [Validators.required]],
+      City: ['', [Validators.required]],
+      Pin: ['', [Validators.required]],
+      Phone: [],
+      EmailAddress2: ['', [Validators.email]],
+      MobileNo2: [],
+      Employee_Id:[]
+
     })
     this.otherInformationForm = this.fb.group({
-      bank_Name: [''],
-      branch_Name: [''],
-      account_No: [''],
-      ifsC_Code: [''],
-      status: [true],
-      other_Details: [''],
-      card_No: [''],
-      carProxy_Nod_No: [''],
-      ipUserId: [''],
-      ipUserData: [''],
-      user_Type: [''],
-      signature: [''],
-      picture: [''],
+      Bank_Name: [''],
+      Branch_Name: [''],
+      Account_No: [''],
+      IFSC_Code: [''],
+      Status: [true],
+      Other_Details: [''],
+      Card_No: [''],
+      CarProxy_Nod_No: [''],
+      // IpUserId: [''],
+      // IpUserData: [''],
+      User_Type: [''],
+      SignatureFile: [''],
+      PictureFile: [''],
+      Employee_Id:[],
       sys_Identity_ProofDtos: new FormArray([]),
     })
   }
@@ -620,13 +625,14 @@ export class DefaultComponent implements OnInit {
   addNomineeDetailsArr() {
     if (this.nName && this.nRelationship) {
       this.nomineeForm = this.formBuilder.group({
-        nominee_Name: [this.nName],
-        nominee_DOB: [this.nDateOfBirth],
-        enum_Id_Relationship: [this.nRelationship],
-        aadharNoNominee: [this.nAadharNo],
-        AadharStatusNominee: [this.nAadharStatus],
-        nominee_Mobile: [this.nContactNo],
-        AddressNominee: [this.nAddress],
+        Nominee_Name: [this.nName],
+        Nominee_DOB: [this.nDateOfBirth],
+        Nominee_RelationshipId: [this.nRelationship],
+        Identity_Number: [this.nAadharNo],
+        IsAadharStatus: [this.nAadharStatus],
+        Nominee_Mobile: [this.nContactNo],
+        Nominee_Address: [this.nAddress],
+        Employee_Id: []
       });
       (<FormArray>this.hrmsForm.get('tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto')).push(this.nomineeForm);
       this.clearNomineeDetails();
@@ -655,13 +661,13 @@ export class DefaultComponent implements OnInit {
   // Edit Nominee Details
   editNomineeDetails(row) {
     const nomineeData = (<FormArray>this.hrmsForm.controls['tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto']).at(row).value;
-    this.nName = nomineeData.nominee_Name;
-    this.nRelationship = nomineeData.enum_Id_Relationship;
-    this.nDateOfBirth = nomineeData.nominee_DOB;
-    this.nAadharNo = nomineeData.aadharNoNominee;
-    this.nAadharStatus = nomineeData.AadharStatusNominee;
+    this.nName = nomineeData.Nominee_Name;
+    this.nRelationship = nomineeData.Nominee_RelationshipId;
+    this.nDateOfBirth = nomineeData.Nominee_DOB;
+    this.nAadharNo = nomineeData.Identity_Number;
+    this.nAadharStatus = nomineeData.IsAadharStatus;
     this.nAddress = nomineeData.AddressNominee;
-    this.nContactNo = nomineeData.nominee_Mobile;
+    this.nContactNo = nomineeData.Nominee_Mobile;
     this.isNomineeEdited = true;
     this.updatedNomineeDetailsId = row;
   }
@@ -670,13 +676,13 @@ export class DefaultComponent implements OnInit {
   updateNomineeDetailsArr() {
     const nommineeDetailsform = (<FormArray>this.hrmsForm.controls['tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto']).at(this.updatedNomineeDetailsId);
     nommineeDetailsform.patchValue({
-      'nominee_Name': [this.nName],
-      'nominee_DOB': [this.nDateOfBirth],
-      'enum_Id_Relationship': [this.nRelationship],
-      'aadharNoNominee': [this.nAadharNo],
-      'AadharStatusNominee': [this.nAadharStatus],
-      'nominee_Mobile': [this.nContactNo],
-      'AddressNominee': [this.nAddress],
+      'Nominee_Name': [this.nName],
+      'Nominee_DOB': [this.nDateOfBirth],
+      'Nominee_RelationshipId': [this.nRelationship],
+      'Identity_Number': [this.nAadharNo],
+      'IsAadharStatus': [this.nAadharStatus],
+      'Nominee_Mobile': [this.nContactNo],
+      'Nominee_Address': [this.nAddress],
     });
     this.isNomineeEdited = false;
     this.updatedNomineeDetailsId = 0;
@@ -707,14 +713,15 @@ export class DefaultComponent implements OnInit {
     this.educationInfoSubmit = true;
     if (this.qualification && this.year) {
       this.educationForm = this.formBuilder.group({
-        highestQualification: [this.highestQualification],
-        qualification: [this.qualification],
-        year: [this.year],
-        specialization: [this.specialization],
-        school: [this.school],
-        board: [this.board],
-        marks: [this.marks],
-        isUploaded: [this.isUploaded]
+        // highestQualification: [this.highestQualification],
+        Qualification: [this.qualification],
+        Emp_Year_OF_Passing: [this.year],
+        Specialization: [this.specialization],
+        School: [this.school],
+        Board: [this.board],
+        Marks: [this.marks],
+        Attachments: [this.isUploaded],
+        Employee_Id:[]
       });
       (<FormArray>this.hrmsForm.get('sys_EducationalQualificationDto')).push(this.educationForm);
       if (this.isUploaded) {
@@ -729,14 +736,14 @@ export class DefaultComponent implements OnInit {
   // Edit Education Information
   editEducationInformation(row) {
     const educationData = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(row).value;
-    this.highestQualification = educationData.highestQualification;
-    this.qualification = educationData.qualification;
-    this.year = educationData.year;
-    this.specialization = educationData.specialization;
-    this.school = educationData.school;
-    this.board = educationData.board;
-    this.marks = educationData.marks;
-    this.isUploaded = educationData.isUploaded;
+    // this.highestQualification = educationData.highestQualification;
+    this.qualification = educationData.Qualification;
+    this.year = educationData.Emp_Year_OF_Passing;
+    this.specialization = educationData.Specialization;
+    this.school = educationData.School;
+    this.board = educationData.Board;
+    this.marks = educationData.Marks;
+    this.isUploaded = educationData.Attachments;
     this.isEducationEdited = true;
     this.udatedEducationDetailsId = row;
   }
@@ -745,14 +752,14 @@ export class DefaultComponent implements OnInit {
   updateEducationInformationArr() {
     const educationInformationform = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(this.udatedEducationDetailsId);
     educationInformationform.patchValue({
-      'highestQualification': [this.highestQualification],
-      'qualification': [this.qualification],
-      'year': [this.year],
-      'specialization': [this.specialization],
-      'school': [this.school],
-      'board': [this.board],
-      'marks': [this.marks],
-      'isUploaded': [this.isUploaded],
+      // 'highestQualification': [this.highestQualification],
+      'Qualification': [this.qualification],
+      'Emp_Year_OF_Passing': [this.year],
+      'Specialization': [this.specialization],
+      'School': [this.school],
+      'Board': [this.board],
+      'Marks': [this.marks],
+      'Attachments': [this.isUploaded],
     });
     this.isEducationEdited = false;
     this.udatedEducationDetailsId = 0;
@@ -1144,6 +1151,7 @@ export class DefaultComponent implements OnInit {
     console.log(this.hrmsForm.value);
   }
   pStatus(value) {
+    debugger;
     if (value == "f") {
       this.isPersonalStatus = false
     } else {
@@ -1273,23 +1281,23 @@ export class DefaultComponent implements OnInit {
   sameAsAbove(event) {
     if (event.target.checked) {
       this.corresspondanceContactInformationForm.patchValue({
-        'address': this.permanentContactInformationForm.get('address').value,
-        'address1': this.permanentContactInformationForm.get('address1').value,
-        'country': this.permanentContactInformationForm.get('country').value,
-        'zone': this.permanentContactInformationForm.get('zone').value,
-        'state': this.permanentContactInformationForm.get('state').value,
-        'city': this.permanentContactInformationForm.get('city').value,
-        'pin': this.permanentContactInformationForm.get('pin').value,
+        'Address': this.permanentContactInformationForm.get('Address').value,
+        'Address1': this.permanentContactInformationForm.get('Address1').value,
+        'Country': this.permanentContactInformationForm.get('Country').value,
+        'Zone': this.permanentContactInformationForm.get('Zone').value,
+        'State': this.permanentContactInformationForm.get('State').value,
+        'City': this.permanentContactInformationForm.get('City').value,
+        'Pin': this.permanentContactInformationForm.get('Pin').value,
       });
     } else {
       this.corresspondanceContactInformationForm.patchValue({
-        'address': '',
-        'address1': '',
-        'country': '',
-        'zone': '',
-        'state': '',
-        'city': '',
-        'pin': '',
+        'Address': '',
+        'Address1': '',
+        'Country': '',
+        'Zone': '',
+        'State': '',
+        'City': '',
+        'Pin': '',
       });
     }
   }

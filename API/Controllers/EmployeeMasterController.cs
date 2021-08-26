@@ -294,8 +294,8 @@ namespace API.Controllers
                     }
                 }
                 var OtherInformation = await _storeContext.Sys_OtherInformation.Where(x => x.Employee_Id == employeeId).FirstOrDefaultAsync();
-                sys_EmployeeMaster.sys_OtherInformation = _mapper.Map<Sys_OtherInformation, Sys_OtherInformationDto>(OtherInformation);
-                if (sys_EmployeeMaster.sys_OtherInformation != null && sys_EmployeeMaster.sys_OtherInformation.Id > 0 && sys_EmployeeMaster.sys_OtherInformation.sys_Identity_Proofs != null && sys_EmployeeMaster.sys_OtherInformation.sys_Identity_Proofs.Count > 0)
+                sys_EmployeeMaster.sys_OtherInformationDto = _mapper.Map<Sys_OtherInformation, Sys_OtherInformationDto>(OtherInformation);
+                if (sys_EmployeeMaster.sys_OtherInformationDto != null && sys_EmployeeMaster.sys_OtherInformationDto.Id > 0 && sys_EmployeeMaster.sys_OtherInformationDto.sys_Identity_Proofs != null && sys_EmployeeMaster.sys_OtherInformationDto.sys_Identity_Proofs.Count > 0)
                 {
                     foreach (Sys_ProfessionalInformationDto Sys_ProfessionalInformation in sys_EmployeeMaster.sys_ProfessionalInformations)
                     {

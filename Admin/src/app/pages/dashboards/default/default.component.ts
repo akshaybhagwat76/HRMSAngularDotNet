@@ -80,6 +80,7 @@ import { HighestQualificationService } from 'src/app/core/services/highest-quali
 import { DesignationsService } from 'src/app/core/services/designations.service';
 import { EmployeeMasterService } from 'src/app/core/services/employee-master.service';
 import { IdentityTypeService } from 'src/app/core/services/identity-type.service';
+import { CompanyMaster } from 'src/app/core/models/company-master.models';
 
 @Component({
   moduleId: "",
@@ -108,7 +109,7 @@ export class DefaultComponent implements OnInit {
   @ViewChild('content') content;
   educationInfoSubmit: boolean;
   professionalInfoSubmit: boolean;
-
+  companyMaster: CompanyMaster = {};
   constructor(private modalService: NgbModal, public formBuilder: FormBuilder, private companyService: CompanyService,
     private branchesService: BranchesService, private contriesService: ContriesService,
     private departmentsService: DepartmentsService,
@@ -440,8 +441,8 @@ export class DefaultComponent implements OnInit {
   get oInfo() { return this.otherInformationForm.controls; }
   fbBuilder() {
     this.hrmsForm = this.fb.group({
-      companyId: ['', [Validators.required]],
-      employeeCategoryId: [''],
+      companyId: [this.companyMaster.CompanyId, [Validators.required]],
+      employeeCategoryId: [this.companyMaster.EmployeeCategoryId],
       employeeCode: [''],
       employeeAutoGenerate: [false],
       biometricCode: [''],
@@ -480,39 +481,10 @@ export class DefaultComponent implements OnInit {
       sys_PermanentContactInformationDto: new FormGroup({}),
       sys_CorresspondanceContactInformationDto: new FormGroup({}),
       sys_OtherInformationDto: new FormGroup({}),
-      // pciAddress: ['', [Validators.required]],
-      // pciAddress1: [''],
-      // pciCountry: ['',[Validators.required]],
-      // pciZone: ['', [Validators.required]],
-      // pciState: ['', [Validators.required]],
-      // pciCity: ['', [Validators.required]],
-      // pciPin: ['', [Validators.required]],
-      // cciAddress: ['', [Validators.required]],
-      // cciAddress1: [''],
-      // cciCountry: [''],
-      // cciZone: ['', [Validators.required]],
-      // cciState: ['', [Validators.required]],
-      // cciCity: ['', [Validators.required]],
-      // cciPin: ['', [Validators.required]],
-      // cciPhone: [''],
-      // cciEmailAddress2: [''],
-      // cciMobileNo2: [''],
       professionalInformationStatus: ['', [Validators.required]],
-      // bank_Name: [''],
-      // branch_Name: [''],
-      // account_No: [''],
-      // ifsC_Code: [''],
-
       sys_ProfessionalInformations: new FormArray([]),
       professionalDocumentAttachment: new FormArray([]),
-      // status: [''],
-      // other_Details: [''],
-      // card_No: [''],
-      // carProxy_Nod_No: [''],
-      // ipUserId: [''],
-      // ipUserType: [''],
-      // ipProfile: [''],
-      // ipSignature: ['']
+      Status_Id: 1
     });
     this.permanentContactInformationForm = this.fb.group({
       address: ['', [Validators.required]],
@@ -1049,39 +1021,35 @@ export class DefaultComponent implements OnInit {
   }
 
   onOptionsSelected(event, target) {
-    const value = event.target.value;
     let zones = this.zones;
     if (target == 'per') {
-      this.countryZones = zones.filter(x => x.id == value);
+      this.countryZones = zones.filter(x => x.id == event);
     }
     else {
-      this.corresspondCountryZone = zones.filter(x => x.id == value);
+      this.corresspondCountryZone = zones.filter(x => x.id == event);
     }
   }
   getControl(name) {
     return this.hrmsForm.get(name);
   }
   OptionsSelected(event, target) {
-    const value = event.target.value;
     let states = this.states;
     if (target !== 'per') {
-      this.CorrFilteredStates = states.filter(x => x.zone_Id == value);
+      this.CorrFilteredStates = states.filter(x => x.zone_Id == event);
     }
     else {
-      this.PerFilteredStates = states.filter(x => x.zone_Id == value);
+      this.PerFilteredStates = states.filter(x => x.zone_Id == event);
     }
   }
 
   OptionsPersonalSelected(event) {
-    const value = event.target.value;
     let states = this.states;
-    this.PerFilteredStates = states.filter(x => x.zone_Id == value);
+    this.PerFilteredStates = states.filter(x => x.zone_Id == event);
   }
 
 
   onThirdPartySelected(event) {
-    const value = event.target.value;
-    this.thirdPartyList = this.thirdParty.filter(x => x.thirdPartyType_Id == value);
+    this.thirdPartyList = this.thirdParty.filter(x => x.thirdPartyType_Id == event);
   }
 
   fileProgress(fileInput: any) {
@@ -1294,7 +1262,8 @@ export class DefaultComponent implements OnInit {
   }
 
   changeDepartmentId(value) {
-    this.designationsDepartmentList = this.designations.filter(x => x.department_Id == +value);
+    debugger;
+    this.designationsDepartmentList = this.designations.filter(x => x.department_Id == value);
   }
 
   sameAsAbove(event) {

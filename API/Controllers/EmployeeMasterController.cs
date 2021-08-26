@@ -70,9 +70,9 @@ namespace API.Controllers
                 {
                     try
                     {
-                        if (EmployeeMasterDto.sys_FamilyDetails != null && EmployeeMasterDto.sys_FamilyDetails.Count > 0)
+                        if (EmployeeMasterDto.sys_FamilyDetailsDto != null && EmployeeMasterDto.sys_FamilyDetailsDto.Count > 0)
                         {
-                            foreach (var item in EmployeeMasterDto.sys_FamilyDetails)
+                            foreach (var item in EmployeeMasterDto.sys_FamilyDetailsDto)
                             {
                                 item.Employee_Id = employeeMaster.Id;
                                 await AddFamilyDetailsAsync(item);
@@ -94,9 +94,9 @@ namespace API.Controllers
                     catch (Exception) { }
                     try
                     {
-                        if (EmployeeMasterDto.sys_EducationalQualifications != null && EmployeeMasterDto.sys_EducationalQualifications.Count > 0)
+                        if (EmployeeMasterDto.sys_EducationalQualificationDto != null && EmployeeMasterDto.sys_EducationalQualificationDto.Count > 0)
                         {
-                            foreach (var item in EmployeeMasterDto.sys_EducationalQualifications)
+                            foreach (var item in EmployeeMasterDto.sys_EducationalQualificationDto)
                             {
                                 item.Employee_Id = employeeMaster.Id;
                                 await AddEducationalQualificationAsync(item);
@@ -106,9 +106,9 @@ namespace API.Controllers
                     catch (Exception) { }
                     try
                     {
-                        if (EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS != null && EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS.Count > 0)
+                        if (EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto != null && EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.Count > 0)
                         {
-                            foreach (var item in EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILS)
+                            foreach (var item in EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto)
                             {
                                 item.Employee_Id = employeeMaster.Id;
                                 await AddNomineeAsync(item);
@@ -119,20 +119,20 @@ namespace API.Controllers
 
                     try
                     {
-                        if (EmployeeMasterDto.sys_PermanentContactInformation != null)
+                        if (EmployeeMasterDto.sys_PermanentContactInformationDto != null)
                         {
-                            EmployeeMasterDto.sys_PermanentContactInformation.Employee_Id = employeeMaster.Id;
-                            await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformation);
+                            EmployeeMasterDto.sys_PermanentContactInformationDto.Employee_Id = employeeMaster.Id;
+                            await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformationDto);
                         }
                     }
                     catch (Exception) { }
 
                     try
                     {
-                        if (EmployeeMasterDto.sys_OtherInformation != null)
+                        if (EmployeeMasterDto.sys_OtherInformationDto != null)
                         {
-                            EmployeeMasterDto.sys_OtherInformation.Employee_Id = employeeMaster.Id;
-                            await AddOtherInformationAsync(EmployeeMasterDto.sys_OtherInformation);
+                            EmployeeMasterDto.sys_OtherInformationDto.Employee_Id = employeeMaster.Id;
+                            await AddOtherInformationAsync(EmployeeMasterDto.sys_OtherInformationDto);
                         }
                     }
                     catch (Exception) { }
@@ -251,17 +251,17 @@ namespace API.Controllers
                 sys_EmployeeMaster = _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(await _storeContext.Sys_EmployeeMaster.Where(x => x.Id == employeeId && x.Status).FirstOrDefaultAsync());
                 var familyDetail = await _storeContext.Sys_FamilyDetails.Where(x => x.Employee_Id == employeeId).ToListAsync();
 
-                sys_EmployeeMaster.sys_FamilyDetails = _mapper.Map<List<Sys_FamilyDetails>, List<Sys_FamilyDetailsDto>>(familyDetail);
+                sys_EmployeeMaster.sys_FamilyDetailsDto = _mapper.Map<List<Sys_FamilyDetails>, List<Sys_FamilyDetailsDto>>(familyDetail);
 
                 var nomineeDetails = await _storeContext.TBL_HR_EMPLOYEE_NOMINEE_DETAILS.Where(x => x.Employee_Id == employeeId).ToListAsync();
-                sys_EmployeeMaster.tBL_HR_EMPLOYEE_NOMINEE_DETAILS = _mapper.Map<List<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>, List<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>>(nomineeDetails);
+                sys_EmployeeMaster.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto = _mapper.Map<List<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>, List<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>>(nomineeDetails);
 
                 var educationalQualifications = await _storeContext.HR_EMPLOYEE_EDUCATION_DETAILs.Where(x => x.Employee_Id == employeeId).ToListAsync();
-                sys_EmployeeMaster.sys_EducationalQualifications = _mapper.Map<List<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>, List<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>>(educationalQualifications);
+                sys_EmployeeMaster.sys_EducationalQualificationDto = _mapper.Map<List<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>, List<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>>(educationalQualifications);
 
-                if (sys_EmployeeMaster.sys_EducationalQualifications != null && sys_EmployeeMaster.sys_EducationalQualifications.Count > 0)
+                if (sys_EmployeeMaster.sys_EducationalQualificationDto != null && sys_EmployeeMaster.sys_EducationalQualificationDto.Count > 0)
                 {
-                    foreach (TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto TBL_HR_EMPLOYEE_EDUCATION_DETAIL in sys_EmployeeMaster.sys_EducationalQualifications)
+                    foreach (TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto TBL_HR_EMPLOYEE_EDUCATION_DETAIL in sys_EmployeeMaster.sys_EducationalQualificationDto)
                     {
                         TBL_Educational_Qualification_Attachements tBL_Educational_Qualification_Attachement = _storeContext.TBL_Educational_Qualification_Attachements.Where(x => x.EmployeeId == employeeId && x.Educational_Qualification_Id == TBL_HR_EMPLOYEE_EDUCATION_DETAIL.Id).FirstOrDefault();
                         if (tBL_Educational_Qualification_Attachement != null && !string.IsNullOrEmpty(tBL_Educational_Qualification_Attachement.DocumentUrl))
@@ -273,10 +273,10 @@ namespace API.Controllers
 
 
                 var permanentContactInformation = await _storeContext.Sys_PermanentContactInformation.Where(x => x.Employee_Id == employeeId).FirstOrDefaultAsync();
-                sys_EmployeeMaster.sys_PermanentContactInformation = _mapper.Map<Sys_PermanentContactInformation, Sys_PermanentContactInformationDto>(permanentContactInformation);
+                sys_EmployeeMaster.sys_PermanentContactInformationDto = _mapper.Map<Sys_PermanentContactInformation, Sys_PermanentContactInformationDto>(permanentContactInformation);
 
                 var corresspondanceContactInformation = await _storeContext.Sys_CorresspondanceContactInformation.Where(x => x.Employee_Id == employeeId).FirstOrDefaultAsync();
-                sys_EmployeeMaster.sys_CorresspondanceContactInformation = _mapper.Map<Sys_CorresspondanceContactInformation, Sys_CorresspondanceContactInformationDto>(corresspondanceContactInformation);
+                sys_EmployeeMaster.sys_CorresspondanceContactInformationDto = _mapper.Map<Sys_CorresspondanceContactInformation, Sys_CorresspondanceContactInformationDto>(corresspondanceContactInformation);
 
 
                 var professionalInformation = await _storeContext.Sys_ProfessionalInformation.Where(x => x.Employee_Id == employeeId).ToListAsync();
@@ -295,20 +295,14 @@ namespace API.Controllers
                 }
                 var OtherInformation = await _storeContext.Sys_OtherInformation.Where(x => x.Employee_Id == employeeId).FirstOrDefaultAsync();
                 sys_EmployeeMaster.sys_OtherInformation = _mapper.Map<Sys_OtherInformation, Sys_OtherInformationDto>(OtherInformation);
-                if (sys_EmployeeMaster.sys_OtherInformation != null && sys_EmployeeMaster.sys_OtherInformation.Id > 0)
+                if (sys_EmployeeMaster.sys_OtherInformation != null && sys_EmployeeMaster.sys_OtherInformation.Id > 0 && sys_EmployeeMaster.sys_OtherInformation.sys_Identity_Proofs != null && sys_EmployeeMaster.sys_OtherInformation.sys_Identity_Proofs.Count > 0)
                 {
-                    List<Sys_Identity_Proof> Sys_Identity_Proofs = await _storeContext.Sys_Identity_Proof.Where(x => x.OtherInformationId == sys_EmployeeMaster.sys_OtherInformation.Id).ToListAsync();
-                    if (Sys_Identity_Proofs != null && Sys_Identity_Proofs.Count > 0)
+                    foreach (Sys_ProfessionalInformationDto Sys_ProfessionalInformation in sys_EmployeeMaster.sys_ProfessionalInformations)
                     {
-                        sys_EmployeeMaster.sys_OtherInformation.sys_Identity_Proofs = _mapper.Map<List<Sys_Identity_Proof>, List<Sys_Identity_ProofDto>>(Sys_Identity_Proofs);
-
-                        foreach (Sys_Identity_ProofDto Sys_Identity_Proof in sys_EmployeeMaster.sys_OtherInformation.sys_Identity_Proofs)
+                        TBL_Professional_Information_Attachements TBL_Professional_Information_Attachement = _storeContext.TBL_Professional_Information_Attachements.Where(x => x.EmployeeId == employeeId && x.Professional_Information_Id == Sys_ProfessionalInformation.Id).FirstOrDefault();
+                        if (TBL_Professional_Information_Attachement != null && !string.IsNullOrEmpty(TBL_Professional_Information_Attachement.DocumentUrl))
                         {
-                            TBL_Identity_Proof_Attachements TBL_Identity_Proof_Attachement = _storeContext.TBL_Identity_Proof_Attachements.Where(x => x.EmployeeId == employeeId && x.Identity_Proof_Id == Sys_Identity_Proof.Id).FirstOrDefault();
-                            if (TBL_Identity_Proof_Attachement != null && !string.IsNullOrEmpty(TBL_Identity_Proof_Attachement.DocumentUrl))
-                            {
-                                Sys_Identity_Proof.Attachments = TBL_Identity_Proof_Attachement.DocumentUrl;
-                            }
+                            Sys_ProfessionalInformation.AttachmentType_Path = TBL_Professional_Information_Attachement.DocumentUrl;
                         }
                     }
                 }

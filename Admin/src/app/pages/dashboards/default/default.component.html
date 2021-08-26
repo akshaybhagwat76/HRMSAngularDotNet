@@ -25,7 +25,7 @@
                     <label for="companyId" class="form-label">Company<span class="text-danger">*</span></label>
                     <select class="form-select" id="companyId" formControlName="companyId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let company of companies" [value]="company.id">
+                      <option *ngFor="let company of companies" [ngValue]="company.id">
                         {{company.compnay_Name}}
                       </option>
                     </select>
@@ -39,7 +39,7 @@
                     <label for="eEmployeeCategory" class="form-label">Employee Category</label>
                     <select class="form-select" id="eEmployeeCategory" formControlName="employeeCategoryId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let category of categories" [value]="category.id">
+                      <option *ngFor="let category of categories" [ngValue]="category.id">
                         {{category?.category_Name}}
                       </option>
                     </select>
@@ -101,7 +101,7 @@
                     <label for="eProject/Branch" class="form-label">Project/Branch</label>
                     <select class="form-select" id="eProject/Branch" formControlName="project_BranchId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let branch of branches" [value]="branch.id">
+                      <option *ngFor="let branch of branches" [ngValue]="branch.id">
                         {{branch?.branch_Name}}
                       </option>
                     </select>
@@ -113,10 +113,10 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="departmentId" class="form-label">Department<span class="text-danger">*</span></label>
-                    <select class="form-select" id="departmentId" (change)="changeDepartmentId($event.target.value)"
+                    <select class="form-select" id="departmentId" (ngModelChange)="changeDepartmentId($event)"
                       formControlName="departmentId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let depart of departments" [value]="depart.id">
+                      <option *ngFor="let depart of departments" [ngValue]="depart.id">
                         {{depart?.department_Name}}
                       </option>
                     </select>
@@ -134,7 +134,7 @@
                         class="text-danger">*</span></label>
                     <select class="form-select" id="validationCustom08" formControlName="designationId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let designation of designationsDepartmentList" [value]="designation.id">
+                      <option *ngFor="let designation of designationsDepartmentList" [ngValue]="designation.id">
                         {{designation?.designation_Name}}
                       </option>
                     </select>
@@ -151,7 +151,7 @@
                     <select class="form-select" id="eBranch/Project"
                       formControlName="higher_Authority_Branch_ProjectId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let hBranches of higherAuthoritiesBranches" [value]="hBranches.id">
+                      <option *ngFor="let hBranches of higherAuthoritiesBranches" [ngValue]="hBranches.id">
                         {{hBranches?.higherAuthority_Branch}}
                       </option>
                     </select>
@@ -162,7 +162,7 @@
                     <label for="higher_AuthorityId" class="form-label">Higher Authority</label>
                     <select class="form-select" id="higher_AuthorityId" formControlName="higher_AuthorityId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let higherAuthority of higherAuthorities" [value]="higherAuthority.id">
+                      <option *ngFor="let higherAuthority of higherAuthorities" [ngValue]="higherAuthority.id">
                         {{higherAuthority?.higherAuthority}}
                       </option>
                     </select>
@@ -173,7 +173,7 @@
                     <label for="eHigherName" class="form-label">Select Higher Authority Name</label>
                     <select class="form-select" id="eHigherName" formControlName="higher_Authority_NameId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let higherAuthorityN of higherAuthorityNames" [value]="higherAuthorityN.id">
+                      <option *ngFor="let higherAuthorityN of higherAuthorityNames" [ngValue]="higherAuthorityN.id">
                         {{higherAuthorityN?.higherAuthority_Name}}
                       </option>
                     </select>
@@ -206,7 +206,7 @@
                     <label for="eEmployee" class="form-label">Employee Type<span class="text-danger">*</span></label>
                     <select class="form-select" id="eEmployee" formControlName="employee_TypeId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let employee of employees" [value]="employee.id">
+                      <option *ngFor="let employee of employees" [ngValue]="employee.id">
                         {{employee?.type_Name}}
                       </option>
                     </select>
@@ -230,10 +230,10 @@
                 <div class="col-md-3">
                   <div class="mb-3">
                     <label for="third_Party_Type" class="form-label">Third Party Type</label>
-                    <select class="form-select" id="third_Party_Type" (change)="onThirdPartySelected($event)"
+                    <select class="form-select" id="third_Party_Type" (ngModelChange)="onThirdPartySelected($event)"
                       formControlName="third_Party_Type">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let tPartyType of thirdPartyType" [value]="tPartyType.id">
+                      <option *ngFor="let tPartyType of thirdPartyType" [ngValue]="tPartyType.id">
                         {{tPartyType?.thirdPartyType_Name}}
                       </option>
                     </select>
@@ -244,7 +244,7 @@
                     <label for="third_Party_Id" class="form-label">Third Party</label>
                     <select class="form-select" id="third_Party_Id" formControlName="third_Party_Id">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let tParty of thirdPartyList" [value]="tParty.id">
+                      <option *ngFor="let tParty of thirdPartyList" [ngValue]="tParty.id">
                         {{tParty?.thirdParty_Name}}
                       </option>
                     </select>
@@ -255,7 +255,7 @@
                     <label for="working_StatusId" class="form-label">Working Status</label>
                     <select class="form-select" id="working_StatusId" formControlName="working_StatusId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let workingStatus of workingStatus" [value]="workingStatus.id">
+                      <option *ngFor="let workingStatus of workingStatus" [ngValue]="workingStatus.id">
                         {{workingStatus?.workingStatus_Name}}
                       </option>
                     </select>
@@ -368,7 +368,7 @@
                     <label for="validationCustom26" class="form-label">Cast</label>
                     <select class="form-select" id="validationCustom26" formControlName="castId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let tcast of casts" [value]="tcast.id">
+                      <option *ngFor="let tcast of casts" [ngValue]="tcast.id">
                         {{tcast.cast_Name}}
                       </option>
                     </select>
@@ -396,7 +396,7 @@
                     <label for="validationCustom28" class="form-label">Blood Group</label>
                     <select class="form-select" id="validationCustom28" formControlName="blood_GroupId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let blood of bloodGroup" [value]="blood.id">{{blood.bloodGroup_Name}}
+                      <option *ngFor="let blood of bloodGroup" [ngValue]="blood.id">{{blood.bloodGroup_Name}}
                       </option>
                     </select>
                   </div>
@@ -407,7 +407,7 @@
                         class="text-danger">*</span></label>
                     <select class="form-select" id="validationCustom34" formControlName="marital_StatusId">
                       <option selected="" disabled="" value="">Choose...</option>
-                      <option *ngFor="let meritalS of meritalStatuses" [value]="meritalS.id">
+                      <option *ngFor="let meritalS of meritalStatuses" [ngValue]="meritalS.id">
                         {{meritalS.marital_Status}}
                       </option>
                     </select>
@@ -448,7 +448,7 @@
                     <select class="form-select" id="eRelationshipName" [(ngModel)]="fRelationship"
                       [ngModelOptions]="{standalone: true}">
                       <option selected="selected" disabled="" value="0">Choose...</option>
-                      <option *ngFor="let relation of relationShip" [value]="relation.id">
+                      <option *ngFor="let relation of relationShip" [ngValue]="relation.id">
                         {{relation.relationShip_Name}}
                       </option>
                     </select>
@@ -534,7 +534,7 @@
                       <th scope="row">{{i+1}}</th>
                       <td><input type="text" class="form-control" formControlName="name" readonly></td>
                       <td><select class="form-select" id="familyDetails" formControlName="relationship" disabled>
-                          <option *ngFor="let relation of relationShip" [value]="relation.id">
+                          <option *ngFor="let relation of relationShip" [ngValue]="relation.id">
                             {{relation.relationShip_Name}}
                         </select>
                       </td>
@@ -576,7 +576,7 @@
                     <select class="form-select" id="eRelationshipName" [(ngModel)]="nRelationship"
                       [ngModelOptions]="{standalone: true}">
                       <option selected="selected" disabled="" value="0">Choose...</option>
-                      <option *ngFor="let relation of relationShip" [value]="relation.id">
+                      <option *ngFor="let relation of relationShip" [ngValue]="relation.id">
                         {{relation.relationShip_Name}}
                       </option>
                     </select>
@@ -666,7 +666,7 @@
                       <td>
                         <select class="form-select" id="erelationShip_Name" formControlName="enum_Id_Relationship"
                           disabled>
-                          <option *ngFor="let relation of relationShip" [value]="relation.id">
+                          <option *ngFor="let relation of relationShip" [ngValue]="relation.id">
                             {{relation.relationShip_Name}}
                         </select>
                       </td>
@@ -703,7 +703,8 @@
                     <select class="form-select" id="eHighestQualification" [(ngModel)]="highestQualification"
                       [ngModelOptions]="{standalone: true}">
                       <option selected="selected" disabled="" value="0">-----SELECT-----</option>
-                      <option *ngFor="let higesQualification of highestQualifications" [value]="higesQualification.id">
+                      <option *ngFor="let higesQualification of highestQualifications"
+                        [ngValue]="higesQualification.id">
                         {{higesQualification.highest_Qualification}}
                     </select>
                   </div>
@@ -729,7 +730,7 @@
                           [ngModelOptions]="{standalone: true}">
                           <option selected="selected" disabled="" value="0">MADHYAMIK</option>
                           <option *ngFor="let higestQualification of highestQualifications"
-                            [value]="higestQualification.id">{{higestQualification.highest_Qualification}}
+                            [ngValue]="higestQualification.id">{{higestQualification.highest_Qualification}}
                         </select>
                         <div
                           *ngIf="(qualification === undefined || qualification === null || qualification === 0) && educationInfoSubmit"
@@ -793,13 +794,13 @@
                       <td>
                         <select class="form-select" id="redCountryScountryName" formControlName="highestQualification">
                           <option *ngFor="let higestQualification of highestQualifications"
-                            [value]="higestQualification.id">{{higestQualification.highest_Qualification}}
+                            [ngValue]="higestQualification.id">{{higestQualification.highest_Qualification}}
                         </select>
                       </td>
                       <td>
                         <select class="form-select" id="redCountryScountry" formControlName="qualification">
                           <option *ngFor="let higestQualification of highestQualifications"
-                            [value]="higestQualification.id">{{higestQualification.highest_Qualification}}
+                            [ngValue]="higestQualification.id">{{higestQualification.highest_Qualification}}
                         </select>
                       </td>
                       <td><input type="text" class="form-control" formControlName="year" readonly></td>
@@ -910,10 +911,10 @@
                   <div class="col-md-3">
                     <div class="mb-3">
                       <label for="country" class="form-label">Country<span class="text-danger">*</span></label>
-                      <select class="form-select" id="country" (change)="onOptionsSelected($event,'per')"
+                      <select class="form-select" id="country" (ngModelChange)="onOptionsSelected($event,'per')"
                         formControlName="country">
                         <option selected="" disabled="" value="">Choose...</option>
-                        <option *ngFor="let CountryS of contries" [value]="CountryS.id">{{CountryS.country_Name}}
+                        <option *ngFor="let CountryS of contries" [ngValue]="CountryS.id">{{CountryS.country_Name}}
                       </select>
                       <div *ngIf="pcInfo.country.hasError('required') && pcInfo.country.touched"
                         class="text text-danger error-div">
@@ -924,9 +925,9 @@
                     <div class="mb-3">
                       <label for="eZone" class="form-label">Zone<span class="text-danger">*</span></label>
                       <select class="form-select" id="eZone" formControlName="zone"
-                        (change)="OptionsSelected($event,'per')">
+                        (ngModelChange)="OptionsSelected($event,'per')">
                         <option selected="" disabled="" value="">Choose...</option>
-                        <option *ngFor="let zone of countryZones" [value]="zone.id">{{zone.zone_Name}}
+                        <option *ngFor="let zone of countryZones" [ngValue]="zone.id">{{zone.zone_Name}}
                       </select>
                       <div *ngIf="pcInfo.zone.hasError('required') && pcInfo.zone.touched"
                         class="text text-danger error-div">
@@ -941,7 +942,7 @@
                       <label for="redcntstateName" class="form-label">State<span class="text-danger">*</span></label>
                       <select class="form-select" id="redcntstateName" formControlName="state">
                         <option selected="" disabled="" value="">Choose...</option>
-                        <option *ngFor="let stP of PerFilteredStates" [value]="stP.id">{{stP.state_Name}}
+                        <option *ngFor="let stP of PerFilteredStates" [ngValue]="stP.id">{{stP.state_Name}}
                       </select>
                       <div *ngIf="pcInfo.state.hasError('required') && pcInfo.state.touched"
                         class="text text-danger error-div">*Select State</div>
@@ -1001,10 +1002,10 @@
                     <div class="mb-3">
                       <label for="redcntcountryName" class="form-label">Country<span
                           class="text-danger">*</span></label>
-                      <select class="form-select" id="redcntcountryName" (change)="onOptionsSelected($event,'curr')"
+                      <select class="form-select" id="redcntcountryName" (ngModelChange)="onOptionsSelected($event,'curr')"
                         formControlName="country">
                         <option selected="" disabled="" value="">Choose...</option>
-                        <option *ngFor="let cnt of contries" [value]="cnt.id">{{cnt.country_Name}}
+                        <option *ngFor="let cnt of contries" [ngValue]="cnt.id">{{cnt.country_Name}}
                       </select>
                     </div>
                   </div>
@@ -1012,9 +1013,9 @@
                     <div class="mb-3">
                       <label for="redZone" class="form-label">Zone<span class="text-danger">*</span></label>
                       <select class="form-select" id="redZone" formControlName="zone"
-                        (change)="OptionsSelected($event,'curr')">
+                        (ngModelChange)="OptionsSelected($event,'curr')">
                         <option selected="" disabled="" value="">Choose...</option>
-                        <option *ngFor="let zn of countryZones" [value]="zn.id">{{zn.zone_Name}}
+                        <option *ngFor="let zn of countryZones" [ngValue]="zn.id">{{zn.zone_Name}}
                       </select>
                       <div *ngIf="ccInfo.zone.hasError('required') && ccInfo.zone.touched"
                         class="text text-danger error-div">
@@ -1028,7 +1029,7 @@
                       <label for="redcntcountryName" class="form-label">State<span class="text-danger">*</span></label>
                       <select class="form-select" id="redcntcountryName" formControlName="state">
                         <option selected="" disabled="" value="">Choose...</option>
-                        <option *ngFor="let stC of PerFilteredStates" [value]="stC.id">{{stC.state_Name}}
+                        <option *ngFor="let stC of PerFilteredStates" [ngValue]="stC.id">{{stC.state_Name}}
                       </select>
                       <div *ngIf="ccInfo.state.hasError('required') && ccInfo.state.touched"
                         class="text text-danger error-div">*Select State</div>
@@ -1328,7 +1329,7 @@
                         <td>
                           <select id="eIdentityProof" class="form-select" [(ngModel)]="identityType"
                             [ngModelOptions]="{standalone: true}">
-                            <option *ngFor="let identityobj of identityList" [value]="identityobj.id">
+                            <option *ngFor="let identityobj of identityList" [ngValue]="identityobj.id">
                               {{identityobj.identity_Type}}</option>
                           </select>
                         </td>
@@ -1370,7 +1371,7 @@
                         <td>{{p+1}}</td>
                         <td>
                           <select id="eidentityProf" class="form-select" formControlName="identity_Type" disabled>
-                            <option *ngFor="let identityobj of identityList" [value]="identityobj.id">
+                            <option *ngFor="let identityobj of identityList" [ngValue]="identityobj.id">
                               {{identityobj.identity_Type}}</option>
                           </select>
                         </td>
@@ -1456,7 +1457,7 @@
                       <label for="eUserType" class="form-label">User Type</label>
                       <select class="form-select" id="eUserType" formControlName="user_Type">
                         <option selected="" disabled="" value="">Choose...</option>
-                        <option *ngFor="let utype of userType" [value]="utype.id">{{utype.userType_Name}}
+                        <option *ngFor="let utype of userType" [ngValue]="utype.id">{{utype.userType_Name}}
                       </select>
                     </div>
                   </div>

@@ -170,8 +170,8 @@ export class DefaultComponent implements OnInit {
 
   // Family Details
   fName: string;
-  fRelationship: number = 0;
-  fDateOfBirth: Date;
+  FamilyDetail_RelationshipId: number = 0;
+  FamilyDetail_DOB: Date;
   fAadharNo: string;
   fAadharStatus: string = "Not Verified";
   fAddress: string;
@@ -319,6 +319,8 @@ export class DefaultComponent implements OnInit {
 
   // Family Details
   get familyDetailsArr() {
+
+
     return (<FormArray>this.hrmsForm.get('sys_FamilyDetailsDto')).controls;
   }
 
@@ -528,21 +530,22 @@ export class DefaultComponent implements OnInit {
   // Add Family details
   addfamilyDetailsArr() {
     // console.log(this.fName);
-    // console.log(this.fRelationship);
-    if (this.fName && this.fRelationship) {
+    // console.log(this.FamilyDetail_RelationshipId);
+    if (this.fName && this.FamilyDetail_RelationshipId) {
       this.familyForm = this.formBuilder.group({
-        name: [this.fName],
-        date_Of_Birth: [this.fDateOfBirth],
-        relationship: [this.fRelationship],
-        aadhar_No: [this.fAadharNo],
-        aadhar_Status: [this.fAadharStatus],
-        contact_No: [this.fContactNo],
-        address: [this.fAddress],
+        FamilyDetail_Name: [this.fName],
+        FamilyDetail_DOB: [this.FamilyDetail_DOB],
+        FamilyDetail_RelationshipId: [this.FamilyDetail_RelationshipId],
+        Identity_Number: [this.fAadharNo],
+        IsAadharStatus: [this.fAadharStatus],
+        FamilyDetail_Mobile: [this.fContactNo],
+        Nominee_Address: [this.fAddress],
+        Employee_Id:[]
       });
       (<FormArray>this.hrmsForm.get('sys_FamilyDetailsDto')).push(this.familyForm);
       this.clearFamilyDetails();
     } else {
-      if (!(this.fName || this.fRelationship)) {
+      if (!(this.fName || this.FamilyDetail_RelationshipId)) {
         alert(`
         - Enter Name
         - Select Relationship
@@ -553,7 +556,7 @@ export class DefaultComponent implements OnInit {
       - Enter Name
       `);
       }
-      else if (!this.fRelationship) {
+      else if (!this.FamilyDetail_RelationshipId) {
         alert(`
         - Select Relationship
       `);
@@ -566,13 +569,13 @@ export class DefaultComponent implements OnInit {
   // Edit Family Details
   editFamilyDetails(row) {
     const familyData = (<FormArray>this.hrmsForm.controls['sys_FamilyDetailsDto']).at(row).value;
-    this.fName = familyData.name;
-    this.fRelationship = familyData.relationship;
-    this.fDateOfBirth = familyData.date_Of_Birth;
-    this.fAadharNo = familyData.aadhar_No;
-    this.fAadharStatus = familyData.aadhar_Status;
-    this.fAddress = familyData.address;
-    this.fContactNo = familyData.contact_No;
+    this.fName = familyData.FamilyDetail_Name;
+    this.FamilyDetail_RelationshipId = familyData.FamilyDetail_RelationshipId;
+    this.FamilyDetail_DOB = familyData.FamilyDetail_DOB;
+    this.fAadharNo = familyData.Identity_Number;
+    this.fAadharStatus = familyData.IsAadharStatus;
+    this.fAddress = familyData.Nominee_Address;
+    this.fContactNo = familyData.FamilyDetail_Mobile;
     this.isFamilyEdited = true;
     this.updatedFamilyDetailsId = row;
   }
@@ -581,13 +584,13 @@ export class DefaultComponent implements OnInit {
   updatefamilyDetailsArr() {
     const familtyDetailsform = (<FormArray>this.hrmsForm.controls['sys_FamilyDetailsDto']).at(this.updatedFamilyDetailsId);
     familtyDetailsform.patchValue({
-      'name': [this.fName],
-      'date_Of_Birth': [this.fDateOfBirth],
-      'relationship': [this.fRelationship],
-      'aadhar_No': [this.fAadharNo],
-      'aadhar_Status': [this.fAadharStatus],
-      'contact_No': [this.fContactNo],
-      'address': [this.fAddress],
+      'FamilyDetail_Name': [this.fName],
+      'FamilyDetail_DOB': [this.FamilyDetail_DOB],
+      'FamilyDetail_RelationshipId': [this.FamilyDetail_RelationshipId],
+      'Identity_Number': [this.fAadharNo],
+      'IsAadharStatus': [this.fAadharStatus],
+      'FamilyDetail_Mobile': [this.fContactNo],
+      'Nominee_Address': [this.fAddress],
     });
     this.isFamilyEdited = false;
     this.updatedFamilyDetailsId = 0;
@@ -605,8 +608,8 @@ export class DefaultComponent implements OnInit {
   // Clear Family Details
   clearFamilyDetails() {
     this.fName = "";
-    this.fRelationship = null;
-    this.fDateOfBirth = null;
+    this.FamilyDetail_RelationshipId = null;
+    this.FamilyDetail_DOB = null;
     this.fAadharNo = "";
     this.fAadharStatus = "";
     this.fAddress = "";
@@ -1150,17 +1153,18 @@ export class DefaultComponent implements OnInit {
 
   onSubmitHrms() {
     debugger;
-    this.hrmsForm.value.sys_PermanentContactInformationDto = this.permanentContactInformationForm.value;
-    this.hrmsForm.value.sys_CorresspondanceContactInformationDto = this.corresspondanceContactInformationForm.value;
-    this.hrmsForm.value.sys_OtherInformationDto = this.otherInformationForm.value;
-    if (this.hrmsForm.valid) {
-      this.submitHrmsForm();
-    } else {
-      this.validateAllFormFields(this.hrmsForm);
-      this.validateAllFormFields(this.permanentContactInformationForm);
-      this.validateAllFormFields(this.corresspondanceContactInformationForm);
-      this.validateAllFormFields(this.otherInformationForm);
-    }
+    // this.hrmsForm.value.sys_PermanentContactInformationDto = this.permanentContactInformationForm.value;
+    // this.hrmsForm.value.sys_CorresspondanceContactInformationDto = this.corresspondanceContactInformationForm.value;
+    // this.hrmsForm.value.sys_OtherInformationDto = this.otherInformationForm.value;
+    // if (this.hrmsForm.valid) {
+    //   this.submitHrmsForm();
+    // } else {
+    //   this.validateAllFormFields(this.hrmsForm);
+    //   this.validateAllFormFields(this.permanentContactInformationForm);
+    //   this.validateAllFormFields(this.corresspondanceContactInformationForm);
+    //   this.validateAllFormFields(this.otherInformationForm);
+    // }
+    this.submitHrmsForm();
   }
   resetHrmsForm() {
     if (this.hrmsForm != undefined) {

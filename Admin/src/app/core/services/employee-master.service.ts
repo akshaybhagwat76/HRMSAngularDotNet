@@ -11,6 +11,6 @@ export class EmployeeMasterService {
 
   post(data) {
     debugger;
-    return this.http.post<any>(`${environment.url}/api/AddEmployeeMaster`,data);
+    return this.http.post<any>(`${environment.url}/api/EmployeeMaster/AddOrUpdateEmployeeMaster`,data);
 }
 }

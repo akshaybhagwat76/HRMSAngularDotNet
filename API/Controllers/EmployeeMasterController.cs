@@ -18,7 +18,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [Route("api/")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class EmployeeMasterController : ControllerBase
     {
@@ -229,7 +229,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("DeleteEmployee")]
         public async Task<ActionResult> DeleteEmployee(int employeeId)
         {
             if (employeeId > 0)
@@ -241,7 +241,8 @@ namespace API.Controllers
             else { return BadRequest(); }
         }
 
-        [HttpGet]
+        [HttpGet("GetEmployee")]
+
         public async Task<ActionResult<Sys_EmployeeMasterDto>> GetEmployee(int employeeId)
         {
             Sys_EmployeeMasterDto sys_EmployeeMaster = new Sys_EmployeeMasterDto();

@@ -13,6 +13,5 @@ namespace API.Dtos
         public string Identity_Number { get; set; }
         public string Nominee_Address { get; set; }
         public bool? IsAadharStatus { get; set; }
-       
     }
 }

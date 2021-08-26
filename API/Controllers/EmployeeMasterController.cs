@@ -47,8 +47,8 @@ namespace API.Controllers
         public async Task<ActionResult<Sys_EmployeeMasterDto>> AddOrUpdateEmployeeMaster(Sys_EmployeeMasterDto EmployeeMasterDto)
         {
             SqlTransaction tr = null;
-
-            //tr = cn.BeginTransaction();
+            await cn.OpenAsync();
+            tr = cn.BeginTransaction();
             try
             {
                 int result = 0;
@@ -156,7 +156,7 @@ namespace API.Controllers
         #endregion
 
         #region Get methods
-        [HttpGet("SearchEmployee")]
+        [HttpPost("SearchEmployee")]
         public async Task<ActionResult<List<Sys_EmployeeMasterDto>>> GetEmployees(EmployeeSearchDTO employeeSearchDTO)
         {
             try
@@ -166,6 +166,7 @@ namespace API.Controllers
 
                 if (tbl_Employees.Count > 0 && employeeSearchDTO != null)
                 {
+                    tbl_Employees = tbl_Employees.Where(x => x.Status).ToList();
                     tbl_Employees.WhereIf(employeeSearchDTO.CompanyId > 0, x => x.CompanyId == employeeSearchDTO.CompanyId)
                                  .WhereIf(employeeSearchDTO.DepartmentId > 0, x => x.DepartmentId == employeeSearchDTO.DepartmentId)
                                  .WhereIf(employeeSearchDTO.Project_BranchId > 0, x => x.Project_BranchId == employeeSearchDTO.Project_BranchId)
@@ -197,7 +198,6 @@ namespace API.Controllers
                             {
                                 tbl_Employees = tbl_Employees.Where(x => x.Id == item.Employee_Id).ToList();
                             }
-
                         }
                         if (permanentContactInformation != null && permanentContactInformation.Count > 0)
                         {
@@ -219,8 +219,6 @@ namespace API.Controllers
                             }
                         }
                     }
-
-
                 }
 
                 return Ok(tbl_Employees);
@@ -232,13 +230,25 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult> DeleteEmployee(int employeeId)
+        {
+            if (employeeId > 0)
+            {
+                Sys_EmployeeMaster sys_EmployeeMaster = await _storeContext.Sys_EmployeeMaster.FindAsync(employeeId);
+                sys_EmployeeMaster.Status = false;
+                return Ok(await _storeContext.SaveChangesAsync());
+            }
+            else { return BadRequest(); }
+        }
+
+        [HttpGet]
         public async Task<ActionResult<Sys_EmployeeMasterDto>> GetEmployee(int employeeId)
         {
             Sys_EmployeeMasterDto sys_EmployeeMaster = new Sys_EmployeeMasterDto();
             try
             {
 
-                sys_EmployeeMaster = _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(await _storeContext.Sys_EmployeeMaster.Where(x => x.Id == employeeId).FirstOrDefaultAsync());
+                sys_EmployeeMaster = _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(await _storeContext.Sys_EmployeeMaster.Where(x => x.Id == employeeId && x.Status).FirstOrDefaultAsync());
                 var familyDetail = await _storeContext.Sys_FamilyDetails.Where(x => x.Employee_Id == employeeId).ToListAsync();
 
                 sys_EmployeeMaster.sys_FamilyDetailsDto = _mapper.Map<List<Sys_FamilyDetails>, List<Sys_FamilyDetailsDto>>(familyDetail);
@@ -296,7 +306,6 @@ namespace API.Controllers
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -722,7 +731,6 @@ namespace API.Controllers
         [NonAction]
         public int GetLastRecordFromTable(string tableName)
         {
-            var dbConn = _configuration.GetValue<string>("ConnectionStrings:FreelencerDB");
             int letestInformationId = 0;
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
@@ -732,7 +740,6 @@ namespace API.Controllers
             {
                 letestInformationId = Convert.ToInt32(command.ExecuteScalar());
             }
-            cn.Close();
             return letestInformationId;
         }
         #endregion

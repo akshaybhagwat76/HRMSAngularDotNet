@@ -161,6 +161,8 @@ export class DefaultComponent implements OnInit {
 
   zones: any;
   countryZones: any[] = [];
+  projectDepartments: any[] = [];
+
   corresspondCountryZone: any[] = [];
   thirdPartyList: any;
   relationShip: any;
@@ -441,14 +443,14 @@ export class DefaultComponent implements OnInit {
   get f() { return this.hrmsForm.controls; }
 
   get pcInfo() {
-    return (<FormGroup>this.hrmsForm.get('sys_PermanentContactInformationDto')).controls; 
+    return (<FormGroup>this.hrmsForm.get('sys_PermanentContactInformationDto')).controls;
   }
   get ccInfo() {
-    return (<FormGroup>this.hrmsForm.get('sys_CorresspondanceContactInformationDto')).controls; 
+    return (<FormGroup>this.hrmsForm.get('sys_CorresspondanceContactInformationDto')).controls;
 
   }
   get oInfo() {
-    return (<FormGroup>this.hrmsForm.get('sys_OtherInformationDto')).controls; 
+    return (<FormGroup>this.hrmsForm.get('sys_OtherInformationDto')).controls;
   }
   fbBuilder() {
     this.hrmsForm = this.fb.group({
@@ -1082,10 +1084,10 @@ export class DefaultComponent implements OnInit {
   onOptionsSelected(event, target) {
     let zones = this.zones;
     if (target == 'per') {
-      this.countryZones = zones.filter(x => x.id == event);
+      this.countryZones = zones.filter(x => x.id == event.target.value);
     }
     else {
-      this.corresspondCountryZone = zones.filter(x => x.id == event);
+      this.corresspondCountryZone = zones.filter(x => x.id == event.target.value);
     }
   }
   getControl(name) {
@@ -1094,21 +1096,21 @@ export class DefaultComponent implements OnInit {
   OptionsSelected(event, target) {
     let states = this.states;
     if (target !== 'per') {
-      this.CorrFilteredStates = states.filter(x => x.zone_Id == event);
+      this.CorrFilteredStates = states.filter(x => x.zone_Id == event.target.value);
     }
     else {
-      this.PerFilteredStates = states.filter(x => x.zone_Id == event);
+      this.PerFilteredStates = states.filter(x => x.zone_Id == event.target.value);
     }
   }
 
   OptionsPersonalSelected(event) {
     let states = this.states;
-    this.PerFilteredStates = states.filter(x => x.zone_Id == event);
+    this.PerFilteredStates = states.filter(x => x.zone_Id == event.target.value);
   }
 
 
   onThirdPartySelected(event) {
-    this.thirdPartyList = this.thirdParty.filter(x => x.thirdPartyType_Id == event);
+    this.thirdPartyList = this.thirdParty.filter(x => x.thirdPartyType_Id == event.target.value);
   }
 
   fileProgress(fileInput: any) {
@@ -1325,7 +1327,12 @@ export class DefaultComponent implements OnInit {
 
   changeDepartmentId(value) {
     debugger;
-    this.designationsDepartmentList = this.designations.filter(x => x.department_Id == value);
+    this.designationsDepartmentList = this.designations.filter(x => x.department_Id == value.target.value);
+  }
+
+  onBranchChanges(event) {
+    let departments = this.departments;
+    this.projectDepartments = departments.filter(x => x.branch_Id == event.target.value);
   }
 
   sameAsAbove(event) {

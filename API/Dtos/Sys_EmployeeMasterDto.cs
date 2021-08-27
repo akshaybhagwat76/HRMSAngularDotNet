@@ -40,6 +40,8 @@ namespace API.Dtos
         public bool Status { get; set; }
         public string ProfessionalInformation { get; set; }
         public string HighestQualification { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public List<Sys_FamilyDetailsDto> sys_FamilyDetailsDto { get; set; }
         public List<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto> sys_EducationalQualificationDto { get; set; }
         public List<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto> tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto { get; set; }

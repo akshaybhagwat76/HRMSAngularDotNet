@@ -55,8 +55,8 @@ namespace API.Controllers
                 Sys_EmployeeMaster employeeMaster = new Sys_EmployeeMaster();
                 if (EmployeeMasterDto.Id == 0)
                 {
+                    EmployeeMasterDto.IsActive = EmployeeMasterDto.Status = true; EmployeeMasterDto.IsDeleted = false;
                     employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
-                    employeeMaster.Status = true;
                     _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
                     result = await _unitOfWork.Complete();
                 }
@@ -178,7 +178,7 @@ namespace API.Controllers
 
                 if (tbl_Employees.Count > 0 && employeeSearchDTO != null)
                 {
-                    tbl_Employees = tbl_Employees.Where(x => x.Status).ToList();
+                    tbl_Employees = tbl_Employees.Where(x => x.IsDeleted && x.IsActive).ToList();
                     tbl_Employees.WhereIf(employeeSearchDTO.CompanyId > 0, x => x.CompanyId == employeeSearchDTO.CompanyId)
                                  .WhereIf(employeeSearchDTO.DepartmentId > 0, x => x.DepartmentId == employeeSearchDTO.DepartmentId)
                                  .WhereIf(employeeSearchDTO.Project_BranchId > 0, x => x.Project_BranchId == employeeSearchDTO.Project_BranchId)
@@ -186,6 +186,20 @@ namespace API.Controllers
                                  .WhereIf(!string.IsNullOrEmpty(employeeSearchDTO.EmployeeCode), x => x.EmployeeCode == employeeSearchDTO.EmployeeCode)
                                  .WhereIf(!string.IsNullOrEmpty(employeeSearchDTO.FirstName), x => x.FirstName == employeeSearchDTO.FirstName)
                                  .WhereIf(!string.IsNullOrEmpty(employeeSearchDTO.email), x => x.email == employeeSearchDTO.email).ToList();
+
+
+                    if (employeeSearchDTO.StatusId == 1)
+                    {
+                        tbl_Employees = tbl_Employees.Where(x => x.Status == true || x.Status == false).ToList();
+                    }
+                    else if (employeeSearchDTO.StatusId == 2)
+                    {
+                        tbl_Employees = tbl_Employees.Where(x => x.Status == false).ToList();
+                    }
+                    else if (employeeSearchDTO.StatusId == 3)
+                    {
+                        tbl_Employees = tbl_Employees.Where(x => x.Status == true).ToList();
+                    }
 
                     if (employeeSearchDTO.ZoneId > 0)
                     {
@@ -242,14 +256,13 @@ namespace API.Controllers
         }
 
         [HttpGet("GetEmployee")]
-
         public async Task<ActionResult<Sys_EmployeeMasterDto>> GetEmployee(int employeeId)
         {
             Sys_EmployeeMasterDto sys_EmployeeMaster = new Sys_EmployeeMasterDto();
             try
             {
 
-                sys_EmployeeMaster = _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(await _storeContext.Sys_EmployeeMaster.Where(x => x.Id == employeeId && x.Status).FirstOrDefaultAsync());
+                sys_EmployeeMaster = _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(await _storeContext.Sys_EmployeeMaster.Where(x => x.Id == employeeId && !x.IsDeleted && x.IsActive).FirstOrDefaultAsync());
                 var familyDetail = await _storeContext.Sys_FamilyDetails.Where(x => x.Employee_Id == employeeId).ToListAsync();
 
                 sys_EmployeeMaster.sys_FamilyDetailsDto = _mapper.Map<List<Sys_FamilyDetails>, List<Sys_FamilyDetailsDto>>(familyDetail);
@@ -313,7 +326,7 @@ namespace API.Controllers
 
         #endregion
 
-        #region Add new employee
+        #region Add new family detail
         [NonAction]
         public async Task<ActionResult<Sys_FamilyDetailsDto>> AddFamilyDetailsAsync(Sys_FamilyDetailsDto familyDetailsDto)
         {
@@ -788,7 +801,23 @@ namespace API.Controllers
             if (employeeId > 0)
             {
                 Sys_EmployeeMaster sys_EmployeeMaster = await _storeContext.Sys_EmployeeMaster.FindAsync(employeeId);
-                sys_EmployeeMaster.Status = false;
+                sys_EmployeeMaster.IsDeleted = true; sys_EmployeeMaster.IsActive = false;
+                return Ok(await _storeContext.SaveChangesAsync());
+            }
+            else { return BadRequest(); }
+        }
+
+        #endregion
+
+        #region Update Employee Master status
+
+        [HttpGet("UpdateStatus")]
+        public async Task<ActionResult> UpdateStatus(int employeeId, bool status)
+        {
+            if (employeeId > 0)
+            {
+                Sys_EmployeeMaster sys_EmployeeMaster = await _storeContext.Sys_EmployeeMaster.FindAsync(employeeId);
+                sys_EmployeeMaster.Status = status;
                 return Ok(await _storeContext.SaveChangesAsync());
             }
             else { return BadRequest(); }

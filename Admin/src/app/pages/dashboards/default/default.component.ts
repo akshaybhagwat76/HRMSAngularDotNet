@@ -285,6 +285,7 @@ export class DefaultComponent implements OnInit {
       state, zones, relationship, userType, employees, higherAuthoritesBranches, thirdParty,
       cast, bloodGroup, merital, highest_Qualification, designation, identity
     ]).subscribe(result => {
+      debugger
       this.companies = result[0];
       this.branches = result[1];
       this.contries = result[2];
@@ -357,14 +358,14 @@ export class DefaultComponent implements OnInit {
   ngOnInit() {
     const relationship = this.relationshipService.getAll();
     this.fbBuilder();
-     this.forCompany();
-    this.forBranch();
-    this.forCountries();
-    this.forDepartments();
-    this.forWorkingStatus();
-    this.forCategories();
+    //  this.forCompany();
+    // this.forBranch();
+    // this.forCountries();
+    // this.forDepartments();
+    // this.forWorkingStatus();
+    // this.forCategories();
     //this.typiesEmp();
-    this.forHigherAuthorityNames();
+    // this.forHigherAuthorityNames();
 
     this.fetchData();
     /**
@@ -453,8 +454,8 @@ export class DefaultComponent implements OnInit {
   }
   fbBuilder() {
     this.hrmsForm = this.fb.group({
-      companyId: [this.companyMaster.CompanyId, [Validators.required]],
-      employeeCategoryId: [this.companyMaster.EmployeeCategoryId],
+      companyId: ['', [Validators.required]],
+      employeeCategoryId: [''],
       employeeCode: [''],
       employeeAutoGenerate: [false],
       biometricCode: [''],
@@ -1076,7 +1077,12 @@ export class DefaultComponent implements OnInit {
     else {
       this.corresspondCountryZone = zonest.filter(x => x.country_Id == event);
     }
-    
+  }
+
+  fetchHigherAuthorities(id){
+    debugger
+    let higherAuthorities = this.higherAuthorities;
+    this.higherAuthorities = higherAuthorities.filter(x=>x.id==id);
   }
   getControl(name) {
     return this.hrmsForm.get(name);
@@ -1309,7 +1315,7 @@ export class DefaultComponent implements OnInit {
     this.downloadDoc(base64String, proDocData.documentType);
   }
 
-  changeDepartmentId(id) {
+  fetchDesignation(id) {
     debugger;
     this.designationsDepartmentList = this.designations.filter(x => x.department_Id ==id);
   }

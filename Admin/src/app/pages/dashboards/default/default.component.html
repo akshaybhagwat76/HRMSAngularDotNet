@@ -122,9 +122,9 @@
                                         <label for="departmentId" class="form-label">Department<span
                                                 class="text-danger">*</span></label>
                                         <select class="form-select" id="departmentId"
-                                            (ngModelChange)="changeDepartmentId($event)" formControlName="departmentId">
+                                            (ngModelChange)="fetchDesignation($event)" formControlName="departmentId">
                                             <option selected="" disabled="" value="">Choose...</option>
-                                            <option *ngFor="let depart of departments" [ngValue]="depart.id">
+                                            <option *ngFor="let depart of projectDepartments" [ngValue]="depart.id">
                                                 {{depart?.department_Name}}
                                             </option>
                                         </select>
@@ -143,7 +143,8 @@
                                         <select class="form-select" id="validationCustom08"
                                             formControlName="designationId">
                                             <option selected="" disabled="" value="">Choose...</option>
-                                            <option *ngFor="let designation of designations" [ngValue]="designation.id">
+                                            <option *ngFor="let designation of designationsDepartmentList"
+                                                [ngValue]="designation.id">
                                                 {{designation?.designation_Name}}
                                             </option>
                                         </select>
@@ -157,8 +158,8 @@
                                     <div class="mb-3">
                                         <label for="eBranch/Project" class="form-label">Higher Authority
                                             Branch/Project<span class="text-danger">*</span></label>
-                                        <select class="form-select" id="eBranch/Project"
-                                            formControlName="higher_Authority_Branch_ProjectId">
+                                        <select class="form-select" id="hAuthorityBranchProject"
+                                            formControlName="higher_Authority_Branch_ProjectId" (ngModelChange)="fetchHigherAuthorities($event)">
                                             <option selected="" disabled="" value="">Choose...</option>
                                             <option *ngFor="let hBranches of higherAuthoritiesBranches"
                                                 [ngValue]="hBranches.id">

@@ -8,6 +8,8 @@ namespace Core.Entities
     {
         public string HigherAuthority_Name { get; set; }
         public int Status_Id { get; set; }
+        public int HigherAuthorityId { get; set; }
+        
         public string Remarks { get; set; }
         public string Action_Remarks { get; set; }
         public DateTime CreatedOn_Date { get; set; }

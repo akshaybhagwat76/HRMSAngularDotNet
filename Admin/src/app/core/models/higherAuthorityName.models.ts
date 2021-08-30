@@ -4,4 +4,5 @@ export class HigherAuthorityName {
     remarks: string;
     action_Remarks: string;
     higherAuthority_Name: string
+    higherAuthorityId:number;
 }

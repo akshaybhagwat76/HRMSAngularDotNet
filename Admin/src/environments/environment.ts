@@ -4,7 +4,8 @@
 
 export const environment = {
   // url: 'https://pdfcoreattachment.azurewebsites.net',
-  url: 'http://localhost:64156',
+  //url: 'http://localhost:64156',
+  url :'https://pdfcoreattachment.azurewebsites.net',
 
   production: false,
   defaultauth: 'firebase',

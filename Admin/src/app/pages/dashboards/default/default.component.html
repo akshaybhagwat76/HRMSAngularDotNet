@@ -173,9 +173,9 @@
                                     <div class="mb-3">
                                         <label for="higher_AuthorityId" class="form-label">Higher Authority</label>
                                         <select class="form-select" id="higher_AuthorityId"
-                                            formControlName="higher_AuthorityId">
+                                            formControlName="higher_AuthorityId" (ngModelChange)="fetchHigherAuthorityNames($event)">
                                             <option selected="" disabled="" value="">Choose...</option>
-                                            <option *ngFor="let higherAuthority of higherAuthorities"
+                                            <option *ngFor="let higherAuthority of filteredHigherAuthorities"
                                                 [ngValue]="higherAuthority.id">
                                                 {{higherAuthority?.higherAuthority}}
                                             </option>
@@ -188,7 +188,7 @@
                                         <select class="form-select" id="eHigherName"
                                             formControlName="higher_Authority_NameId">
                                             <option selected="" disabled="" value="">Choose...</option>
-                                            <option *ngFor="let higherAuthorityN of higherAuthorityNames"
+                                            <option *ngFor="let higherAuthorityN of filteredHigherAuthorityNames"
                                                 [ngValue]="higherAuthorityN.id">
                                                 {{higherAuthorityN?.higherAuthority_Name}}
                                             </option>
@@ -264,7 +264,7 @@
                                         <select class="form-select" id="third_Party_Id"
                                             formControlName="third_Party_Id">
                                             <option selected="" disabled="" value="">Choose...</option>
-                                            <option *ngFor="let tParty of thirdParty" [ngValue]="tParty.id">
+                                            <option *ngFor="let tParty of filetedThirdParty" [ngValue]="tParty.id">
                                                 {{tParty?.thirdParty_Name}}
                                             </option>
                                         </select>

@@ -145,14 +145,18 @@ export class DefaultComponent implements OnInit {
   categories: any;
   typiesEmp: any;
   higherAuthorities: any;
+  filteredHigherAuthorities: any;
+
   higherAuthoritiesBranches: any;
   disabledEmployeeCode = false;
   thirdPartyName: any;
   thirdParty: any;
+  filetedThirdParty: any;
   thirdPartyType: any;
 
 
   higherAuthorityNames: any;
+  filteredHigherAuthorityNames: any;
   casts: any;
   bloodGroup: any;
   states: any;
@@ -539,39 +543,37 @@ export class DefaultComponent implements OnInit {
     });
     this.initEducationalQualification();
 
-    
+
   }
-  initEducationalQualification()
-  {
+  initEducationalQualification() {
     const EducationalQualificationArray = <FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto'];
     for (let k = 0; k < 1; k++) {
-        EducationalQualificationArray.push(this.fb.group({
-          Id:[],
-          Employee_Id:[],
-          Emp_Year_OF_Passing:[],
-          Qualification:[],
-          Specialization:[],
-          School:[],
-          Board:[],
-          Marks:[],
-          Remarks:[],
-          Attachments: this.fb.array([])
-        }))
-        this.initEduAttachmentsQualification();
+      EducationalQualificationArray.push(this.fb.group({
+        Id: [],
+        Employee_Id: [],
+        Emp_Year_OF_Passing: [],
+        Qualification: [],
+        Specialization: [],
+        School: [],
+        Board: [],
+        Marks: [],
+        Remarks: [],
+        Attachments: this.fb.array([])
+      }))
+      this.initEduAttachmentsQualification();
 
 
     }
   }
-  initEduAttachmentsQualification()
-  {
+  initEduAttachmentsQualification() {
     const EduAttachmentsArray = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(0).get('Attachments') as FormArray;
     for (let k = 0; k < 1; k++) {
       EduAttachmentsArray.push(this.fb.group({
-        Educational_Qualification_Id:[],
-        Employee_Id:[],
-        CourseName:[],
-        DocumentType:[],
-        DocumentUrl:[],
+        Educational_Qualification_Id: [],
+        Employee_Id: [],
+        CourseName: [],
+        DocumentType: [],
+        DocumentUrl: [],
       }))
     }
   }
@@ -1068,7 +1070,7 @@ export class DefaultComponent implements OnInit {
       this.higherAuthoritiesBranches = data;
     });
   }
-  
+
   onOptionsSelected(event, target) {
     let zonest = this.zones;
     if (target == 'per') {
@@ -1079,10 +1081,15 @@ export class DefaultComponent implements OnInit {
     }
   }
 
-  fetchHigherAuthorities(id){
+  fetchHigherAuthorities(id) {
     debugger
     let higherAuthorities = this.higherAuthorities;
-    this.higherAuthorities = higherAuthorities.filter(x=>x.id==id);
+    this.filteredHigherAuthorities = higherAuthorities.filter(x => x.higherAuthorityBranchId == id);
+  }
+  fetchHigherAuthorityNames(id) {
+    debugger
+    let higherAuthorityNames = this.higherAuthorityNames;
+    this.filteredHigherAuthorityNames = higherAuthorityNames.filter(x => x.higherAuthorityId == id);
   }
   getControl(name) {
     return this.hrmsForm.get(name);
@@ -1104,7 +1111,10 @@ export class DefaultComponent implements OnInit {
 
 
   onThirdPartySelected(id) {
-    this.thirdPartyList = this.thirdParty.filter(x => x.thirdPartyType_Id == id);
+    debugger
+    let thirdParty = this.thirdParty;
+
+    this.filetedThirdParty = thirdParty.filter(x => x.thirdPartyType_Id == id);
   }
 
   fileProgress(fileInput: any) {
@@ -1317,7 +1327,7 @@ export class DefaultComponent implements OnInit {
 
   fetchDesignation(id) {
     debugger;
-    this.designationsDepartmentList = this.designations.filter(x => x.department_Id ==id);
+    this.designationsDepartmentList = this.designations.filter(x => x.department_Id == id);
   }
 
   onBranchChanges(id) {

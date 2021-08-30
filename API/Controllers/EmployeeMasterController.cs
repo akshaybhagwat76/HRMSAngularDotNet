@@ -255,8 +255,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("GetEmployee{employeeId:int}")]
-        [Route("{employeeId:int}")]
+        [HttpGet("GetEmployee")]
         public async Task<ActionResult<Sys_EmployeeMasterDto>> GetEmployee(int employeeId)
         {
             Sys_EmployeeMasterDto sys_EmployeeMaster = new Sys_EmployeeMasterDto();

@@ -30,6 +30,7 @@
                                                 {{company.compnay_Name}}
                                             </option>
                                         </select>
+
                                         <!-- <div *ngIf="submit && form.company.errors" class="invalid-feedback">
             <span *ngIf="form.company.errors.required">Please provide a valid company.</span>
           </div> -->
@@ -123,7 +124,7 @@
                                         <select class="form-select" id="departmentId"
                                             (ngModelChange)="changeDepartmentId($event)" formControlName="departmentId">
                                             <option selected="" disabled="" value="">Choose...</option>
-                                            <option *ngFor="let depart of projectDepartments" [ngValue]="depart.id">
+                                            <option *ngFor="let depart of departments" [ngValue]="depart.id">
                                                 {{depart?.department_Name}}
                                             </option>
                                         </select>
@@ -142,8 +143,7 @@
                                         <select class="form-select" id="validationCustom08"
                                             formControlName="designationId">
                                             <option selected="" disabled="" value="">Choose...</option>
-                                            <option *ngFor="let designation of designationsDepartmentList"
-                                                [ngValue]="designation.id">
+                                            <option *ngFor="let designation of designations" [ngValue]="designation.id">
                                                 {{designation?.designation_Name}}
                                             </option>
                                         </select>
@@ -265,7 +265,7 @@
                                         <select class="form-select" id="third_Party_Id"
                                             formControlName="third_Party_Id">
                                             <option selected="" disabled="" value="">Choose...</option>
-                                            <option *ngFor="let tParty of thirdPartyList" [ngValue]="tParty.id">
+                                            <option *ngFor="let tParty of thirdParty" [ngValue]="tParty.id">
                                                 {{tParty?.thirdParty_Name}}
                                             </option>
                                         </select>
@@ -1029,8 +1029,8 @@
                                         <div class="mb-3">
                                             <label for="eZone" class="form-label">Zone<span
                                                     class="text-danger">*</span></label>
-                                            <select class="form-select" id="eZone" formControlName="Zone"
-                                                (ngModelChange)="OptionsSelected($event,'per')">
+                                            <select class="form-select" id="eZone"
+                                                (ngModelChange)="OptionsSelected($event,'per')" formControlName="Zone">
                                                 <option selected="" disabled="" value="">Choose...</option>
                                                 <option *ngFor="let zone of countryZones" [ngValue]="zone.id">
                                                     {{zone.zone_Name}}
@@ -1130,7 +1130,7 @@
                                             <select class="form-select" id="redZone" formControlName="Zone"
                                                 (ngModelChange)="OptionsSelected($event,'curr')">
                                                 <option selected="" disabled="" value="">Choose...</option>
-                                                <option *ngFor="let zn of countryZones" [ngValue]="zn.id">
+                                                <option *ngFor="let zn of corresspondCountryZone" [ngValue]="zn.id">
                                                     {{zn.zone_Name}}
                                             </select>
                                             <div *ngIf="ccInfo.Zone.hasError('required') && ccInfo.Zone.touched"
@@ -1617,7 +1617,7 @@
                                             <select class="form-select" id="eUserType" formControlName="User_Type">
                                                 <option selected="" disabled="" value="">Choose...</option>
                                                 <option *ngFor="let utype of userType" [ngValue]="utype.id">
-                                                    {{utype.userType_Name}}
+                                                    {{utype.userType_Name}}</option>
                                             </select>
                                         </div>
                                     </div>

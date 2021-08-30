@@ -8,6 +8,6 @@ namespace API.Dtos
         [Required]
         public string Department_Name { get; set; }
         [Required]
-        public string Departmen_Code { get; set; }
+        public string Department_Code { get; set; }
     }
 }

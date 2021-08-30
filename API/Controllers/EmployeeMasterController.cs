@@ -261,16 +261,34 @@ namespace API.Controllers
             Sys_EmployeeMasterDto sys_EmployeeMaster = new Sys_EmployeeMasterDto();
             try
             {
-
                 sys_EmployeeMaster = _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(await _storeContext.Sys_EmployeeMaster.Where(x => x.Id == employeeId && !x.IsDeleted && x.IsActive).FirstOrDefaultAsync());
                 var familyDetail = await _storeContext.Sys_FamilyDetails.Where(x => x.Employee_Id == employeeId).ToListAsync();
+                if (sys_EmployeeMaster == null)
+                {
+                    sys_EmployeeMaster = new Sys_EmployeeMasterDto();
+                }
+
+                if(familyDetail==null || familyDetail.Count == 0)
+                {
+                    familyDetail = new List<Sys_FamilyDetails>();
+                }
 
                 sys_EmployeeMaster.sys_FamilyDetailsDto = _mapper.Map<List<Sys_FamilyDetails>, List<Sys_FamilyDetailsDto>>(familyDetail);
 
                 var nomineeDetails = await _storeContext.TBL_HR_EMPLOYEE_NOMINEE_DETAILS.Where(x => x.Employee_Id == employeeId).ToListAsync();
+
+                if (nomineeDetails == null || nomineeDetails.Count == 0)
+                {
+                    nomineeDetails = new List<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>();
+                }
                 sys_EmployeeMaster.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto = _mapper.Map<List<TBL_HR_EMPLOYEE_NOMINEE_DETAILS>, List<TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto>>(nomineeDetails);
 
                 var educationalQualifications = await _storeContext.HR_EMPLOYEE_EDUCATION_DETAILs.Where(x => x.Employee_Id == employeeId).ToListAsync();
+
+                if (educationalQualifications == null || educationalQualifications.Count == 0)
+                {
+                    educationalQualifications = new List<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>();
+                }
                 sys_EmployeeMaster.sys_EducationalQualificationDto = _mapper.Map<List<TBL_HR_EMPLOYEE_EDUCATION_DETAILS>, List<TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>>(educationalQualifications);
 
                 if (sys_EmployeeMaster.sys_EducationalQualificationDto != null && sys_EmployeeMaster.sys_EducationalQualificationDto.Count > 0)
@@ -278,26 +296,46 @@ namespace API.Controllers
                     foreach (TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto TBL_HR_EMPLOYEE_EDUCATION_DETAIL in sys_EmployeeMaster.sys_EducationalQualificationDto)
                     {
                         List<TBL_Educational_Qualification_Attachements> LstTBL_Educational_Qualification_Attachement = await _storeContext.TBL_Educational_Qualification_Attachements.Where(x => x.EmployeeId == employeeId && x.Educational_Qualification_Id == TBL_HR_EMPLOYEE_EDUCATION_DETAIL.Id).ToListAsync();
+                        if (LstTBL_Educational_Qualification_Attachement == null || LstTBL_Educational_Qualification_Attachement.Count == 0)
+                        {
+                            LstTBL_Educational_Qualification_Attachement = new List<TBL_Educational_Qualification_Attachements>();
+                        }
                         TBL_HR_EMPLOYEE_EDUCATION_DETAIL.Attachments = _mapper.Map<List<TBL_Educational_Qualification_Attachements>, List<TBL_Educational_Qualification_AttachementsDto>>(LstTBL_Educational_Qualification_Attachement);
                     }
                 }
 
 
                 var permanentContactInformation = await _storeContext.Sys_PermanentContactInformation.Where(x => x.Employee_Id == employeeId).FirstOrDefaultAsync();
+                if (permanentContactInformation == null)
+                {
+                    permanentContactInformation = new Sys_PermanentContactInformation();
+                }
                 sys_EmployeeMaster.sys_PermanentContactInformationDto = _mapper.Map<Sys_PermanentContactInformation, Sys_PermanentContactInformationDto>(permanentContactInformation);
 
                 var corresspondanceContactInformation = await _storeContext.Sys_CorresspondanceContactInformation.Where(x => x.Employee_Id == employeeId).FirstOrDefaultAsync();
+                if (corresspondanceContactInformation == null)
+                {
+                    corresspondanceContactInformation = new Sys_CorresspondanceContactInformation();
+                }
                 sys_EmployeeMaster.sys_CorresspondanceContactInformationDto = _mapper.Map<Sys_CorresspondanceContactInformation, Sys_CorresspondanceContactInformationDto>(corresspondanceContactInformation);
 
 
                 var professionalInformation = await _storeContext.Sys_ProfessionalInformation.Where(x => x.Employee_Id == employeeId).ToListAsync();
+                if (professionalInformation == null)
+                {
+                    professionalInformation = new List<Sys_ProfessionalInformation>();
+                }
                 sys_EmployeeMaster.sys_ProfessionalInformations = _mapper.Map<List<Sys_ProfessionalInformation>, List<Sys_ProfessionalInformationDto>>(professionalInformation);
 
                 if (sys_EmployeeMaster.sys_ProfessionalInformations != null && sys_EmployeeMaster.sys_ProfessionalInformations.Count > 0)
                 {
                     foreach (Sys_ProfessionalInformationDto Sys_ProfessionalInformation in sys_EmployeeMaster.sys_ProfessionalInformations)
                     {
-                        List<TBL_Professional_Information_Attachements> LstTBL_Professional_Information_Attachement = await _storeContext.TBL_Professional_Information_Attachements.Where(x => x.EmployeeId == employeeId && x.Professional_Information_Id == Sys_ProfessionalInformation.Id).ToListAsync();
+                        List<TBL_Professional_Information_Attachements> LstTBL_Professional_Information_Attachement = await _storeContext.TBL_Professional_Information_Attachements.Where(x => x.EmployeeId == employeeId && x.Professional_Information_Attachements_Id == Sys_ProfessionalInformation.Id).ToListAsync();
+                        if (LstTBL_Professional_Information_Attachement == null)
+                        {
+                            LstTBL_Professional_Information_Attachement = new List<TBL_Professional_Information_Attachements>();
+                        }
                         Sys_ProfessionalInformation.Attachments = _mapper.Map<List<TBL_Professional_Information_Attachements>, List<TBL_Professional_Information_AttachementsDto>>(LstTBL_Professional_Information_Attachement);
                     }
                 }
@@ -308,11 +346,19 @@ namespace API.Controllers
                 if (sys_EmployeeMaster.sys_OtherInformationDto != null && sys_EmployeeMaster.sys_OtherInformationDto.Id > 0)
                 {
                     List<Sys_Identity_Proof> LstSys_IdentityProof = await _storeContext.Sys_Identity_Proof.Where(x => x.OtherInformationId == sys_EmployeeMaster.sys_OtherInformationDto.Id).ToListAsync();
+                    if (LstSys_IdentityProof == null)
+                    {
+                        LstSys_IdentityProof = new List<Sys_Identity_Proof>();
+                    }
                     sys_EmployeeMaster.sys_OtherInformationDto.sys_Identity_Proofs = _mapper.Map<List<Sys_Identity_Proof>, List<Sys_Identity_ProofDto>>(LstSys_IdentityProof);
 
                     foreach (Sys_Identity_ProofDto sys_Identity_Proof in sys_EmployeeMaster.sys_OtherInformationDto.sys_Identity_Proofs)
                     {
                         List<TBL_Identity_Proof_Attachements> LstTBL_Identity_Proof_Attachement = await _storeContext.TBL_Identity_Proof_Attachements.Where(x => x.EmployeeId == employeeId && x.Identity_Proof_Id == sys_Identity_Proof.Id).ToListAsync();
+                        if (LstTBL_Identity_Proof_Attachement == null)
+                        {
+                            LstTBL_Identity_Proof_Attachement = new List<TBL_Identity_Proof_Attachements>();
+                        }
                         sys_Identity_Proof.Attachments = _mapper.Map<List<TBL_Identity_Proof_Attachements>, List<TBL_Identity_Proof_AttachementsDto>>(LstTBL_Identity_Proof_Attachement);
                     }
                 }
@@ -472,7 +518,7 @@ namespace API.Controllers
                             if (!string.IsNullOrEmpty(TBL_Professional_Information_Attachement.DocumentType) && !string.IsNullOrEmpty(TBL_Professional_Information_Attachement.DocumentUrl) && TBL_Professional_Information_Attachement.DocumentUrl.Length > 1000)
                             {
                                 string docUrl = UploadFile(TBL_Professional_Information_Attachement.DocumentUrl, ProfessionalInformationDto.Employee_Id);
-                                TBL_Professional_Information_AttachementsDto Professional_Information_AttachementsDto = new TBL_Professional_Information_AttachementsDto() { EmployeeId = ProfessionalInformationDto.Employee_Id, DocumentType = TBL_Professional_Information_Attachement.DocumentType, Professional_Information_Id = ProfessionalInformationId, DocumentUrl = docUrl };
+                                TBL_Professional_Information_AttachementsDto Professional_Information_AttachementsDto = new TBL_Professional_Information_AttachementsDto() { EmployeeId = ProfessionalInformationDto.Employee_Id, DocumentType = TBL_Professional_Information_Attachement.DocumentType, Professional_Information_Attachements_Id = ProfessionalInformationId, DocumentUrl = docUrl };
                                 var Professional_Information_Attachement = _mapper.Map<TBL_Professional_Information_AttachementsDto, TBL_Professional_Information_Attachements>(TBL_Professional_Information_Attachement);
                                 _unitOfWork.Repository<TBL_Professional_Information_Attachements>().Add(Professional_Information_Attachement);
                                 var resultProfessional_Information_Attachement = await _unitOfWork.Complete();
@@ -495,7 +541,7 @@ namespace API.Controllers
                             if (!string.IsNullOrEmpty(TBL_Professional_Information_Attachements.DocumentType) && !string.IsNullOrEmpty(TBL_Professional_Information_Attachements.DocumentUrl) && TBL_Professional_Information_Attachements.DocumentUrl.Length > 1000)
                             {
                                 string docUrl = UploadFile(TBL_Professional_Information_Attachements.DocumentUrl, professionalInformationDto.Employee_Id);
-                                TBL_Professional_Information_AttachementsDto Professional_Information_AttachementsDto = new TBL_Professional_Information_AttachementsDto() { EmployeeId = professionalInformationDto.Employee_Id, DocumentType = TBL_Professional_Information_Attachements.DocumentType, Professional_Information_Id = professionalInformationDto.Id, DocumentUrl = docUrl };
+                                TBL_Professional_Information_AttachementsDto Professional_Information_AttachementsDto = new TBL_Professional_Information_AttachementsDto() { EmployeeId = professionalInformationDto.Employee_Id, DocumentType = TBL_Professional_Information_Attachements.DocumentType, Professional_Information_Attachements_Id = professionalInformationDto.Id, DocumentUrl = docUrl };
                                 var professional_Information_Attachement = _mapper.Map<TBL_Professional_Information_AttachementsDto, TBL_Professional_Information_Attachements>(Professional_Information_AttachementsDto);
 
                                 if (TBL_Professional_Information_Attachements.Id == 0)

@@ -255,7 +255,7 @@ export class DefaultComponent implements OnInit {
 
   isStatusVisible = false;
 
-  private fetchData() {
+  public fetchData() {
     const companies = this.companyService.getAll();
     const branches = this.branchesService.getAll();
     const contries = this.contriesService.getAll();
@@ -338,7 +338,7 @@ export class DefaultComponent implements OnInit {
 
   // Education Document
   get educationDocumentArr() {
-    return this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments')['controls'] as FormArray;
+    return "";//this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments')['controls'] as FormArray;
   }
   // Identity Proof
   get identityProofArr() {
@@ -356,16 +356,15 @@ export class DefaultComponent implements OnInit {
   }
   ngOnInit() {
     const relationship = this.relationshipService.getAll();
-    // console.log("relationshipdata", relationship);
     this.fbBuilder();
-    // this.forCompany();
-    // this.forBranch();
-    // this.forCountries();
-    // this.forDepartments();
-    // this.forWorkingStatus();
-    //this.forCategories();
-    // this.typiesEmp();
-    // this.forHigherAuthorityNames();
+     this.forCompany();
+    this.forBranch();
+    this.forCountries();
+    this.forDepartments();
+    this.forWorkingStatus();
+    this.forCategories();
+    //this.typiesEmp();
+    this.forHigherAuthorityNames();
 
     this.fetchData();
     /**
@@ -1027,90 +1026,82 @@ export class DefaultComponent implements OnInit {
 
   forCompany() {
     this.companyService.getAll().subscribe(data => {
-      console.log(data);
       this.companies = data;
     });
   }
   forBranch() {
     this.branchesService.getAll().subscribe(data => {
-      console.log(data);
       this.branches = data;
     });
   }
   forCountries() {
     this.contriesService.getAll().subscribe(data => {
-      console.log(data);
       this.contries = data;
     });
   }
   forDepartments() {
     this.departmentsService.getAll().subscribe(data => {
-      console.log(data);
       this.departments = data;
     });
   }
   forWorkingStatus() {
     this.workingStatusService.getAll().subscribe(data => {
-      console.log(data);
       this.workingStatus = data;
     });
   }
   forCategories() {
     this.categoryEmpsService.getAll().subscribe(data => {
-      console.log(data);
       this.categories = data;
     });
   }
   fortypiesEmp() {
     this.typeEmpsService.getAll().subscribe(data => {
-      console.log(data);
       this.typiesEmp = data;
     });
   }
   forHigherAuthorityNames() {
     this.higherAuthorityNameService.getAll().subscribe(data => {
-      console.log(data);
       this.departments = data;
     });
   }
 
   forHigherAuthoritiesBranches() {
     this.higherAuthoritiesBranchesService.getAll().subscribe(data => {
-      console.log(data);
       this.higherAuthoritiesBranches = data;
     });
   }
-
+  
   onOptionsSelected(event, target) {
-    let zones = this.zones;
+    let zonest = this.zones;
     if (target == 'per') {
-      this.countryZones = zones.filter(x => x.id == event.target.value);
+      this.countryZones = zonest.filter(x => x.country_Id == event);
     }
     else {
-      this.corresspondCountryZone = zones.filter(x => x.id == event.target.value);
+      this.corresspondCountryZone = zonest.filter(x => x.country_Id == event);
     }
+    
   }
   getControl(name) {
     return this.hrmsForm.get(name);
   }
-  OptionsSelected(event, target) {
+  OptionsSelected(id, target) {
     let states = this.states;
     if (target !== 'per') {
-      this.CorrFilteredStates = states.filter(x => x.zone_Id == event.target.value);
+      this.CorrFilteredStates = states.filter(x => x.zone_Id == id);
     }
     else {
-      this.PerFilteredStates = states.filter(x => x.zone_Id == event.target.value);
+      this.PerFilteredStates = states.filter(x => x.zone_Id == id);
     }
   }
 
-  OptionsPersonalSelected(event) {
+  OptionsPersonalSelected(id) {
     let states = this.states;
-    this.PerFilteredStates = states.filter(x => x.zone_Id == event.target.value);
+    this.PerFilteredStates = states.filter(x => x.zone_Id == id);
   }
 
 
-  onThirdPartySelected(event) {
-    this.thirdPartyList = this.thirdParty.filter(x => x.thirdPartyType_Id == event.target.value);
+  onThirdPartySelected(id) {
+    this.thirdPartyList = this.thirdParty.filter(x => x.thirdPartyType_Id == id);
   }
 
   fileProgress(fileInput: any) {
@@ -1123,7 +1114,6 @@ export class DefaultComponent implements OnInit {
       this.documentfile = null;
       return;
     }
-    console.log(this.documentfile);
     this.preview();
   }
 
@@ -1200,7 +1190,6 @@ export class DefaultComponent implements OnInit {
   }
 
   finallySave() {
-    console.log(this.hrmsForm.value);
   }
   pStatus(value) {
     debugger;
@@ -1299,9 +1288,7 @@ export class DefaultComponent implements OnInit {
   }
 
   submitHrmsForm() {
-    debugger;
     this.employeeMasterService.post(this.hrmsForm.value).subscribe((resp: any) => {
-      console.log(resp);
     })
   }
 
@@ -1325,14 +1312,14 @@ export class DefaultComponent implements OnInit {
     this.downloadDoc(base64String, proDocData.documentType);
   }
 
-  changeDepartmentId(value) {
+  changeDepartmentId(id) {
     debugger;
-    this.designationsDepartmentList = this.designations.filter(x => x.department_Id == value.target.value);
+    this.designationsDepartmentList = this.designations.filter(x => x.department_Id ==id);
   }
 
-  onBranchChanges(event) {
+  onBranchChanges(id) {
     let departments = this.departments;
-    this.projectDepartments = departments.filter(x => x.branch_Id == event.target.value);
+    this.projectDepartments = departments.filter(x => x.branch_Id == id);
   }
 
   sameAsAbove(event) {

@@ -39,7 +39,11 @@ namespace API.Helpers
             CreateMap<Sys_IdentityTypeDto, Sys_IdentityType>().ReverseMap();
             CreateMap<Sys_ProfessionalInformationDto, Sys_ProfessionalInformation>().ReverseMap();
             CreateMap<Sys_EmployeeMasterDto, Sys_EmployeeMaster>().ReverseMap();
-            
+
+            CreateMap<Sys_PermanentContactInformation, Sys_PermanentContactInformationDto>().ReverseMap();
+            CreateMap<Sys_CorresspondanceContactInformation, Sys_CorresspondanceContactInformationDto>().ReverseMap();
+            CreateMap<Sys_OtherInformation, Sys_OtherInformationDto>().ReverseMap();
+
         }
     }
 }

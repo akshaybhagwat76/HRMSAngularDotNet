@@ -536,48 +536,45 @@ export class DefaultComponent implements OnInit {
       professionalDocumentAttachment: new FormArray([]),
       Status_Id: 1
     });
-    // this.permanentContactInformationForm = this.fb.group({
-    //   Address: ['', [Validators.required]],
-    //   Address1: [''],
-    //   Country: ['', [Validators.required]],
-    //   Zone: ['', [Validators.required]],
-    //   State: ['', [Validators.required]],
-    //   City: ['', [Validators.required]],
-    //   Pin: ['', [Validators.required]],
-    //   Employee_Id: [0]
-    // })
-    // this.corresspondanceContactInformationForm = this.fb.group({
-    //   Address: ['', [Validators.required]],
-    //   Address1: [''],
-    //   Country: ['', [Validators.required]],
-    //   Zone: ['', [Validators.required]],
-    //   State: ['', [Validators.required]],
-    //   City: ['', [Validators.required]],
-    //   Pin: ['', [Validators.required]],
-    //   Phone: [],
-    //   EmailAddress2: ['', [Validators.email]],
-    //   MobileNo2: [],
-    //   Employee_Id: [0]
+    this.initEducationalQualification();
 
-    // })
-    // this.otherInformationForm = this.fb.group({
-    //   Bank_Name: [''],
-    //   Branch_Name: [''],
-    //   Account_No: [''],
-    //   IFSC_Code: [''],
-    //   Status: [true],
-    //   Other_Details: [''],
-    //   Card_No: [''],
-    //   CarProxy_Nod_No: [''],
-    //   // IpUserId: [''],
-    //   // IpUserData: [''],
-    //   User_Type: [''],
-    //   SignatureFile: [''],
-    //   PictureFile: [''],
-    //   Employee_Id: [0],
-    //   sys_Identity_ProofDtos: new FormArray([]),
-    // })
+    
   }
+  initEducationalQualification()
+  {
+    const EducationalQualificationArray = <FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto'];
+    for (let k = 0; k < 1; k++) {
+        EducationalQualificationArray.push(this.fb.group({
+          Id:[],
+          Employee_Id:[],
+          Emp_Year_OF_Passing:[],
+          Qualification:[],
+          Specialization:[],
+          School:[],
+          Board:[],
+          Marks:[],
+          Remarks:[],
+          Attachments: this.fb.array([])
+        }))
+        this.initEduAttachmentsQualification();
+
+
+    }
+  }
+  initEduAttachmentsQualification()
+  {
+    const EduAttachmentsArray = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(0).get('Attachments') as FormArray;
+    for (let k = 0; k < 1; k++) {
+      EduAttachmentsArray.push(this.fb.group({
+        Educational_Qualification_Id:[],
+        Employee_Id:[],
+        CourseName:[],
+        DocumentType:[],
+        DocumentUrl:[],
+      }))
+    }
+  }
+
 
   // Add Family details
   addfamilyDetailsArr() {

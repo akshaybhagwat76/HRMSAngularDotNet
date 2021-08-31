@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace API.Controllers
 {
@@ -179,7 +180,7 @@ namespace API.Controllers
                 if (tbl_Employees.Count > 0 && employeeSearchDTO != null)
                 {
                     tbl_Employees = tbl_Employees.Where(x => !x.IsDeleted && x.IsActive).ToList();
-                    tbl_Employees.WhereIf(employeeSearchDTO.CompanyId > 0, x => x.CompanyId == employeeSearchDTO.CompanyId)
+                    tbl_Employees = tbl_Employees.WhereIf(employeeSearchDTO.CompanyId > 0, x => x.CompanyId == employeeSearchDTO.CompanyId)
                                  .WhereIf(employeeSearchDTO.DepartmentId > 0, x => x.DepartmentId == employeeSearchDTO.DepartmentId)
                                  .WhereIf(employeeSearchDTO.Project_BranchId > 0, x => x.Project_BranchId == employeeSearchDTO.Project_BranchId)
                                  .WhereIf(employeeSearchDTO.DesignationId > 0, x => x.DesignationId == employeeSearchDTO.DesignationId)
@@ -187,6 +188,22 @@ namespace API.Controllers
                                  .WhereIf(!string.IsNullOrEmpty(employeeSearchDTO.FirstName), x => x.FirstName == employeeSearchDTO.FirstName)
                                  .WhereIf(!string.IsNullOrEmpty(employeeSearchDTO.email), x => x.email == employeeSearchDTO.email).ToList();
 
+                    var permanentContactInformation = await _unitOfWork.Repository<Sys_PermanentContactInformation>().ListAllAsync();
+
+                    if (employeeSearchDTO.ZoneId == 0 && tbl_Employees!=null && tbl_Employees.Count>0)
+                    {
+                        foreach (Sys_EmployeeMaster Sys_EmployeeMaster in tbl_Employees)
+                        {
+                            if (Sys_EmployeeMaster != null)
+                            {
+                                List<Sys_PermanentContactInformation> lstSys_PermanentContactInformation = permanentContactInformation.Where(x => x.Employee_Id == Sys_EmployeeMaster.Id).ToList();
+                                if(lstSys_PermanentContactInformation!=null && lstSys_PermanentContactInformation.Count > 0)
+                                {
+                                    Sys_EmployeeMaster.ProfessionalInformation = lstSys_PermanentContactInformation[0].Address;
+                                }
+                            }
+                        }
+                    }
 
                     if (employeeSearchDTO.StatusId == 1)
                     {
@@ -204,7 +221,6 @@ namespace API.Controllers
                     if (employeeSearchDTO.ZoneId > 0)
                     {
                         var hR_Employees = await _unitOfWork.Repository<Sys_CorresspondanceContactInformation>().ListAllAsync();
-                        var permanentContactInformation = await _unitOfWork.Repository<Sys_PermanentContactInformation>().ListAllAsync();
 
                         if (hR_Employees != null && hR_Employees.Count > 0)
                         {
@@ -236,6 +252,17 @@ namespace API.Controllers
                                     if (item.Id > 0)
                                     {
                                         LstpermanentContactInformation = LstpermanentContactInformation.Where(x => x.Employee_Id == item.Id).ToList();
+                                    }
+                                    foreach (Sys_EmployeeMaster Sys_EmployeeMaster in tbl_Employees)
+                                    {
+                                        if (Sys_EmployeeMaster != null)
+                                        {
+                                            List<Sys_PermanentContactInformation> lstSys_PermanentContactInformation = permanentContactInformation.Where(x => x.Employee_Id == Sys_EmployeeMaster.Id).ToList();
+                                            if (lstSys_PermanentContactInformation != null && lstSys_PermanentContactInformation.Count > 0)
+                                            {
+                                                Sys_EmployeeMaster.ProfessionalInformation = lstSys_PermanentContactInformation[0].Address;
+                                            }
+                                        }
                                     }
                                 }
                             }

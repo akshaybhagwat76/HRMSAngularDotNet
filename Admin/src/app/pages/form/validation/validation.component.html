@@ -134,7 +134,7 @@
         </div>
         <!-- end card -->
       </div>
-      <div class="row">
+      <div class="row" *ngIf="lstEmployees && lstEmployees.length>0">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
@@ -165,175 +165,41 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>ISPAT DAMODAR PRIVATE LIMITED</td>
-                      <td>Full Time</td>
-                      <td>SSEPL20202</td>
-                      <td>DEMO2 USER</td>
-                      <td>Kolkata</td>
-                      <td>FINANCE & ACCOUNTING</td>
-                      <td>Accountant</td>
-                      <td>demouser2@vehement.in</td>
-                      <td>8976564534</td>
+                    <tr *ngFor="let emp of lstEmployees; let i=index">
+                      <th>{{i + 1}}</th>
+                      <th>{{getCompany(emp.companyId)}}</th>
+                      <th>{{getEmployeeType(emp.employee_TypeId)}}</th>
+                      <th>{{emp.employeeCode}}</th>
+                      <th>{{emp.firstName}} {{emp.lastName}}</th>
+
+                      <th>{{emp.professionalInformation}}</th>
+                      <th>{{getDepartment(emp.departmentId)}}</th>
+                      <th>{{getDesignation(emp.designationId)}}</th>
+                      <th>{{emp.email}}</th>
+                      <th>{{emp.reference_Phone_No}}</th>
                       <td>
                         <input type="image"
                           name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                           id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/icon_edit.gif" onclick="target"
+                          src="assets/images/icon_edit.gif" (click)="editEmployee(emp.id)"
                           style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                        <input type="image"
+                        <input type="image" *ngIf="validationform.controls.statusId.value==3 || (validationform.controls.statusId.value==1 && emp.status)"
                           name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
+                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive" (click)="disableEmployee(emp.id)"
+                          src="assets/images/iconRed.gif" style="border-width:0px;margin-left: 10px;"><br />
+                        <input type="image" *ngIf="validationform.controls.statusId.value==2 ||(validationform.controls.statusId.value==1 && !emp.status)"
+                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive" (click)="enableEmployee(emp.id)"
                           id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
-                          src="assets/images/iconGreen.gif" style="border-width:0px;margin-left: 10px;"><br />
+                          src="assets/images/iconGreen.gif" style="border-width:0px;margin-left: 10px;">
                         <input type="image"
                           name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                           id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/close.png" onclick="target"
-                          style="height:25px;width:25px;border-width:0px;margin-left: 10px;">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>ISPAT DAMODAR PRIVATE LIMITED</td>
-                      <td>Full Time</td>
-                      <td>SSEPL20203</td>
-                      <td>Pradipta Poddar</td>
-                      <td>Kolkata</td>
-                      <td>DOT NET</td>
-                      <td>JUNIOR PROGRAMMER</td>
-                      <td>pradipta@vehement.in</td>
-                      <td>9831794094</td>
-                      <td>
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/icon_edit.gif" onclick="target"
-                          style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
-                          src="assets/images/iconGreen.gif" style="border-width:0px;margin-left: 10px;"><br />
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/close.png" onclick="target"
-                          style="height:25px;width:25px;border-width:0px;margin-left: 10px;">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>ISPAT DAMODAR PRIVATE LIMITED</td>
-                      <td>Full Time</td>
-                      <td>MGNT0001</td>
-                      <td>S K</td>
-                      <td>Nabagram</td>
-                      <td>MANAGEMENT</td>
-                      <td>Director</td>
-                      <td>sk@amajeegroup.com</td>
-                      <td>7605074515</td>
-                      <td>
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/icon_edit.gif" onclick="target"
-                          style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
-                          src="assets/images/iconGreen.gif" style="border-width:0px;margin-left: 10px;"><br />
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/close.png" onclick="target"
-                          style="height:25px;width:25px;border-width:0px;margin-left: 10px;">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>ISPAT DAMODAR PRIVATE LIMITED</td>
-                      <td>Full Time</td>
-                      <td>MGNT0002</td>
-                      <td>Ujjwal Dey</td>
-                      <td>Nabagram</td>
-                      <td>MANAGEMENT</td>
-                      <td>Director</td>
-                      <td>ujjwal.dey@amajeegroup.com</td>
-                      <td>7029600515</td>
-                      <td>
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/icon_edit.gif" onclick="target"
-                          style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
-                          src="assets/images/iconGreen.gif" style="border-width:0px;margin-left: 10px;"><br />
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/close.png" onclick="target"
-                          style="height:25px;width:25px;border-width:0px;margin-left: 10px;">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>ISPAT DAMODAR PRIVATE LIMITED</td>
-                      <td>Full Time</td>
-                      <td>MGNT0003</td>
-                      <td>Amit Gupta</td>
-                      <td>Nabagram</td>
-                      <td>MANAGEMENT</td>
-                      <td>Director</td>
-                      <td>amit.gupta@amajeegroup.com</td>
-                      <td>91702960051</td>
-                      <td>
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/icon_edit.gif" onclick="target"
-                          style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
-                          src="assets/images/iconGreen.gif" style="border-width:0px;margin-left: 10px;"><br />
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/close.png" onclick="target"
-                          style="height:25px;width:25px;border-width:0px;margin-left: 10px;">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>ISPAT DAMODAR PRIVATE LIMITED</td>
-                      <td>Full Time</td>
-                      <td>MGNT0004</td>
-                      <td>Abhisheke Dia</td>
-                      <td>Nabagram</td>
-                      <td>MANAGEMENT</td>
-                      <td>Director</td>
-                      <td>abhishekedia@amajeegroup.com</td>
-                      <td>91760507451</td>
-                      <td>
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/icon_edit.gif" onclick="target"
-                          style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
-                          src="assets/images/iconGreen.gif" style="border-width:0px;margin-left: 10px;"><br />
-                        <input type="image"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
-                          src="assets/images/close.png" onclick="target"
+                          src="assets/images/DeleteIcon.png" (click)="deleteEmployee(emp.id)"
                           style="height:25px;width:25px;border-width:0px;margin-left: 10px;">
                       </td>
                     </tr>
                   </tbody>
+
                 </table>
               </div>
             </div>

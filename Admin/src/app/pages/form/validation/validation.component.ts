@@ -145,14 +145,41 @@ export class ValidationComponent implements OnInit {
   }
 
   getEmployeeType(id) {
-    return this.types.find(x => x.id == id).type_Name;
+    var type = this.types.find(x => x.id == id);
+    if (type !== undefined) {
+      return type.type_Name;
+    }
+    else {
+      return 'N/A';
+    }
   }
   getDepartment(id) {
-    return this.departments.find(x => x.id == id).department_Name;
+    var department = this.designations.find(x => x.id == id);
+    if (department !== undefined) {
+      return department.department_Name;
+    }
+    else {
+      return 'N/A';
+    }
   }
 
   getDesignation(id) {
-    return this.designations.find(x => x.id == id).designation_Name;
+    var designation = this.designations.find(x => x.id == id);
+    if (designation !== undefined) {
+      return designation.designation_Name;
+    }
+    else {
+      return 'N/A';
+    }
+  }
+  getCompany(id) {
+    var company = this.companies.find(x => x.id == id);
+    if (company !== undefined) {
+      return company.compnay_Name;
+    }
+    else {
+      return 'N/A';
+    }
   }
 
 
@@ -180,7 +207,7 @@ export class ValidationComponent implements OnInit {
       this.validationform.get('project_BranchId').setValue(0);
       this.validationform.get('designationId').setValue(0);
       this.validationform.get('zoneId').setValue(0);
-
+      this.lstEmployees = [];
       this.filteredDesignations = this.filteredDepartments = this.branches = [];
     }
   }
@@ -204,7 +231,7 @@ export class ValidationComponent implements OnInit {
       "designationId": parseInt(this.validationform.controls.designationId.value),
       "statusId": this.validationform.controls.statusId.value,
       "employeeCode": this.validationform.controls.employeeCode.value,
-      "firstName":this.validationform.controls.firstName.value,
+      "firstName": this.validationform.controls.firstName.value,
       "email": this.validationform.controls.email.value
     }
     this.employeeMasterService.search(searchDto).subscribe((data: any) => {
@@ -212,7 +239,6 @@ export class ValidationComponent implements OnInit {
     })
   }
   selectChangeHandler(i: any) {
-
     console.log(i.target.value);
   }
   filterBranches(id) {
@@ -273,6 +299,41 @@ export class ValidationComponent implements OnInit {
     this.rangesubmit = true;
   }
 
+  editEmployee(id) {
 
-
+  }
+  disableEmployee(id) {
+    if (confirm('Are you sure?')) {
+      this.employeeMasterService.updateStatus(id, false).subscribe((data: any) => {
+        if (data != null && data > 0) {
+          var objIndex = this.lstEmployees.findIndex((obj => obj.id == id));
+          this.lstEmployees[objIndex].status = false;
+          alert('Employee status updated successfully.');
+        }
+      });
+    }
+  }
+  enableEmployee(id) {
+    if (confirm('Are you sure?')) {
+      this.employeeMasterService.updateStatus(id, true).subscribe((data: any) => {
+        if (data != null && data > 0) {
+          var objIndex = this.lstEmployees.findIndex((obj => obj.id == id));
+          this.lstEmployees[objIndex].status = true;
+          alert('Employee status updated successfully.');
+        }
+      });
+    }
+  }
+  deleteEmployee(id) {
+    if (confirm('Are you sure to delete this record?')) {
+      this.employeeMasterService.delete(id).subscribe((data: any) => {
+        if (data != null && data > 0) {
+          var filtered = this.lstEmployees.filter(function (el) { return el.id != id; });
+          this.lstEmployees = filtered;
+          alert('Employee deleted successfully.');
+        }
+      });
+    }
+  }
 }
+

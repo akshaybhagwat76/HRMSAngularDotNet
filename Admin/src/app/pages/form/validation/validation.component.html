@@ -18,7 +18,7 @@
                   <label for="validationCompany" class="form-label">Company</label>
                   <select (change)="selectChangeHandler($event)" class="form-select" id="validationCompany"
                     name="company" name="company">
-                    <!-- <option selected="" disabled="" value="">Choose...</option> -->
+                    <option selected="" value="">-- All --</option>
                     <option *ngFor="let company of companies" [value]="company.compnay_Name">
                       {{company?.compnay_Name}}
                     </option>
@@ -29,7 +29,7 @@
                 <div class="mb-3">
                   <label for="validationZone" class="form-label">Zone</label>
                   <select class="form-select" id="validationZone" formControlName="zone">
-                    <!-- <option selected="" disabled="" value="">Choose...</option> -->
+                    <option selected="" value="">-- All --</option>
                     <option *ngFor="let zone of zones" [value]="zone.id" name="zone">
                       {{zone?.zone_Name}}
                     </option>

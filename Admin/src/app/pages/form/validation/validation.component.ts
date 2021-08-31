@@ -58,6 +58,21 @@ export class ValidationComponent implements OnInit {
       this.departments = result[2];
       this.designations = result[3];
       this.zones = result[4];
+console.log(this.companies)
+      this.validationform = this.formBuilder.group({
+        company: ['',],
+        zone: ['',],
+        branch: ['',],
+        department: ['',],
+        designation: ['',],
+        firstName: ['',],
+        employeeCode: ['',],
+        email: ['',],
+        rdoAll: ['',],
+        rdoInActive: ['',],
+        rdoActive: ['',],
+      });
+
     });
   }
 
@@ -70,19 +85,7 @@ export class ValidationComponent implements OnInit {
     /**
      * Bootstrap validation form data
      */
-    this.validationform = this.formBuilder.group({
-      company: ['',],
-      zone: ['',],
-      branch: ['',],
-      department: ['',],
-      designation: ['',],
-      firstName: ['',],
-      employeeCode: ['',],
-      email: ['',],
-      rdoAll: ['',],
-      rdoInActive: ['',],
-      rdoActive: ['',],
-    });
+   
 
     /**
      * Bootstrap tooltip validation form data
@@ -166,6 +169,7 @@ export class ValidationComponent implements OnInit {
     this.formsubmit = true;
   }
   selectChangeHandler(i: any) {
+    
     console.log(i.target.value);
   }
   /**

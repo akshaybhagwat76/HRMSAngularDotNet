@@ -7,11 +7,11 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
-        <div class="card-body">
+        <div class="card-body"  *ngIf="validationform">
           <h4 class="card-title">Search Employee</h4>
           <!-- <p class="card-title-desc">Provide valuable, actionable feedback to your users with HTML5 form
             validation–available in all our supported browsers.</p> -->
-          <form class="needs-validation" #f="ngForm" (ngSubmit)="validSubmit(f)">
+          <form class="needs-validation" [formGroup]="validationform" name="validationform">
             <div class="row">
               <div class="col-md-3">
                 <div class="mb-3">
@@ -116,8 +116,8 @@
               </div>
             </div>
             <div>
-              <button class="btn btn-primary" type="submit">Search</button>
-              <button class="btn btn-primary" type="submit">Reset</button>
+              <button class="btn btn-primary" (click)="formSubmit" type="submit">Search</button> &nbsp;
+              <button class="btn btn-primary" type="button" (click)="resetForm()">Reset</button>
             </div>
           </form>
         </div>

@@ -289,7 +289,6 @@ export class DefaultComponent implements OnInit {
       state, zones, relationship, userType, employees, higherAuthoritesBranches, thirdParty,
       cast, bloodGroup, merital, highest_Qualification, designation, identity
     ]).subscribe(result => {
-      debugger
       this.companies = result[0];
       this.branches = result[1];
       this.contries = result[2];
@@ -1082,12 +1081,10 @@ export class DefaultComponent implements OnInit {
   }
 
   fetchHigherAuthorities(id) {
-    debugger
     let higherAuthorities = this.higherAuthorities;
     this.filteredHigherAuthorities = higherAuthorities.filter(x => x.higherAuthorityBranchId == id);
   }
   fetchHigherAuthorityNames(id) {
-    debugger
     let higherAuthorityNames = this.higherAuthorityNames;
     this.filteredHigherAuthorityNames = higherAuthorityNames.filter(x => x.higherAuthorityId == id);
   }
@@ -1111,7 +1108,6 @@ export class DefaultComponent implements OnInit {
 
 
   onThirdPartySelected(id) {
-    debugger
     let thirdParty = this.thirdParty;
 
     this.filetedThirdParty = thirdParty.filter(x => x.thirdPartyType_Id == id);
@@ -1205,7 +1201,6 @@ export class DefaultComponent implements OnInit {
   finallySave() {
   }
   pStatus(value) {
-    debugger;
     if (value == "f") {
       this.isPersonalStatus = false
     } else {
@@ -1214,7 +1209,6 @@ export class DefaultComponent implements OnInit {
   }
 
   onSubmitHrms() {
-    debugger;
     // this.hrmsForm.value.sys_PermanentContactInformationDto = this.permanentContactInformationForm.value;
     // this.hrmsForm.value.sys_CorresspondanceContactInformationDto = this.corresspondanceContactInformationForm.value;
     // this.hrmsForm.value.sys_OtherInformationDto = this.otherInformationForm.value;
@@ -1326,8 +1320,8 @@ export class DefaultComponent implements OnInit {
   }
 
   fetchDesignation(id) {
-    debugger;
-    this.designationsDepartmentList = this.designations.filter(x => x.department_Id == id);
+    var lstDesignations = this.designations;
+    this.designationsDepartmentList = lstDesignations.filter(x => x.department_Id == id);
   }
 
   onBranchChanges(id) {

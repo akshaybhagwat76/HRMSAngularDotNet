@@ -147,7 +147,11 @@ export class ValidationComponent implements OnInit {
     console.warn(value.company);
   }
 
-
+  resetForm() {
+    if (this.validationform != undefined) {
+      this.validationform.reset();
+    }
+  }
   /**
    * returns tooltip validation form
    */

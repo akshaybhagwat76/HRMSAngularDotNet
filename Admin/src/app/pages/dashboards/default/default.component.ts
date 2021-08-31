@@ -540,9 +540,7 @@ export class DefaultComponent implements OnInit {
       professionalDocumentAttachment: new FormArray([]),
       Status_Id: 1
     });
-    this.initEducationalQualification();
-
-
+    // this.initEducationalQualification();
   }
   initEducationalQualification() {
     const EducationalQualificationArray = <FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto'];
@@ -1365,8 +1363,12 @@ export class DefaultComponent implements OnInit {
   }
 
   oiStatus(value) {
+    debugger
     if (value == 'Others') {
       this.isStatusVisible = true;
+    }
+    else {
+      this.isStatusVisible = false;
     }
   }
 

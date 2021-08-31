@@ -19,5 +19,6 @@ namespace Core.Entities
         public string UpdatedFrom_Page { get; set; }
         public int? UpdatedFrom_Sub_Menu_Id { get; set; }
         public string UpdatedFrom_API_Name { get; set; }
+        public int ZoneId { get; set; }
     }
 }

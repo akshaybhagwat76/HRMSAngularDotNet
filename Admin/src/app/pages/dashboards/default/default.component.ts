@@ -201,8 +201,8 @@ export class DefaultComponent implements OnInit {
   designationsDepartmentList: any;
 
   // Educational Information
-  highestQualification: string;
-  qualification: string;
+  highestQualification: string = '0';
+  qualification: string = '0';
   year: number;
   specialization: string;
   school: string;
@@ -540,7 +540,7 @@ export class DefaultComponent implements OnInit {
       professionalDocumentAttachment: new FormArray([]),
       Status_Id: 1
     });
-    this.initEducationalQualification();
+    // this.initEducationalQualification();
 
 
   }
@@ -1365,11 +1365,14 @@ export class DefaultComponent implements OnInit {
   }
 
   oiStatus(value) {
+    debugger
     if (value == 'Others') {
       this.isStatusVisible = true;
     }
+    else {
+      this.isStatusVisible = false;
+    }
   }
-
   keyPressNumbers(event) {
     var charCode = (event.which) ? event.which : event.keyCode;
     // Only Numbers 0-9

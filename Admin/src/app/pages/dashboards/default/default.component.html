@@ -73,7 +73,6 @@
                                             placeholder="Biometric Code" />
                                     </div>
                                 </div>
-
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="eFirstName">First Name<span class="text-danger">*</span></label>
@@ -153,7 +152,6 @@
                                             *Select Designation</div>
                                     </div>
                                 </div>
-
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="eBranch/Project" class="form-label">Higher Authority
@@ -173,7 +171,8 @@
                                     <div class="mb-3">
                                         <label for="higher_AuthorityId" class="form-label">Higher Authority</label>
                                         <select class="form-select" id="higher_AuthorityId"
-                                            formControlName="higher_AuthorityId" (ngModelChange)="fetchHigherAuthorityNames($event)">
+                                            formControlName="higher_AuthorityId"
+                                            (ngModelChange)="fetchHigherAuthorityNames($event)">
                                             <option selected="" disabled="" value="">Choose...</option>
                                             <option *ngFor="let higherAuthority of filteredHigherAuthorities"
                                                 [ngValue]="higherAuthority.id">
@@ -303,7 +302,7 @@
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="reference_Phone_No">Reference Phone No</label>
-                                        <input type="text" autocomplete="off" class="form-control" 
+                                        <input type="text" autocomplete="off" class="form-control"
                                             formControlName="reference_Phone_No" id="reference_Phone_No"
                                             placeholder="Reference Phone No" (keypress)="keyPressNumbers($event)">
                                         <div *ngIf="f.reference_Phone_No.touched && f.reference_Phone_No.invalid"
@@ -774,7 +773,7 @@
                                             Qualification</label>
                                         <select class="form-select" id="eHighestQualification"
                                             [(ngModel)]="highestQualification" [ngModelOptions]="{standalone: true}">
-                                            <option selected="selected" disabled="" value="0">-----SELECT-----</option>
+                                            <option selected="" disabled="" value="0">-----SELECT-----</option>
                                             <option *ngFor="let higesQualification of highestQualifications"
                                                 [ngValue]="higesQualification.highest_Qualification">
                                                 {{higesQualification.highest_Qualification}}
@@ -821,22 +820,22 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="redspecialization"
-                                                    placeholder="Specialization" [(ngModel)]="specialization"
+                                                <input type="text" autocomplete="off" class="form-control"
+                                                    id="redspecialization" placeholder="Specialization"
+                                                    [(ngModel)]="specialization" [ngModelOptions]="{standalone: true}">
+                                            </td>
+                                            <td>
+                                                <input type="text" autocomplete="off" class="form-control"
+                                                    id="redschool" placeholder="School" [(ngModel)]="school"
                                                     [ngModelOptions]="{standalone: true}">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="redschool"
-                                                    placeholder="School" [(ngModel)]="school"
-                                                    [ngModelOptions]="{standalone: true}">
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" id="redboard"
+                                                <input type="text" autocomplete="off" class="form-control" id="redboard"
                                                     placeholder="Board" [(ngModel)]="board"
                                                     [ngModelOptions]="{standalone: true}">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="redmarks"
+                                                <input type="text" autocomplete="off" class="form-control" id="redmarks"
                                                     placeholder="Marks" [(ngModel)]="marks"
                                                     [ngModelOptions]="{standalone: true}"
                                                     (keypress)="keyPressNumbers($event)">
@@ -859,7 +858,6 @@
                                     <thead>
                                         <tr style="background: aliceblue;">
                                             <th scope="col">Sl.No</th>
-                                            <th scope="col">Highest Qualification</th>
                                             <th scope="col">Qualification</th>
                                             <th scope="col">Year</th>
                                             <th scope="col">Specialization</th>
@@ -874,15 +872,16 @@
                                             [formGroupName]="k">
                                             <td>{{k+1}}</td>
                                             <td>
-                                                <select class="form-select" id="redCountryScountryName">
+                                                <!-- <select class="form-select" id="redCountryScountry"
+                                                    formControlName="Qualification">
+                                                    <option selected="" disabled="" value="">Choose...</option>
                                                     <option *ngFor="let higestQualification of highestQualifications"
                                                         [ngValue]="higestQualification.highest_Qualification">
                                                         {{higestQualification.highest_Qualification}}
-                                                </select>
-                                            </td>
-                                            <td>
+                                                </select> -->
                                                 <select class="form-select" id="redCountryScountry"
-                                                    formControlName="Qualification">
+                                                    formControlName="Qualification" [(ngModel)]="qualification">
+                                                    <option selected="selected" disabled="" value="0">MADHYAMIK</option>
                                                     <option *ngFor="let higestQualification of highestQualifications"
                                                         [ngValue]="higestQualification.highest_Qualification">
                                                         {{higestQualification.highest_Qualification}}
@@ -1176,8 +1175,8 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="ePhone">Phone</label>
-                                            <input type="text" autocomplete="off" 
-                                                formControlName="Phone" class="form-control" id="validationPhone"
+                                            <input type="text" autocomplete="off" formControlName="Phone"
+                                                class="form-control" id="validationPhone"
                                                 (keypress)="keyPressNumbers($event)" />
                                         </div>
                                     </div>
@@ -1477,6 +1476,7 @@
                                                     <select id="eIdentityProof" class="form-select"
                                                         [(ngModel)]="identityType"
                                                         [ngModelOptions]="{standalone: true}">
+                                                        <option selected="" disabled="" value="0">PAN</option>
                                                         <option *ngFor="let identityobj of identityList"
                                                             [ngValue]="identityobj.id">
                                                             {{identityobj.identity_Type}}</option>
@@ -1591,29 +1591,25 @@
                                             <label for="eUserId">User Id</label>
                                             <div class="d-flex">
                                                 <div class="custom-control custom-radio custom-control-inline mr-5">
-                                                    <input type="radio" (click)="oiStatus('Emp Code')" id="redEmpCode"
-                                                        value="Emp Code" checked name="ipUserId"
-                                                        class="custom-control-input">
+                                                    <input type="radio" (click)="oiStatus('EmpCode')" id="redEmpCode"
+                                                        value="Emp Code" name="ipUserId" class="custom-control-input">
                                                     <label class="custom-control-label" for="redEmpCode"> Emp
                                                         Code</label>
                                                 </div>
                                                 <div class="custom-control custom-radio custom-control-inline mr-5">
-                                                    <input type="radio" (click)="oiStatus('Mobile No')"
-                                                        value="Mobile No" id="redMobileNo" name="ipUserId"
-                                                        class="custom-control-input">
+                                                    <input type="radio" (click)="oiStatus('MobileNo')" value="Mobile No"
+                                                        id="redMobileNo" name="ipUserId" class="custom-control-input">
                                                     <label class="custom-control-label" for="redMobileNo"> Mobile No
                                                     </label>
                                                 </div>
                                                 <div class="custom-control custom-radio custom-control-inline">
                                                     <input type="radio" (click)="oiStatus('Others')" value="Others"
-                                                        id="redOthers" name="ipUserId" class="custom-control-input"
-                                                        checked>
+                                                        id="redOthers" name="ipUserId" class="custom-control-input">
                                                     <label class="custom-control-label" for="redOthers">Others</label>
                                                 </div>
                                             </div>
-                                            <!-- <input type="text" 
-                        [attr.readonly]="sys_OtherInformationDto.controls.ipUserId.value == 'Others' ? null : ''"
-                        class="form-control" id="validationUserId" /> -->
+                                            <input type="text" autocomplete ="off" [disabled]="!isStatusVisible" class="form-control"
+                                                id="validationUserId" />
                                         </div>
                                     </div>
                                     <div class="col-md-3">

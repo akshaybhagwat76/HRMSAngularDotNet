@@ -60,7 +60,6 @@ export class ValidationComponent implements OnInit {
       this.zones = result[4];
     });
   }
-
   ngOnInit() {
 
     this.fetchData();

@@ -8,10 +8,9 @@ import { Employees } from '../models/employees.models';
 })
 export class EmployeesService {
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getAll() {
-    // 
     return this.http.get<Employees>(`${environment.url}/api/types`);
-}
+  }
 }

@@ -178,7 +178,7 @@ namespace API.Controllers
 
                 if (tbl_Employees.Count > 0 && employeeSearchDTO != null)
                 {
-                    tbl_Employees = tbl_Employees.Where(x => x.IsDeleted && x.IsActive).ToList();
+                    tbl_Employees = tbl_Employees.Where(x => !x.IsDeleted && x.IsActive).ToList();
                     tbl_Employees.WhereIf(employeeSearchDTO.CompanyId > 0, x => x.CompanyId == employeeSearchDTO.CompanyId)
                                  .WhereIf(employeeSearchDTO.DepartmentId > 0, x => x.DepartmentId == employeeSearchDTO.DepartmentId)
                                  .WhereIf(employeeSearchDTO.Project_BranchId > 0, x => x.Project_BranchId == employeeSearchDTO.Project_BranchId)

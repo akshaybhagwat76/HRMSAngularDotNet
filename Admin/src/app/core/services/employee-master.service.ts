@@ -7,10 +7,12 @@ import { environment } from 'src/environments/environment';
 })
 export class EmployeeMasterService {
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   post(data) {
-    debugger;
-    return this.http.post<any>(`${environment.url}/api/EmployeeMaster/AddOrUpdateEmployeeMaster`,data);
-}
+    return this.http.post<any>(`${environment.url}/api/EmployeeMaster/AddOrUpdateEmployeeMaster`, data);
+  }
+  search(data){
+    return this.http.post<any>(`${environment.url}/api/EmployeeMaster/SearchEmployee`, data);
+  }
 }

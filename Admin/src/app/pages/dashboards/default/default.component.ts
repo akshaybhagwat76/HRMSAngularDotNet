@@ -541,8 +541,6 @@ export class DefaultComponent implements OnInit {
       Status_Id: 1
     });
     // this.initEducationalQualification();
-
-
   }
   initEducationalQualification() {
     const EducationalQualificationArray = <FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto'];

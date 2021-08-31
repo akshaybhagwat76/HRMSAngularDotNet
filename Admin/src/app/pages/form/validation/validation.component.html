@@ -16,10 +16,10 @@
               <div class="col-md-3">
                 <div class="mb-3">
                   <label for="validationCompany" class="form-label">Company</label>
-                  <select (change)="selectChangeHandler($event)" class="form-select" id="validationCompany"
-                    name="company" name="company">
-                    <!-- <option selected="" disabled="" value="">Choose...</option> -->
-                    <option *ngFor="let company of companies" [value]="company.compnay_Name">
+                  <select class="form-select" id="validationCompany" name="company" name="company"
+                    formControlName="companyId">
+                    <option selected="" [value]="0">-- All --</option>
+                    <option *ngFor="let company of companies" [value]="company.id">
                       {{company?.compnay_Name}}
                     </option>
                   </select>
@@ -28,8 +28,9 @@
               <div class="col-md-3">
                 <div class="mb-3">
                   <label for="validationZone" class="form-label">Zone</label>
-                  <select class="form-select" id="validationZone" formControlName="zone">
-                    <option selected="" disabled="" value="">---All Zone---</option>
+                  <select class="form-select" id="validationZone" formControlName="zoneId"
+                    (change)="filterBranches($event.target.value)">
+                    <option selected="" [value]="0">-- All Zone--</option>
                     <option *ngFor="let zone of zones" [value]="zone.id" name="zone">
                       {{zone?.zone_Name}}
                     </option>
@@ -39,9 +40,12 @@
               <div class="col-md-3">
                 <div class="mb-3">
                   <label for="validationBranch" class="form-label">Branch</label>
-                  <select class="form-select" id="validationBranch" formControlName="branch">
-                    <option selected="" disabled="" value="">---All Branch---</option>
-                    <option *ngFor="let branch of branches" [value]="branch.id">
+                  <select class="form-select" id="validationBranch" formControlName="project_BranchId"
+                    (change)="filterDepartments($event.target.value)">
+                    <!-- <option selected="" disabled="" value="">Choose...</option> -->
+                    <option selected="" [value]="0">-- All Branch--</option>
+
+                    <option *ngFor="let branch of filteredBranches" [value]="branch.id">
                       {{branch?.branch_Name}}
                     </option>
                   </select>
@@ -50,9 +54,12 @@
               <div class="col-md-3">
                 <div class="mb-3">
                   <label for="validationDepartment" class="form-label">Department</label>
-                  <select class="form-select" id="validationDepartment" formControlName="department">
-                    <option selected="" disabled="" value="">---All Department---</option>
-                    <option *ngFor="let depart of departments" [value]="depart.id">
+                  <select class="form-select" id="validationDepartment" formControlName="departmentId"
+                    (change)="filterDesignation($event.target.value)">
+                    <!-- <option selected="" disabled="" value="">Choose...</option> -->
+                    <option selected="" [value]="0">-- All Department--</option>
+
+                    <option *ngFor="let depart of filteredDepartments" [value]="depart.id">
                       {{depart?.department_Name}}
                     </option>
                   </select>
@@ -63,9 +70,11 @@
               <div class="col-md-3">
                 <div class="mb-3">
                   <label for="validationDesignation" class="form-label">Designation</label>
-                  <select class="form-select" id="validationDesignation" formControlName="designation">
-                    <option selected="" disabled="" value="">---All Designation---</option>
-                    <option *ngFor="let designation of designations" [value]="designation.id">
+                  <select class="form-select" id="validationDesignation" formControlName="designationId">
+                    <!-- <option selected="" disabled="" value="">Choose...</option> -->
+                    <option selected="" [value]="0">-- All Designation--</option>
+
+                    <option *ngFor="let designation of filteredDesignations" [value]="designation.id">
                       {{designation?.designation_Name}}
                     </option>
                   </select>
@@ -99,15 +108,18 @@
                   <label for="validationAadharStatusNominee">Status</label>
                   <div class="d-flex">
                     <div class="custom-control custom-radio custom-control-inline mr-4">
-                      <input type="radio" id="rdoAll" name="rdoAll" class="custom-control-input">
-                      <label class="custom-control-label" for="rdoAadharStatusNominee">All</label>
-                    </div>
+                      <input type="radio" [value]="1" id="rdoStatusAll" name="statusId" class="custom-control-input"
+                        formControlName="statusId">
+                      <label class="custom-control-label" for="rdoStatusAll">All</label>
+                    </div> &nbsp;
                     <div class="custom-control custom-radio custom-control-inline mr-4">
-                      <input type="radio" id="rdoInActive" name="rdoAll" class="custom-control-input">
+                      <input type="radio" [value]="2" id="rdoInActive" name="statusId" class="custom-control-input"
+                        formControlName="statusId">
                       <label class="custom-control-label" for="rdoInActive">In Active</label>
-                    </div>
+                    </div>&nbsp;
                     <div class="custom-control custom-radio custom-control-inline mr-4">
-                      <input type="radio" id="rdoActive" name="rdoAll" class="custom-control-input" checked>
+                      <input type="radio" [value]="3" id="rdoActive" name="statusId" class="custom-control-input"
+                        formControlName="statusId">
                       <label class="custom-control-label" for="rdoActive">Active</label>
                     </div>
                   </div>
@@ -115,7 +127,7 @@
               </div>
             </div>
             <div>
-              <button class="btn btn-primary" (click)="formSubmit" type="submit">Search</button>&nbsp;
+              <button class="btn btn-primary" (click)="formSubmit()" type="submit">Search</button> &nbsp;
               <button class="btn btn-primary" type="button" (click)="resetForm()">Reset</button>
             </div>
           </form>

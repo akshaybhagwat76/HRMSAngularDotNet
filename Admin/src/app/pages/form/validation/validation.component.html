@@ -141,15 +141,15 @@
               <div class="table-responsive">
                 <table class="table table-centered table-nowrap">
                   <thead>
-                    <!-- <tr>
+                    <tr>
                       <td>
                         <div id="ctl00_ContentPlaceHolder1_UpdatePanel1">
-                          <input type="image" name="ctl00$ContentPlaceHolder1$lnkBtnExelExport"
+                          <input type="image" name="ctl00$ContentPlaceHolder1$lnkBtnExelExport" (click)="exportToExcel()"
                             id="ctl00_ContentPlaceHolder1_lnkBtnExelExport" src="assets/images/excel.jpeg"
                             style="height:31px;border-width:0px;">
                         </div>
                       </td>
-                    </tr> -->
+                    </tr>
                     <tr style="background: aliceblue;">
                       <th class="align-middle">SI. No.</th>
                       <th class="align-middle">Company</th>
@@ -183,12 +183,16 @@
                           id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                           src="assets/images/icon_edit.gif" (click)="editEmployee(emp.id)"
                           style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                        <input type="image" *ngIf="validationform.controls.statusId.value==3 || (validationform.controls.statusId.value==1 && emp.status)"
+                        <input type="image"
+                          *ngIf="validationform.controls.statusId.value==3 || (validationform.controls.statusId.value==1 && emp.status)"
                           name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
-                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive" (click)="disableEmployee(emp.id)"
-                          src="assets/images/iconRed.gif" style="border-width:0px;margin-left: 10px;"><br />
-                        <input type="image" *ngIf="validationform.controls.statusId.value==2 ||(validationform.controls.statusId.value==1 && !emp.status)"
-                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive" (click)="enableEmployee(emp.id)"
+                          id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
+                          (click)="disableEmployee(emp.id)" src="assets/images/iconRed.gif"
+                          style="border-width:0px;margin-left: 10px;"><br />
+                        <input type="image"
+                          *ngIf="validationform.controls.statusId.value==2 ||(validationform.controls.statusId.value==1 && !emp.status)"
+                          name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
+                          (click)="enableEmployee(emp.id)"
                           id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
                           src="assets/images/iconGreen.gif" style="border-width:0px;margin-left: 10px;">
                         <input type="image"
@@ -257,17 +261,14 @@
                 <td>demouser2@vehement.in</td>
                 <td>8976564534</td>
                 <td>
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/icon_edit.gif" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
                     src="assets/images/iconRed.gif" style="border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/DeleteIcon.png" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;">
@@ -285,17 +286,14 @@
                 <td>pradipta@vehement.in</td>
                 <td>9831794094</td>
                 <td>
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/icon_edit.gif" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
                     src="assets/images/iconRed.gif" style="border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/DeleteIcon.png" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;">
@@ -313,17 +311,14 @@
                 <td>sk@amajeegroup.com</td>
                 <td>7605074515</td>
                 <td>
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/icon_edit.gif" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
                     src="assets/images/iconRed.gif" style="border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/DeleteIcon.png" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;">
@@ -341,17 +336,14 @@
                 <td>ujjwal.dey@amajeegroup.com</td>
                 <td>7029600515</td>
                 <td>
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/icon_edit.gif" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
                     src="assets/images/iconRed.gif" style="border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/DeleteIcon.png" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;">
@@ -369,17 +361,14 @@
                 <td>amit.gupta@amajeegroup.com</td>
                 <td>91702960051</td>
                 <td>
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/icon_edit.gif" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
                     src="assets/images/iconRed.gif" style="border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/DeleteIcon.png" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;">
@@ -397,17 +386,14 @@
                 <td>abhishekedia@amajeegroup.com</td>
                 <td>91760507451</td>
                 <td>
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/icon_edit.gif" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnActive"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnActive"
                     src="assets/images/iconRed.gif" style="border-width:0px;margin-left: 10px;"><br />
-                  <input type="image"
-                    name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
+                  <input type="image" name="ctl00$ContentPlaceHolder1$RadgdvEmployeeDetails$ctl00$ctl04$ImgbtnEdit"
                     id="ctl00_ContentPlaceHolder1_RadgdvEmployeeDetails_ctl00_ctl04_ImgbtnEdit"
                     src="assets/images/DeleteIcon.png" onclick="target"
                     style="height:25px;width:25px;border-width:0px;margin-left: 10px;">

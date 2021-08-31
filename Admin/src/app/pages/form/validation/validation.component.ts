@@ -10,6 +10,7 @@ import { forkJoin } from 'rxjs';
 import { DesignationsService } from 'src/app/core/services/designations.service';
 import { EmployeesService } from 'src/app/core/services/employees.service';
 import { EmployeeMasterService } from 'src/app/core/services/employee-master.service';
+import { ExportService } from 'src/app/core/services/export.service';
 @Component({
   selector: 'app-validation',
   templateUrl: './validation.component.html',
@@ -20,6 +21,7 @@ import { EmployeeMasterService } from 'src/app/core/services/employee-master.ser
  * Forms Validation component
  */
 export class ValidationComponent implements OnInit {
+  ExcelData = [];
 
   validationform: FormGroup; // bootstrap validation form
   tooltipvalidationform: FormGroup; // bootstrap tooltip validation form
@@ -29,7 +31,7 @@ export class ValidationComponent implements OnInit {
   constructor(public formBuilder: FormBuilder, private getemployeservice: GetemployeService
     , private companyservice: CompanyService, private branch: BranchesService, private department: DepartmentsService,
     private employeetypeService: EmployeesService, private employeeMasterService: EmployeeMasterService,
-    private zone: ZoneService, private designationSerivce: DesignationsService
+    private zone: ZoneService, private designationSerivce: DesignationsService, private excelService: ExportService
   ) { }
   // bread crumb items
   breadCrumbItems: Array<{}>;
@@ -144,6 +146,10 @@ export class ValidationComponent implements OnInit {
     this.rangesubmit = false;
   }
 
+  exportToExcel() {
+    this.excelService.exportExcel(this.ExcelData, "Employees");
+  }
+
   getEmployeeType(id) {
     var type = this.types.find(x => x.id == id);
     if (type !== undefined) {
@@ -236,6 +242,33 @@ export class ValidationComponent implements OnInit {
     }
     this.employeeMasterService.search(searchDto).subscribe((data: any) => {
       this.lstEmployees = data;
+      let _arrayExcel = [];
+
+      if (this.lstEmployees != null && this.lstEmployees.length > 0) {
+        let i = 1;
+        this.lstEmployees.forEach(function (value) {
+          let _dataExcel = {
+            'SI. No.': i,
+            //'TotalOrder': value['totalOrderWithoutDeliveryCharges'],
+            'Company': this.getCompany(value['companyId']),
+            'Employee Type': this.getEmployeeType(value['employee_TypeId']),
+            'Employee Code': value['employeeCode'],
+            'Name': value['firstName'] + " " + value['lastName'],
+            'Address': value['professionalInformation'],
+            'Department': this.getDepartment(value['departmentId']),
+
+            'Designation': this.getDesignation(value['designationId']),
+            'Email Id': value['email'],
+
+            //'Total Amount': value['totalAmountWithoutDeliveryCharges'],
+            'Contact No.': value['reference_Phone_No']
+
+
+          }
+          i++;
+          _arrayExcel.push(_dataExcel);
+        });
+      }
     })
   }
   selectChangeHandler(i: any) {

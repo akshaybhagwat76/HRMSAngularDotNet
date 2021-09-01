@@ -202,7 +202,6 @@ export class ValidationComponent implements OnInit {
    */
   validSubmit(value: any) {
     this.submit = true;
-    console.warn(value.company);
   }
 
   resetForm() {
@@ -268,7 +267,6 @@ export class ValidationComponent implements OnInit {
     })
   }
   selectChangeHandler(i: any) {
-    console.log(i.target.value);
   }
   filterBranches(id) {
     let branches = this.branches;
@@ -329,10 +327,8 @@ export class ValidationComponent implements OnInit {
   }
 
   editEmployee(id) {
-    debugger
   }
   disableEmployee(id) {
-    debugger
     if (confirm('Are you sure?')) {
       this.employeeMasterService.updateStatus(id, false).subscribe((data: any) => {
         if (data != null && data > 0) {
@@ -344,7 +340,6 @@ export class ValidationComponent implements OnInit {
     }
   }
   enableEmployee(id) {
-    debugger
     if (confirm('Are you sure?')) {
       this.employeeMasterService.updateStatus(id, true).subscribe((data: any) => {
         if (data != null && data > 0) {
@@ -356,7 +351,6 @@ export class ValidationComponent implements OnInit {
     }
   }
   deleteEmployee(id) {
-    debugger
     if (confirm('Are you sure to delete this record?')) {
       this.employeeMasterService.delete(id).subscribe((data: any) => {
         if (data != null && data > 0) {

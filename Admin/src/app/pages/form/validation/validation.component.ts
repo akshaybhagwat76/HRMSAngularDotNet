@@ -41,7 +41,7 @@ export class ValidationComponent implements OnInit {
   formsubmit: boolean;
   typesubmit: boolean;
   rangesubmit: boolean;
-
+  isDropdownLoaded: boolean = true;
   companies: any;
   branches: any;
   zones: any;
@@ -74,6 +74,7 @@ export class ValidationComponent implements OnInit {
       if (this.companies && this.companies.length > 0) {
         this.validationform.get('companyId').setValue(4);
       }
+      this.isDropdownLoaded = false;
     });
   }
   ngOnInit() {

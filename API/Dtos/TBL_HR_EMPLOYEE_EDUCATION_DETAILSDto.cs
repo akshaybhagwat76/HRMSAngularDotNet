@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 namespace API.Dtos
 {
     public class TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto
@@ -13,6 +12,7 @@ namespace API.Dtos
         public string Board { get; set; }
         public string Marks { get; set; }
         public string Remarks { get; set; }
+        public bool IsDeleted { get; set; }
         public List<TBL_Educational_Qualification_AttachementsDto> Attachments { get; set; }
     }
 }

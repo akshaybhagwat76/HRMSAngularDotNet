@@ -1,12 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Core.Entities
 {
     [Table("tBL_HR_EMPLOYEE_EDUCATION_DETAILs")]
     public class TBL_HR_EMPLOYEE_EDUCATION_DETAILS : BaseEntity, IAuditableEntity
     {
         public int Employee_Id { get; set; }
+        public bool IsDeleted { get; set; }
         public int Emp_Year_OF_Passing { get; set; }
         public string Qualification { get; set; }
         public string Specialization { get; set; }

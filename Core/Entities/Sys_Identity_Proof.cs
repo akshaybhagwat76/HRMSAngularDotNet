@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-
 namespace Core.Entities
 {
     [Table("tbl_Identity_Proof")]
@@ -27,5 +24,6 @@ namespace Core.Entities
         public int? UpdatedFrom_Sub_Menu_Id { get; set; }
         public string UpdatedFrom_API_Name { get; set; }
         public int OtherInformationId { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

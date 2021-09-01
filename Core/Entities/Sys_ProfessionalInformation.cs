@@ -1,12 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Core.Entities
 {
     [Table("tbl_ProfessionalInformation")]
     public class Sys_ProfessionalInformation : BaseEntity, IAuditableEntity
     {
         public int Status_Id { get; set; }
+        public bool IsDeleted { get; set; }
         public string EmployeerName { get; set; }
         public string EmployeerAddress { get; set; }
         public string Designation { get; set; }

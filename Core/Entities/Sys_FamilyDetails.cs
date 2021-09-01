@@ -6,6 +6,7 @@ namespace Core.Entities
     public class Sys_FamilyDetails : BaseEntity, IAuditableEntity
     {
         public int Employee_Id { get; set; }
+        public bool IsDeleted { get; set; }
         public int? FamilyDetail_RelationshipId { get; set; }
         public string FamilyDetail_Name { get; set; }
         public string FamilyDetail_Mobile { get; set; }

@@ -244,31 +244,26 @@ export class ValidationComponent implements OnInit {
     this.employeeMasterService.search(searchDto).subscribe((data: any) => {
       this.lstEmployees = data;
       let _arrayExcel = [];
-
       if (this.lstEmployees != null && this.lstEmployees.length > 0) {
         let i = 1;
-        this.lstEmployees.forEach(function (value) {
+        Array.from(this.lstEmployees).forEach(value => {
           let _dataExcel = {
             'SI. No.': i,
-            //'TotalOrder': value['totalOrderWithoutDeliveryCharges'],
             'Company': this.getCompany(value['companyId']),
             'Employee Type': this.getEmployeeType(value['employee_TypeId']),
             'Employee Code': value['employeeCode'],
             'Name': value['firstName'] + " " + value['lastName'],
             'Address': value['professionalInformation'],
             'Department': this.getDepartment(value['departmentId']),
-
             'Designation': this.getDesignation(value['designationId']),
             'Email Id': value['email'],
-
-            //'Total Amount': value['totalAmountWithoutDeliveryCharges'],
             'Contact No.': value['reference_Phone_No']
-
-
           }
           i++;
           _arrayExcel.push(_dataExcel);
         });
+
+        this.ExcelData = _arrayExcel;
       }
     })
   }
@@ -334,9 +329,10 @@ export class ValidationComponent implements OnInit {
   }
 
   editEmployee(id) {
-
+    debugger
   }
   disableEmployee(id) {
+    debugger
     if (confirm('Are you sure?')) {
       this.employeeMasterService.updateStatus(id, false).subscribe((data: any) => {
         if (data != null && data > 0) {
@@ -348,6 +344,7 @@ export class ValidationComponent implements OnInit {
     }
   }
   enableEmployee(id) {
+    debugger
     if (confirm('Are you sure?')) {
       this.employeeMasterService.updateStatus(id, true).subscribe((data: any) => {
         if (data != null && data > 0) {
@@ -359,6 +356,7 @@ export class ValidationComponent implements OnInit {
     }
   }
   deleteEmployee(id) {
+    debugger
     if (confirm('Are you sure to delete this record?')) {
       this.employeeMasterService.delete(id).subscribe((data: any) => {
         if (data != null && data > 0) {

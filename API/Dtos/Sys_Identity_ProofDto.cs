@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 namespace API.Dtos
 {
     public class Sys_Identity_ProofDto : BaseDto
@@ -9,6 +8,7 @@ namespace API.Dtos
         public string Identity_No { get; set; }
         public List<TBL_Identity_Proof_AttachementsDto> Attachments { set; get; }
         public DateTime Valid_Upto { get; set; }
+        public bool IsDeleted { get; set; }
         public int OtherInformationId { get; set; }
     }
 }

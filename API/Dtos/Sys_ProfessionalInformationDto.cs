@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-
 namespace API.Dtos
 {
     public class Sys_ProfessionalInformationDto : BaseDto
     {
         public string EmployeerName { get; set; }
+        public bool IsDeleted { get; set; }
         public string EmployeerAddress { get; set; }
         public string Designation { get; set; }
         public string ContactPerson { get; set; }

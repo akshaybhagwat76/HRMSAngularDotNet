@@ -22,6 +22,6 @@ export class EmployeeMasterService {
     return this.http.get<any>(`${environment.url}/api/EmployeeMaster/DeleteEmployee?employeeId=${id}`);
   }
   updateStatus(id, status) {
-    return this.http.get<any>(`${environment.url}/api/EmployeeMaster/DeleteEmployee?employeeId=${id}&status=${status}`);
+    return this.http.get<any>(`${environment.url}/api/EmployeeMaster/UpdateStatus?employeeId=${id}&status=${status}`);
   }
 }

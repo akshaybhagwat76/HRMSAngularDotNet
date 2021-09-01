@@ -1,10 +1,10 @@
 ﻿using System;
-
 namespace API.Dtos
 {
     public class Sys_FamilyDetailsDto : BaseDto
     {
         public int Employee_Id { get; set; }
+        public bool IsDeleted { get; set; }
         public int? FamilyDetail_RelationshipId { get; set; }
         public string FamilyDetail_Name { get; set; }
         public string FamilyDetail_Mobile { get; set; }

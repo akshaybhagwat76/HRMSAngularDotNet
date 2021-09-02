@@ -63,8 +63,9 @@ namespace API.Controllers
                 {
                     employeeMaster = await _unitOfWork.Repository<Sys_EmployeeMaster>().GetByIdAsync(EmployeeMasterDto.Id);
                     employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
-
                     _unitOfWork.Repository<Sys_EmployeeMaster>().Update(employeeMaster);
+                    result = 1;
+
                 }
                 if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employeemaster"));
                 else
@@ -388,9 +389,9 @@ namespace API.Controllers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             return Ok(sys_EmployeeMaster);
         }
@@ -947,13 +948,18 @@ namespace API.Controllers
         public int GetLastRecordFromTable(string tableName)
         {
             int letestInformationId = 0;
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = cn;
-            cn.Open();
-            SqlCommand command = new SqlCommand($"select top 1 Id from {tableName} order by Id desc", cn);
-            if (!string.IsNullOrEmpty(command.ExecuteScalar().ToString()))
+            using (SqlConnection Con = new SqlConnection(_configuration.GetValue<string>("ConnectionStrings:FreelencerDB")))
             {
-                letestInformationId = Convert.ToInt32(command.ExecuteScalar());
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = Con;
+                if (Con != null && Con.State == ConnectionState.Closed)
+                    Con.Open();
+                SqlCommand command = new SqlCommand($"select top 1 Id from {tableName} order by Id desc", Con);
+                if (!string.IsNullOrEmpty(command.ExecuteScalar() + ""))
+                {
+                    letestInformationId = Convert.ToInt32(command.ExecuteScalar());
+                }
             }
             return letestInformationId;
         }

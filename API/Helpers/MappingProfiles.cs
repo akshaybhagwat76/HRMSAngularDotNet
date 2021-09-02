@@ -43,6 +43,7 @@ namespace API.Helpers
             CreateMap<Sys_PermanentContactInformation, Sys_PermanentContactInformationDto>().ReverseMap();
             CreateMap<Sys_CorresspondanceContactInformation, Sys_CorresspondanceContactInformationDto>().ReverseMap();
             CreateMap<Sys_OtherInformation, Sys_OtherInformationDto>().ReverseMap();
+            CreateMap<Sys_Identity_Proof, Sys_Identity_ProofDto>().ReverseMap();
 
         }
     }

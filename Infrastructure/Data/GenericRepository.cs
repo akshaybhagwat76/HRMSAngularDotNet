@@ -18,7 +18,7 @@ namespace Infrastructure.Data
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         public async Task<IReadOnlyList<T>> ListAllAsync()
@@ -58,6 +58,7 @@ namespace Infrastructure.Data
         {
             _context.Set<T>().Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public void Delete(T entity)

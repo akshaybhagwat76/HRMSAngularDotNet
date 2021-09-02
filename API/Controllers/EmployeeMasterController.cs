@@ -26,8 +26,9 @@ namespace API.Controllers
         private readonly IUnitOfWork _unitOfWork;
         readonly IConfiguration _configuration;
         private readonly StoreContext _storeContext;
-
+        public Boolean isRollBacked = false;
         public SqlConnection cn = null;
+        SqlTransaction tr = null;
         #endregion
 
         #region Constructor
@@ -45,7 +46,6 @@ namespace API.Controllers
         [HttpPost("AddOrUpdateEmployeeMaster")]
         public async Task<ActionResult<Sys_EmployeeMasterDto>> AddOrUpdateEmployeeMaster(Sys_EmployeeMasterDto EmployeeMasterDto)
         {
-            SqlTransaction tr = null;
             await cn.OpenAsync();
             tr = cn.BeginTransaction();
             try
@@ -148,7 +148,14 @@ namespace API.Controllers
                         }
                     }
                     catch (Exception) { }
-                    await tr.CommitAsync();
+                    if (!isRollBacked)
+                    {
+                        await tr.CommitAsync();
+                    }
+                    else
+                    {
+                        return BadRequest(new ApiResponse(400, "Problem submitting employee master details"));
+                    }
                     return _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(employeeMaster);
                 }
             }
@@ -436,7 +443,9 @@ namespace API.Controllers
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message.ToString());
+                await tr.RollbackAsync();
+                isRollBacked = true;
+                throw new Exception(exception.Message.ToString());
             }
         }
         #endregion
@@ -527,7 +536,9 @@ namespace API.Controllers
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message.ToString());
+                await tr.RollbackAsync();
+                isRollBacked = true;
+                throw new Exception(exception.Message.ToString());
             }
         }
         #endregion
@@ -619,7 +630,9 @@ namespace API.Controllers
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message.ToString());
+                await tr.RollbackAsync();
+                isRollBacked = true;
+                throw new Exception(exception.Message.ToString());
             }
         }
         #endregion
@@ -662,7 +675,9 @@ namespace API.Controllers
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message.ToString());
+                await tr.RollbackAsync();
+                isRollBacked = true;
+                throw new Exception(exception.Message.ToString());
             }
         }
         #endregion
@@ -697,7 +712,9 @@ namespace API.Controllers
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message.ToString());
+                await tr.RollbackAsync();
+                isRollBacked = true;
+                throw new Exception(exception.Message.ToString());
             }
         }
         #endregion
@@ -732,7 +749,9 @@ namespace API.Controllers
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message.ToString());
+                await tr.RollbackAsync();
+                isRollBacked = true;
+                throw new Exception(exception.Message.ToString());
             }
         }
         #endregion
@@ -782,7 +801,7 @@ namespace API.Controllers
                             if (resultIdentity_Proof <= 0) { return BadRequest(new ApiResponse(400, "Problem creating OtherInformation")); }
                             else
                             {
-                                int identityProofId = GetLastRecordFromTable(Messages.tBL_HR_EMPLOYEE_IDENTITYPROOF_DETAILs);
+                                int identityProofId = GetLastRecordFromTable(Messages.tbl_Identity_Proof);
                                 if (Sys_Identity_Proof.Attachments != null && Sys_Identity_Proof.Attachments.Count > 0)
                                 {
                                     foreach (TBL_Identity_Proof_AttachementsDto TBL_Identity_Proof_Attachements in Sys_Identity_Proof.Attachments)
@@ -874,7 +893,9 @@ namespace API.Controllers
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message.ToString());
+                await tr.RollbackAsync();
+                isRollBacked = true;
+                throw new Exception(exception.Message.ToString());
             }
         }
         #endregion
@@ -1002,7 +1023,7 @@ namespace API.Controllers
                     Directory.CreateDirectory(hrDir);
                 }
 
-                String dirPath = Path.GetFullPath(Messages.wwwroot) + Messages.assethr + employeeId.ToString() + "/";
+                String dirPath = Path.GetFullPath(Messages.wwwroot) + Messages.assethr + "/" + employeeId.ToString() + "/";
                 if (!Directory.Exists(dirPath))
                 {
                     Directory.CreateDirectory(dirPath);

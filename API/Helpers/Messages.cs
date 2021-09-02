@@ -13,6 +13,7 @@
         public const string tBL_HR_EMPLOYEE_EXPERIENCE_DETAILs = "tBL_HR_EMPLOYEE_EXPERIENCE_DETAILs";
         public const string tBL_HR_EMPLOYEE_FAMILY_DETAILs = "tBL_HR_EMPLOYEE_FAMILY_DETAILs";
         public const string tBL_HR_EMPLOYEE_IDENTITYPROOF_DETAILs = "tBL_HR_EMPLOYEE_IDENTITYPROOF_DETAILs";
+        public const string tbl_Identity_Proof = "tbl_Identity_Proof";
         public const string tBL_HR_EMPLOYEE_NOMINEE_DETAILs = "tBL_HR_EMPLOYEE_NOMINEE_DETAILs";
         public const string tbl_OtherInformation = "tbl_OtherInformation";
         public const string tbl_PermanentContactInformation = "tbl_PermanentContactInformation";

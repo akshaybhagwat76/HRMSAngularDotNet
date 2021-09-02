@@ -10,7 +10,6 @@ namespace API.Dtos
         public int Identity_Proof_Id { get; set; }
         public int EmployeeId { get; set; }
         public string IdentityType { get; set; }
-        public string EmployeeName { get; set; }
         public string DocumentType { get; set; }
         public string DocumentUrl { get; set; }
         public DateTime CreatedOn_Date { get; set; }

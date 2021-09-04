@@ -257,7 +257,7 @@ export class DefaultComponent implements OnInit {
   _documentPreviewUrl: any = null;
   piDocumentPreviewUrl: any = null;
 
-  isStatusVisible = false;
+  isStatusVisible = true;
 
   public fetchData() {
     const companies = this.companyService.getAll();
@@ -584,8 +584,6 @@ export class DefaultComponent implements OnInit {
 
   // Add Family details
   addfamilyDetailsArr() {
-    // console.log(this.fName);
-    // console.log(this.FamilyDetail_RelationshipId);
     if (this.fName && this.FamilyDetail_RelationshipId) {
       this.familyForm = this.formBuilder.group({
         FamilyDetail_Name: [this.fName],
@@ -1027,7 +1025,7 @@ export class DefaultComponent implements OnInit {
   }
 
   addFamilyDetails() {
-    console.log(this.validationform.value);
+    //console.log(this.validationform.value);
   }
 
   forCompany() {
@@ -1078,7 +1076,6 @@ export class DefaultComponent implements OnInit {
   }
 
   onOptionsSelected(event, target) {
-    debugger;
     let zonest = this.zones;
     if (target == 'per') {
       this.countryZones = zonest.filter(x => x.country_Id == event);
@@ -1306,7 +1303,6 @@ export class DefaultComponent implements OnInit {
   getEmployeeDetails() {
     let employeeId = 6;
     this.employeeMasterService.get(employeeId).subscribe((result: any) => {
-      console.log("getEmployeeDetails", result);
 
       // sys_PermanentContactInformationDto
       var sys_PermanentContactInformationDto = this.hrmsForm.controls['sys_PermanentContactInformationDto'];
@@ -1490,18 +1486,7 @@ export class DefaultComponent implements OnInit {
           });
           (<FormArray>this.hrmsForm.get('sys_ProfessionalInformations')).push(ProfessionalInformations);
         });
-
-
-       
-
-
       }
-
-
-
-
-      debugger;
-
     })
   }
 
@@ -1723,7 +1708,6 @@ export class DefaultComponent implements OnInit {
       //   ]
       // }
     }
-    debugger;
     this.employeeMasterService.post(inputModel).subscribe((resp: any) => {
     })
   }
@@ -1761,13 +1745,13 @@ export class DefaultComponent implements OnInit {
   sameAsAbove(event) {
     if (event.target.checked) {
       this.hrmsForm.get('sys_CorresspondanceContactInformationDto').patchValue({
-        'Address': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('Address').value,
-        'Address1': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('Address1').value,
-        'Country': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('Country').value,
-        'Zone': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('Zone').value,
-        'State': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('State').value,
-        'City': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('City').value,
-        'Pin': this.hrmsForm.get('sys_CorresspondanceContactInformationDto').get('Pin').value,
+        'Address': this.hrmsForm.get('sys_PermanentContactInformationDto').get('Address').value,
+        'Address1': this.hrmsForm.get('sys_PermanentContactInformationDto').get('Address1').value,
+        'Country': this.hrmsForm.get('sys_PermanentContactInformationDto').get('Country').value,
+        'Zone': this.hrmsForm.get('sys_PermanentContactInformationDto').get('Zone').value,
+        'State': this.hrmsForm.get('sys_PermanentContactInformationDto').get('State').value,
+        'City': this.hrmsForm.get('sys_PermanentContactInformationDto').get('City').value,
+        'Pin': this.hrmsForm.get('sys_PermanentContactInformationDto').get('Pin').value,
       });
     } else {
       this.hrmsForm.get('sys_CorresspondanceContactInformationDto').patchValue({
@@ -1794,7 +1778,6 @@ export class DefaultComponent implements OnInit {
   }
 
   oiStatus(value) {
-    debugger
     if (value == 'Others') {
       this.isStatusVisible = true;
     }

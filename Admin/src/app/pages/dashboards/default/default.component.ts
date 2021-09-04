@@ -460,7 +460,7 @@ export class DefaultComponent implements OnInit {
   }
   fbBuilder() {
     this.hrmsForm = this.fb.group({
-      employeeId : ['', [Validators.required]],
+      employeeId: ['', [Validators.required]],
       companyId: ['', [Validators.required]],
       employeeCategoryId: [''],
       employeeCode: [''],
@@ -494,8 +494,8 @@ export class DefaultComponent implements OnInit {
       blood_GroupId: [''],
       marital_StatusId: ['', [Validators.required]],
       identification_Mark: [''],
-      highestQualification:[''],
-      professionalInformation:[''],
+      highestQualification: [''],
+      professionalInformation: [''],
       sys_FamilyDetailsDto: new FormArray([]),
       tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto: new FormArray([]),
       sys_EducationalQualificationDto: new FormArray([]),
@@ -1320,7 +1320,7 @@ export class DefaultComponent implements OnInit {
         });
 
 
-        // sys_CorresspondanceContactInformationDto
+      // sys_CorresspondanceContactInformationDto
       var sys_CorresspondanceContactInformationDto = this.hrmsForm.controls['sys_CorresspondanceContactInformationDto'];
       if (result.sys_CorresspondanceContactInformationDto)
         sys_CorresspondanceContactInformationDto.patchValue({
@@ -1338,32 +1338,30 @@ export class DefaultComponent implements OnInit {
           MobileNo2: [result.sys_CorresspondanceContactInformationDto.mobileNo2],
         });
 
-
-
-         // sys_OtherInformationDto
-         var sys_OtherInformationDto = this.hrmsForm.controls['sys_OtherInformationDto'];
-         if (result.sys_OtherInformationDto)
-         sys_OtherInformationDto.patchValue({
-             Id: [result.sys_OtherInformationDto.id],
-             Bank_Name: [result.sys_OtherInformationDto.bank_Name],
-             Branch_Name: [result.sys_OtherInformationDto.branch_Name],
-             Account_No: [result.sys_OtherInformationDto.account_No],
-             IFSC_Code: [result.sys_OtherInformationDto.ifsC_Code],
-             Status: [result.sys_OtherInformationDto.status],
-             Other_Details: [result.sys_OtherInformationDto.other_Details],
-             Card_No: [result.sys_OtherInformationDto.card_No],
-             CarProxy_Nod_No: [result.sys_OtherInformationDto.carProxy_Nod_No],
-             User_Type: [result.sys_OtherInformationDto.user_Type],
-             SignatureFile: [result.sys_OtherInformationDto.signatureFile],
-             PictureFile: [result.sys_OtherInformationDto.pictureFile],
-             Employee_Id: [result.sys_OtherInformationDto.employee_Id]
-           });
+      // sys_OtherInformationDto
+      var sys_OtherInformationDto = this.hrmsForm.controls['sys_OtherInformationDto'];
+      if (result.sys_OtherInformationDto)
+        sys_OtherInformationDto.patchValue({
+          Id: [result.sys_OtherInformationDto.id],
+          Bank_Name: [result.sys_OtherInformationDto.bank_Name],
+          Branch_Name: [result.sys_OtherInformationDto.branch_Name],
+          Account_No: [result.sys_OtherInformationDto.account_No],
+          IFSC_Code: [result.sys_OtherInformationDto.ifsC_Code],
+          Status: [result.sys_OtherInformationDto.status],
+          Other_Details: [result.sys_OtherInformationDto.other_Details],
+          Card_No: [result.sys_OtherInformationDto.card_No],
+          CarProxy_Nod_No: [result.sys_OtherInformationDto.carProxy_Nod_No],
+          User_Type: [result.sys_OtherInformationDto.user_Type],
+          SignatureFile: [result.sys_OtherInformationDto.signatureFile],
+          PictureFile: [result.sys_OtherInformationDto.pictureFile],
+          Employee_Id: [result.sys_OtherInformationDto.employee_Id]
+        });
 
 
 
 
       this.hrmsForm.patchValue({
-        employeeId : result.id,
+        employeeId: result.id,
         companyId: result.companyId,
         employeeCategoryId: result.employeeCategoryId,
         employeeCode: result.employeeCode,
@@ -1498,36 +1496,36 @@ export class DefaultComponent implements OnInit {
       // "remarks": this.hrmsForm.controls.remarks.value,
       // "action_Remarks": this.hrmsForm.controls.action_Remarks.value,
       "companyId": Number(this.hrmsForm.controls.companyId.value),
-      "employeeCategoryId":  Number(this.hrmsForm.controls.employeeCategoryId.value),
+      "employeeCategoryId": Number(this.hrmsForm.controls.employeeCategoryId.value),
       "employeeCode": this.hrmsForm.controls.employeeCode.value,
       "biometricCode": this.hrmsForm.controls.biometricCode.value,
       "firstName": this.hrmsForm.controls.firstName.value,
       "middleName": this.hrmsForm.controls.middleName.value,
       "lastName": this.hrmsForm.controls.lastName.value,
       "email": this.hrmsForm.controls.email.value,
-      "project_BranchId":  Number(this.hrmsForm.controls.project_BranchId.value),
-      "departmentId":  Number(this.hrmsForm.controls.departmentId.value),
-      "designationId":  Number(this.hrmsForm.controls.designationId.value),
-      "higher_Authority_Branch_ProjectId":  Number(this.hrmsForm.controls.higher_Authority_Branch_ProjectId.value),
-      "higher_AuthorityId":  Number(this.hrmsForm.controls.higher_AuthorityId.value),
-      "higher_Authority_NameId":  Number(this.hrmsForm.controls.higher_Authority_NameId.value),
+      "project_BranchId": Number(this.hrmsForm.controls.project_BranchId.value),
+      "departmentId": Number(this.hrmsForm.controls.departmentId.value),
+      "designationId": Number(this.hrmsForm.controls.designationId.value),
+      "higher_Authority_Branch_ProjectId": Number(this.hrmsForm.controls.higher_Authority_Branch_ProjectId.value),
+      "higher_AuthorityId": Number(this.hrmsForm.controls.higher_AuthorityId.value),
+      "higher_Authority_NameId": Number(this.hrmsForm.controls.higher_Authority_NameId.value),
       "date_Of_Joining": this.hrmsForm.controls.date_Of_Joining.value,
-      "employee_TypeId":  Number(this.hrmsForm.controls.employee_TypeId.value),
+      "employee_TypeId": Number(this.hrmsForm.controls.employee_TypeId.value),
       "mobile_No": this.hrmsForm.controls.mobile_No.value,
-      "third_Party_Type":  Number(this.hrmsForm.controls.third_Party_Type.value),
-      "third_Party_Id":  Number(this.hrmsForm.controls.third_Party_Id.value),
-      "working_StatusId":  Number(this.hrmsForm.controls.working_StatusId.value),
-      "probation_Period":  Number(this.hrmsForm.controls.probation_Period.value),
+      "third_Party_Type": Number(this.hrmsForm.controls.third_Party_Type.value),
+      "third_Party_Id": Number(this.hrmsForm.controls.third_Party_Id.value),
+      "working_StatusId": Number(this.hrmsForm.controls.working_StatusId.value),
+      "probation_Period": Number(this.hrmsForm.controls.probation_Period.value),
       "referenceEmployeeName": this.hrmsForm.controls.referenceEmployeeName.value,
       "reference_Phone_No": this.hrmsForm.controls.reference_Phone_No.value,
       "date_Of_Birth": this.hrmsForm.controls.date_Of_Birth.value,
       "gender": this.hrmsForm.controls.gender.value,
       "nationality": this.hrmsForm.controls.nationality.value,
       "religion": this.hrmsForm.controls.religion.value,
-      "castId":  Number(this.hrmsForm.controls.castId.value),
-      "physicalDisability":  this.hrmsForm.controls.physicalDisability.value,
-      "blood_GroupId":  Number(this.hrmsForm.controls.blood_GroupId.value),
-      "marital_StatusId":  Number(this.hrmsForm.controls.marital_StatusId.value),
+      "castId": Number(this.hrmsForm.controls.castId.value),
+      "physicalDisability": this.hrmsForm.controls.physicalDisability.value,
+      "blood_GroupId": Number(this.hrmsForm.controls.blood_GroupId.value),
+      "marital_StatusId": Number(this.hrmsForm.controls.marital_StatusId.value),
       "identification_Mark": this.hrmsForm.controls.identification_Mark.value,
       // "status": this.hrmsForm.controls.status.value,
       "professionalInformation": this.hrmsForm.controls.professionalInformation.value,

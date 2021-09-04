@@ -580,7 +580,7 @@
                                             <td><select class="form-select" id="familyDetails"
                                                     formControlName="FamilyDetail_RelationshipId" disabled>
                                                     <option *ngFor="let relation of relationShip"
-                                                        [ngValue]="relation.id">
+                                                        value="{{relation.id}}">
                                                         {{relation.relationShip_Name}}
                                                 </select>
                                             </td>
@@ -1015,7 +1015,7 @@
                                                 (ngModelChange)="onOptionsSelected($event,'per')"
                                                 formControlName="Country">
                                                 <option selected="" disabled="" value="">Choose...</option>
-                                                <option *ngFor="let CountryS of contries" [ngValue]="CountryS.id">
+                                                <option *ngFor="let CountryS of contries" value="{{CountryS.id}}">
                                                     {{CountryS.country_Name}}
                                             </select>
                                             <div *ngIf="pcInfo.Country.hasError('required') && pcInfo.Country.touched"
@@ -1030,7 +1030,7 @@
                                             <select class="form-select" id="eZone"
                                                 (ngModelChange)="OptionsSelected($event,'per')" formControlName="Zone">
                                                 <option selected="" disabled="" value="">Choose...</option>
-                                                <option *ngFor="let zone of countryZones" [ngValue]="zone.id">
+                                                <option *ngFor="let zone of countryZones" value="{{zone.id}}">
                                                     {{zone.zone_Name}}
                                             </select>
                                             <div *ngIf="pcInfo.Zone.hasError('required') && pcInfo.Zone.touched"
@@ -1047,7 +1047,7 @@
                                                     class="text-danger">*</span></label>
                                             <select class="form-select" id="redcntstateName" formControlName="State">
                                                 <option selected="" disabled="" value="">Choose...</option>
-                                                <option *ngFor="let stP of PerFilteredStates" [ngValue]="stP.id">
+                                                <option *ngFor="let stP of PerFilteredStates" value="{{stP.id}}">
                                                     {{stP.state_Name}}
                                             </select>
                                             <div *ngIf="pcInfo.State.hasError('required') && pcInfo.State.touched"
@@ -1117,7 +1117,7 @@
                                                 (ngModelChange)="onOptionsSelected($event,'curr')"
                                                 formControlName="Country">
                                                 <option selected="" disabled="" value="">Choose...</option>
-                                                <option *ngFor="let cnt of contries" [ngValue]="cnt.id">
+                                                <option *ngFor="let cnt of contries" value="{{cnt.id}}">
                                                     {{cnt.country_Name}}
                                             </select>
                                         </div>
@@ -1129,7 +1129,7 @@
                                             <select class="form-select" id="redZone" formControlName="Zone"
                                                 (ngModelChange)="OptionsSelected($event,'curr')">
                                                 <option selected="" disabled="" value="">Choose...</option>
-                                                <option *ngFor="let zn of corresspondCountryZone" [ngValue]="zn.id">
+                                                <option *ngFor="let zn of corresspondCountryZone" value="{{zn.id}}">
                                                     {{zn.zone_Name}}
                                             </select>
                                             <div *ngIf="ccInfo.Zone.hasError('required') && ccInfo.Zone.touched"
@@ -1145,7 +1145,7 @@
                                                     class="text-danger">*</span></label>
                                             <select class="form-select" id="redcntcountryName" formControlName="State">
                                                 <option selected="" disabled="" value="">Choose...</option>
-                                                <option *ngFor="let stC of PerFilteredStates" [ngValue]="stC.id">
+                                                <option *ngFor="let stC of PerFilteredStates" value="{{stC.id}}">
                                                     {{stC.state_Name}}
                                             </select>
                                             <div *ngIf="ccInfo.State.hasError('required') && ccInfo.State.touched"
@@ -1478,7 +1478,7 @@
                                                         [ngModelOptions]="{standalone: true}">
                                                         <option selected="" disabled="" value="0">PAN</option>
                                                         <option *ngFor="let identityobj of identityList"
-                                                            [ngValue]="identityobj.id">
+                                                            value="{{identityobj.id}}">
                                                             {{identityobj.identity_Type}}</option>
                                                     </select>
                                                 </td>

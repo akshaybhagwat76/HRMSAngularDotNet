@@ -81,6 +81,13 @@ import { DesignationsService } from 'src/app/core/services/designations.service'
 import { EmployeeMasterService } from 'src/app/core/services/employee-master.service';
 import { IdentityTypeService } from 'src/app/core/services/identity-type.service';
 import { CompanyMaster } from 'src/app/core/models/company-master.models';
+import {
+  EmployeeFormData, Basicdetailsdtls, FamilyDetailsDto, EducationalQualificationDto, Educationattachmentsdata,
+  HR_EMPLOYEE_NOMINEE_DETAILSDto, PermanentContactInformationDto, ProfessionalInformations, Profattachmentsdata,
+  CorresspondanceContactInformationDto, OtherInformationDto, IdentityProofs,
+  IdentityProofsattachments
+} from '../../../core/models/EmployeeFormData';
+import { EmployeedataService } from '../../../core/services/employeedata.service';
 
 @Component({
   moduleId: "",
@@ -93,6 +100,19 @@ export class DefaultComponent implements OnInit {
   validationform: FormGroup; // bootstrap validation form
   validationformNominee: FormGroup;
   validationFamily: FormGroup;
+
+  
+  employeeformdata: EmployeeFormData;
+  //Employee Data variables
+  basicdetails: Basicdetailsdtls;
+  FamilyDetails: FamilyDetailsDto;
+  EducationalQualification: EducationalQualificationDto;
+  NOMINEE_DETAILS: HR_EMPLOYEE_NOMINEE_DETAILSDto;
+  PermanentContact: PermanentContactInformationDto;
+  ProfessionalInf: ProfessionalInformations;
+  CorresspondanceContact: CorresspondanceContactInformationDto;
+  OtherInformation: OtherInformationDto;
+
   // Form submition
 
   submit: boolean;
@@ -135,7 +155,8 @@ export class DefaultComponent implements OnInit {
     private fb: FormBuilder,
     private designationService: DesignationsService,
     private identityService: IdentityTypeService,
-    private http: HttpClient
+    private employeedataservice: EmployeedataService,
+    private http: HttpClient,
   ) { }
   companies: any;
   branches: any;
@@ -372,6 +393,22 @@ export class DefaultComponent implements OnInit {
     // this.forCategories();
     //this.typiesEmp();
     // this.forHigherAuthorityNames();
+    this.basicdetails = this.employeedataservice.getEmployeeBasicData();
+    this.FamilyDetails = this.employeedataservice.getFamilyDetails();
+    this.EducationalQualification = this.employeedataservice.getEducationalQualification();
+    this.NOMINEE_DETAILS = this.employeedataservice.getHR_EMPLOYEE_NOMINEE_DETAILS();
+    this.PermanentContact = this.employeedataservice.getPermanentContactInformation();
+    this.ProfessionalInf = this.employeedataservice.getProfessionalInformations();
+    this.CorresspondanceContact = this.employeedataservice.getCorresspondanceContactInformationDto();
+    this.OtherInformation = this.employeedataservice.getOtherInformationDto();
+    console.log(this.basicdetails);
+    console.log(this.FamilyDetails);
+    console.log(this.EducationalQualification);
+    console.log(this.NOMINEE_DETAILS);
+    console.log(this.PermanentContact);
+    console.log(this.ProfessionalInf);
+    console.log(this.CorresspondanceContact);
+    console.log(this.OtherInformation);
 
     this.fetchData();
     /**

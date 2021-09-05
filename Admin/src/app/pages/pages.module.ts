@@ -39,6 +39,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import { FilemanagerComponent } from './filemanager/filemanager.component';
+import { EmployeedataService } from '../core/services/employeedata.service';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -81,5 +82,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     NgbCollapseModule,
     SimplebarAngularModule
   ],
+  providers: [
+    { provide: EmployeedataService}
+  ]
 })
 export class PagesModule { }

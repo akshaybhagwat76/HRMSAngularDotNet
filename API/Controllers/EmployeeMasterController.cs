@@ -52,6 +52,22 @@ namespace API.Controllers
             {
                 int result = 0;
                 Sys_EmployeeMaster employeeMaster = new Sys_EmployeeMaster();
+
+                var listOfEmployees = await _unitOfWork.Repository<Sys_EmployeeMaster>().ListAllAsync();
+
+                if (string.IsNullOrEmpty(EmployeeMasterDto.EmployeeCode))
+                {
+                    EmployeeMasterDto.EmployeeCode = RandomString();
+                    if (listOfEmployees != null && listOfEmployees.Count > 0)
+                    {
+                        bool isExist = listOfEmployees.Where(x => x.EmployeeCode == EmployeeMasterDto.EmployeeCode).Count() > 0;
+                        if (isExist)
+                        {
+                            EmployeeMasterDto.EmployeeCode = RandomString();
+                        }
+                    }
+                }
+
                 if (EmployeeMasterDto.Id == 0)
                 {
                     EmployeeMasterDto.IsActive = EmployeeMasterDto.Status = true; EmployeeMasterDto.IsDeleted = false;
@@ -1056,6 +1072,23 @@ namespace API.Controllers
             return string.Empty;
         }
 
+        #endregion
+
+        #region Other methods
+        private string RandomString()
+        {
+            var chars = "0123456789";
+            var stringChars = new char[3];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            string finalString = new String(stringChars);
+            return finalString;
+        }
         #endregion
     }
 }

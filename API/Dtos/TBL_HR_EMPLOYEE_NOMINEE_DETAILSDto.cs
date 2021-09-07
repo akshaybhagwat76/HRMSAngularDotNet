@@ -8,7 +8,7 @@ namespace API.Dtos
         public int? Nominee_RelationshipId { get; set; }
         public string Nominee_Name { get; set; }
         public string Nominee_Mobile { get; set; }
-        public string Nominee_EmailId { get; set; }
+        //public string Nominee_EmailId { get; set; }
         public DateTime? Nominee_DOB { get; set; }
         public string Identity_Number { get; set; }
         public string Nominee_Address { get; set; }

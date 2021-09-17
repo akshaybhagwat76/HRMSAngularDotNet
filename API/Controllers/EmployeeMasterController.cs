@@ -28,6 +28,7 @@ namespace API.Controllers
         private readonly StoreContext _storeContext;
         public Boolean isRollBacked = false;
         public SqlConnection cn = null;
+       // var tr = null;
         SqlTransaction tr = null;
         #endregion
 
@@ -47,146 +48,170 @@ namespace API.Controllers
         public async Task<ActionResult<Sys_EmployeeMasterDto>> AddOrUpdateEmployeeMaster(Sys_EmployeeMasterDto EmployeeMasterDto)
         {
             await cn.OpenAsync();
-            tr = cn.BeginTransaction();
+            tr = cn.BeginTransaction("FreelencerDB");
             try
-            {
-                int result = 0;
-                Sys_EmployeeMaster employeeMaster = new Sys_EmployeeMaster();
-
-                var listOfEmployees = await _unitOfWork.Repository<Sys_EmployeeMaster>().ListAllAsync();
-
-                if (string.IsNullOrEmpty(EmployeeMasterDto.EmployeeCode))
                 {
-                    EmployeeMasterDto.EmployeeCode = RandomString();
-                    if (listOfEmployees != null && listOfEmployees.Count > 0)
+                    int result = 0;
+                    Sys_EmployeeMaster employeeMaster = new Sys_EmployeeMaster();
+
+                    var listOfEmployees = await _unitOfWork.Repository<Sys_EmployeeMaster>().ListAllAsync();
+
+                    if (string.IsNullOrEmpty(EmployeeMasterDto.EmployeeCode))
                     {
-                        bool isExist = listOfEmployees.Where(x => x.EmployeeCode == EmployeeMasterDto.EmployeeCode).Count() > 0;
-                        if (isExist)
+                        EmployeeMasterDto.EmployeeCode = RandomString();
+                        if (listOfEmployees != null && listOfEmployees.Count > 0)
                         {
-                            EmployeeMasterDto.EmployeeCode = RandomString();
-                        }
-                    }
-                }
-
-                if (EmployeeMasterDto.Id == 0)
-                {
-                    EmployeeMasterDto.IsActive = EmployeeMasterDto.Status = true; EmployeeMasterDto.IsDeleted = false;
-                    employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
-                    _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
-                    result = await _unitOfWork.Complete();
-                }
-                else
-                {
-                    employeeMaster = await _unitOfWork.Repository<Sys_EmployeeMaster>().GetByIdAsync(EmployeeMasterDto.Id);
-                    employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
-                    _unitOfWork.Repository<Sys_EmployeeMaster>().Update(employeeMaster);
-                    result = 1;
-
-                }
-                if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employeemaster"));
-                else
-                {
-                    try
-                    {
-                        if (EmployeeMasterDto.sys_FamilyDetailsDto != null && EmployeeMasterDto.sys_FamilyDetailsDto.Count > 0)
-                        {
-                            foreach (var item in EmployeeMasterDto.sys_FamilyDetailsDto)
+                            bool isExist = listOfEmployees.Where(x => x.EmployeeCode == EmployeeMasterDto.EmployeeCode).Count() > 0;
+                            if (isExist)
                             {
-                                item.Employee_Id = employeeMaster.Id;
-                                await AddFamilyDetailsAsync(item);
+                                EmployeeMasterDto.EmployeeCode = RandomString();
                             }
                         }
                     }
-                    catch (Exception) { }
-                    try
-                    {
-                        if (EmployeeMasterDto.sys_ProfessionalInformations != null && EmployeeMasterDto.sys_ProfessionalInformations.Count > 0)
-                        {
-                            foreach (var item in EmployeeMasterDto.sys_ProfessionalInformations)
-                            {
-                                item.Employee_Id = employeeMaster.Id;
-                                await AddProfessionalInformationAsync(item);
-                            }
-                        }
-                    }
-                    catch (Exception) { }
-                    try
-                    {
-                        if (EmployeeMasterDto.sys_EducationalQualificationDto != null && EmployeeMasterDto.sys_EducationalQualificationDto.Count > 0)
-                        {
-                            foreach (var item in EmployeeMasterDto.sys_EducationalQualificationDto)
-                            {
-                                item.Employee_Id = employeeMaster.Id;
-                                await AddEducationalQualificationAsync(item);
-                            }
-                        }
-                    }
-                    catch (Exception) { }
-                    try
-                    {
-                        if (EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto != null && EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.Count > 0)
-                        {
-                            foreach (var item in EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto)
-                            {
-                                item.Employee_Id = employeeMaster.Id;
-                                await AddNomineeAsync(item);
-                            }
-                        }
-                    }
-                    catch (Exception) { }
 
-                    try
+                    if (EmployeeMasterDto.Id == 0)
                     {
-                        if (EmployeeMasterDto.sys_PermanentContactInformationDto != null)
-                        {
-                            EmployeeMasterDto.sys_PermanentContactInformationDto.Employee_Id = employeeMaster.Id;
-                            await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformationDto);
-                        }
-                    }
-                    catch (Exception) { }
-
-                    try
-                    {
-                        if (EmployeeMasterDto.sys_CorresspondanceContactInformationDto != null)
-                        {
-                            EmployeeMasterDto.sys_CorresspondanceContactInformationDto.Employee_Id = employeeMaster.Id;
-                            await AddCorresspondanceContactInformationAsync(EmployeeMasterDto.sys_CorresspondanceContactInformationDto);
-                        }
-                    }
-                    catch (Exception) { }
-
-                    try
-                    {
-                        if (EmployeeMasterDto.sys_OtherInformationDto != null)
-                        {
-                            EmployeeMasterDto.sys_OtherInformationDto.Employee_Id = employeeMaster.Id;
-                            await AddOtherInformationAsync(EmployeeMasterDto.sys_OtherInformationDto);
-                        }
-                    }
-                    catch (Exception) { }
-                    if (!isRollBacked)
-                    {
-                        await tr.CommitAsync();
+                        EmployeeMasterDto.IsActive = EmployeeMasterDto.Status = true; EmployeeMasterDto.IsDeleted = false;
+                        employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
+                        _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
+                        result = await _unitOfWork.Complete();
                     }
                     else
                     {
-                        return BadRequest(new ApiResponse(400, "Problem submitting employee master details"));
+                        employeeMaster = await _unitOfWork.Repository<Sys_EmployeeMaster>().GetByIdAsync(EmployeeMasterDto.Id);
+                        employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
+                        _unitOfWork.Repository<Sys_EmployeeMaster>().Update(employeeMaster);
+                        result = 1;
+
                     }
-                    return _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(employeeMaster);
+                    if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employeemaster"));
+                    else
+                    {
+                        try
+                        {
+                            if (EmployeeMasterDto.sys_FamilyDetailsDto != null && EmployeeMasterDto.sys_FamilyDetailsDto.Count > 0)
+                            {
+                                foreach (var item in EmployeeMasterDto.sys_FamilyDetailsDto)
+                                {
+                                    item.Employee_Id = employeeMaster.Id;
+                                    await AddFamilyDetailsAsync(item);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                        try
+                        {
+                            if (EmployeeMasterDto.sys_ProfessionalInformations != null && EmployeeMasterDto.sys_ProfessionalInformations.Count > 0)
+                            {
+                                foreach (var item in EmployeeMasterDto.sys_ProfessionalInformations)
+                                {
+                                    item.Employee_Id = employeeMaster.Id;
+                                    await AddProfessionalInformationAsync(item);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                        try
+                        {
+                            if (EmployeeMasterDto.sys_EducationalQualificationDto != null && EmployeeMasterDto.sys_EducationalQualificationDto.Count > 0)
+                            {
+                                foreach (var item in EmployeeMasterDto.sys_EducationalQualificationDto)
+                                {
+                                    item.Employee_Id = employeeMaster.Id;
+                                    await AddEducationalQualificationAsync(item);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                        try
+                        {
+                            if (EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto != null && EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.Count > 0)
+                            {
+                                foreach (var item in EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto)
+                                {
+                                    item.Employee_Id = employeeMaster.Id;
+                                    await AddNomineeAsync(item);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+
+                        try
+                        {
+                            if (EmployeeMasterDto.sys_PermanentContactInformationDto != null)
+                            {
+                                EmployeeMasterDto.sys_PermanentContactInformationDto.Employee_Id = employeeMaster.Id;
+                                await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformationDto);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+
+                        try
+                        {
+                            if (EmployeeMasterDto.sys_CorresspondanceContactInformationDto != null)
+                            {
+                                EmployeeMasterDto.sys_CorresspondanceContactInformationDto.Employee_Id = employeeMaster.Id;
+                                await AddCorresspondanceContactInformationAsync(EmployeeMasterDto.sys_CorresspondanceContactInformationDto);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+
+                        try
+                        {
+                            if (EmployeeMasterDto.sys_OtherInformationDto != null)
+                            {
+                                EmployeeMasterDto.sys_OtherInformationDto.Employee_Id = employeeMaster.Id;
+                                await AddOtherInformationAsync(EmployeeMasterDto.sys_OtherInformationDto);
+                            }
+                        }
+                        catch (Exception ex) {
+                            throw ex;
+                        }
+                        if (!isRollBacked)
+                        {
+                            await tr.CommitAsync();
+                        }
+                        else
+                        {
+
+                            return BadRequest(new ApiResponse(400, "Problem submitting employee master details"));
+                        }
+                        return _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(employeeMaster);
+                    }
                 }
-            }
-            catch (Exception exception)
-            {
-                await tr.RollbackAsync();
-                return BadRequest(exception.Message.ToString());
-            }
-            finally
-            {
-                if (cn != null)
-                    await cn.DisposeAsync();
-                if (tr != null)
-                    await tr.DisposeAsync();
-            }
+                catch (Exception exception)
+                {
+                    if (!isRollBacked)
+                    {
+                        await tr.RollbackAsync();
+                    }
+                    return BadRequest(exception.Message.ToString());
+                }
+                finally
+                {
+                    if (cn != null)
+                        await cn.DisposeAsync();
+                    if (tr != null)
+                        await tr.DisposeAsync();
+                }
         }
         #endregion
 
@@ -457,11 +482,12 @@ namespace API.Controllers
                     }
                 }
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -550,11 +576,12 @@ namespace API.Controllers
                     return _mapper.Map<TBL_HR_EMPLOYEE_EDUCATION_DETAILS, TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>(educationQuilificationDto);
                 }
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty;
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -644,11 +671,12 @@ namespace API.Controllers
                     }
                 }
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -689,11 +717,12 @@ namespace API.Controllers
                     return new TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto();
                 }
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -726,11 +755,12 @@ namespace API.Controllers
                     return _mapper.Map<Sys_PermanentContactInformation, Sys_PermanentContactInformationDto>(permanentContactInformation);
                 }
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -763,11 +793,13 @@ namespace API.Controllers
                 }
 
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -778,6 +810,7 @@ namespace API.Controllers
         {
             try
             {
+              
                 if (OtherInformationDto == null)
                 {
                     return new Sys_OtherInformationDto();
@@ -903,15 +936,16 @@ namespace API.Controllers
 
                     return _mapper.Map<Sys_OtherInformation, Sys_OtherInformationDto>(OtherInformation);
                 }
-
                 return new Sys_OtherInformationDto();
 
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+                throw new Exception(exception);
             }
         }
         #endregion

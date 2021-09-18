@@ -191,7 +191,6 @@ namespace API.Controllers
                         }
                         else
                         {
-
                             return BadRequest(new ApiResponse(400, "Problem submitting employee master details"));
                         }
                         return _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(employeeMaster);

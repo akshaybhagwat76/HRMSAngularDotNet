@@ -47,10 +47,11 @@ namespace API.Controllers
         [HttpPost("AddOrUpdateEmployeeMaster")]
         public async Task<ActionResult<Sys_EmployeeMasterDto>> AddOrUpdateEmployeeMaster(Sys_EmployeeMasterDto EmployeeMasterDto)
         {
-            await cn.OpenAsync();
-            tr = cn.BeginTransaction("FreelencerDB");
+            //await cn.OpenAsync();
+            //tr = cn.BeginTransaction("FreelencerDB");
             try
             {
+                await _unitOfWork.BeginChanges();
                 int result = 0;
                 Sys_EmployeeMaster employeeMaster = new Sys_EmployeeMaster();
 
@@ -74,7 +75,7 @@ namespace API.Controllers
                     EmployeeMasterDto.IsActive = EmployeeMasterDto.Status = true; EmployeeMasterDto.IsDeleted = false;
                     employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
                     _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
-                    result = await _unitOfWork.Complete();
+                    result = await _unitOfWork.Complete(true);
                 }
                 else
                 {
@@ -82,7 +83,6 @@ namespace API.Controllers
                     employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
                     _unitOfWork.Repository<Sys_EmployeeMaster>().Update(employeeMaster);
                     result = 1;
-
                 }
                 if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employeemaster"));
                 else
@@ -188,12 +188,19 @@ namespace API.Controllers
                     }
                     if (!isRollBacked)
                     {
-                        await tr.CommitAsync();
+                        await _unitOfWork.CommitChanges();
+                        //await tr.CommitAsync();
                     }
                     else
                     {
+                        int empId = GetLastRecordFromTable(Messages.tbl_EmployeeMaster);
+
+                        _unitOfWork.Repository<Sys_EmployeeMaster>().Delete(await _unitOfWork.Repository<Sys_EmployeeMaster>().GetByIdAsync(empId));
+
                         return BadRequest(new ApiResponse(400, "Problem submitting employee master details"));
                     }
+
+                    
                     return _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(employeeMaster);
                 }
             }

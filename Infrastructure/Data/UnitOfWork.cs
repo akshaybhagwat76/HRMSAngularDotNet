@@ -17,9 +17,13 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public async Task<int> Complete()
+        public async Task<int> Complete(bool isEmployeeCommit = false)
         {
-            return await _context.SaveChangesAsync();
+            if (selfManagedTransaction && isEmployeeCommit)
+            {
+                return await CommitChanges();
+            }
+            return 0;
         }
 
         public void Dispose()
@@ -28,30 +32,23 @@ namespace Infrastructure.Data
         }
 
 
-        public void SaveChanges()
-        {
-            if (selfManagedTransaction)
-            {
-                CommitChanges();
-            }
-        }
-
-        public void BeginChanges()
+        public async Task<int> BeginChanges()
         {
             selfManagedTransaction = false;
             Interlocked.Increment(ref beginChangeCount);
+            return 1;
         }
 
-        public void CommitChanges()
+        public async Task<int> CommitChanges()
         {
             if (Interlocked.Decrement(ref beginChangeCount) > 0)
             {
-                return;
+                return 0;
             }
 
             beginChangeCount = 0;
-            _context.SaveChanges();
             selfManagedTransaction = true;
+            return await _context.SaveChangesAsync();
         }
 
         public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity

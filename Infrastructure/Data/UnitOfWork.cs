@@ -2,6 +2,7 @@
 using Core.Interfaces;
 using System;
 using System.Collections;
+using System.Threading;
 using System.Threading.Tasks;
 namespace Infrastructure.Data
 {
@@ -9,20 +10,45 @@ namespace Infrastructure.Data
     {
         private readonly StoreContext _context;
         private Hashtable __repositories;
-
+        private int beginChangeCount;
+        private bool selfManagedTransaction = true;
         public UnitOfWork(StoreContext context)
         {
             _context = context;
         }
 
-        public async Task<int> Complete()
+        public async Task<int> Complete(bool isEmployeeCommit = false)
         {
-            return await _context.SaveChangesAsync();
+            if (selfManagedTransaction && isEmployeeCommit)
+            {
+                return await CommitChanges();
+            }
+            return 0;
         }
 
         public void Dispose()
         {
             _context.Dispose();
+        }
+
+
+        public async Task<int> BeginChanges()
+        {
+            selfManagedTransaction = false;
+            Interlocked.Increment(ref beginChangeCount);
+            return 1;
+        }
+
+        public async Task<int> CommitChanges()
+        {
+            if (Interlocked.Decrement(ref beginChangeCount) > 0)
+            {
+                return 0;
+            }
+
+            beginChangeCount = 0;
+            selfManagedTransaction = true;
+            return await _context.SaveChangesAsync();
         }
 
         public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity

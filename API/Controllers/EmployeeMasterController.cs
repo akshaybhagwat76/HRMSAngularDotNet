@@ -28,6 +28,7 @@ namespace API.Controllers
         private readonly StoreContext _storeContext;
         public Boolean isRollBacked = false;
         public SqlConnection cn = null;
+        // var tr = null;
         SqlTransaction tr = null;
         #endregion
 
@@ -46,10 +47,11 @@ namespace API.Controllers
         [HttpPost("AddOrUpdateEmployeeMaster")]
         public async Task<ActionResult<Sys_EmployeeMasterDto>> AddOrUpdateEmployeeMaster(Sys_EmployeeMasterDto EmployeeMasterDto)
         {
-            await cn.OpenAsync();
-            tr = cn.BeginTransaction();
+            //await cn.OpenAsync();
+            //tr = cn.BeginTransaction("FreelencerDB");
             try
             {
+                await _unitOfWork.BeginChanges();
                 int result = 0;
                 Sys_EmployeeMaster employeeMaster = new Sys_EmployeeMaster();
 
@@ -73,7 +75,7 @@ namespace API.Controllers
                     EmployeeMasterDto.IsActive = EmployeeMasterDto.Status = true; EmployeeMasterDto.IsDeleted = false;
                     employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
                     _unitOfWork.Repository<Sys_EmployeeMaster>().Add(employeeMaster);
-                    result = await _unitOfWork.Complete();
+                    result = await _unitOfWork.Complete(true);
                 }
                 else
                 {
@@ -81,7 +83,6 @@ namespace API.Controllers
                     employeeMaster = _mapper.Map<Sys_EmployeeMasterDto, Sys_EmployeeMaster>(EmployeeMasterDto);
                     _unitOfWork.Repository<Sys_EmployeeMaster>().Update(employeeMaster);
                     result = 1;
-
                 }
                 if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating employeemaster"));
                 else
@@ -97,7 +98,10 @@ namespace API.Controllers
                             }
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                     try
                     {
                         if (EmployeeMasterDto.sys_ProfessionalInformations != null && EmployeeMasterDto.sys_ProfessionalInformations.Count > 0)
@@ -109,7 +113,10 @@ namespace API.Controllers
                             }
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                     try
                     {
                         if (EmployeeMasterDto.sys_EducationalQualificationDto != null && EmployeeMasterDto.sys_EducationalQualificationDto.Count > 0)
@@ -121,7 +128,10 @@ namespace API.Controllers
                             }
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                     try
                     {
                         if (EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto != null && EmployeeMasterDto.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.Count > 0)
@@ -133,7 +143,10 @@ namespace API.Controllers
                             }
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
 
                     try
                     {
@@ -143,7 +156,10 @@ namespace API.Controllers
                             await AddPermanentContactInformationAsync(EmployeeMasterDto.sys_PermanentContactInformationDto);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
 
                     try
                     {
@@ -153,7 +169,10 @@ namespace API.Controllers
                             await AddCorresspondanceContactInformationAsync(EmployeeMasterDto.sys_CorresspondanceContactInformationDto);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
 
                     try
                     {
@@ -163,21 +182,34 @@ namespace API.Controllers
                             await AddOtherInformationAsync(EmployeeMasterDto.sys_OtherInformationDto);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                     if (!isRollBacked)
                     {
-                        await tr.CommitAsync();
+                        await _unitOfWork.CommitChanges();
+                        //await tr.CommitAsync();
                     }
                     else
                     {
+                        int empId = GetLastRecordFromTable(Messages.tbl_EmployeeMaster);
+
+                        _unitOfWork.Repository<Sys_EmployeeMaster>().Delete(await _unitOfWork.Repository<Sys_EmployeeMaster>().GetByIdAsync(empId));
+
                         return BadRequest(new ApiResponse(400, "Problem submitting employee master details"));
                     }
+
+                    
                     return _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(employeeMaster);
                 }
             }
             catch (Exception exception)
             {
-                await tr.RollbackAsync();
+                if (!isRollBacked)
+                {
+                    await tr.RollbackAsync();
+                }
                 return BadRequest(exception.Message.ToString());
             }
             finally
@@ -457,11 +489,12 @@ namespace API.Controllers
                     }
                 }
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -550,11 +583,12 @@ namespace API.Controllers
                     return _mapper.Map<TBL_HR_EMPLOYEE_EDUCATION_DETAILS, TBL_HR_EMPLOYEE_EDUCATION_DETAILSDto>(educationQuilificationDto);
                 }
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty;
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -644,11 +678,12 @@ namespace API.Controllers
                     }
                 }
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -689,11 +724,12 @@ namespace API.Controllers
                     return new TBL_HR_EMPLOYEE_NOMINEE_DETAILSDto();
                 }
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -726,11 +762,12 @@ namespace API.Controllers
                     return _mapper.Map<Sys_PermanentContactInformation, Sys_PermanentContactInformationDto>(permanentContactInformation);
                 }
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -763,11 +800,13 @@ namespace API.Controllers
                 }
 
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+
+                throw new Exception(exception);
             }
         }
         #endregion
@@ -778,6 +817,7 @@ namespace API.Controllers
         {
             try
             {
+
                 if (OtherInformationDto == null)
                 {
                     return new Sys_OtherInformationDto();
@@ -903,15 +943,16 @@ namespace API.Controllers
 
                     return _mapper.Map<Sys_OtherInformation, Sys_OtherInformationDto>(OtherInformation);
                 }
-
                 return new Sys_OtherInformationDto();
 
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
                 await tr.RollbackAsync();
                 isRollBacked = true;
-                throw new Exception(exception.Message.ToString());
+
+                string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
+                throw new Exception(exception);
             }
         }
         #endregion

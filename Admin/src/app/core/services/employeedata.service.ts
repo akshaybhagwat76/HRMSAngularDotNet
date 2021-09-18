@@ -5,6 +5,7 @@ import {
   CorresspondanceContactInformationDto, OtherInformationDto, IdentityProofs,
   IdentityProofsattachments
 } from '../models/EmployeeFormData';
+import { Attachment, Attachment2, Attachment3, SysCorresspondanceContactInformationDto, SysEducationalQualificationDto, SysFamilyDetailsDto, SysIdentityProof, SysOtherInformationDto, SysPermanentContactInformationDto, SysProfessionalInformation, TBLHREMPLOYEENOMINEEDETAILSDto } from '../models/EmployeeFormDataLatest';
 
 @Injectable()
 export class EmployeedataService {
@@ -117,6 +118,35 @@ export class EmployeedataService {
     return FamilyDetailsDto;
   }
 
+  setDefaultValue(value) {
+    let numberValue = value ? value : 0;
+    return Number(numberValue);
+  }
+  setDefaultValueString(value) {
+    return value ? value : "";
+  }
+
+  getFamilyDetailsData(data: FamilyDetailsDto): FamilyDetailsDto {
+    var FamilyDetailsDto: FamilyDetailsDto = {
+      id: this.setDefaultValue(data?.id),
+      status_Id: this.setDefaultValue(data?.status_Id),
+      remarks: this.setDefaultValueString(data?.remarks),
+      action_Remarks: this.setDefaultValueString(data?.action_Remarks),
+      // employee_Id: this.setDefaultValue(data?.employee_Id),
+      employee_Id: 0,
+      isDeleted: data?.isDeleted==undefined?false:data?.isDeleted,
+      familyDetail_RelationshipId: this.setDefaultValue(data?.familyDetail_RelationshipId),
+      familyDetail_Name: this.setDefaultValueString(data?.familyDetail_Name),
+      familyDetail_Mobile: this.setDefaultValueString(data?.familyDetail_Mobile),
+      familyDetail_EmailId: this.setDefaultValueString(data?.familyDetail_EmailId),
+      familyDetail_DOB: data?.familyDetail_DOB,
+      identity_Number: this.setDefaultValueString(data?.identity_Number),
+      nominee_Address: this.setDefaultValueString(data?.nominee_Address),
+      isAadharStatus: data?.isAadharStatus==undefined?true:data?.isAadharStatus
+    }
+    return FamilyDetailsDto;
+  }
+
   setFamilyDetails(data:FamilyDetailsDto) {
        this.EmployeeData.sys_FamilyDetailsDto.id=data.id,
        this.EmployeeData.sys_FamilyDetailsDto.id=data.status_Id,
@@ -152,6 +182,43 @@ export class EmployeedataService {
     return EducationalQualificationDto;
   }
 
+  getEducationalQualificationData(data: SysEducationalQualificationDto): SysEducationalQualificationDto {
+    let educationalQualificationDto: SysEducationalQualificationDto = {
+      id: this.setDefaultValue(data?.id),
+      // employee_Id: this.setDefaultValue(data?.employee_Id),
+      employee_Id: 0,
+      emp_Year_OF_Passing: this.setDefaultValue(data?.emp_Year_OF_Passing),
+      qualification: this.setDefaultValueString(data?.qualification),
+      specialization: this.setDefaultValueString(data?.specialization),
+      school: this.setDefaultValueString(data?.school),
+      board: this.setDefaultValueString(data?.board),
+      marks: this.setDefaultValueString(data?.marks),
+      remarks: this.setDefaultValueString(data?.remarks),
+      isDeleted: data?.isDeleted==undefined?false:data?.isDeleted,
+      attachments: this.getAttachmentsData(data?.attachments)
+    }
+    return educationalQualificationDto;
+  }
+
+  getAttachmentsData(attachments: Attachment[]): Attachment[] {
+    let tempAttachments: Attachment[] = [];
+    attachments && attachments.forEach(attachment => {
+      let attachmentData: Attachment = new Attachment();
+      attachmentData.id = this.setDefaultValue(attachment.id);
+      attachmentData.status_Id = this.setDefaultValue(attachment.status_Id);
+      attachmentData.remarks = this.setDefaultValueString(attachment.remarks);
+      attachmentData.action_Remarks = this.setDefaultValueString(attachment.action_Remarks);;
+      attachmentData.educational_Qualification_Id = this.setDefaultValue(attachment.educational_Qualification_Id);
+      // attachmentData.employeeId = this.setDefaultValue(attachment.employeeId);
+      attachmentData.employeeId = 0;
+      attachmentData.courseName = this.setDefaultValueString(attachment.courseName);;
+      attachmentData.documentType = this.setDefaultValueString(attachment.documentType);;
+      attachmentData.documentUrl = this.setDefaultValueString(attachment.documentUrl);;
+      tempAttachments.push(attachmentData);
+    });
+    return tempAttachments;
+  }
+
   setEducationalQualification(data:EducationalQualificationDto){
        this.EmployeeData.sys_EducationalQualificationDto.id=data.id,
        this.EmployeeData.sys_EducationalQualificationDto.employee_Id=data.employee_Id,
@@ -181,6 +248,24 @@ export class EmployeedataService {
       nominee_Address: this.EmployeeData.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.nominee_Address,
       isAadharStatus: this.EmployeeData.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.isAadharStatus==undefined?true:this.EmployeeData.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.isAadharStatus,
       isDeleted: this.EmployeeData.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.isDeleted==undefined?false:this.EmployeeData.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.isDeleted
+    }
+    return HR_EMPLOYEE_NOMINEE_DETAILSDto;
+  }
+
+  getHR_EMPLOYEE_NOMINEE_DETAILSData(data: TBLHREMPLOYEENOMINEEDETAILSDto): TBLHREMPLOYEENOMINEEDETAILSDto {
+    var HR_EMPLOYEE_NOMINEE_DETAILSDto: TBLHREMPLOYEENOMINEEDETAILSDto = {
+      id: this.setDefaultValue(data?.id),
+      // employee_Id: this.setDefaultValue(data?.employee_Id),
+      employee_Id: 0,
+      nominee_RelationshipId: this.setDefaultValue(data?.nominee_RelationshipId),
+      nominee_Name: this.setDefaultValueString(data?.nominee_Name),
+      nominee_Mobile: this.setDefaultValueString(data?.nominee_Mobile),
+      // nominee_EmailId: data?.nominee_EmailId,
+      nominee_DOB: data?.nominee_DOB,
+      identity_Number: this.setDefaultValueString(data?.identity_Number),
+      nominee_Address: this.setDefaultValueString(data?.nominee_Address),
+      isAadharStatus: data?.isAadharStatus==undefined?true:data?.isAadharStatus,
+      isDeleted: data?.isDeleted==undefined?false:data?.isDeleted
     }
     return HR_EMPLOYEE_NOMINEE_DETAILSDto;
   }
@@ -215,6 +300,25 @@ export class EmployeedataService {
       city: this.EmployeeData.sys_PermanentContactInformationDto.city,
       pin: this.EmployeeData.sys_PermanentContactInformationDto.pin,
       employee_Id: this.EmployeeData.sys_PermanentContactInformationDto.employee_Id
+    }
+    return PermanentContactInformation;
+  }
+
+  getPermanentContactInformationData(data: SysPermanentContactInformationDto): SysPermanentContactInformationDto {
+    var PermanentContactInformation: SysPermanentContactInformationDto = {
+      id: this.setDefaultValue(data?.id),
+      status_Id: this.setDefaultValue(data?.id),
+      remarks: this.setDefaultValueString(data?.remarks),
+      action_Remarks: this.setDefaultValueString(data?.action_Remarks),
+      address: this.setDefaultValueString(data?.address),
+      address1: this.setDefaultValueString(data?.address1),
+      country: this.setDefaultValue(data?.country),
+      zone: this.setDefaultValue(data?.zone),
+      state: this.setDefaultValue(data?.state),
+      city: this.setDefaultValueString(data?.city),
+      pin: this.setDefaultValueString(data?.pin),
+      // employee_Id: this.setDefaultValue(data?.employee_Id)
+      employee_Id: 0
     }
     return PermanentContactInformation;
   }
@@ -258,6 +362,49 @@ export class EmployeedataService {
     return getProfessionalInformations;
   }
 
+  getProfessionalInformationsData(data: SysProfessionalInformation): SysProfessionalInformation {
+    var getProfessionalInformations: SysProfessionalInformation = {
+      id: this.setDefaultValue(data?.id),
+      status_Id: this.setDefaultValue(data?.status_Id),
+      remarks: this.setDefaultValueString(data?.remarks),
+      action_Remarks: this.setDefaultValueString(data?.action_Remarks),
+      employeerName: this.setDefaultValueString(data?.employeerName),
+      isDeleted: data?.isDeleted==undefined?false:data?.isDeleted,
+      employeerAddress: this.setDefaultValueString(data?.employeerAddress),
+      designation: this.setDefaultValueString(data?.designation),
+      contactPerson: this.setDefaultValueString(data?.contactPerson),
+      contactNo: this.setDefaultValueString(data?.contactNo),
+      emailId: this.setDefaultValueString(data?.emailId),
+      dateOfJoining: data?.dateOfJoining,
+      lastDrawnSalary: this.setDefaultValueString(data?.lastDrawnSalary),
+      reasonForLeaving: this.setDefaultValueString(data?.reasonForLeaving),
+      dateOfLeaving: data?.dateOfJoining,
+      // employee_Id: this.setDefaultValue(data?.employee_Id),
+      employee_Id: 0,
+      attachments: this.getAttachments2Data(data?.attachments)
+    }
+    return getProfessionalInformations;
+  }
+
+  getAttachments2Data(attachments: Attachment2[]): Attachment2[] {
+    let tempAttachments: Attachment2[] = [];
+    attachments && attachments.forEach(attachment => {
+      let attachment2Data: Attachment2 = new Attachment2();
+      attachment2Data.id = this.setDefaultValue(attachment.id);
+      attachment2Data.status_Id = this.setDefaultValue(attachment.status_Id);
+      attachment2Data.remarks = this.setDefaultValueString(attachment.remarks);
+      attachment2Data.action_Remarks = this.setDefaultValueString(attachment.action_Remarks);;
+      attachment2Data.professional_Information_Attachements_Id = this.setDefaultValue(attachment.professional_Information_Attachements_Id);
+      // attachment2Data.employeeId = this.setDefaultValue(attachment.employeeId);
+      attachment2Data.employeeId = 0;
+      attachment2Data.employeeName = this.setDefaultValueString(attachment.employeeName);
+      attachment2Data.documentType = this.setDefaultValueString(attachment.documentType);
+      attachment2Data.documentUrl = this.setDefaultValueString(attachment.documentUrl);
+      tempAttachments.push(attachment2Data);
+    });
+    return tempAttachments;
+  }
+
   setProfessionalInformations(data: ProfessionalInformations) {
        this.EmployeeData.sys_ProfessionalInformations.id=data.id,
        this.EmployeeData.sys_ProfessionalInformations.status_Id=data.status_Id,
@@ -296,6 +443,28 @@ export class EmployeedataService {
       phone: this.EmployeeData.sys_CorresspondanceContactInformationDto.phone,
       emailAddress2: this.EmployeeData.sys_CorresspondanceContactInformationDto.emailAddress2,
       employee_Id: this.EmployeeData.sys_CorresspondanceContactInformationDto.employee_Id
+    }
+    return CorresspondanceContactInformation;
+  }
+
+  getCorresspondanceContactInformationDtoData(data: SysCorresspondanceContactInformationDto): SysCorresspondanceContactInformationDto {
+    var CorresspondanceContactInformation: SysCorresspondanceContactInformationDto = {
+      id: this.setDefaultValue(data?.id),
+      status_Id: this.setDefaultValue(data?.status_Id),
+      remarks: this.setDefaultValueString(data?.remarks),
+      action_Remarks: this.setDefaultValueString(data?.action_Remarks),
+      address: this.setDefaultValueString(data?.address),
+      address1: this.setDefaultValueString(data?.address1),
+      country: this.setDefaultValue(data?.country),
+      zone: this.setDefaultValue(data?.zone),
+      state: this.setDefaultValue(data?.state),
+      city: this.setDefaultValueString(data?.city),
+      pin: this.setDefaultValueString(data?.pin),
+      mobileNo2: this.setDefaultValueString(data?.mobileNo2),
+      phone: this.setDefaultValueString(data?.phone),
+      emailAddress2: this.setDefaultValueString(data?.emailAddress2),
+      // employee_Id: this.setDefaultValue(data?.employee_Id)
+      employee_Id: 0
     }
     return CorresspondanceContactInformation;
   }
@@ -345,6 +514,75 @@ export class EmployeedataService {
     }
     return OtherInformationDto;
   }
+
+  getOtherInformationDtoData(data: SysOtherInformationDto): SysOtherInformationDto {
+    var OtherInformationDto: SysOtherInformationDto = {
+      id: this.setDefaultValue(data?.id),
+      status_Id: this.setDefaultValue(data?.status_Id),
+      remarks: this.setDefaultValueString(data?.remarks),
+      action_Remarks: this.setDefaultValueString(data?.action_Remarks),
+      bank_Name: this.setDefaultValueString(data?.bank_Name),
+      branch_Name: this.setDefaultValueString(data?.branch_Name),
+      account_No: this.setDefaultValueString(data?.account_No),
+      ifsC_Code: this.setDefaultValueString(data?.ifsC_Code),
+      status: data?.status==undefined?true:data?.status,
+      other_Details: this.setDefaultValueString(data?.other_Details),
+      card_No: this.setDefaultValueString(data?.card_No),
+      carProxy_Nod_No: this.setDefaultValueString(data?.carProxy_Nod_No),
+      user_Id: this.setDefaultValueString(data?.user_Id),
+      user_Data: this.setDefaultValueString(data?.user_Data),
+      user_Type: this.setDefaultValue(data?.user_Type),
+      signature: data?.signature,
+      picture: data?.picture,
+      signatureFile: data?.signatureFile,
+      pictureFile: data?.pictureFile,
+      // employee_Id: this.setDefaultValue(data?.employee_Id),
+      employee_Id: 0,
+      sys_Identity_Proofs: this.getSysIdentityProof(data?.sys_Identity_Proofs)
+    }
+    return OtherInformationDto;
+  }
+
+  getSysIdentityProof(attachments: SysIdentityProof[]): SysIdentityProof[] {
+    let tempAttachments: SysIdentityProof[] = [];
+    attachments && attachments.forEach(attachment => {
+      let attachment2Data: SysIdentityProof = new SysIdentityProof();
+      attachment2Data.id = this.setDefaultValue(attachment.id);
+      attachment2Data.status_Id = this.setDefaultValue(attachment.status_Id);
+      attachment2Data.remarks = this.setDefaultValueString(attachment.remarks);
+      attachment2Data.action_Remarks = this.setDefaultValueString(attachment.action_Remarks);;
+      attachment2Data.identity_Type = this.setDefaultValueString(attachment.identity_Type);
+      attachment2Data.identity_No = this.setDefaultValueString(attachment.identity_No);
+      attachment2Data.attachments =  this.attachmentsIdentity(attachment?.attachments);
+      attachment2Data.valid_Upto = attachment.valid_Upto; // need to conform date
+      attachment2Data.isDeleted = attachment?.isDeleted==undefined?false:attachment?.isDeleted;
+      attachment2Data.otherInformationId = this.setDefaultValue(attachment.otherInformationId);
+
+      tempAttachments.push(attachment2Data);
+    });
+    return tempAttachments;
+  }
+
+  attachmentsIdentity(attachments: Attachment3[]): Attachment3[] {
+    let tempAttachments: Attachment3[] = [];
+    attachments && attachments.forEach(attachment => {
+      let attachmentData: Attachment3 = new Attachment3();
+      attachmentData.id = this.setDefaultValue(attachment.id);
+      attachmentData.status_Id = this.setDefaultValue(attachment.status_Id);
+      attachmentData.remarks = this.setDefaultValueString(attachment.remarks);
+      attachmentData.action_Remarks = this.setDefaultValueString(attachment.action_Remarks);;
+      attachmentData.identity_Proof_Id = this.setDefaultValue(attachment.identity_Proof_Id);
+      // attachmentData.employeeId = this.setDefaultValue(attachment.employeeId);
+      attachmentData.employeeId = 0;
+      attachmentData.identityType = this.setDefaultValueString(attachment.identityType);;
+      attachmentData.documentType = this.setDefaultValueString(attachment.documentType);;
+      attachmentData.documentUrl = this.setDefaultValueString(attachment.documentUrl);;
+      tempAttachments.push(attachmentData);
+    });
+    return tempAttachments;
+  }
+
+
 
   setOtherInformationDto(data: OtherInformationDto) {
        this.EmployeeData.sys_OtherInformationDto.id=data.id,

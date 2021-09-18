@@ -576,24 +576,24 @@
                                             [formGroupName]="i">
                                             <th scope="row">{{i+1}}</th>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="FamilyDetail_Name" readonly></td>
+                                                    formControlName="familyDetail_Name" readonly></td>
                                             <td><select class="form-select" id="familyDetails"
-                                                    formControlName="FamilyDetail_RelationshipId" disabled>
+                                                    formControlName="familyDetail_RelationshipId" disabled>
                                                     <option *ngFor="let relation of relationShip"
                                                         value="{{relation.id}}">
                                                         {{relation.relationShip_Name}}
                                                 </select>
                                             </td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="FamilyDetail_DOB" readonly></td>
+                                                    formControlName="familyDetail_DOB" readonly></td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="Identity_Number" readonly></td>
-                                            <td><input type="text" class="form-control" formControlName="IsAadharStatus"
+                                                    formControlName="identity_Number" readonly></td>
+                                            <td><input type="text" class="form-control" formControlName="isAadharStatus"
                                                     readonly></td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="Nominee_Address" readonly></td>
+                                                    formControlName="nominee_Address" readonly></td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="FamilyDetail_Mobile" readonly></td>
+                                                    formControlName="familyDetail_Mobile" readonly></td>
                                             <td><i class="fa fa-edit"
                                                     style="font-size:24px;color: blue; cursor: pointer;"
                                                     (click)="editFamilyDetails(i)"></i> &nbsp;
@@ -724,25 +724,25 @@
                                         <tr *ngFor="let nomineeDetails of nomineeDetailsArr;let j=index;"
                                             [formGroupName]="j">
                                             <td>{{j+1}}</td>
-                                            <td><input type="text" class="form-control" formControlName="Nominee_Name"
+                                            <td><input type="text" class="form-control" formControlName="nominee_Name"
                                                     readonly></td>
                                             <td>
                                                 <select class="form-select" id="erelationShip_Name"
-                                                    formControlName="Nominee_RelationshipId" disabled>
+                                                    formControlName="nominee_RelationshipId" disabled>
                                                     <option *ngFor="let relation of relationShip"
                                                         [ngValue]="relation.id">
                                                         {{relation.relationShip_Name}}
                                                 </select>
                                             </td>
-                                            <td><input type="text" class="form-control" formControlName="Nominee_DOB"
+                                            <td><input type="text" class="form-control" formControlName="nominee_DOB"
                                                     readonly></td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="Identity_Number" readonly></td>
-                                            <td><input type="text" class="form-control" formControlName="IsAadharStatus"
+                                                    formControlName="identity_Number" readonly></td>
+                                            <td><input type="text" class="form-control" formControlName="isAadharStatus"
                                                     readonly></td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="Nominee_Address" readonly></td>
-                                            <td><input type="text" class="form-control" formControlName="Nominee_Mobile"
+                                                    formControlName="nominee_Address" readonly></td>
+                                            <td><input type="text" class="form-control" formControlName="nominee_Mobile"
                                                     readonly></td>
                                             <td>
                                                 <i class="fa fa-edit"
@@ -873,14 +873,14 @@
                                             <td>{{k+1}}</td>
                                             <td>
                                                 <!-- <select class="form-select" id="redCountryScountry"
-                                                    formControlName="Qualification">
+                                                    formControlName="qualification">
                                                     <option selected="" disabled="" value="">Choose...</option>
                                                     <option *ngFor="let higestQualification of highestQualifications"
                                                         [ngValue]="higestQualification.highest_Qualification">
                                                         {{higestQualification.highest_Qualification}}
                                                 </select> -->
                                                 <select class="form-select" id="redCountryScountry"
-                                                    formControlName="Qualification" [(ngModel)]="qualification">
+                                                    formControlName="qualification" [(ngModel)]="qualification">
                                                     <option selected="selected" disabled="" value="0">MADHYAMIK</option>
                                                     <option *ngFor="let higestQualification of highestQualifications"
                                                         [ngValue]="higestQualification.highest_Qualification">
@@ -888,14 +888,14 @@
                                                 </select>
                                             </td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="Emp_Year_OF_Passing" readonly></td>
-                                            <td><input type="text" class="form-control" formControlName="Specialization"
+                                                    formControlName="emp_Year_OF_Passing" readonly></td>
+                                            <td><input type="text" class="form-control" formControlName="specialization"
                                                     readonly></td>
-                                            <td><input type="text" class="form-control" formControlName="School"
+                                            <td><input type="text" class="form-control" formControlName="school"
                                                     readonly></td>
-                                            <td><input type="text" class="form-control" formControlName="Board"
+                                            <td><input type="text" class="form-control" formControlName="board"
                                                     readonly></td>
-                                            <td><input type="text" class="form-control" formControlName="Marks"
+                                            <td><input type="text" class="form-control" formControlName="marks"
                                                     readonly></td>
                                             <td>
                                                 <i class="fa fa-trash"
@@ -994,16 +994,16 @@
                                         <div class="mb-3">
                                             <label for="eAddressInformation" class="form-label">Address<span
                                                     class="text-danger">*</span></label>
-                                            <textarea class="form-control" autocomplete="off" formControlName="Address"
+                                            <textarea class="form-control" autocomplete="off" formControlName="address"
                                                 id="eAddressInformation"></textarea>
-                                            <div *ngIf="pcInfo.Address.hasError('required') && pcInfo.Address.touched"
+                                            <div *ngIf="pcInfo.address.hasError('required') && pcInfo.address.touched"
                                                 class="text text-danger error-div">*Enter Address</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eAddress2" class="form-label">Address 1</label>
-                                            <textarea class="form-control" formControlName="Address1"
+                                            <textarea class="form-control" formControlName="address1"
                                                 id="eAddress2"></textarea>
                                         </div>
                                     </div>
@@ -1013,12 +1013,12 @@
                                                     class="text-danger">*</span></label>
                                             <select class="form-select" id="country"
                                                 (ngModelChange)="onOptionsSelected($event,'per')"
-                                                formControlName="Country">
+                                                formControlName="country">
                                                 <option selected="" disabled="" value="">Choose...</option>
                                                 <option *ngFor="let CountryS of contries" value="{{CountryS.id}}">
                                                     {{CountryS.country_Name}}
                                             </select>
-                                            <div *ngIf="pcInfo.Country.hasError('required') && pcInfo.Country.touched"
+                                            <div *ngIf="pcInfo.country.hasError('required') && pcInfo.country.touched"
                                                 class="text text-danger error-div">
                                                 *Select Country</div>
                                         </div>
@@ -1028,12 +1028,12 @@
                                             <label for="eZone" class="form-label">Zone<span
                                                     class="text-danger">*</span></label>
                                             <select class="form-select" id="eZone"
-                                                (ngModelChange)="OptionsSelected($event,'per')" formControlName="Zone">
+                                                (ngModelChange)="OptionsSelected($event,'per')" formControlName="zone">
                                                 <option selected="" disabled="" value="">Choose...</option>
                                                 <option *ngFor="let zone of countryZones" value="{{zone.id}}">
                                                     {{zone.zone_Name}}
                                             </select>
-                                            <div *ngIf="pcInfo.Zone.hasError('required') && pcInfo.Zone.touched"
+                                            <div *ngIf="pcInfo.zone.hasError('required') && pcInfo.zone.touched"
                                                 class="text text-danger error-div">
                                                 *Select Zone
                                             </div>
@@ -1045,21 +1045,21 @@
                                         <div class="mb-3">
                                             <label for="redcntstateName" class="form-label">State<span
                                                     class="text-danger">*</span></label>
-                                            <select class="form-select" id="redcntstateName" formControlName="State">
+                                            <select class="form-select" id="redcntstateName" formControlName="state">
                                                 <option selected="" disabled="" value="">Choose...</option>
                                                 <option *ngFor="let stP of PerFilteredStates" value="{{stP.id}}">
                                                     {{stP.state_Name}}
                                             </select>
-                                            <div *ngIf="pcInfo.State.hasError('required') && pcInfo.State.touched"
+                                            <div *ngIf="pcInfo.state.hasError('required') && pcInfo.state.touched"
                                                 class="text text-danger error-div">*Select State</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eCity">City </label>
-                                            <input type="text" autocomplete="off" formControlName="City"
+                                            <input type="text" autocomplete="off" formControlName="city"
                                                 class="form-control" id="validationCity" />
-                                            <div *ngIf="pcInfo.City.hasError('required') && pcInfo.City.touched"
+                                            <div *ngIf="pcInfo.city.hasError('required') && pcInfo.city.touched"
                                                 class="text text-danger error-div">
                                                 *Enter City</div>
                                         </div>
@@ -1068,9 +1068,9 @@
                                         <div class="mb-3">
                                             <label for="ePin">Pin <span class="text-danger">*</span></label>
                                             <input type="text" autocomplete="off" autocomplete="off"
-                                                formControlName="Pin" class="form-control" id="validationPin"
+                                                formControlName="pin" class="form-control" id="validationPin"
                                                 (keypress)="keyPressNumbers($event)" />
-                                            <div *ngIf="pcInfo.Pin.hasError('required') && pcInfo.Pin.touched"
+                                            <div *ngIf="pcInfo.pin.hasError('required') && pcInfo.pin.touched"
                                                 class="text text-danger error-div">
                                                 *Enter Pin Code</div>
                                         </div>
@@ -1096,16 +1096,16 @@
                                         <div class="mb-3">
                                             <label for="eAddresss" class="form-label">Address<span
                                                     class="text-danger">*</span></label>
-                                            <textarea class="form-control" formControlName="Address"
+                                            <textarea class="form-control" formControlName="address"
                                                 id="eAddresss"></textarea>
-                                            <div *ngIf="ccInfo.Address.hasError('required') && ccInfo.Address.touched"
+                                            <div *ngIf="ccInfo.address.hasError('required') && ccInfo.address.touched"
                                                 class="text text-danger error-div">*Enter Corresspondance Address</div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eAddress1" class="form-label">Address 1</label>
-                                            <textarea class="form-control" formControlName="Address1"
+                                            <textarea class="form-control" formControlName="address1"
                                                 id="eAddress1"></textarea>
                                         </div>
                                     </div>
@@ -1115,7 +1115,7 @@
                                                     class="text-danger">*</span></label>
                                             <select class="form-select" id="redcntcountryName"
                                                 (ngModelChange)="onOptionsSelected($event,'curr')"
-                                                formControlName="Country">
+                                                formControlName="country">
                                                 <option selected="" disabled="" value="">Choose...</option>
                                                 <option *ngFor="let cnt of contries" value="{{cnt.id}}">
                                                     {{cnt.country_Name}}
@@ -1126,13 +1126,13 @@
                                         <div class="mb-3">
                                             <label for="redZone" class="form-label">Zone<span
                                                     class="text-danger">*</span></label>
-                                            <select class="form-select" id="redZone" formControlName="Zone"
+                                            <select class="form-select" id="redZone" formControlName="zone"
                                                 (ngModelChange)="OptionsSelected($event,'curr')">
                                                 <option selected="" disabled="" value="">Choose...</option>
                                                 <option *ngFor="let zn of corresspondCountryZone" value="{{zn.id}}">
                                                     {{zn.zone_Name}}
                                             </select>
-                                            <div *ngIf="ccInfo.Zone.hasError('required') && ccInfo.Zone.touched"
+                                            <div *ngIf="ccInfo.zone.hasError('required') && ccInfo.zone.touched"
                                                 class="text text-danger error-div">
                                                 *Select Zone</div>
                                         </div>
@@ -1143,12 +1143,12 @@
                                         <div class="mb-3">
                                             <label for="redcntcountryName" class="form-label">State<span
                                                     class="text-danger">*</span></label>
-                                            <select class="form-select" id="redcntcountryName" formControlName="State">
+                                            <select class="form-select" id="redcntcountryName" formControlName="state">
                                                 <option selected="" disabled="" value="">Choose...</option>
                                                 <option *ngFor="let stC of PerFilteredStates" value="{{stC.id}}">
                                                     {{stC.state_Name}}
                                             </select>
-                                            <div *ngIf="ccInfo.State.hasError('required') && ccInfo.State.touched"
+                                            <div *ngIf="ccInfo.state.hasError('required') && ccInfo.state.touched"
                                                 class="text text-danger error-div">*Select State</div>
                                         </div>
                                     </div>
@@ -1156,8 +1156,8 @@
                                         <div class="mb-3">
                                             <label for="City1">City </label>
                                             <input type="text" autocomplete="off" class="form-control"
-                                                formControlName="City" id="City1" />
-                                            <div *ngIf="ccInfo.City.hasError('required') && ccInfo.City.touched"
+                                                formControlName="city" id="City1" />
+                                            <div *ngIf="ccInfo.city.hasError('required') && ccInfo.city.touched"
                                                 class="text text-danger error-div">
                                                 *Enter City</div>
                                         </div>
@@ -1165,9 +1165,9 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="ePin1">Pin <span class="text-danger">*</span></label>
-                                            <input type="text" autocomplete="off" formControlName="Pin"
+                                            <input type="text" autocomplete="off" formControlName="pin"
                                                 class="form-control" id="ePin1" (keypress)="keyPressNumbers($event)" />
-                                            <div *ngIf="ccInfo.Pin.hasError('required') && ccInfo.Pin.touched"
+                                            <div *ngIf="ccInfo.pin.hasError('required') && ccInfo.pin.touched"
                                                 class="text text-danger error-div">
                                                 *Enter Pin Code</div>
                                         </div>
@@ -1175,7 +1175,7 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="ePhone">Phone</label>
-                                            <input type="text" autocomplete="off" formControlName="Phone"
+                                            <input type="text" autocomplete="off" formControlName="phone"
                                                 class="form-control" id="validationPhone"
                                                 (keypress)="keyPressNumbers($event)" />
                                         </div>
@@ -1185,9 +1185,9 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eEmail">Email Address2 </label>
-                                            <input type="text" autocomplete="off" formControlName="EmailAddress2"
+                                            <input type="text" autocomplete="off" formControlName="emailAddress2"
                                                 class="form-control" id="eEmail" />
-                                            <div *ngIf="ccInfo.EmailAddress2.hasError('email')"
+                                            <div *ngIf="ccInfo.emailAddress2.hasError('email')"
                                                 class="text text-danger error-div">
                                                 *Enter valid email Address</div>
                                         </div>
@@ -1195,7 +1195,7 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eMobileNo2">Mobile No2 </label>
-                                            <input type="text" autocomplete="off" formControlName="MobileNo2"
+                                            <input type="text" autocomplete="off" formControlName="mobileNo2"
                                                 class="form-control" id="eMobileNo2"
                                                 (keypress)="keyPressNumbers($event)" />
                                         </div>
@@ -1331,24 +1331,24 @@
                                         <tr *ngFor="let sys_ProfessionalInformations of professionalInformationArr;let q=index;"
                                             [formGroupName]="q">
                                             <td><input type="text" class="form-control"
-                                                    formControlName="EmployeerName" /></td>
+                                                    formControlName="employeerName" /></td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="EmployeerAddress"></td>
-                                            <td><input type="text" class="form-control" formControlName="Designation">
+                                                    formControlName="employeerAddress"></td>
+                                            <td><input type="text" class="form-control" formControlName="designation">
                                             </td>
-                                            <td><input type="text" class="form-control" formControlName="ContactPerson">
+                                            <td><input type="text" class="form-control" formControlName="contactPerson">
                                             </td>
-                                            <td><input type="text" class="form-control" formControlName="ContactNo">
+                                            <td><input type="text" class="form-control" formControlName="contactNo">
                                             </td>
-                                            <td><input type="text" class="form-control" formControlName="EmailId"></td>
+                                            <td><input type="text" class="form-control" formControlName="emailId"></td>
                                             <td><input type="date" class="form-control" id="reddate"
-                                                    formControlName="DateOfJoining" />
+                                                    formControlName="dateOfJoining" />
                                             </td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="LastDrawnSalary"></td>
+                                                    formControlName="lastDrawnSalary"></td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="ReasonForLeaving"></td>
-                                            <td><input type="text" class="form-control" formControlName="DateOfLeaving">
+                                                    formControlName="reasonForLeaving"></td>
+                                            <td><input type="text" class="form-control" formControlName="dateOfLeaving">
                                             </td>
                                             <td>
                                                 <i class="fa fa-trash"
@@ -1427,21 +1427,21 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eBankName">Bank Name </label>
-                                            <input type="text" formControlName="Bank_Name" class="form-control"
+                                            <input type="text" formControlName="bank_Name" class="form-control"
                                                 id="eBankName" />
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eBranchName">Branch Name </label>
-                                            <input type="text" formControlName="Branch_Name" class="form-control"
+                                            <input type="text" formControlName="branch_Name" class="form-control"
                                                 id="eBranchName" />
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eAccountNo">Account No. </label>
-                                            <input type="text" autocomplete="off" formControlName="Account_No"
+                                            <input type="text" autocomplete="off" formControlName="account_No"
                                                 class="form-control" id="eAccountNo"
                                                 (keypress)="keyPressNumbers($event)" />
                                         </div>
@@ -1449,7 +1449,7 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eIFSCCode">IFSC Code</label>
-                                            <input type="text" formControlName="IFSC_Code" class="form-control"
+                                            <input type="text" formControlName="ifsC_Code" class="form-control"
                                                 id="eIFSCCode" />
                                         </div>
                                     </div>
@@ -1470,7 +1470,7 @@
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody formArrayName="sys_Identity_ProofDtos">
+                                        <tbody formArrayName="sys_Identity_Proofs">
                                             <tr>
                                                 <td>
                                                     <select id="eIdentityProof" class="form-select"
@@ -1517,7 +1517,7 @@
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody formArrayName="sys_Identity_ProofDtos">
+                                        <tbody formArrayName="sys_Identity_Proofs">
                                             <tr *ngFor="let identityProf of identityProofArr;let p=index;"
                                                 [formGroupName]="p">
                                                 <td>{{p+1}}</td>
@@ -1559,20 +1559,20 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="redStatus" class="mr-5">Status </label>
-                                            <input type="checkbox" formControlName="Status" id="redStatus" />
+                                            <input type="checkbox" formControlName="status" id="redStatus" />
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eOtherDetails">Other Details </label>
-                                            <textarea class="form-control" formControlName="Other_Details"
+                                            <textarea class="form-control" formControlName="other_Details"
                                                 id="eOtherDetails"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eCardNo">Card No </label>
-                                            <input type="text" autocomplete="off" formControlName="Card_No"
+                                            <input type="text" autocomplete="off" formControlName="card_No"
                                                 class="form-control" id="eCardNo"
                                                 (keypress)="keyPressNumbers($event)" />
                                         </div>
@@ -1580,7 +1580,7 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eProxyNo">Proxy No </label>
-                                            <input type="text" formControlName="CarProxy_Nod_No" class="form-control"
+                                            <input type="text" formControlName="carProxy_Nod_No" class="form-control"
                                                 id="eProxyNo" (keypress)="keyPressNumbers($event)" />
                                         </div>
                                     </div>
@@ -1615,7 +1615,7 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eUserType" class="form-label">User Type</label>
-                                            <select class="form-select" id="eUserType" formControlName="User_Type">
+                                            <select class="form-select" id="eUserType" formControlName="user_Type">
                                                 <option selected="" disabled="" value="">Choose...</option>
                                                 <option *ngFor="let utype of userType" [ngValue]="utype.id">
                                                     {{utype.userType_Name}}</option>
@@ -1625,14 +1625,14 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="ePicture">Picture</label>
-                                            <input type="file" formControlName="PictureFile" class="form-control"
+                                            <input type="file" formControlName="pictureFile" class="form-control"
                                                 id="ePicture" />
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eSignature">Signature</label>
-                                            <input type="file" formControlName="SignatureFile" class="form-control"
+                                            <input type="file" formControlName="signatureFile" class="form-control"
                                                 id="eSignature" />
                                         </div>
                                     </div>

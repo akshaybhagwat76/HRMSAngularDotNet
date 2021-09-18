@@ -88,6 +88,7 @@ import {
   IdentityProofsattachments
 } from '../../../core/models/EmployeeFormData';
 import { EmployeedataService } from '../../../core/services/employeedata.service';
+import { Employee, SysFamilyDetailsDto } from 'src/app/core/models/EmployeeFormDataLatest';
 
 @Component({
   moduleId: "",
@@ -341,12 +342,13 @@ export class DefaultComponent implements OnInit {
       // this.designation = result[21];
     });
 
-
-    this.getEmployeeDetails();
-
+    // let employeeId = 159; //
+    // if(employeeId) {
+    //   this.getEmployeeDetails(employeeId);
+    // }
     //this.employees = employees;
   }
-
+   
   // Family Details
   get familyDetailsArr() {
 
@@ -371,7 +373,7 @@ export class DefaultComponent implements OnInit {
   // Identity Proof
   get identityProofArr() {
     //  return return (<FormArray>this.hrmsForm.get('sys_OtherInformationDto')).controls;
-    return this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_ProofDtos')['controls'] as FormArray;
+    return this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_Proofs')['controls'] as FormArray;
   }
   // Professional Information
   get professionalInformationArr() {
@@ -497,23 +499,26 @@ export class DefaultComponent implements OnInit {
   }
   fbBuilder() {
     this.hrmsForm = this.fb.group({
-      employeeId: ['', [Validators.required]],
+      id: ['', [Validators.required]],
+      Status_Id: 1,
+      remarks: [''],
+      action_Remarks: [''],
       companyId: ['', [Validators.required]],
       employeeCategoryId: [''],
       employeeCode: [''],
-      employeeAutoGenerate: [false],
       biometricCode: [''],
+      employeeAutoGenerate: [false],
       firstName: ['', [Validators.required]],
       middleName: [''],
       lastName: ['', [Validators.required]],
+      email: ['', [Validators.email]],
+      project_BranchId: [''],
       departmentId: ['', [Validators.required]],
       designationId: ['', [Validators.required]],
-      project_BranchId: [''],
       higher_Authority_Branch_ProjectId: [''],
       higher_AuthorityId: [''],
       higher_Authority_NameId: [''],
       date_Of_Joining: [''],
-      email: ['', [Validators.email]],
       employee_TypeId: ['', [Validators.required]],
       mobile_No: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       third_Party_Type: [''],
@@ -531,57 +536,60 @@ export class DefaultComponent implements OnInit {
       blood_GroupId: [''],
       marital_StatusId: ['', [Validators.required]],
       identification_Mark: [''],
-      highestQualification: [''],
+      
+      status: [''],
       professionalInformation: [''],
+      highestQualification: [''],
+      // isActive: [true],
+      // isDelete: [false],
       sys_FamilyDetailsDto: new FormArray([]),
       tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto: new FormArray([]),
       sys_EducationalQualificationDto: new FormArray([]),
       // educationDocument: new FormArray([]),
       sys_PermanentContactInformationDto: this.fb.group({
-        Address: ['', [Validators.required]],
-        Address1: [''],
-        Country: ['', [Validators.required]],
-        Zone: ['', [Validators.required]],
-        State: ['', [Validators.required]],
-        City: ['', [Validators.required]],
-        Pin: ['', [Validators.required]],
-        Employee_Id: [0]
+        address: ['', [Validators.required]],
+        address1: [''],
+        country: ['', [Validators.required]],
+        zone: ['', [Validators.required]],
+        state: ['', [Validators.required]],
+        city: ['', [Validators.required]],
+        pin: ['', [Validators.required]],
+        employee_Id: [0]
       }),
       sys_CorresspondanceContactInformationDto: this.fb.group({
-        Address: ['', [Validators.required]],
-        Address1: [''],
-        Country: ['', [Validators.required]],
-        Zone: ['', [Validators.required]],
-        State: ['', [Validators.required]],
-        City: ['', [Validators.required]],
-        Pin: ['', [Validators.required]],
-        Phone: [],
-        EmailAddress2: ['', [Validators.email]],
-        MobileNo2: [],
-        Employee_Id: [0]
+        address: ['', [Validators.required]],
+        address1: [''],
+        country: ['', [Validators.required]],
+        zone: ['', [Validators.required]],
+        state: ['', [Validators.required]],
+        city: ['', [Validators.required]],
+        pin: ['', [Validators.required]],
+        phone: [],
+        emailAddress2: ['', [Validators.email]],
+        mobileNo2: [],
+        employee_Id: [0]
 
       }),
       sys_OtherInformationDto: this.fb.group({
-        Bank_Name: [''],
-        Branch_Name: [''],
-        Account_No: [''],
-        IFSC_Code: [''],
-        Status: [true],
-        Other_Details: [''],
-        Card_No: [''],
-        CarProxy_Nod_No: [''],
-        // IpUserId: [''],
-        // IpUserData: [''],
-        User_Type: [''],
-        SignatureFile: [''],
-        PictureFile: [''],
-        Employee_Id: [0],
-        sys_Identity_ProofDtos: new FormArray([]),
+        bank_Name: [''],
+        branch_Name: [''],
+        account_No: [''],
+        ifsC_Code: [''],
+        status: [true],
+        other_Details: [''],
+        card_No: [''],
+        carProxy_Nod_No: [''],
+        // ipUserId: [''],
+        // ipUserData: [''],
+        user_Type: [''],
+        signatureFile: [''],
+        pictureFile: [''],
+        employee_Id: [0],
+        sys_Identity_Proofs: new FormArray([]),
       }),
       professionalInformationStatus: ['', [Validators.required]],
       sys_ProfessionalInformations: new FormArray([]),
-      professionalDocumentAttachment: new FormArray([]),
-      Status_Id: 1
+      professionalDocumentAttachment: new FormArray([])
     });
     // this.initEducationalQualification();
   }
@@ -589,16 +597,16 @@ export class DefaultComponent implements OnInit {
     const EducationalQualificationArray = <FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto'];
     for (let k = 0; k < 1; k++) {
       EducationalQualificationArray.push(this.fb.group({
-        Id: [],
-        Employee_Id: [],
-        Emp_Year_OF_Passing: [],
-        Qualification: [],
-        Specialization: [],
-        School: [],
-        Board: [],
-        Marks: [],
-        Remarks: [],
-        Attachments: this.fb.array([])
+        id: [],
+        employee_Id: [],
+        emp_Year_OF_Passing: [],
+        qualification: [],
+        specialization: [],
+        school: [],
+        board: [],
+        marks: [],
+        remarks: [],
+        attachments: this.fb.array([])
       }))
       this.initEduAttachmentsQualification();
 
@@ -609,11 +617,11 @@ export class DefaultComponent implements OnInit {
     const EduAttachmentsArray = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(0).get('Attachments') as FormArray;
     for (let k = 0; k < 1; k++) {
       EduAttachmentsArray.push(this.fb.group({
-        Educational_Qualification_Id: [],
-        Employee_Id: [],
-        CourseName: [],
-        DocumentType: [],
-        DocumentUrl: [],
+        educational_Qualification_Id: [],
+        employee_Id: [],
+        courseName: [],
+        documentType: [],
+        documentUrl: [],
       }))
     }
   }
@@ -623,14 +631,14 @@ export class DefaultComponent implements OnInit {
   addfamilyDetailsArr() {
     if (this.fName && this.FamilyDetail_RelationshipId) {
       this.familyForm = this.formBuilder.group({
-        FamilyDetail_Name: [this.fName],
-        FamilyDetail_DOB: [this.FamilyDetail_DOB],
-        FamilyDetail_RelationshipId: [this.FamilyDetail_RelationshipId],
-        Identity_Number: [this.fAadharNo],
-        IsAadharStatus: [this.fAadharStatus],
-        FamilyDetail_Mobile: [this.fContactNo],
-        Nominee_Address: [this.fAddress],
-        Employee_Id: [0]
+        familyDetail_Name: [this.fName],
+        familyDetail_DOB: [this.FamilyDetail_DOB],
+        familyDetail_RelationshipId: [this.FamilyDetail_RelationshipId],
+        identity_Number: [this.fAadharNo],
+        isAadharStatus: [this.fAadharStatus],
+        familyDetail_Mobile: [this.fContactNo],
+        nominee_Address: [this.fAddress],
+        employee_Id: [0]
       });
       (<FormArray>this.hrmsForm.get('sys_FamilyDetailsDto')).push(this.familyForm);
       this.clearFamilyDetails();
@@ -659,13 +667,13 @@ export class DefaultComponent implements OnInit {
   // Edit Family Details
   editFamilyDetails(row) {
     const familyData = (<FormArray>this.hrmsForm.controls['sys_FamilyDetailsDto']).at(row).value;
-    this.fName = familyData.FamilyDetail_Name;
-    this.FamilyDetail_RelationshipId = familyData.FamilyDetail_RelationshipId;
-    this.FamilyDetail_DOB = familyData.FamilyDetail_DOB;
-    this.fAadharNo = familyData.Identity_Number;
-    this.fAadharStatus = familyData.IsAadharStatus;
-    this.fAddress = familyData.Nominee_Address;
-    this.fContactNo = familyData.FamilyDetail_Mobile;
+    this.fName = familyData.familyDetail_Name;
+    this.FamilyDetail_RelationshipId = familyData.familyDetail_RelationshipId;
+    this.FamilyDetail_DOB = familyData.familyDetail_DOB;
+    this.fAadharNo = familyData.identity_Number;
+    this.fAadharStatus = familyData.isAadharStatus;
+    this.fAddress = familyData.nominee_Address;
+    this.fContactNo = familyData.familyDetail_Mobile;
     this.isFamilyEdited = true;
     this.updatedFamilyDetailsId = row;
   }
@@ -674,13 +682,13 @@ export class DefaultComponent implements OnInit {
   updatefamilyDetailsArr() {
     const familtyDetailsform = (<FormArray>this.hrmsForm.controls['sys_FamilyDetailsDto']).at(this.updatedFamilyDetailsId);
     familtyDetailsform.patchValue({
-      'FamilyDetail_Name': [this.fName],
-      'FamilyDetail_DOB': [this.FamilyDetail_DOB],
-      'FamilyDetail_RelationshipId': [this.FamilyDetail_RelationshipId],
-      'Identity_Number': [this.fAadharNo],
-      'IsAadharStatus': [this.fAadharStatus],
-      'FamilyDetail_Mobile': [this.fContactNo],
-      'Nominee_Address': [this.fAddress],
+      'familyDetail_Name': this.fName,
+      'familyDetail_DOB': this.FamilyDetail_DOB,
+      'familyDetail_RelationshipId': this.FamilyDetail_RelationshipId,
+      'identity_Number': this.fAadharNo,
+      'isAadharStatus': this.fAadharStatus,
+      'familyDetail_Mobile': this.fContactNo,
+      'nominee_Address': this.fAddress,
     });
     this.isFamilyEdited = false;
     this.updatedFamilyDetailsId = 0;
@@ -713,14 +721,14 @@ export class DefaultComponent implements OnInit {
   addNomineeDetailsArr() {
     if (this.nName && this.nRelationship) {
       this.nomineeForm = this.formBuilder.group({
-        Nominee_Name: [this.nName],
-        Nominee_DOB: [this.nDateOfBirth],
-        Nominee_RelationshipId: [this.nRelationship],
-        Identity_Number: [this.nAadharNo],
-        IsAadharStatus: [this.nAadharStatus],
-        Nominee_Mobile: [this.nContactNo],
-        Nominee_Address: [this.nAddress],
-        Employee_Id: [0]
+        nominee_Name: [this.nName],
+        nominee_DOB: [this.nDateOfBirth],
+        nominee_RelationshipId: [this.nRelationship],
+        identity_Number: [this.nAadharNo],
+        isAadharStatus: [this.nAadharStatus],
+        nominee_Mobile: [this.nContactNo],
+        nominee_Address: [this.nAddress],
+        employee_Id: [0]
       });
       (<FormArray>this.hrmsForm.get('tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto')).push(this.nomineeForm);
       this.clearNomineeDetails();
@@ -764,13 +772,13 @@ export class DefaultComponent implements OnInit {
   updateNomineeDetailsArr() {
     const nommineeDetailsform = (<FormArray>this.hrmsForm.controls['tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto']).at(this.updatedNomineeDetailsId);
     nommineeDetailsform.patchValue({
-      'Nominee_Name': [this.nName],
-      'Nominee_DOB': [this.nDateOfBirth],
-      'Nominee_RelationshipId': [this.nRelationship],
-      'Identity_Number': [this.nAadharNo],
-      'IsAadharStatus': [this.nAadharStatus],
-      'Nominee_Mobile': [this.nContactNo],
-      'Nominee_Address': [this.nAddress],
+      'nominee_Name': this.nName,
+      'nominee_DOB': this.nDateOfBirth,
+      'nominee_RelationshipId': this.nRelationship,
+      'identity_Number': this.nAadharNo,
+      'isAadharStatus': this.nAadharStatus,
+      'nominee_Mobile': this.nContactNo,
+      'nominee_Address': this.nAddress,
     });
     this.isNomineeEdited = false;
     this.updatedNomineeDetailsId = 0;
@@ -802,14 +810,14 @@ export class DefaultComponent implements OnInit {
     if (this.qualification && this.year) {
       this.educationForm = this.formBuilder.group({
         // highestQualification: [this.highestQualification],
-        Qualification: [this.qualification],
-        Emp_Year_OF_Passing: [this.year],
-        Specialization: [this.specialization],
-        School: [this.school],
-        Board: [this.board],
-        Marks: [this.marks],
-        // Attachments: [''],
-        Employee_Id: [0]
+        qualification: [this.qualification],
+        emp_Year_OF_Passing: [this.year],
+        specialization: [this.specialization],
+        school: [this.school],
+        board: [this.board],
+        marks: [this.marks],
+        // attachments: [''],
+        employee_Id: [0]
       });
       (<FormArray>this.hrmsForm.get('sys_EducationalQualificationDto')).push(this.educationForm);
       if (this.isUploaded) {
@@ -841,13 +849,13 @@ export class DefaultComponent implements OnInit {
     const educationInformationform = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(this.udatedEducationDetailsId);
     educationInformationform.patchValue({
       // 'highestQualification': [this.highestQualification],
-      'Qualification': [this.qualification],
-      'Emp_Year_OF_Passing': [this.year],
-      'Specialization': [this.specialization],
-      'School': [this.school],
-      'Board': [this.board],
-      'Marks': [this.marks],
-      'Attachments': [''],
+      'qualification': this.qualification,
+      'emp_Year_OF_Passing': this.year,
+      'specialization': this.specialization,
+      'school': this.school,
+      'board': this.board,
+      'marks': this.marks,
+      'attachments': [''],
     });
     this.isEducationEdited = false;
     this.udatedEducationDetailsId = 0;
@@ -913,14 +921,14 @@ export class DefaultComponent implements OnInit {
       attachments: [this.attachments],
       identityPreviewUrl: [this.documentPreviewUrl]
     });
-    (<FormArray>this.hrmsForm.get('sys_OtherInformationDto').get('sys_Identity_ProofDtos')).push(this.identityProofForm);
+    (<FormArray>this.hrmsForm.get('sys_OtherInformationDto').get('sys_Identity_Proofs')).push(this.identityProofForm);
     // this.clearEducationDocument();
   }
 
   // Delete Identity Proof
   deleteIdentityProof(row) {
 
-    const IdentityProof = this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_ProofDtos') as FormArray;
+    const IdentityProof = this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_Proofs') as FormArray;
     if (IdentityProof) {
       IdentityProof.removeAt(row);
     }
@@ -931,18 +939,18 @@ export class DefaultComponent implements OnInit {
     this.professionalInfoSubmit = true;
     if (this.EmployeerName && this.EmailId && this.DateOfJoining && this.LastDrawnSalary) {
       this.ProfessionalInformationForm = this.formBuilder.group({
-        EmployeerName: [this.EmployeerName],
-        EmployeerAddress: [this.EmployeerAddress],
-        Designation: [this.Designation],
-        ContactPerson: [this.ContactPerson],
-        ContactNo: [this.ContactNo],
-        EmailId: [this.EmailId],
-        DateOfJoining: [this.DateOfJoining],
-        LastDrawnSalary: [this.LastDrawnSalary],
-        ReasonForLeaving: [this.ReasonforLeavingy],
-        DateOfLeaving: [this.DateOfLeaving],
-        AttachmentType_Path: [this.Professionaldocument],
-        Employee_Id: [0]
+        employeerName: [this.EmployeerName],
+        employeerAddress: [this.EmployeerAddress],
+        designation: [this.Designation],
+        contactPerson: [this.ContactPerson],
+        contactNo: [this.ContactNo],
+        emailId: [this.EmailId],
+        dateOfJoining: [this.DateOfJoining],
+        lastDrawnSalary: [this.LastDrawnSalary],
+        reasonForLeaving: [this.ReasonforLeavingy],
+        dateOfLeaving: [this.DateOfLeaving],
+        attachmentType_Path: [this.Professionaldocument],
+        employee_Id: [0]
       });
       (<FormArray>this.hrmsForm.get('sys_ProfessionalInformations')).push(this.ProfessionalInformationForm);
       if (this.isProfessionalDocUploaded) {
@@ -1204,10 +1212,10 @@ export class DefaultComponent implements OnInit {
   onSubmit(row) {
     const educationDocData = (this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments') as FormArray).at(row);
     educationDocData.patchValue({
-      'courseName': [this.courseName],
-      'documentType': [this.documentType],
-      'documentfile': [this.documentPreviewUrl],
-      'eduDocumentPreviewUrl': [this.documentPreviewUrl]
+      'courseName': this.courseName,
+      'documentType': this.documentType,
+      'documentfile': this.documentPreviewUrl,
+      'eduDocumentPreviewUrl': this.documentPreviewUrl
     });
     const educationDocumentsArray = this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments')['controls'] as FormArray;;
     educationDocumentsArray.at(row).patchValue({ 'eduDocumentPreviewUrl': this.documentPreviewUrl });
@@ -1216,8 +1224,8 @@ export class DefaultComponent implements OnInit {
   onProfessionalSubmit(row) {
     const professionalDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row);
     professionalDocData.patchValue({
-      'piEmployeeName': [this.EmployeerName],
-      'piDocumentPreviewUrl': [this._documentPreviewUrl]
+      'piEmployeeName': this.EmployeerName,
+      'piDocumentPreviewUrl': this._documentPreviewUrl
     });
     const professionalDocumentsArray = <FormArray>this.hrmsForm.controls['professionalDocumentAttachment'];
     professionalDocumentsArray.at(row).patchValue({ 'piDocumentPreviewUrl': this._documentPreviewUrl });
@@ -1236,7 +1244,7 @@ export class DefaultComponent implements OnInit {
   getIdentityImgSrc(row) {
 
 
-    const identityData = (this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_ProofDtos') as FormArray).at(row).value;
+    const identityData = (this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_Proofs') as FormArray).at(row).value;
     return identityData.identityPreviewUrl;
   }
 
@@ -1262,6 +1270,7 @@ export class DefaultComponent implements OnInit {
     //   this.validateAllFormFields(this.corresspondanceContactInformationForm);
     //   this.validateAllFormFields(this.otherInformationForm);
     // }
+    // this.submitHrmsForm();
     this.submitHrmsForm();
   }
   resetHrmsForm() {
@@ -1337,23 +1346,23 @@ export class DefaultComponent implements OnInit {
   }
 
 
-  getEmployeeDetails() {
-    let employeeId = 6;
+  getEmployeeDetails(employeeId: number) {
+    // let employeeId = 6;
     this.employeeMasterService.get(employeeId).subscribe((result: any) => {
 
       // sys_PermanentContactInformationDto
       var sys_PermanentContactInformationDto = this.hrmsForm.controls['sys_PermanentContactInformationDto'];
       if (result.sys_PermanentContactInformationDto)
         sys_PermanentContactInformationDto.patchValue({
-          Id: [result.sys_PermanentContactInformationDto.id],
-          Address: [result.sys_PermanentContactInformationDto.address],
-          Address1: [result.sys_PermanentContactInformationDto.address1],
-          Country: [result.sys_PermanentContactInformationDto.country],
-          Zone: [result.sys_PermanentContactInformationDto.zone],
-          State: [result.sys_PermanentContactInformationDto.state],
-          City: [result.sys_PermanentContactInformationDto.city],
-          Pin: [result.sys_PermanentContactInformationDto.pin],
-          Employee_Id: [result.sys_PermanentContactInformationDto.employee_Id],
+          id: result.sys_PermanentContactInformationDto.id,
+          address: result.sys_PermanentContactInformationDto.address,
+          address1: result.sys_PermanentContactInformationDto.address1,
+          country: result.sys_PermanentContactInformationDto.country,
+          zone: result.sys_PermanentContactInformationDto.zone,
+          state: result.sys_PermanentContactInformationDto.state,
+          city: result.sys_PermanentContactInformationDto.city,
+          pin: result.sys_PermanentContactInformationDto.pin,
+          employee_Id: result.sys_PermanentContactInformationDto.employee_Id,
         });
 
 
@@ -1361,44 +1370,44 @@ export class DefaultComponent implements OnInit {
       var sys_CorresspondanceContactInformationDto = this.hrmsForm.controls['sys_CorresspondanceContactInformationDto'];
       if (result.sys_CorresspondanceContactInformationDto)
         sys_CorresspondanceContactInformationDto.patchValue({
-          Id: [result.sys_CorresspondanceContactInformationDto.id],
-          Address: [result.sys_CorresspondanceContactInformationDto.address],
-          Address1: [result.sys_CorresspondanceContactInformationDto.address1],
-          Country: [result.sys_CorresspondanceContactInformationDto.country],
-          Zone: [result.sys_CorresspondanceContactInformationDto.zone],
-          State: [result.sys_CorresspondanceContactInformationDto.state],
-          City: [result.sys_CorresspondanceContactInformationDto.city],
-          Pin: [result.sys_CorresspondanceContactInformationDto.pin],
-          Employee_Id: [result.sys_CorresspondanceContactInformationDto.employee_Id],
-          Phone: [result.sys_CorresspondanceContactInformationDto.phone],
-          EmailAddress2: [result.sys_CorresspondanceContactInformationDto.emailAddress2],
-          MobileNo2: [result.sys_CorresspondanceContactInformationDto.mobileNo2],
+          id: result.sys_CorresspondanceContactInformationDto.id,
+          address: result.sys_CorresspondanceContactInformationDto.address,
+          address1: result.sys_CorresspondanceContactInformationDto.address1,
+          country: result.sys_CorresspondanceContactInformationDto.country,
+          zone: result.sys_CorresspondanceContactInformationDto.zone,
+          state: result.sys_CorresspondanceContactInformationDto.state,
+          city: result.sys_CorresspondanceContactInformationDto.city,
+          pin: result.sys_CorresspondanceContactInformationDto.pin,
+          employee_Id: result.sys_CorresspondanceContactInformationDto.employee_Id,
+          phone: result.sys_CorresspondanceContactInformationDto.phone,
+          emailAddress2: result.sys_CorresspondanceContactInformationDto.emailAddress2,
+          mobileNo2: result.sys_CorresspondanceContactInformationDto.mobileNo2,
         });
 
       // sys_OtherInformationDto
       var sys_OtherInformationDto = this.hrmsForm.controls['sys_OtherInformationDto'];
       if (result.sys_OtherInformationDto)
         sys_OtherInformationDto.patchValue({
-          Id: [result.sys_OtherInformationDto.id],
-          Bank_Name: [result.sys_OtherInformationDto.bank_Name],
-          Branch_Name: [result.sys_OtherInformationDto.branch_Name],
-          Account_No: [result.sys_OtherInformationDto.account_No],
-          IFSC_Code: [result.sys_OtherInformationDto.ifsC_Code],
-          Status: [result.sys_OtherInformationDto.status],
-          Other_Details: [result.sys_OtherInformationDto.other_Details],
-          Card_No: [result.sys_OtherInformationDto.card_No],
-          CarProxy_Nod_No: [result.sys_OtherInformationDto.carProxy_Nod_No],
-          User_Type: [result.sys_OtherInformationDto.user_Type],
-          SignatureFile: [result.sys_OtherInformationDto.signatureFile],
-          PictureFile: [result.sys_OtherInformationDto.pictureFile],
-          Employee_Id: [result.sys_OtherInformationDto.employee_Id]
+          id: result.sys_OtherInformationDto.id,
+          bank_Name: result.sys_OtherInformationDto.bank_Name,
+          branch_Name: result.sys_OtherInformationDto.branch_Name,
+          account_No: result.sys_OtherInformationDto.account_No,
+          ifsC_Code: result.sys_OtherInformationDto.ifsC_Code,
+          status: result.sys_OtherInformationDto.status,
+          other_Details: result.sys_OtherInformationDto.other_Details,
+          card_No: result.sys_OtherInformationDto.card_No,
+          carProxy_Nod_No: result.sys_OtherInformationDto.carProxy_Nod_No,
+          user_Type: result.sys_OtherInformationDto.user_Type,
+          signatureFile: result.sys_OtherInformationDto.signatureFile,
+          pictureFile: result.sys_OtherInformationDto.pictureFile,
+          employee_Id: result.sys_OtherInformationDto.employee_Id
         });
 
 
 
 
       this.hrmsForm.patchValue({
-        employeeId: result.id,
+        id: result.id,
         companyId: result.companyId,
         employeeCategoryId: result.employeeCategoryId,
         employeeCode: result.employeeCode,
@@ -1440,15 +1449,15 @@ export class DefaultComponent implements OnInit {
         //sys_FamilyDetailsDto
         result.sys_FamilyDetailsDto.forEach(element => {
           this.familyForm = this.formBuilder.group({
-            FamilyDetail_Id: [element.id],
-            FamilyDetail_Name: [element.familyDetail_Name],
-            FamilyDetail_DOB: [element.familyDetail_DOB],
-            FamilyDetail_RelationshipId: [element.familyDetail_RelationshipId],
-            Identity_Number: [element.identity_Number],
-            IsAadharStatus: [element.isAadharStatus],
-            FamilyDetail_Mobile: [element.familyDetail_Mobile],
-            Nominee_Address: [element.nominee_Address],
-            Employee_Id: [element.employee_Id]
+            familyDetail_Id: [element.id],
+            familyDetail_Name: [element.familyDetail_Name],
+            familyDetail_DOB: [element.familyDetail_DOB],
+            familyDetail_RelationshipId: [element.familyDetail_RelationshipId],
+            identity_Number: [element.identity_Number],
+            isAadharStatus: [element.isAadharStatus],
+            familyDetail_Mobile: [element.familyDetail_Mobile],
+            nominee_Address: [element.nominee_Address],
+            employee_Id: [element.employee_Id]
           });
           // sys_FamilyDetailsDtoArray.push(this.familyForm);
           (<FormArray>this.hrmsForm.get('sys_FamilyDetailsDto')).push(this.familyForm);
@@ -1459,15 +1468,15 @@ export class DefaultComponent implements OnInit {
         //tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto
         result.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.forEach(element => {
           this.nomineeForm = this.formBuilder.group({
-            Nominee_Id: [element.id],
-            Nominee_Name: [element.nominee_Name],
-            Nominee_DOB: [element.nominee_DOB],
-            Nominee_RelationshipId: [element.nominee_RelationshipId],
-            Identity_Number: [element.identity_Number],
-            IsAadharStatus: [element.isAadharStatus],
-            Nominee_Mobile: [element.nominee_Mobile],
-            Nominee_Address: [element.nominee_Address],
-            Employee_Id: [element.employee_Id]
+            nominee_Id: [element.id],
+            nominee_Name: [element.nominee_Name],
+            nominee_DOB: [element.nominee_DOB],
+            nominee_RelationshipId: [element.nominee_RelationshipId],
+            identity_Number: [element.identity_Number],
+            isAadharStatus: [element.isAadharStatus],
+            nominee_Mobile: [element.nominee_Mobile],
+            nominee_Address: [element.nominee_Address],
+            employee_Id: [element.employee_Id]
           });
           (<FormArray>this.hrmsForm.get('tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto')).push(this.nomineeForm);
         });
@@ -1475,14 +1484,14 @@ export class DefaultComponent implements OnInit {
         //tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto
         result.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.forEach(element => {
           var HR_EMPLOYEE_NOMINEE_DETAILSDto = this.formBuilder.group({
-            Nominee_Name: [element.nominee_Name],
-            Nominee_DOB: [element.nominee_DOB],
-            Nominee_RelationshipId: [element.nominee_RelationshipId],
-            Identity_Number: [element.identity_Number],
-            IsAadharStatus: [element.isAadharStatus],
-            Nominee_Mobile: [element.nominee_Mobile],
-            Nominee_Address: [element.nominee_Address],
-            Employee_Id: [element.employee_Id]
+            nominee_Name: [element.nominee_Name],
+            nominee_DOB: [element.nominee_DOB],
+            nominee_RelationshipId: [element.nominee_RelationshipId],
+            identity_Number: [element.identity_Number],
+            isAadharStatus: [element.isAadharStatus],
+            nominee_Mobile: [element.nominee_Mobile],
+            nominee_Address: [element.nominee_Address],
+            employee_Id: [element.employee_Id]
           });
           (<FormArray>this.hrmsForm.get('tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto')).push(HR_EMPLOYEE_NOMINEE_DETAILSDto);
         });
@@ -1491,13 +1500,13 @@ export class DefaultComponent implements OnInit {
         result.sys_EducationalQualificationDto.forEach(element => {
           var EducationalQualificationDto = this.formBuilder.group({
             highestQualification: [element.id],
-            Qualification: [element.qualification],
-            Emp_Year_OF_Passing: [element.emp_Year_OF_Passing],
-            Specialization: [element.specialization],
-            School: [element.school],
-            Board: [element.board],
-            Marks: [element.marks],
-            Attachments: [element.attachments]
+            qualification: [element.qualification],
+            emp_Year_OF_Passing: [element.emp_Year_OF_Passing],
+            specialization: [element.specialization],
+            school: [element.school],
+            board: [element.board],
+            marks: [element.marks],
+            attachments: [element.attachments]
           });
           (<FormArray>this.hrmsForm.get('sys_EducationalQualificationDto')).push(EducationalQualificationDto);
         });
@@ -1505,19 +1514,19 @@ export class DefaultComponent implements OnInit {
         // sys_ProfessionalInformations
         result.sys_ProfessionalInformations.forEach(element => {
           var ProfessionalInformations = this.formBuilder.group({
-            Id: [result.sys_ProfessionalInformations.id],
-            EmployeerName: [result.sys_ProfessionalInformations.employeerName],
-            EmployeerAddress: [result.sys_ProfessionalInformations.employeerAddress],
-            Designation: [result.sys_ProfessionalInformations.designation],
-            ContactPerson: [result.sys_ProfessionalInformations.contactPerson],
-            ContactNo: [result.sys_ProfessionalInformations.contactNo],
-            EmailId: [result.sys_ProfessionalInformations.emailId],
-            DateOfJoining: [result.sys_ProfessionalInformations.dateOfJoining],
-            LastDrawnSalary: [result.sys_ProfessionalInformations.lastDrawnSalary],
-            ReasonForLeaving: [result.sys_ProfessionalInformations.reasonForLeaving],
-            DateOfLeaving: [result.sys_ProfessionalInformations.dateOfLeaving],
-            AttachmentType_Path: [result.sys_ProfessionalInformations.attachmentType_Path],
-            Employee_Id: [result.sys_ProfessionalInformations.employee_Id]
+            id: [result.sys_ProfessionalInformations.id],
+            employeerName: [result.sys_ProfessionalInformations.employeerName],
+            employeerAddress: [result.sys_ProfessionalInformations.employeerAddress],
+            designation: [result.sys_ProfessionalInformations.designation],
+            contactPerson: [result.sys_ProfessionalInformations.contactPerson],
+            contactNo: [result.sys_ProfessionalInformations.contactNo],
+            emailId: [result.sys_ProfessionalInformations.emailId],
+            dateOfJoining: [result.sys_ProfessionalInformations.dateOfJoining],
+            lastDrawnSalary: [result.sys_ProfessionalInformations.lastDrawnSalary],
+            reasonForLeaving: [result.sys_ProfessionalInformations.reasonForLeaving],
+            dateOfLeaving: [result.sys_ProfessionalInformations.dateOfLeaving],
+            attachmentType_Path: [result.sys_ProfessionalInformations.attachmentType_Path],
+            employee_Id: [result.sys_ProfessionalInformations.employee_Id]
           });
           (<FormArray>this.hrmsForm.get('sys_ProfessionalInformations')).push(ProfessionalInformations);
         });
@@ -1527,225 +1536,341 @@ export class DefaultComponent implements OnInit {
 
   submitHrmsForm() {
 
-    var inputModel = {
-      "id": Number(this.hrmsForm.controls.employeeId.value),
-      "status_Id": Number(this.hrmsForm.controls.Status_Id.value),
-      // "remarks": this.hrmsForm.controls.remarks.value,
-      // "action_Remarks": this.hrmsForm.controls.action_Remarks.value,
-      "companyId": Number(this.hrmsForm.controls.companyId.value),
-      "employeeCategoryId": Number(this.hrmsForm.controls.employeeCategoryId.value),
-      "employeeCode": this.hrmsForm.controls.employeeCode.value,
-      "biometricCode": this.hrmsForm.controls.biometricCode.value,
-      "firstName": this.hrmsForm.controls.firstName.value,
-      "middleName": this.hrmsForm.controls.middleName.value,
-      "lastName": this.hrmsForm.controls.lastName.value,
-      "email": this.hrmsForm.controls.email.value,
-      "project_BranchId": Number(this.hrmsForm.controls.project_BranchId.value),
-      "departmentId": Number(this.hrmsForm.controls.departmentId.value),
-      "designationId": Number(this.hrmsForm.controls.designationId.value),
-      "higher_Authority_Branch_ProjectId": Number(this.hrmsForm.controls.higher_Authority_Branch_ProjectId.value),
-      "higher_AuthorityId": Number(this.hrmsForm.controls.higher_AuthorityId.value),
-      "higher_Authority_NameId": Number(this.hrmsForm.controls.higher_Authority_NameId.value),
-      "date_Of_Joining": this.hrmsForm.controls.date_Of_Joining.value,
-      "employee_TypeId": Number(this.hrmsForm.controls.employee_TypeId.value),
-      "mobile_No": this.hrmsForm.controls.mobile_No.value,
-      "third_Party_Type": Number(this.hrmsForm.controls.third_Party_Type.value),
-      "third_Party_Id": Number(this.hrmsForm.controls.third_Party_Id.value),
-      "working_StatusId": Number(this.hrmsForm.controls.working_StatusId.value),
-      "probation_Period": Number(this.hrmsForm.controls.probation_Period.value),
-      "referenceEmployeeName": this.hrmsForm.controls.referenceEmployeeName.value,
-      "reference_Phone_No": this.hrmsForm.controls.reference_Phone_No.value,
-      "date_Of_Birth": this.hrmsForm.controls.date_Of_Birth.value,
-      "gender": this.hrmsForm.controls.gender.value,
-      "nationality": this.hrmsForm.controls.nationality.value,
-      "religion": this.hrmsForm.controls.religion.value,
-      "castId": Number(this.hrmsForm.controls.castId.value),
-      "physicalDisability": this.hrmsForm.controls.physicalDisability.value,
-      "blood_GroupId": Number(this.hrmsForm.controls.blood_GroupId.value),
-      "marital_StatusId": Number(this.hrmsForm.controls.marital_StatusId.value),
-      "identification_Mark": this.hrmsForm.controls.identification_Mark.value,
-      // "status": this.hrmsForm.controls.status.value,
-      "professionalInformation": this.hrmsForm.controls.professionalInformation.value,
-      "highestQualification": this.hrmsForm.controls.highestQualification.value,
-      // "isActive": this.hrmsForm.controls.isActive.value,
-      // "isDeleted": this.hrmsForm.controls.isDeleted.value,
-      // "sys_FamilyDetailsDto": [
-      //   {
-      //     "id":  Number(this.hrmsForm.controls.Id.value),
-      //     "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
-      //     "remarks": this.hrmsForm.controls.Remarks.value,
-      //     "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
-      //     "employee_Id":  Number(this.hrmsForm.controls.Employee_Id.value),
-      //     "isDeleted": this.hrmsForm.controls.IsDeleted.value,
-      //     "familyDetail_RelationshipId":  Number(this.hrmsForm.controls.FamilyDetail_RelationshipId.value),
-      //     "familyDetail_Name": this.hrmsForm.controls.FamilyDetail_Name.value,
-      //     "familyDetail_Mobile": this.hrmsForm.controls.FamilyDetail_Mobile.value,
-      //     "familyDetail_EmailId": this.hrmsForm.controls.FamilyDetail_EmailId.value,
-      //     "familyDetail_DOB": this.hrmsForm.controls.FamilyDetail_DOB.value,
-      //     "identity_Number": this.hrmsForm.controls.Identity_Number.value,
-      //     "nominee_Address": this.hrmsForm.controls.Nominee_Address.value,
-      //     "isAadharStatus": this.hrmsForm.controls.IsAadharStatus.value,
-      //   }
-      // ],
-      // "sys_EducationalQualificationDto": [
-      //   {
-      //     "id":  Number(this.hrmsForm.controls.Id.value),
-      //     "employee_Id":  Number(this.hrmsForm.controls.EmployeeId.value),
-      //     "emp_Year_OF_Passing":  Number(this.hrmsForm.controls.Emp_Year_OF_Passing.value),
-      //     "qualification": this.hrmsForm.controls.Qualification.value,
-      //     "specialization": this.hrmsForm.controls.Specialization.value,
-      //     "school": this.hrmsForm.controls.School.value,
-      //     "board": this.hrmsForm.controls.Board.value,
-      //     "marks": this.hrmsForm.controls.Marks.value,
-      //     "remarks": this.hrmsForm.controls.Remarks.value,
-      //     "isDeleted": this.hrmsForm.controls.IsDeleted.value,
-      //     "attachments": [
-      //       {
-      //         "id":  Number(this.hrmsForm.controls.EmployeeId.value),
-      //         "status_Id":  Number(this.hrmsForm.controls.EmployeeId.value),
-      //         "remarks": this.hrmsForm.controls.Remarks.value,
-      //         "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
-      //         "educational_Qualification_Id":  Number(this.hrmsForm.controls.EmployeeId.value),
-      //         "employeeId":  Number(this.hrmsForm.controls.EmployeeId.value),
-      //         "courseName": this.hrmsForm.controls.CourseName.value,
-      //         "documentType": this.hrmsForm.controls.DocumentType.value,
-      //         "documentUrl": this.hrmsForm.controls.DocumentUrl.value,
-      //       }
-      //     ]
-      //   }
-      // ],
-      // "tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto": [
-      //   {
-      //     "id":  Number(this.hrmsForm.controls.Id.value),
-      //     "employee_Id":  Number(this.hrmsForm.controls.Employee_Id.value),
-      //     "nominee_RelationshipId":  Number(this.hrmsForm.controls.Nominee_RelationshipId.value),
-      //     "nominee_Name": this.hrmsForm.controls.Nominee_Name.value,
-      //     "nominee_Mobile": this.hrmsForm.controls.Nominee_Mobile.value,
-      //     "nominee_EmailId": this.hrmsForm.controls.Nominee_EmailId.value,
-      //     "nominee_DOB": this.hrmsForm.controls.Nominee_DOB.value,
-      //     "identity_Number": this.hrmsForm.controls.Identity_Number.value,
-      //     "nominee_Address": this.hrmsForm.controls.Nominee_Address.value,
-      //     "isAadharStatus": this.hrmsForm.controls.IsAadharStatus.value,
-      //     "isDeleted": this.hrmsForm.controls.IsDeleted.value
-      //   }
-      // ],
-      // "sys_PermanentContactInformationDto": {
-      //   "id":  Number(this.hrmsForm.controls.Id.value),
-      //   "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
-      //   "remarks": this.hrmsForm.controls.Remarks.value,
-      //   "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
-      //   "address": this.hrmsForm.controls.Address.value,
-      //   "address1": this.hrmsForm.controls.Address1.value,
-      //   "country":  Number(this.hrmsForm.controls.Country.value),
-      //   "zone":  Number(this.hrmsForm.controls.Zone.value),
-      //   "state":  Number(this.hrmsForm.controls.State.value),
-      //   "city": this.hrmsForm.controls.City.value,
-      //   "pin": this.hrmsForm.controls.Pin.value,
-      //   "employee_Id":  Number(this.hrmsForm.controls.Employee_Id.value),
-      // },
-      // "sys_ProfessionalInformations": [
-      //   {
-      //     "id":  Number(this.hrmsForm.controls.Id.value),
-      //     "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
-      //     "remarks": this.hrmsForm.controls.Remarks.value,
-      //     "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
-      //     "employeerName": this.hrmsForm.controls.EmployeerName.value,
-      //     "isDeleted": this.hrmsForm.controls.IsDeleted.value,
-      //     "employeerAddress": this.hrmsForm.controls.EmployeerAddress.value,
-      //     "designation": this.hrmsForm.controls.Designation.value,
-      //     "contactPerson": this.hrmsForm.controls.ContactPerson.value,
-      //     "contactNo": this.hrmsForm.controls.ContactNo.value,
-      //     "emailId": this.hrmsForm.controls.EmailId.value,
-      //     "dateOfJoining": this.hrmsForm.controls.DateOfJoining.value,
-      //     "lastDrawnSalary": this.hrmsForm.controls.LastDrawnSalary.value,
-      //     "reasonForLeaving": this.hrmsForm.controls.ReasonForLeaving.value,
-      //     "dateOfLeaving": this.hrmsForm.controls.DateOfLeaving.value,
-      //     "employee_Id":  Number(this.hrmsForm.controls.Employee_Id.value),
-      //     "attachments": [
-      //       {
-      //         "id":  Number(this.hrmsForm.controls.Id.value),
-      //         "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
-      //         "remarks": this.hrmsForm.controls.Remarks.value,
-      //         "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
-      //         "professional_Information_Attachements_Id":  Number(this.hrmsForm.controls.Professional_Information_Attachements_Id.value),
-      //         "employeeId":  Number(this.hrmsForm.controls.EmployeeId.value),
-      //         "employeeName": this.hrmsForm.controls.EmployeeName.value,
-      //         "documentType": this.hrmsForm.controls.DocumentType.value,
-      //         "documentUrl": this.hrmsForm.controls.DocumentUrl.value,
-      //       }
-      //     ]
-      //   }
-      // ],
-      // "sys_CorresspondanceContactInformationDto": {
-      //   "id":  Number(this.hrmsForm.controls.Id.value),
-      //   "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
-      //   "remarks": this.hrmsForm.controls.Remarks.value,
-      //   "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
-      //   "address": this.hrmsForm.controls.Address.value,
-      //   "address1": this.hrmsForm.controls.Address1.value,
-      //   "country":  Number(this.hrmsForm.controls.Country.value),
-      //   "zone":  Number(this.hrmsForm.controls.Zone.value),
-      //   "state":  Number(this.hrmsForm.controls.State.value),
-      //   "city": this.hrmsForm.controls.City.value,
-      //   "pin": this.hrmsForm.controls.Pin.value,
-      //   "mobileNo2": this.hrmsForm.controls.MobileNo2.value,
-      //   "phone": this.hrmsForm.controls.Phone.value,
-      //   "emailAddress2": this.hrmsForm.controls.EmailAddress2.value,
-      //   "employee_Id": Number(this.hrmsForm.controls.Employee_Id.value),
-      // },
-      // "sys_OtherInformationDto": {
-      //   "id":  Number(this.hrmsForm.controls.Id.value),
-      //   "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
-      //   "remarks": this.hrmsForm.controls.Remarks.value,
-      //   "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
-      //   "bank_Name": this.hrmsForm.controls.Bank_Name.value,
-      //   "branch_Name": this.hrmsForm.controls.Branch_Name.value,
-      //   "account_No": this.hrmsForm.controls.Account_No.value,
-      //   "ifsC_Code": this.hrmsForm.controls.IfSC_Code.value,
-      //   "status": this.hrmsForm.controls.Status.value,
-      //   "other_Details": this.hrmsForm.controls.Other_Details.value,
-      //   "card_No": this.hrmsForm.controls.Card_No.value,
-      //   "carProxy_Nod_No": this.hrmsForm.controls.CarProxy_Nod_No.value,
-      //   "user_Id": this.hrmsForm.controls.User_Id.value,
-      //   "user_Data": this.hrmsForm.controls.User_Data.value,
-      //   "user_Type":  Number(this.hrmsForm.controls.User_Type.value),
-      //   "signature": this.hrmsForm.controls.Signature.value,
-      //   "picture": "",
-      //   "signatureFile": "",
-      //   "pictureFile": "",
-      //   "employee_Id":  Number(this.hrmsForm.controls.Employee_Id.value),
-      //   "sys_Identity_Proofs": [
-      //     {
-      //       "id":  Number(this.hrmsForm.controls.Id.value),
-      //       "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
-      //       "remarks": this.hrmsForm.controls.Remarks.value,
-      //       "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
-      //       "identity_Type": this.hrmsForm.controls.Identity_Type.value,
-      //       "identity_No": this.hrmsForm.controls.Identity_No.value,
-      //       "attachments": [
-      //         {
-      //           "id":  Number(this.hrmsForm.controls.Id.value),
-      //           "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
-      //           "remarks": this.hrmsForm.controls.Remarks.value,
-      //           "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
-      //           "identity_Proof_Id":  Number(this.hrmsForm.controls.Identity_Proof_Id.value),
-      //           "employeeId":  Number(this.hrmsForm.controls.EmployeeId.value),
-      //           "identityType": this.hrmsForm.controls.IdentityType.value,
-      //           "employeeName": this.hrmsForm.controls.EmployeeName.value,
-      //           "documentType": this.hrmsForm.controls.DocumentType.value,
-      //           "documentUrl": this.hrmsForm.controls.DocumentUrl.value,
-      //         }
-      //       ],
-      //       "valid_Upto": this.hrmsForm.controls.valid_Upto.value,
-      //       "isDeleted": this.hrmsForm.controls.IsDeleted.value,
-      //       "otherInformationId":  Number(this.hrmsForm.controls.OtherInformationId.value),
-      //     }
-      //   ]
-      // }
-    }
+    let hrmsFormData = this.hrmsForm.getRawValue();
+    console.log(hrmsFormData);
+
+    // if (this.hrmsForm.invalid)
+    // {
+    //   debugger;
+    //   return;
+    // }   
+    
+    let inputModel: Employee = new Employee();
+    // inputModel.id = Number(this.hrmsForm.controls.id.value);
+    inputModel.id = Number(0);
+    inputModel.status_Id = Number(this.hrmsForm.controls.Status_Id.value);
+    // inputModel.remarks = this.hrmsForm.controls.remarks.value;
+    // inputModel.action_Remarks = this.hrmsForm.controls.action_Remarks.value;
+    inputModel.companyId = Number(this.hrmsForm.controls.companyId.value);
+    inputModel.employeeCategoryId = Number(this.hrmsForm.controls.employeeCategoryId.value);
+    inputModel.employeeCode = this.hrmsForm.controls.employeeCode.value;
+    inputModel.biometricCode = this.hrmsForm.controls.biometricCode.value;
+    inputModel.firstName = this.hrmsForm.controls.firstName.value;
+    inputModel.middleName = this.hrmsForm.controls.middleName.value;
+    inputModel.lastName = this.hrmsForm.controls.lastName.value;
+    inputModel.email = this.hrmsForm.controls.email.value;
+    inputModel.project_BranchId = Number(this.hrmsForm.controls.project_BranchId.value);
+    inputModel.departmentId = Number(this.hrmsForm.controls.departmentId.value);
+    inputModel.designationId = Number(this.hrmsForm.controls.designationId.value);
+    inputModel.higher_Authority_Branch_ProjectId = Number(this.hrmsForm.controls.higher_Authority_Branch_ProjectId.value);
+    inputModel.higher_AuthorityId = Number(this.hrmsForm.controls.higher_AuthorityId.value);
+    inputModel.higher_Authority_NameId = Number(this.hrmsForm.controls.higher_Authority_NameId.value);
+    inputModel.date_Of_Joining = this.hrmsForm.controls.date_Of_Joining.value;
+    inputModel.employee_TypeId = Number(this.hrmsForm.controls.employee_TypeId.value);
+    inputModel.mobile_No = this.hrmsForm.controls.mobile_No.value;
+    inputModel.third_Party_Type = Number(this.hrmsForm.controls.third_Party_Type.value);
+    inputModel.third_Party_Id = Number(this.hrmsForm.controls.third_Party_Id.value);
+    inputModel.working_StatusId = Number(this.hrmsForm.controls.working_StatusId.value);
+    inputModel.probation_Period = Number(this.hrmsForm.controls.probation_Period.value);
+    inputModel.referenceEmployeeName = this.hrmsForm.controls.referenceEmployeeName.value;
+    inputModel.reference_Phone_No = this.hrmsForm.controls.reference_Phone_No.value;
+    inputModel.date_Of_Birth = this.hrmsForm.controls.date_Of_Birth.value;
+    inputModel.gender = this.hrmsForm.controls.gender.value;
+    inputModel.nationality = this.hrmsForm.controls.nationality.value;
+    inputModel.religion = this.hrmsForm.controls.religion.value;
+    inputModel.castId = Number(this.hrmsForm.controls.castId.value);
+    inputModel.physicalDisability = this.hrmsForm.controls.physicalDisability.value;
+    inputModel.blood_GroupId = Number(this.hrmsForm.controls.blood_GroupId.value);
+    inputModel.marital_StatusId = Number(this.hrmsForm.controls.marital_StatusId.value);
+    inputModel.identification_Mark = this.hrmsForm.controls.identification_Mark.value;
+    // inputModel.status = this.hrmsForm.controls.status.value;
+    inputModel.professionalInformation = this.hrmsForm.controls.professionalInformation.value;
+    inputModel.highestQualification = this.hrmsForm.controls.highestQualification.value;
+    // inputModel.isActive = this.hrmsForm.controls.isActive.value;
+    // inputModel.isDeleted = this.hrmsForm.controls.isDeleted.value;
+
+    // FamilyDetails
+    let sys_FamilyDetailsDto = this.hrmsForm.getRawValue().sys_FamilyDetailsDto;
+    inputModel.sys_FamilyDetailsDto = [];
+    sys_FamilyDetailsDto.forEach(data => {
+      let  sys_FamilyDetail = this.employeedataservice.getFamilyDetailsData(data);
+      inputModel.sys_FamilyDetailsDto.push(sys_FamilyDetail);
+
+    });
+
+    // SysEducationalQualificationDto
+    let sys_EducationalQualificationDto = this.hrmsForm.getRawValue().sys_EducationalQualificationDto;
+    inputModel.sys_EducationalQualificationDto = [];
+    sys_EducationalQualificationDto.forEach(data => {
+      let  sys_EducationalQualification = this.employeedataservice.getEducationalQualificationData(data);
+      inputModel.sys_EducationalQualificationDto.push(sys_EducationalQualification);
+
+    });
+    // tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto
+    let tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto = this.hrmsForm.getRawValue().tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto;
+    inputModel.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto = [];
+    tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.forEach(data => {
+      let  tBL_HR_EMPLOYEE_NOMINEE_DETAIL = this.employeedataservice.getHR_EMPLOYEE_NOMINEE_DETAILSData(data);
+      inputModel.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.push(tBL_HR_EMPLOYEE_NOMINEE_DETAIL);
+    });
+    // sys_PermanentContactInformationDto
+    let sys_PermanentContactInformationDto =this.hrmsForm.getRawValue().professionalDocumentAttachment;
+    let  sys_PermanentContactInformation = this.employeedataservice.getPermanentContactInformationData(sys_PermanentContactInformationDto);
+    inputModel.sys_PermanentContactInformationDto = sys_PermanentContactInformation;
+
+    // sys_ProfessionalInformations
+    let sys_ProfessionalInformations =this.hrmsForm.getRawValue().sys_ProfessionalInformations;
+    inputModel.sys_ProfessionalInformations = [];
+    sys_ProfessionalInformations.forEach(data => {
+      let  sys_ProfessionalInformations = this.employeedataservice.getProfessionalInformationsData(data);
+      inputModel.sys_ProfessionalInformations.push(sys_ProfessionalInformations);
+    });
+
+    // sys_CorresspondanceContactInformationDto
+    let sys_CorresspondanceContactInformationDto =this.hrmsForm.getRawValue().sys_CorresspondanceContactInformationDto;
+    let  sys_CorresspondanceContactInformation = this.employeedataservice.getCorresspondanceContactInformationDtoData(sys_CorresspondanceContactInformationDto);
+    inputModel.sys_CorresspondanceContactInformationDto = sys_CorresspondanceContactInformation;
+
+    // sys_OtherInformationDto
+    // inputModel.sys_OtherInformationDto =this.hrmsForm.getRawValue().sys_OtherInformationDto;
+    let sys_OtherInformationDto =this.hrmsForm.getRawValue().sys_OtherInformationDto;
+    let  sys_OtherInformation = this.employeedataservice.getOtherInformationDtoData(sys_OtherInformationDto);
+    inputModel.sys_OtherInformationDto = sys_OtherInformation;
+
+    console.log(inputModel);
+
     this.employeeMasterService.post(inputModel).subscribe((resp: any) => {
+      this.resetHrmsForm();
     })
+
+    
+     
   }
+
+  // submitHrmsForm() {
+
+  //   let formData = this.hrmsForm.getRawValue();
+  //   console.log(formData);
+
+  //   var inputModel = {
+  //     "id": Number(this.hrmsForm.controls.id.value),
+  //     "status_Id": Number(this.hrmsForm.controls.Status_Id.value),
+  //     // "remarks": this.hrmsForm.controls.remarks.value,
+  //     // "action_Remarks": this.hrmsForm.controls.action_Remarks.value,
+  //     "companyId": Number(this.hrmsForm.controls.companyId.value),
+  //     "employeeCategoryId": Number(this.hrmsForm.controls.employeeCategoryId.value),
+  //     "employeeCode": this.hrmsForm.controls.employeeCode.value,
+  //     "biometricCode": this.hrmsForm.controls.biometricCode.value,
+  //     "firstName": this.hrmsForm.controls.firstName.value,
+  //     "middleName": this.hrmsForm.controls.middleName.value,
+  //     "lastName": this.hrmsForm.controls.lastName.value,
+  //     "email": this.hrmsForm.controls.email.value,
+  //     "project_BranchId": Number(this.hrmsForm.controls.project_BranchId.value),
+  //     "departmentId": Number(this.hrmsForm.controls.departmentId.value),
+  //     "designationId": Number(this.hrmsForm.controls.designationId.value),
+  //     "higher_Authority_Branch_ProjectId": Number(this.hrmsForm.controls.higher_Authority_Branch_ProjectId.value),
+  //     "higher_AuthorityId": Number(this.hrmsForm.controls.higher_AuthorityId.value),
+  //     "higher_Authority_NameId": Number(this.hrmsForm.controls.higher_Authority_NameId.value),
+  //     "date_Of_Joining": this.hrmsForm.controls.date_Of_Joining.value,
+  //     "employee_TypeId": Number(this.hrmsForm.controls.employee_TypeId.value),
+  //     "mobile_No": this.hrmsForm.controls.mobile_No.value,
+  //     "third_Party_Type": Number(this.hrmsForm.controls.third_Party_Type.value),
+  //     "third_Party_Id": Number(this.hrmsForm.controls.third_Party_Id.value),
+  //     "working_StatusId": Number(this.hrmsForm.controls.working_StatusId.value),
+  //     "probation_Period": Number(this.hrmsForm.controls.probation_Period.value),
+  //     "referenceEmployeeName": this.hrmsForm.controls.referenceEmployeeName.value,
+  //     "reference_Phone_No": this.hrmsForm.controls.reference_Phone_No.value,
+  //     "date_Of_Birth": this.hrmsForm.controls.date_Of_Birth.value,
+  //     "gender": this.hrmsForm.controls.gender.value,
+  //     "nationality": this.hrmsForm.controls.nationality.value,
+  //     "religion": this.hrmsForm.controls.religion.value,
+  //     "castId": Number(this.hrmsForm.controls.castId.value),
+  //     "physicalDisability": this.hrmsForm.controls.physicalDisability.value,
+  //     "blood_GroupId": Number(this.hrmsForm.controls.blood_GroupId.value),
+  //     "marital_StatusId": Number(this.hrmsForm.controls.marital_StatusId.value),
+  //     "identification_Mark": this.hrmsForm.controls.identification_Mark.value,
+  //     // "status": this.hrmsForm.controls.status.value,
+  //     "professionalInformation": this.hrmsForm.controls.professionalInformation.value,
+  //     "highestQualification": this.hrmsForm.controls.highestQualification.value,
+  //     // "isActive": this.hrmsForm.controls.isActive.value,
+  //     // "isDeleted": this.hrmsForm.controls.isDeleted.value,
+  //     // "sys_FamilyDetailsDto": [
+  //     //   {
+  //     //     "id":  Number(this.hrmsForm.controls.Id.value),
+  //     //     "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
+  //     //     "remarks": this.hrmsForm.controls.Remarks.value,
+  //     //     "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
+  //     //     "employee_Id":  Number(this.hrmsForm.controls.Employee_Id.value),
+  //     //     "isDeleted": this.hrmsForm.controls.IsDeleted.value,
+  //     //     "familyDetail_RelationshipId":  Number(this.hrmsForm.controls.FamilyDetail_RelationshipId.value),
+  //     //     "familyDetail_Name": this.hrmsForm.controls.FamilyDetail_Name.value,
+  //     //     "familyDetail_Mobile": this.hrmsForm.controls.FamilyDetail_Mobile.value,
+  //     //     "familyDetail_EmailId": this.hrmsForm.controls.FamilyDetail_EmailId.value,
+  //     //     "familyDetail_DOB": this.hrmsForm.controls.FamilyDetail_DOB.value,
+  //     //     "identity_Number": this.hrmsForm.controls.Identity_Number.value,
+  //     //     "nominee_Address": this.hrmsForm.controls.Nominee_Address.value,
+  //     //     "isAadharStatus": this.hrmsForm.controls.IsAadharStatus.value,
+  //     //   }
+  //     // ],
+  //     // "sys_EducationalQualificationDto": [
+  //     //   {
+  //     //     "id":  Number(this.hrmsForm.controls.Id.value),
+  //     //     "employee_Id":  Number(this.hrmsForm.controls.EmployeeId.value),
+  //     //     "emp_Year_OF_Passing":  Number(this.hrmsForm.controls.Emp_Year_OF_Passing.value),
+  //     //     "qualification": this.hrmsForm.controls.Qualification.value,
+  //     //     "specialization": this.hrmsForm.controls.Specialization.value,
+  //     //     "school": this.hrmsForm.controls.School.value,
+  //     //     "board": this.hrmsForm.controls.Board.value,
+  //     //     "marks": this.hrmsForm.controls.Marks.value,
+  //     //     "remarks": this.hrmsForm.controls.Remarks.value,
+  //     //     "isDeleted": this.hrmsForm.controls.IsDeleted.value,
+  //     //     "attachments": [
+  //     //       {
+  //     //         "id":  Number(this.hrmsForm.controls.EmployeeId.value),
+  //     //         "status_Id":  Number(this.hrmsForm.controls.EmployeeId.value),
+  //     //         "remarks": this.hrmsForm.controls.Remarks.value,
+  //     //         "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
+  //     //         "educational_Qualification_Id":  Number(this.hrmsForm.controls.EmployeeId.value),
+  //     //         "employeeId":  Number(this.hrmsForm.controls.EmployeeId.value),
+  //     //         "courseName": this.hrmsForm.controls.CourseName.value,
+  //     //         "documentType": this.hrmsForm.controls.DocumentType.value,
+  //     //         "documentUrl": this.hrmsForm.controls.DocumentUrl.value,
+  //     //       }
+  //     //     ]
+  //     //   }
+  //     // ],
+  //     // "tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto": [
+  //     //   {
+  //     //     "id":  Number(this.hrmsForm.controls.Id.value),
+  //     //     "employee_Id":  Number(this.hrmsForm.controls.Employee_Id.value),
+  //     //     "nominee_RelationshipId":  Number(this.hrmsForm.controls.Nominee_RelationshipId.value),
+  //     //     "nominee_Name": this.hrmsForm.controls.Nominee_Name.value,
+  //     //     "nominee_Mobile": this.hrmsForm.controls.Nominee_Mobile.value,
+  //     //     "nominee_EmailId": this.hrmsForm.controls.Nominee_EmailId.value,
+  //     //     "nominee_DOB": this.hrmsForm.controls.Nominee_DOB.value,
+  //     //     "identity_Number": this.hrmsForm.controls.Identity_Number.value,
+  //     //     "nominee_Address": this.hrmsForm.controls.Nominee_Address.value,
+  //     //     "isAadharStatus": this.hrmsForm.controls.IsAadharStatus.value,
+  //     //     "isDeleted": this.hrmsForm.controls.IsDeleted.value
+  //     //   }
+  //     // ],
+  //     // "sys_PermanentContactInformationDto": {
+  //     //   "id":  Number(this.hrmsForm.controls.Id.value),
+  //     //   "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
+  //     //   "remarks": this.hrmsForm.controls.Remarks.value,
+  //     //   "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
+  //     //   "address": this.hrmsForm.controls.Address.value,
+  //     //   "address1": this.hrmsForm.controls.Address1.value,
+  //     //   "country":  Number(this.hrmsForm.controls.Country.value),
+  //     //   "zone":  Number(this.hrmsForm.controls.Zone.value),
+  //     //   "state":  Number(this.hrmsForm.controls.State.value),
+  //     //   "city": this.hrmsForm.controls.City.value,
+  //     //   "pin": this.hrmsForm.controls.Pin.value,
+  //     //   "employee_Id":  Number(this.hrmsForm.controls.Employee_Id.value),
+  //     // },
+  //     // "sys_ProfessionalInformations": [
+  //     //   {
+  //     //     "id":  Number(this.hrmsForm.controls.Id.value),
+  //     //     "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
+  //     //     "remarks": this.hrmsForm.controls.Remarks.value,
+  //     //     "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
+  //     //     "employeerName": this.hrmsForm.controls.EmployeerName.value,
+  //     //     "isDeleted": this.hrmsForm.controls.IsDeleted.value,
+  //     //     "employeerAddress": this.hrmsForm.controls.EmployeerAddress.value,
+  //     //     "designation": this.hrmsForm.controls.Designation.value,
+  //     //     "contactPerson": this.hrmsForm.controls.ContactPerson.value,
+  //     //     "contactNo": this.hrmsForm.controls.ContactNo.value,
+  //     //     "emailId": this.hrmsForm.controls.EmailId.value,
+  //     //     "dateOfJoining": this.hrmsForm.controls.DateOfJoining.value,
+  //     //     "lastDrawnSalary": this.hrmsForm.controls.LastDrawnSalary.value,
+  //     //     "reasonForLeaving": this.hrmsForm.controls.ReasonForLeaving.value,
+  //     //     "dateOfLeaving": this.hrmsForm.controls.DateOfLeaving.value,
+  //     //     "employee_Id":  Number(this.hrmsForm.controls.Employee_Id.value),
+  //     //     "attachments": [
+  //     //       {
+  //     //         "id":  Number(this.hrmsForm.controls.Id.value),
+  //     //         "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
+  //     //         "remarks": this.hrmsForm.controls.Remarks.value,
+  //     //         "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
+  //     //         "professional_Information_Attachements_Id":  Number(this.hrmsForm.controls.Professional_Information_Attachements_Id.value),
+  //     //         "employeeId":  Number(this.hrmsForm.controls.EmployeeId.value),
+  //     //         "employeeName": this.hrmsForm.controls.EmployeeName.value,
+  //     //         "documentType": this.hrmsForm.controls.DocumentType.value,
+  //     //         "documentUrl": this.hrmsForm.controls.DocumentUrl.value,
+  //     //       }
+  //     //     ]
+  //     //   }
+  //     // ],
+  //     // "sys_CorresspondanceContactInformationDto": {
+  //     //   "id":  Number(this.hrmsForm.controls.Id.value),
+  //     //   "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
+  //     //   "remarks": this.hrmsForm.controls.Remarks.value,
+  //     //   "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
+  //     //   "address": this.hrmsForm.controls.Address.value,
+  //     //   "address1": this.hrmsForm.controls.Address1.value,
+  //     //   "country":  Number(this.hrmsForm.controls.Country.value),
+  //     //   "zone":  Number(this.hrmsForm.controls.Zone.value),
+  //     //   "state":  Number(this.hrmsForm.controls.State.value),
+  //     //   "city": this.hrmsForm.controls.City.value,
+  //     //   "pin": this.hrmsForm.controls.Pin.value,
+  //     //   "mobileNo2": this.hrmsForm.controls.MobileNo2.value,
+  //     //   "phone": this.hrmsForm.controls.Phone.value,
+  //     //   "emailAddress2": this.hrmsForm.controls.EmailAddress2.value,
+  //     //   "employee_Id": Number(this.hrmsForm.controls.Employee_Id.value),
+  //     // },
+  //     // "sys_OtherInformationDto": {
+  //     //   "id":  Number(this.hrmsForm.controls.Id.value),
+  //     //   "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
+  //     //   "remarks": this.hrmsForm.controls.Remarks.value,
+  //     //   "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
+  //     //   "bank_Name": this.hrmsForm.controls.Bank_Name.value,
+  //     //   "branch_Name": this.hrmsForm.controls.Branch_Name.value,
+  //     //   "account_No": this.hrmsForm.controls.Account_No.value,
+  //     //   "ifsC_Code": this.hrmsForm.controls.IfSC_Code.value,
+  //     //   "status": this.hrmsForm.controls.Status.value,
+  //     //   "other_Details": this.hrmsForm.controls.Other_Details.value,
+  //     //   "card_No": this.hrmsForm.controls.Card_No.value,
+  //     //   "carProxy_Nod_No": this.hrmsForm.controls.CarProxy_Nod_No.value,
+  //     //   "user_Id": this.hrmsForm.controls.User_Id.value,
+  //     //   "user_Data": this.hrmsForm.controls.User_Data.value,
+  //     //   "user_Type":  Number(this.hrmsForm.controls.User_Type.value),
+  //     //   "signature": this.hrmsForm.controls.Signature.value,
+  //     //   "picture": "",
+  //     //   "signatureFile": "",
+  //     //   "pictureFile": "",
+  //     //   "employee_Id":  Number(this.hrmsForm.controls.Employee_Id.value),
+  //     //   "sys_Identity_Proofs": [
+  //     //     {
+  //     //       "id":  Number(this.hrmsForm.controls.Id.value),
+  //     //       "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
+  //     //       "remarks": this.hrmsForm.controls.Remarks.value,
+  //     //       "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
+  //     //       "identity_Type": this.hrmsForm.controls.Identity_Type.value,
+  //     //       "identity_No": this.hrmsForm.controls.Identity_No.value,
+  //     //       "attachments": [
+  //     //         {
+  //     //           "id":  Number(this.hrmsForm.controls.Id.value),
+  //     //           "status_Id":  Number(this.hrmsForm.controls.Status_Id.value),
+  //     //           "remarks": this.hrmsForm.controls.Remarks.value,
+  //     //           "action_Remarks": this.hrmsForm.controls.Action_Remarks.value,
+  //     //           "identity_Proof_Id":  Number(this.hrmsForm.controls.Identity_Proof_Id.value),
+  //     //           "employeeId":  Number(this.hrmsForm.controls.EmployeeId.value),
+  //     //           "identityType": this.hrmsForm.controls.IdentityType.value,
+  //     //           "employeeName": this.hrmsForm.controls.EmployeeName.value,
+  //     //           "documentType": this.hrmsForm.controls.DocumentType.value,
+  //     //           "documentUrl": this.hrmsForm.controls.DocumentUrl.value,
+  //     //         }
+  //     //       ],
+  //     //       "valid_Upto": this.hrmsForm.controls.valid_Upto.value,
+  //     //       "isDeleted": this.hrmsForm.controls.IsDeleted.value,
+  //     //       "otherInformationId":  Number(this.hrmsForm.controls.OtherInformationId.value),
+  //     //     }
+  //     //   ]
+  //     // }
+  //   }
+  //   this.employeeMasterService.post(formData).subscribe((resp: any) => {
+  //   })
+  // }
 
   downloadDoc(base64String, fileName) {
     const source = `${base64String}`;
@@ -1780,23 +1905,23 @@ export class DefaultComponent implements OnInit {
   sameAsAbove(event) {
     if (event.target.checked) {
       this.hrmsForm.get('sys_CorresspondanceContactInformationDto').patchValue({
-        'Address': this.hrmsForm.get('sys_PermanentContactInformationDto').get('Address').value,
-        'Address1': this.hrmsForm.get('sys_PermanentContactInformationDto').get('Address1').value,
-        'Country': this.hrmsForm.get('sys_PermanentContactInformationDto').get('Country').value,
-        'Zone': this.hrmsForm.get('sys_PermanentContactInformationDto').get('Zone').value,
-        'State': this.hrmsForm.get('sys_PermanentContactInformationDto').get('State').value,
-        'City': this.hrmsForm.get('sys_PermanentContactInformationDto').get('City').value,
-        'Pin': this.hrmsForm.get('sys_PermanentContactInformationDto').get('Pin').value,
+        'address': this.hrmsForm.get('sys_PermanentContactInformationDto').get('address').value,
+        'address1': this.hrmsForm.get('sys_PermanentContactInformationDto').get('address1').value,
+        'country': this.hrmsForm.get('sys_PermanentContactInformationDto').get('country').value,
+        'zone': this.hrmsForm.get('sys_PermanentContactInformationDto').get('zone').value,
+        'state': this.hrmsForm.get('sys_PermanentContactInformationDto').get('state').value,
+        'city': this.hrmsForm.get('sys_PermanentContactInformationDto').get('city').value,
+        'pin': this.hrmsForm.get('sys_PermanentContactInformationDto').get('pin').value,
       });
     } else {
       this.hrmsForm.get('sys_CorresspondanceContactInformationDto').patchValue({
-        'Address': '',
-        'Address1': '',
-        'Country': '',
-        'Zone': '',
-        'State': '',
-        'City': '',
-        'Pin': '',
+        'address': '',
+        'address1': '',
+        'country': '',
+        'zone': '',
+        'state': '',
+        'city': '',
+        'pin': '',
       });
     }
   }

@@ -1376,11 +1376,11 @@
                                             [formGroupName]="m">
                                             <td>{{m+1}}</td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="piEmployeeName" /></td>
+                                                    formControlName="employeeName" /></td>
                                             <td><input type="text" class="form-control"
-                                                    formControlName="piDocumentType"></td>
+                                                    formControlName="documentType"></td>
                                             <td>
-                                                <input type="file" class="form-control" formControlName="pidocumentfile"
+                                                <input type="file" class="form-control" formControlName="documentUrl"
                                                     name="image" (change)="professionalFile($event)">
                                                 <button class="form-control btn-sm btn-primary"
                                                     (click)="onProfessionalSubmit(m)" *ngIf="pidocumentfile">Upload
@@ -1538,7 +1538,7 @@
                                                         id="redidentityProf" formControlName="valid_Upto" />
                                                 </td>
                                                 <td>
-                                                    <div *ngIf="!attachments && !documentPreviewUrl">
+                                                    <div *ngIf="!attachmentsSysIdentityProof && !documentPreviewUrl">
                                                         <img height="70" width="70"
                                                             src="../../../../assets/images/1.jpg" alt="">
                                                     </div>
@@ -1625,14 +1625,14 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="ePicture">Picture</label>
-                                            <input type="file" formControlName="pictureFile" class="form-control"
+                                            <input type="file" formControlName="pictureFile" (change)="fileProgressOtherInfo($event, 'pictureFile')" class="form-control"
                                                 id="ePicture" />
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="eSignature">Signature</label>
-                                            <input type="file" formControlName="signatureFile" class="form-control"
+                                            <input type="file" formControlName="signatureFile" (change)="fileProgressOtherInfo($event, 'signatureFile')" class="form-control"
                                                 id="eSignature" />
                                         </div>
                                     </div>

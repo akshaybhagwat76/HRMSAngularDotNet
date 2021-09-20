@@ -88,7 +88,7 @@ import {
   IdentityProofsattachments
 } from '../../../core/models/EmployeeFormData';
 import { EmployeedataService } from '../../../core/services/employeedata.service';
-import { Employee, SysFamilyDetailsDto } from 'src/app/core/models/EmployeeFormDataLatest';
+import { Attachment, Attachment2, Attachment3, Employee, SysFamilyDetailsDto } from 'src/app/core/models/EmployeeFormDataLatest';
 
 @Component({
   moduleId: "",
@@ -132,6 +132,10 @@ export class DefaultComponent implements OnInit {
   educationInfoSubmit: boolean;
   professionalInfoSubmit: boolean;
   companyMaster: CompanyMaster = {};
+  signatureUrl: any = null;
+  pictureUrl: any = null;
+  employeeId = 0; //  
+
   constructor(private modalService: NgbModal, public formBuilder: FormBuilder, private companyService: CompanyService,
     private branchesService: BranchesService, private contriesService: ContriesService,
     private departmentsService: DepartmentsService,
@@ -251,10 +255,10 @@ export class DefaultComponent implements OnInit {
   NumberOfYears: any;
 
   // Identity Proof
-  identityType: number = 0;
+  identityType: string;
   identityNo: string;
   validUpto: Date;
-  attachments: File;
+  attachmentsSysIdentityProof: Attachment3[] = [];
   identityPreviewUrl: string;
 
   // Professional Information
@@ -271,13 +275,14 @@ export class DefaultComponent implements OnInit {
   Professionaldocument: boolean;
   isPersonalStatus = false;
   isProfessionalDocUploaded = false;
+  attachmentsProfessionalInfo: Attachment2[] = []; // need to check
 
   // Professional Document
-  piEmployeeName: number;
+  employeeName: number;
   piDocumentType: string;
   pidocumentfile: File;
   _documentPreviewUrl: any = null;
-  piDocumentPreviewUrl: any = null;
+  documentUrl: any = null;
 
   isStatusVisible = true;
 
@@ -341,11 +346,10 @@ export class DefaultComponent implements OnInit {
 
       // this.designation = result[21];
     });
-
-    // let employeeId = 159; //
-    // if(employeeId) {
-    //   this.getEmployeeDetails(employeeId);
-    // }
+    let employeeId = 0;
+    if(employeeId) {
+      this.getEmployeeDetails(employeeId);
+    }
     //this.employees = employees;
   }
    
@@ -914,13 +918,36 @@ export class DefaultComponent implements OnInit {
 
   // Add Identity Proof
   addIdentityProoftArr() {
+    // this.identityProofForm = this.formBuilder.group({
+    //   identity_Type: [this.identityType],
+    //   identity_No: [this.identityNo],
+    //   valid_Upto: [this.validUpto],
+    //   attachments: [this.attachments],
+    //   identityPreviewUrl: [this.documentPreviewUrl]
+    // });
+    this.attachmentsSysIdentityProof && this.attachmentsSysIdentityProof.forEach(attachment => {
+      attachment.identityType = this.identityType;
+    });
+
+    // id: number;
+    // status_Id: number;
+    // remarks: string;
+    // action_Remarks: string;
+    // identity_Proof_Id: number;
+    // employeeId: number;
+    // identityType: string;
+    // documentType: string;
+    // documentUrl: string;
+
     this.identityProofForm = this.formBuilder.group({
       identity_Type: [this.identityType],
       identity_No: [this.identityNo],
       valid_Upto: [this.validUpto],
-      attachments: [this.attachments],
-      identityPreviewUrl: [this.documentPreviewUrl]
+      attachments: [this.attachmentsSysIdentityProof],
     });
+
+    // this.documentPreviewUrl
+    
     (<FormArray>this.hrmsForm.get('sys_OtherInformationDto').get('sys_Identity_Proofs')).push(this.identityProofForm);
     // this.clearEducationDocument();
   }
@@ -971,11 +998,17 @@ export class DefaultComponent implements OnInit {
 
   // Add Professional Document
   addProfessionalDocumentArr() {
+    // this.ProfessionalDocumentInformationForm = this.formBuilder.group({
+    //   piEmployeeName: [this.EmployeerName],
+    //   piDocumentType: [''],
+    //   pidocumentfile: [''],
+    //   piDocumentPreviewUrl: ['']
+    // });
     this.ProfessionalDocumentInformationForm = this.formBuilder.group({
-      piEmployeeName: [this.EmployeerName],
-      piDocumentType: [''],
-      pidocumentfile: [''],
-      piDocumentPreviewUrl: ['']
+      employeeName: [this.EmployeerName],
+      documentType: [''],
+      documentfile: [''],
+      documentPreviewUrl: ['']
     });
     (<FormArray>this.hrmsForm.get('professionalDocumentAttachment')).push(this.ProfessionalDocumentInformationForm);
   }
@@ -1176,6 +1209,19 @@ export class DefaultComponent implements OnInit {
     this.preview();
   }
 
+  fileProgressOtherInfo(fileInput: any, type: string) {
+    let documentfile = <File>fileInput.target.files[0];
+    var _mb = this.bytesToSize(this.documentfile.size, 2);
+    if (_mb > 10) {
+      alert(`
+      - The maximum supported file sizes are 10 MB
+        `);
+      documentfile = null;
+      return;
+    }
+    this.previewOtherInfo(documentfile, type);
+  }
+
   professionalFile(fileInput: any) {
     this.pidocumentfile = <File>fileInput.target.files[0];
     var _mb = this.bytesToSize(this.pidocumentfile.size, 2);
@@ -1183,10 +1229,25 @@ export class DefaultComponent implements OnInit {
       alert(`
       - The maximum supported file sizes are 10 MB
         `);
-      this.documentfile = null;
+      this.pidocumentfile = null;
       return;
     }
     this.previewProfessional();
+  }
+
+  previewOtherInfo(documentfile, type) {
+    // Show preview
+    var mimeType = documentfile.type;
+    var reader = new FileReader();
+    reader.readAsDataURL(this.documentfile);
+    reader.onload = (_event) => {
+      if(type == 'pictureFile') {
+        this.pictureUrl = reader.result;
+      } else if(type == 'signatureFile') {
+        this.signatureUrl = reader.result;
+      }
+      
+    }
   }
 
   preview() {
@@ -1196,6 +1257,18 @@ export class DefaultComponent implements OnInit {
     reader.readAsDataURL(this.documentfile);
     reader.onload = (_event) => {
       this.documentPreviewUrl = reader.result;
+      // need to test
+      let attachemnt: Attachment3 = new Attachment3();
+      // attachemnt.id = 0;
+      // attachemnt.status_Id = 0;
+      // attachemnt.remarks ="";
+      // attachemnt.action_Remarks = "";
+      // attachemnt.identity_Proof_Id = 0;
+      // attachemnt.employeeId = 0;
+      // attachemnt.identityType = "";
+      // attachemnt.documentType = mimeType;
+      attachemnt.documentUrl = this.documentPreviewUrl;
+      this.attachmentsSysIdentityProof = [attachemnt]; 
     }
   }
 
@@ -1206,6 +1279,18 @@ export class DefaultComponent implements OnInit {
     reader.readAsDataURL(this.pidocumentfile);
     reader.onload = (_event) => {
       this._documentPreviewUrl = reader.result;
+      // need to test
+      // let attachemnt: Attachment2 = new Attachment2();
+      // // attachemnt.id = 0;
+      // // attachemnt.status_Id = 0;
+      // // attachemnt.remarks ="";
+      // // attachemnt.action_Remarks = "";
+      // // attachemnt.identity_Proof_Id = 0;
+      // // attachemnt.employeeId = 0;
+      // // attachemnt.identityType = "";
+      // // attachemnt.documentType = mimeType;
+      // attachemnt.documentUrl = this._documentPreviewUrl;
+      // this.attachmentsProfessionalInfo = [attachemnt]; 
     }
   }
 
@@ -1224,11 +1309,11 @@ export class DefaultComponent implements OnInit {
   onProfessionalSubmit(row) {
     const professionalDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row);
     professionalDocData.patchValue({
-      'piEmployeeName': this.EmployeerName,
-      'piDocumentPreviewUrl': this._documentPreviewUrl
+      'employeeName': this.EmployeerName,
+      'documentUrl': this._documentPreviewUrl
     });
     const professionalDocumentsArray = <FormArray>this.hrmsForm.controls['professionalDocumentAttachment'];
-    professionalDocumentsArray.at(row).patchValue({ 'piDocumentPreviewUrl': this._documentPreviewUrl });
+    professionalDocumentsArray.at(row).patchValue({ 'documentUrl': this._documentPreviewUrl });
   }
 
   getImgSrc(row) {
@@ -1238,7 +1323,7 @@ export class DefaultComponent implements OnInit {
 
   getImgProfessionalSrc(row) {
     const professionalDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row).value;
-    return professionalDocData.piDocumentPreviewUrl;
+    return professionalDocData.documentUrl;
   }
 
   getIdentityImgSrc(row) {
@@ -1345,6 +1430,16 @@ export class DefaultComponent implements OnInit {
     }
   }
 
+  private formatDate(date) {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
+  }
+
 
   getEmployeeDetails(employeeId: number) {
     // let employeeId = 6;
@@ -1421,7 +1516,7 @@ export class DefaultComponent implements OnInit {
         higher_Authority_Branch_ProjectId: result.higher_Authority_Branch_ProjectId,
         higher_AuthorityId: result.higher_AuthorityId,
         higher_Authority_NameId: result.higher_Authority_NameId,
-        date_Of_Joining: result.date_Of_Joining,
+        date_Of_Joining: this.formatDate(result.date_Of_Joining),
         email: result.email,
         employee_TypeId: result.employee_TypeId,
         mobile_No: result.mobile_No,
@@ -1431,7 +1526,7 @@ export class DefaultComponent implements OnInit {
         probation_Period: result.probation_Period,
         referenceEmployeeName: result.referenceEmployeeName,
         reference_Phone_No: result.reference_Phone_No,
-        date_Of_Birth: result.date_Of_Birth,
+        date_Of_Birth: this.formatDate(result.date_Of_Birth),
         gender: result.gender,
         nationality: result.nationality,
         religion: result.religion,
@@ -1585,6 +1680,7 @@ export class DefaultComponent implements OnInit {
     inputModel.identification_Mark = this.hrmsForm.controls.identification_Mark.value;
     // inputModel.status = this.hrmsForm.controls.status.value;
     inputModel.professionalInformation = this.hrmsForm.controls.professionalInformation.value;
+    // professionalInformationStatus
     inputModel.highestQualification = this.hrmsForm.controls.highestQualification.value;
     // inputModel.isActive = this.hrmsForm.controls.isActive.value;
     // inputModel.isDeleted = this.hrmsForm.controls.isDeleted.value;
@@ -1614,15 +1710,20 @@ export class DefaultComponent implements OnInit {
       inputModel.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.push(tBL_HR_EMPLOYEE_NOMINEE_DETAIL);
     });
     // sys_PermanentContactInformationDto
-    let sys_PermanentContactInformationDto =this.hrmsForm.getRawValue().professionalDocumentAttachment;
+    let sys_PermanentContactInformationDto =this.hrmsForm.getRawValue().sys_PermanentContactInformationDto;
     let  sys_PermanentContactInformation = this.employeedataservice.getPermanentContactInformationData(sys_PermanentContactInformationDto);
     inputModel.sys_PermanentContactInformationDto = sys_PermanentContactInformation;
+
+    // professionalDocumentAttachment
+    let professionalDocumentAttachments =this.hrmsForm.getRawValue().professionalDocumentAttachment;
+    let  professionalDocumentAttachment = this.employeedataservice.getAttachments2Data(professionalDocumentAttachments);
 
     // sys_ProfessionalInformations
     let sys_ProfessionalInformations =this.hrmsForm.getRawValue().sys_ProfessionalInformations;
     inputModel.sys_ProfessionalInformations = [];
     sys_ProfessionalInformations.forEach(data => {
       let  sys_ProfessionalInformations = this.employeedataservice.getProfessionalInformationsData(data);
+      sys_ProfessionalInformations.attachments = professionalDocumentAttachment.filter( a => a.employeeName == sys_ProfessionalInformations.employeerName);
       inputModel.sys_ProfessionalInformations.push(sys_ProfessionalInformations);
     });
 
@@ -1633,9 +1734,16 @@ export class DefaultComponent implements OnInit {
 
     // sys_OtherInformationDto
     // inputModel.sys_OtherInformationDto =this.hrmsForm.getRawValue().sys_OtherInformationDto;
+    // sys_Identity_Proofs
+    // let sys_Identity_Proofs = this.hrmsForm.getRawValue().sys_Identity_Proofs;
+    // let  sys_Identity_Proof = this.employeedataservice.getSysIdentityProof(sys_Identity_Proofs);
+    //  inputModel.sys_OtherInformationDto = sys_OtherInformation;
+
     let sys_OtherInformationDto =this.hrmsForm.getRawValue().sys_OtherInformationDto;
     let  sys_OtherInformation = this.employeedataservice.getOtherInformationDtoData(sys_OtherInformationDto);
     inputModel.sys_OtherInformationDto = sys_OtherInformation;
+    inputModel.sys_OtherInformationDto.pictureFile = this.pictureUrl;
+    inputModel.sys_OtherInformationDto.signatureFile = this.signatureUrl;
 
     console.log(inputModel);
 
@@ -1888,7 +1996,7 @@ export class DefaultComponent implements OnInit {
 
   onClickDownloadProfessionalDoc(row) {
     const proDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row).value;
-    let base64String = proDocData.piDocumentPreviewUrl;
+    let base64String = proDocData.documentUrl;
     this.downloadDoc(base64String, proDocData.documentType);
   }
 

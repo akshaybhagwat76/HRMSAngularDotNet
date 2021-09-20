@@ -381,7 +381,7 @@ export class EmployeedataService {
       dateOfLeaving: data?.dateOfJoining,
       // employee_Id: this.setDefaultValue(data?.employee_Id),
       employee_Id: 0,
-      attachments: this.getAttachments2Data(data?.attachments)
+      attachments: []
     }
     return getProfessionalInformations;
   }

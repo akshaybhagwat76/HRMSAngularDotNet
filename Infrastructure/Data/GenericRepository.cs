@@ -54,6 +54,22 @@ namespace Infrastructure.Data
             _context.Set<T>().Add(entity);
         }
 
+        public int GetLastInsertedId(string tableName)
+        {
+            try
+            {
+                var orderSummaryList = _context.Set<T>().FromSqlRaw($"select top 1 Id from {tableName} order by Id desc")
+                       .ToList();
+
+                return 0;
+            }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
+        }
+
         public void Update(T entity)
         {
             _context.Set<T>().Attach(entity);

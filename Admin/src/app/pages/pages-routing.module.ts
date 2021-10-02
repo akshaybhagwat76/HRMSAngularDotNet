@@ -7,9 +7,10 @@ import { DefaultComponent } from './dashboards/default/default.component';
 import { FilemanagerComponent } from './filemanager/filemanager.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard' },
 
+  { path: 'dashboard/:id', component: DefaultComponent },
   { path: 'dashboard', component: DefaultComponent },
+  { path: '', redirectTo: 'dashboard' },
   { path: 'calendar', component: CalendarComponent },
   { path: 'chat', component: ChatComponent },
   { path: 'filemanager', component: FilemanagerComponent },

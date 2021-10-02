@@ -5,7 +5,7 @@ import {
   AfterViewInit
 } from '@angular/core';
 import {
-  employees
+  employees, InputTypes
 } from './data';
 import {
   FormBuilder,
@@ -89,6 +89,7 @@ import {
 } from '../../../core/models/EmployeeFormData';
 import { EmployeedataService } from '../../../core/services/employeedata.service';
 import { Attachment, Attachment2, Attachment3, Employee, SysFamilyDetailsDto } from 'src/app/core/models/EmployeeFormDataLatest';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   moduleId: "",
@@ -135,8 +136,10 @@ export class DefaultComponent implements OnInit {
   signatureUrl: any = null;
   pictureUrl: any = null;
   employeeId = 0; //  
+  defaultDocumentUrl = '../../../../assets/images/1.jpg';
+  inputTypes = InputTypes;
 
-  constructor(private modalService: NgbModal, public formBuilder: FormBuilder, private companyService: CompanyService,
+  constructor(private router: Router, private modalService: NgbModal, public formBuilder: FormBuilder, private companyService: CompanyService,
     private branchesService: BranchesService, private contriesService: ContriesService,
     private departmentsService: DepartmentsService,
     private workingStatusService: WorkingStatusService,
@@ -162,7 +165,10 @@ export class DefaultComponent implements OnInit {
     private identityService: IdentityTypeService,
     private employeedataservice: EmployeedataService,
     private http: HttpClient,
-  ) { }
+    private _Activatedroute:ActivatedRoute,
+  ) {
+    this.employeeId = Number(this._Activatedroute.snapshot.paramMap.get("id"));
+   }
   companies: any;
   branches: any;
   contries: any;
@@ -259,7 +265,8 @@ export class DefaultComponent implements OnInit {
   identityNo: string;
   validUpto: Date;
   attachmentsSysIdentityProof: Attachment3[] = [];
-  identityPreviewUrl: string;
+  attachmentsEducationProof: Attachment[] = [];
+  identityPreviewUrl: any;
 
   // Professional Information
   EmployeerName: string;
@@ -281,7 +288,7 @@ export class DefaultComponent implements OnInit {
   employeeName: number;
   piDocumentType: string;
   pidocumentfile: File;
-  _documentPreviewUrl: any = null;
+  _professionalDocumentPreviewUrl: any = null;
   documentUrl: any = null;
 
   isStatusVisible = true;
@@ -346,9 +353,8 @@ export class DefaultComponent implements OnInit {
 
       // this.designation = result[21];
     });
-    let employeeId = 0;
-    if(employeeId) {
-      this.getEmployeeDetails(employeeId);
+    if(this.employeeId) {
+      this.getEmployeeDetails(this.employeeId);
     }
     //this.employees = employees;
   }
@@ -372,7 +378,7 @@ export class DefaultComponent implements OnInit {
 
   // Education Document
   get educationDocumentArr() {
-    return "";//this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments')['controls'] as FormArray;
+    return (<FormArray>this.hrmsForm.get('EducationAttachments')).controls;
   }
   // Identity Proof
   get identityProofArr() {
@@ -549,7 +555,7 @@ export class DefaultComponent implements OnInit {
       sys_FamilyDetailsDto: new FormArray([]),
       tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto: new FormArray([]),
       sys_EducationalQualificationDto: new FormArray([]),
-      // educationDocument: new FormArray([]),
+      EducationAttachments: new FormArray([]),
       sys_PermanentContactInformationDto: this.fb.group({
         address: ['', [Validators.required]],
         address1: [''],
@@ -583,8 +589,8 @@ export class DefaultComponent implements OnInit {
         other_Details: [''],
         card_No: [''],
         carProxy_Nod_No: [''],
-        // ipUserId: [''],
-        // ipUserData: [''],
+        user_Id: [''],
+        user_Data: [''],
         user_Type: [''],
         signatureFile: [''],
         pictureFile: [''],
@@ -618,7 +624,7 @@ export class DefaultComponent implements OnInit {
     }
   }
   initEduAttachmentsQualification() {
-    const EduAttachmentsArray = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(0).get('Attachments') as FormArray;
+    const EduAttachmentsArray = (<FormArray>this.hrmsForm.controls['sys_EducationalQualificationDto']).at(0).get('EducationAttachments') as FormArray;
     for (let k = 0; k < 1; k++) {
       EduAttachmentsArray.push(this.fb.group({
         educational_Qualification_Id: [],
@@ -761,13 +767,13 @@ export class DefaultComponent implements OnInit {
   // Edit Nominee Details
   editNomineeDetails(row) {
     const nomineeData = (<FormArray>this.hrmsForm.controls['tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto']).at(row).value;
-    this.nName = nomineeData.Nominee_Name;
-    this.nRelationship = nomineeData.Nominee_RelationshipId;
-    this.nDateOfBirth = nomineeData.Nominee_DOB;
-    this.nAadharNo = nomineeData.Identity_Number;
-    this.nAadharStatus = nomineeData.IsAadharStatus;
-    this.nAddress = nomineeData.AddressNominee;
-    this.nContactNo = nomineeData.Nominee_Mobile;
+    this.nName = nomineeData.nominee_Name;
+    this.nRelationship = nomineeData.nominee_RelationshipId;
+    this.nDateOfBirth = nomineeData.nominee_DOB;
+    this.nAadharNo = nomineeData.identity_Number;
+    this.nAadharStatus = nomineeData.isAadharStatus;
+    this.nAddress = nomineeData.nddressNominee;
+    this.nContactNo = nomineeData.nominee_Mobile;
     this.isNomineeEdited = true;
     this.updatedNomineeDetailsId = row;
   }
@@ -827,8 +833,10 @@ export class DefaultComponent implements OnInit {
       if (this.isUploaded) {
         this.addEducationDocumentArr();
       }
-      this.clearEducationInformation();
-      this.educationInfoSubmit = false;
+      setTimeout(() => {
+        this.clearEducationInformation();
+        this.educationInfoSubmit = false;
+      }, 100);
     }
 
   }
@@ -892,10 +900,11 @@ export class DefaultComponent implements OnInit {
       courseName: [this.qualification],
       documentType: [''],
       documentfile: [''],
-      eduDocumentPreviewUrl: ['']
+      documentUrl: ['']
     });
     // (<FormArray>this.hrmsForm.get('educationDocument')).push(this.educationDocumentForm);
-    (<FormArray>this.hrmsForm.get('sys_EducationalQualificationDto').get('Attachments')).push(this.educationDocumentForm);
+    // (<FormArray>this.hrmsForm.get('sys_EducationalQualificationDto').get('Attachments')).push(this.educationDocumentForm);
+    (<FormArray>this.hrmsForm.get('EducationAttachments')).push(this.educationDocumentForm);
     // this.clearEducationDocument();
   }
 
@@ -910,7 +919,7 @@ export class DefaultComponent implements OnInit {
 
   // Delete Education Document
   deleteEducationDocument(row) {
-    const educationDocument = this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments') as FormArray;
+    const educationDocument = <FormArray>this.hrmsForm.controls['EducationAttachments'];
     if (educationDocument) {
       educationDocument.removeAt(row);
     }
@@ -949,7 +958,15 @@ export class DefaultComponent implements OnInit {
     // this.documentPreviewUrl
     
     (<FormArray>this.hrmsForm.get('sys_OtherInformationDto').get('sys_Identity_Proofs')).push(this.identityProofForm);
-    // this.clearEducationDocument();
+    this.clearIdentityProof();
+  }
+
+  // clear  clearIdentityProof
+  clearIdentityProof() {
+    this.identityType ="";
+    this.identityNo ="";
+    this.validUpto = null;
+    this.identityPreviewUrl =null;
   }
 
   // Delete Identity Proof
@@ -984,9 +1001,21 @@ export class DefaultComponent implements OnInit {
         this.addProfessionalDocumentArr();
       }
       this.professionalInfoSubmit = false;
+      this.clearProfessionalInformation();
     }
+  }
 
-    // this.clearEducationDocument();
+  clearProfessionalInformation() {
+    this.EmployeerName = null;
+    this.EmployeerAddress = "";
+    this.Designation = null;
+    this.ContactPerson = "";
+    this.ContactNo = "";
+    this.EmailId = "";
+    this.DateOfJoining = null;
+    this.LastDrawnSalary = null;
+    this.DateOfLeaving = null;
+    this.ReasonforLeavingy = "";
   }
   // Delete Professional Information
   deleteProfessionalInformation(row) {
@@ -1007,8 +1036,8 @@ export class DefaultComponent implements OnInit {
     this.ProfessionalDocumentInformationForm = this.formBuilder.group({
       employeeName: [this.EmployeerName],
       documentType: [''],
-      documentfile: [''],
-      documentPreviewUrl: ['']
+      documentFile: [''],
+      documentUrl: ['']
     });
     (<FormArray>this.hrmsForm.get('professionalDocumentAttachment')).push(this.ProfessionalDocumentInformationForm);
   }
@@ -1209,9 +1238,22 @@ export class DefaultComponent implements OnInit {
     this.preview();
   }
 
+  fileProgressEducation(fileInput: any) {
+    let documentfile = <File>fileInput.target.files[0];
+    var _mb = this.bytesToSize(documentfile.size, 2);
+    if (_mb > 10) {
+      alert(`
+      - The maximum supported file sizes are 10 MB
+        `);
+      documentfile = null;
+      return;
+    }
+    this.previewEducation(documentfile);
+  }
+
   fileProgressOtherInfo(fileInput: any, type: string) {
     let documentfile = <File>fileInput.target.files[0];
-    var _mb = this.bytesToSize(this.documentfile.size, 2);
+    var _mb = this.bytesToSize(documentfile.size, 2);
     if (_mb > 10) {
       alert(`
       - The maximum supported file sizes are 10 MB
@@ -1239,7 +1281,7 @@ export class DefaultComponent implements OnInit {
     // Show preview
     var mimeType = documentfile.type;
     var reader = new FileReader();
-    reader.readAsDataURL(this.documentfile);
+    reader.readAsDataURL(documentfile);
     reader.onload = (_event) => {
       if(type == 'pictureFile') {
         this.pictureUrl = reader.result;
@@ -1247,6 +1289,20 @@ export class DefaultComponent implements OnInit {
         this.signatureUrl = reader.result;
       }
       
+    }
+  }
+
+  previewEducation(documentfile) {
+    // Show preview
+    var mimeType = documentfile.type;
+    var reader = new FileReader();
+    reader.readAsDataURL(documentfile);
+    reader.onload = (_event) => {
+      this.eduDocumentPreviewUrl = reader.result;
+      // need to test
+      // let attachemnt: Attachment = new Attachment();
+      // attachemnt.documentUrl = this.eduDocumentPreviewUrl;
+      // this.attachmentsEducationProof = [attachemnt]; 
     }
   }
 
@@ -1278,7 +1334,7 @@ export class DefaultComponent implements OnInit {
     var reader = new FileReader();
     reader.readAsDataURL(this.pidocumentfile);
     reader.onload = (_event) => {
-      this._documentPreviewUrl = reader.result;
+      this._professionalDocumentPreviewUrl = reader.result;
       // need to test
       // let attachemnt: Attachment2 = new Attachment2();
       // // attachemnt.id = 0;
@@ -1294,43 +1350,56 @@ export class DefaultComponent implements OnInit {
     }
   }
 
-  onSubmit(row) {
-    const educationDocData = (this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments') as FormArray).at(row);
-    educationDocData.patchValue({
-      'courseName': this.courseName,
-      'documentType': this.documentType,
-      'documentfile': this.documentPreviewUrl,
-      'eduDocumentPreviewUrl': this.documentPreviewUrl
-    });
-    const educationDocumentsArray = this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments')['controls'] as FormArray;;
-    educationDocumentsArray.at(row).patchValue({ 'eduDocumentPreviewUrl': this.documentPreviewUrl });
+  onSubmitEducation(row) {
+    // const educationDocData = (<FormArray>this.hrmsForm.controls['EducationAttachments']).at(row);
+    // educationDocData.patchValue({
+    //   'courseName': this.courseName,
+    //   'documentType': this.documentType,
+    //   'documentfile': this.eduDocumentPreviewUrl,
+    //   'documentUrl': this.eduDocumentPreviewUrl
+    // });
+    const educationDocumentsArray = (<FormArray>this.hrmsForm.controls['EducationAttachments']);
+    educationDocumentsArray.at(row).patchValue({ 'documentUrl': this.eduDocumentPreviewUrl });
+    this.eduDocumentPreviewUrl =  null ; // clear
   }
 
   onProfessionalSubmit(row) {
-    const professionalDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row);
-    professionalDocData.patchValue({
-      'employeeName': this.EmployeerName,
-      'documentUrl': this._documentPreviewUrl
-    });
+    // const professionalDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row);
+    // professionalDocData.patchValue({
+    //   'employeeName': this.EmployeerName,
+    //   'documentUrl': this._documentPreviewUrl
+    // });
     const professionalDocumentsArray = <FormArray>this.hrmsForm.controls['professionalDocumentAttachment'];
-    professionalDocumentsArray.at(row).patchValue({ 'documentUrl': this._documentPreviewUrl });
+    professionalDocumentsArray.at(row).patchValue({ 'documentUrl': this._professionalDocumentPreviewUrl });
+    this._professionalDocumentPreviewUrl = null;
   }
 
   getImgSrc(row) {
-    const eduDocData = (this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments') as FormArray).at(row).value;
-    return eduDocData.eduDocumentPreviewUrl;
+    const eduDocData = (<FormArray>this.hrmsForm.controls['EducationAttachments']).at(row).value;
+    let documentUrl = this.defaultDocumentUrl;
+    if(eduDocData.documentUrl) {
+      documentUrl = eduDocData.documentUrl;
+    }
+    return documentUrl;
   }
 
   getImgProfessionalSrc(row) {
     const professionalDocData = (<FormArray>this.hrmsForm.controls['professionalDocumentAttachment']).at(row).value;
-    return professionalDocData.documentUrl;
+    let documentUrl = this.defaultDocumentUrl;
+    if(professionalDocData.documentUrl) {
+      documentUrl = professionalDocData.documentUrl;
+    }
+    return documentUrl;
   }
 
   getIdentityImgSrc(row) {
-
-
     const identityData = (this.hrmsForm.controls['sys_OtherInformationDto'].get('sys_Identity_Proofs') as FormArray).at(row).value;
-    return identityData.identityPreviewUrl;
+    // return identityData.identityPreviewUrl;
+    let documentUrl = this.defaultDocumentUrl;
+    if(identityData.attachments && identityData.attachments.length > 0) {
+      documentUrl = identityData.attachments[0].documentUrl;
+    }
+    return documentUrl;
   }
 
   finallySave() {
@@ -1359,6 +1428,18 @@ export class DefaultComponent implements OnInit {
     this.submitHrmsForm();
   }
   resetHrmsForm() {
+    if(this.employeeId != 0) {
+      this.router.navigate(['dashboard']);
+    }
+    
+    this.pictureUrl = null;
+    this.signatureUrl = null;
+    this.documentPreviewUrl = null;
+    this.documentUrl = null;
+    this.employeeId = 0;
+    this.attachmentsEducationProof = [];
+    this.attachmentsProfessionalInfo = [];
+    this.attachmentsSysIdentityProof = [];
     if (this.hrmsForm != undefined) {
       this.hrmsForm.reset();
     }
@@ -1385,7 +1466,7 @@ export class DefaultComponent implements OnInit {
       for (let i = control.length - 1; i >= 0; i--) {
         control.removeAt(i)
       }
-      const control1 = this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments')['controls'] as FormArray;
+      const control1 = this.hrmsForm.controls['sys_EducationalQualificationDto'].get('EducationAttachments')['controls'] as FormArray;
       for (let i = control1.length - 1; i >= 0; i--) {
         control1.removeAt(i)
       }
@@ -1492,14 +1573,15 @@ export class DefaultComponent implements OnInit {
           other_Details: result.sys_OtherInformationDto.other_Details,
           card_No: result.sys_OtherInformationDto.card_No,
           carProxy_Nod_No: result.sys_OtherInformationDto.carProxy_Nod_No,
+          user_Id: result.sys_OtherInformationDto.user_Id,
+          user_Data: result.sys_OtherInformationDto.user_Data,
           user_Type: result.sys_OtherInformationDto.user_Type,
           signatureFile: result.sys_OtherInformationDto.signatureFile,
           pictureFile: result.sys_OtherInformationDto.pictureFile,
           employee_Id: result.sys_OtherInformationDto.employee_Id
         });
-
-
-
+        this.signatureUrl = result.sys_OtherInformationDto.pictureFile;
+        this.pictureUrl = result.sys_OtherInformationDto.pictureFile;
 
       this.hrmsForm.patchValue({
         id: result.id,
@@ -1535,10 +1617,13 @@ export class DefaultComponent implements OnInit {
         blood_GroupId: result.blood_GroupId,
         marital_StatusId: result.marital_StatusId,
         identification_Mark: result.identification_Mark,
-        sys_PermanentContactInformationDto: sys_PermanentContactInformationDto
+        sys_PermanentContactInformationDto: sys_PermanentContactInformationDto,
+        professionalInformationStatus: result.sys_ProfessionalInformations.length > 0 ? 'Experience' : 'Fresher'
         // sys_FamilyDetailsDto: sys_FamilyDetailsDtoArray
         // XXXXXXXXXXXX: result.YYYYYYYYYYY,
       });
+
+      this.highestQualification = result.highestQualification;
 
       if (result) {
         //sys_FamilyDetailsDto
@@ -1576,23 +1661,8 @@ export class DefaultComponent implements OnInit {
           (<FormArray>this.hrmsForm.get('tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto')).push(this.nomineeForm);
         });
 
-        //tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto
-        result.tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto.forEach(element => {
-          var HR_EMPLOYEE_NOMINEE_DETAILSDto = this.formBuilder.group({
-            nominee_Name: [element.nominee_Name],
-            nominee_DOB: [element.nominee_DOB],
-            nominee_RelationshipId: [element.nominee_RelationshipId],
-            identity_Number: [element.identity_Number],
-            isAadharStatus: [element.isAadharStatus],
-            nominee_Mobile: [element.nominee_Mobile],
-            nominee_Address: [element.nominee_Address],
-            employee_Id: [element.employee_Id]
-          });
-          (<FormArray>this.hrmsForm.get('tBL_HR_EMPLOYEE_NOMINEE_DETAILSDto')).push(HR_EMPLOYEE_NOMINEE_DETAILSDto);
-        });
-
         // sys_EducationalQualificationDto
-        result.sys_EducationalQualificationDto.forEach(element => {
+        result.sys_EducationalQualificationDto.forEach(element => {   
           var EducationalQualificationDto = this.formBuilder.group({
             highestQualification: [element.id],
             qualification: [element.qualification],
@@ -1601,31 +1671,54 @@ export class DefaultComponent implements OnInit {
             school: [element.school],
             board: [element.board],
             marks: [element.marks],
-            attachments: [element.attachments]
+            attachments: []
           });
           (<FormArray>this.hrmsForm.get('sys_EducationalQualificationDto')).push(EducationalQualificationDto);
+          // element.attachments.forEach(attachment => {
+          //   let educationDocumentForm = this.formBuilder.group({
+          //     courseName: [attachment.courseName],
+          //     documentType: [attachment.documentType],
+          //     documentfile: [''],
+          //     documentUrl: [attachment.documentUrl]
+          //   });
+          //   (<FormArray>this.hrmsForm.get('EducationAttachments')).push(educationDocumentForm); //
+          // });
         });
 
         // sys_ProfessionalInformations
+        this.isPersonalStatus = result.sys_ProfessionalInformations.length > 0 ? true : false;  
         result.sys_ProfessionalInformations.forEach(element => {
-          var ProfessionalInformations = this.formBuilder.group({
-            id: [result.sys_ProfessionalInformations.id],
-            employeerName: [result.sys_ProfessionalInformations.employeerName],
-            employeerAddress: [result.sys_ProfessionalInformations.employeerAddress],
-            designation: [result.sys_ProfessionalInformations.designation],
-            contactPerson: [result.sys_ProfessionalInformations.contactPerson],
-            contactNo: [result.sys_ProfessionalInformations.contactNo],
-            emailId: [result.sys_ProfessionalInformations.emailId],
-            dateOfJoining: [result.sys_ProfessionalInformations.dateOfJoining],
-            lastDrawnSalary: [result.sys_ProfessionalInformations.lastDrawnSalary],
-            reasonForLeaving: [result.sys_ProfessionalInformations.reasonForLeaving],
-            dateOfLeaving: [result.sys_ProfessionalInformations.dateOfLeaving],
-            attachmentType_Path: [result.sys_ProfessionalInformations.attachmentType_Path],
-            employee_Id: [result.sys_ProfessionalInformations.employee_Id]
+          let ProfessionalInformations = this.formBuilder.group({
+            id: [element.id],
+            employeerName: [element.employeerName],
+            employeerAddress: [element.employeerAddress],
+            designation: [element.designation],
+            contactPerson: [element.contactPerson],
+            contactNo: [element.contactNo],
+            emailId: [element.emailId],
+            dateOfJoining: [element.dateOfJoining],
+            lastDrawnSalary: [element.lastDrawnSalary],
+            reasonForLeaving: [element.reasonForLeaving],
+            dateOfLeaving: [element.dateOfLeaving],
+            attachmentType_Path: [element.attachmentType_Path],
+            employee_Id: [element.employee_Id]
           });
           (<FormArray>this.hrmsForm.get('sys_ProfessionalInformations')).push(ProfessionalInformations);
+          // (<FormArray>this.hrmsForm.get('sys_ProfessionalInformations')).push(this.ProfessionalInformationForm);
+        });
+
+        // other information - identity proof
+        result.sys_OtherInformationDto.sys_Identity_Proofs.forEach(element => {   
+          let identityProofForm = this.formBuilder.group({
+            identity_Type: [element.identity_Type],
+            identity_No: [element.identity_No],
+            valid_Upto: [this.formatDate(element.valid_Upto)],
+            attachments: [], // need to wor
+          });
+          (<FormArray>this.hrmsForm.get('sys_OtherInformationDto').get('sys_Identity_Proofs')).push(identityProofForm);
         });
       }
+      this.oiStatus(result.sys_OtherInformationDto.user_Id);
     })
   }
 
@@ -1642,7 +1735,8 @@ export class DefaultComponent implements OnInit {
     
     let inputModel: Employee = new Employee();
     // inputModel.id = Number(this.hrmsForm.controls.id.value);
-    inputModel.id = Number(0);
+    // inputModel.id = Number(0);
+    inputModel.id = Number(this.employeeId);
     inputModel.status_Id = Number(this.hrmsForm.controls.Status_Id.value);
     // inputModel.remarks = this.hrmsForm.controls.remarks.value;
     // inputModel.action_Remarks = this.hrmsForm.controls.action_Remarks.value;
@@ -1679,9 +1773,10 @@ export class DefaultComponent implements OnInit {
     inputModel.marital_StatusId = Number(this.hrmsForm.controls.marital_StatusId.value);
     inputModel.identification_Mark = this.hrmsForm.controls.identification_Mark.value;
     // inputModel.status = this.hrmsForm.controls.status.value;
-    inputModel.professionalInformation = this.hrmsForm.controls.professionalInformation.value;
+    inputModel.professionalInformation = this.hrmsForm.controls.professionalInformationStatus.value;
     // professionalInformationStatus
-    inputModel.highestQualification = this.hrmsForm.controls.highestQualification.value;
+    // inputModel.highestQualification = this.hrmsForm.controls.highestQualification.value;
+    inputModel.highestQualification = this.highestQualification;
     // inputModel.isActive = this.hrmsForm.controls.isActive.value;
     // inputModel.isDeleted = this.hrmsForm.controls.isDeleted.value;
 
@@ -1695,10 +1790,15 @@ export class DefaultComponent implements OnInit {
     });
 
     // SysEducationalQualificationDto
+    // EducationAttachments
+    let EducationAttachments =this.hrmsForm.getRawValue().EducationAttachments;
+    let  EducationAttachment = this.employeedataservice.getAttachmentsData(EducationAttachments);
+    
     let sys_EducationalQualificationDto = this.hrmsForm.getRawValue().sys_EducationalQualificationDto;
     inputModel.sys_EducationalQualificationDto = [];
     sys_EducationalQualificationDto.forEach(data => {
       let  sys_EducationalQualification = this.employeedataservice.getEducationalQualificationData(data);
+      sys_EducationalQualification.attachments = EducationAttachment.filter( a => a.courseName == sys_EducationalQualification.qualification);
       inputModel.sys_EducationalQualificationDto.push(sys_EducationalQualification);
 
     });
@@ -1748,7 +1848,8 @@ export class DefaultComponent implements OnInit {
     console.log(inputModel);
 
     this.employeeMasterService.post(inputModel).subscribe((resp: any) => {
-      this.resetHrmsForm();
+      // this.resetHrmsForm();
+      this.router.navigate(['dashboard']);
     })
 
     
@@ -1989,7 +2090,7 @@ export class DefaultComponent implements OnInit {
   }
 
   onClickDownloadDoc(row) {
-    const eduDocData = (this.hrmsForm.controls['sys_EducationalQualificationDto'].get('Attachments') as FormArray).at(row).value;
+    const eduDocData = (this.hrmsForm.controls['sys_EducationalQualificationDto'].get('EducationAttachments') as FormArray).at(row).value;
     let base64String = eduDocData.eduDocumentPreviewUrl;
     this.downloadDoc(base64String, eduDocData.documentType);
   }
@@ -2046,12 +2147,21 @@ export class DefaultComponent implements OnInit {
   }
 
   oiStatus(value) {
+    this.isStatusVisible = false;
+    let userData = '';
     if (value == 'Others') {
       this.isStatusVisible = true;
     }
-    else {
-      this.isStatusVisible = false;
+    else if(value == 'Mobile No') {
+      userData = this.hrmsForm.controls.mobile_No.value;
     }
+    else if(value == 'Emp Code') {
+      userData = this.hrmsForm.controls.employeeCode.value;
+    }
+    var sys_OtherInformationDto = this.hrmsForm.controls['sys_OtherInformationDto'];
+    sys_OtherInformationDto.patchValue({
+      user_Data: userData 
+    });
   }
   keyPressNumbers(event) {
     var charCode = (event.which) ? event.which : event.keyCode;

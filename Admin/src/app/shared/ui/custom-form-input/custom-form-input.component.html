@@ -1,0 +1,19 @@
+<div [formGroup]="formGrp">
+    <div *ngIf="inputType == inputTypes.Text">
+        <label [for]="labelFor">{{labelName}}<span *ngIf="requiredField" class="text-danger">*</span></label>
+        <input type="text" 
+            [autocomplete]="autocomplete" 
+            [class]="class"
+            [formControlName]="formCtrlName"
+            [id]="id"
+            [placeholder]="placeholder" />
+        <div *ngIf="getErrorRequired()"
+        class="text text-danger error-div">
+        *{{errorText}}</div>
+        <div *ngIf="getErrorValid()" class="text text-danger error-div">
+            *{{errorValidText}}</div>
+        <!-- <div *ngIf="f.firstName.hasError('required') && f.firstName.touched"
+        class="text text-danger error-div">
+        *Enter First Name</div> -->
+    </div>
+</div>

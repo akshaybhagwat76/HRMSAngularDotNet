@@ -67,37 +67,87 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eBiometricCode">Biometric Code</label>
+                                        <!-- <label for="eBiometricCode">Biometric Code</label>
                                         <input type="text" autocomplete="off" class="form-control"
                                             formControlName="biometricCode" id="validationCustom04"
-                                            placeholder="Biometric Code" />
+                                            placeholder="Biometric Code" /> -->
+                                            <app-custom-form-input 
+                                                [id]="'validationCustom04'" 
+                                                [class]="'form-control'" 
+                                                [formGrp]="hrmsForm" 
+                                                [formCtrlName]="'biometricCode'" 
+                                                [labelFor]="'eBiometricCode'"
+                                                [labelName]="'Biometric Code'"
+                                                [placeholder]="'Biometric Code'"
+                                                [inputType]="inputTypes.Text" >
+                                            </app-custom-form-input>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eFirstName">First Name<span class="text-danger">*</span></label>
+                                        <!-- <label for="eFirstName">First Name<span class="text-danger">*</span></label>
                                         <input type="text" autocomplete="off" class="form-control" id="eFirstName"
                                             formControlName="firstName" placeholder="First Name">
                                         <div *ngIf="f.firstName.hasError('required') && f.firstName.touched"
                                             class="text text-danger error-div">
-                                            *Enter First Name</div>
+                                            *Enter First Name</div> -->
+
+                                        <app-custom-form-input 
+                                            [id]="'eFirstName'" 
+                                            [class]="'form-control'" 
+                                            [formGrp]="hrmsForm" 
+                                            [formCtrlName]="'firstName'" 
+                                            [labelFor]="'eFirstName'"
+                                            [labelName]="'First Name'"
+                                            [placeholder]="'First Name'"
+                                            [inputType]="inputTypes.Text"
+                                            [requiredField]="true" 
+                                            [errorFormCtrl]="f"
+                                            [errorText]="'Enter First Name'"
+                                            >
+                                        </app-custom-form-input>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eMiddleName">Middle Name</label>
+                                        <!-- <label for="eMiddleName">Middle Name</label>
                                         <input type="text" autocomplete="off" class="form-control"
-                                            formControlName="middleName" id="eMiddleName" placeholder="Middle Name" />
+                                            formControlName="middleName" id="eMiddleName" placeholder="Middle Name" /> -->
+                                            <app-custom-form-input 
+                                            [id]="'eMiddleName'" 
+                                            [class]="'form-control'" 
+                                            [formGrp]="hrmsForm" 
+                                            [formCtrlName]="'middleName'" 
+                                            [labelFor]="'eFirstName'"
+                                            [labelName]="'Middle Name'"
+                                            [placeholder]="'Middle Name'"
+                                            [inputType]="inputTypes.Text"
+                                            >
+                                        </app-custom-form-input>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="lastName">Last Name<span class="text-danger">*</span></label>
+                                        <!-- <label for="lastName">Last Name<span class="text-danger">*</span></label>
                                         <input type="text" autocomplete="off" class="form-control"
                                             formControlName="lastName" id="lastName" placeholder="Last Name">
                                         <div *ngIf="f.lastName.hasError('required') && f.lastName.touched"
                                             class="text text-danger error-div">
-                                            *Enter Last Name</div>
+                                            *Enter Last Name</div> -->
+                                            <app-custom-form-input 
+                                                [id]="'lastName'" 
+                                                [class]="'form-control'" 
+                                                [formGrp]="hrmsForm" 
+                                                [formCtrlName]="'lastName'" 
+                                                [labelFor]="'lastName'"
+                                                [labelName]="'Last Name'"
+                                                [placeholder]="'Last Name'"
+                                                [inputType]="inputTypes.Text"
+                                                [requiredField]="true" 
+                                                [errorFormCtrl]="f"
+                                                [errorText]="'Enter Last Name'"
+                                                >
+                                            </app-custom-form-input>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -209,11 +259,27 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="email">Email Address</label>
+                                        <!-- <label for="email">Email Address</label>
                                         <input type="text" autocomplete="off" class="form-control"
                                             formControlName="email" id="email" placeholder="Email Address" />
                                         <div *ngIf="f.email.hasError('email')" class="text text-danger error-div">
-                                            *Enter valid email Address</div>
+                                            *Enter valid email Address</div> -->
+                                            <app-custom-form-input 
+                                                [id]="'email'" 
+                                                [class]="'form-control'" 
+                                                [formGrp]="hrmsForm" 
+                                                [formCtrlName]="'email'" 
+                                                [labelFor]="'email'"
+                                                [labelName]="'Email Address'"
+                                                [placeholder]="'Email Address'"
+                                                [inputType]="inputTypes.Text"
+                                                [requiredField]="true" 
+                                                [errorFormCtrl]="f"
+                                                [formCtrlValidName]="'email'"
+                                                [errorText]="'Enter email Address'"
+                                                [errorValidText]="'Enter valid email Address'"
+                                                >
+                                            </app-custom-form-input>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -293,10 +359,21 @@
 
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eReferenceEmployee">Reference Employee Name</label>
+                                        <!-- <label for="eReferenceEmployee">Reference Employee Name</label>
                                         <input type="text" autocomplete="off" class="form-control"
                                             formControlName="referenceEmployeeName" id="eReferenceEmployee"
-                                            placeholder="Reference Employee Name">
+                                            placeholder="Reference Employee Name"> -->
+                                        <app-custom-form-input 
+                                        [id]="'eReferenceEmployee'" 
+                                        [class]="'form-control'" 
+                                        [formGrp]="hrmsForm" 
+                                        [formCtrlName]="'referenceEmployeeName'" 
+                                        [labelFor]="'eReferenceEmployee'"
+                                        [labelName]="'Reference Employee Name'"
+                                        [placeholder]="'Reference Employee Name'"
+                                        [inputType]="inputTypes.Text"
+                                        >
+                                    </app-custom-form-input>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -361,30 +438,52 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="validationCustom24">Nationality<span
+                                        <!-- <label for="validationCustom24">Nationality<span
                                                 class="text-danger">*</span></label>
                                         <input type="text" autocomplete="off" formControlName="nationality"
                                             class="form-control" id="validationCustom24" placeholder="Nationality">
                                         <div *ngIf="f.nationality.hasError('required') && f.nationality.touched"
                                             class="text text-danger error-div">
-                                            *Enter Nationality</div>
-                                        <!-- <div *ngIf="submit && form.nationality.errors" class="invalid-feedback">
-<span *ngIf="form.nationality.errors.required">Please provide a valid Nationality.</span>
-</div> -->
+                                            *Enter Nationality</div> -->
+                                        <app-custom-form-input 
+                                        [id]="'validationCustom24'" 
+                                        [class]="'form-control'" 
+                                        [formGrp]="hrmsForm" 
+                                        [formCtrlName]="'nationality'" 
+                                        [labelFor]="'validationCustom24'"
+                                        [labelName]="'Nationality'"
+                                        [placeholder]="'Nationality'"
+                                        [inputType]="inputTypes.Text"
+                                        [requiredField]="true" 
+                                        [errorFormCtrl]="f"
+                                        [errorText]="'Enter Nationality'"
+                                        >
+                                    </app-custom-form-input>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="validationCustom25">Religion<span
+                                        <!-- <label for="validationCustom25">Religion<span
                                                 class="text-danger">*</span></label>
                                         <input type="text" autocomplete="off" formControlName="religion"
                                             class="form-control" id="validationCustom25" placeholder="Religion">
                                         <div *ngIf="f.religion.hasError('required') && f.religion.touched"
                                             class="text text-danger error-div">
-                                            *Enter Religion</div>
-                                        <!-- <div *ngIf="submit && form.religion.errors" class="invalid-feedback">
-<span *ngIf="form.religion.errors.required">Please provide a valid Religion.</span>
-</div> -->
+                                            *Enter Religion</div> -->
+                                        <app-custom-form-input 
+                                        [id]="'validationCustom25'" 
+                                        [class]="'form-control'" 
+                                        [formGrp]="hrmsForm" 
+                                        [formCtrlName]="'religion'" 
+                                        [labelFor]="'validationCustom25'"
+                                        [labelName]="'Religion'"
+                                        [placeholder]="'Religion'"
+                                        [inputType]="inputTypes.Text"
+                                        [requiredField]="true" 
+                                        [errorFormCtrl]="f"
+                                        [errorText]="'Enter Religion'"
+                                        >
+                                    </app-custom-form-input>
                                     </div>
                                 </div>
                             </div>
@@ -474,6 +573,17 @@
                                         <input type="text" autocomplete="off" class="form-control" [(ngModel)]="fName"
                                             name="fName" [ngModelOptions]="{standalone: true}" id="redName"
                                             placeholder="Name">
+                                        <!-- <app-custom-form-input 
+                                        [id]="'redName'" 
+                                        [class]="'form-control'" 
+                                        [formGrp]="hrmsForm" 
+                                        [formCtrlName]="'email'" 
+                                        [labelFor]="'redName'"
+                                        [labelName]="'Name'"
+                                        [placeholder]="'Name'"
+                                        [inputType]="inputTypes.Text"
+                                        >
+                                        </app-custom-form-input> -->
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -880,11 +990,11 @@
                                                         {{higestQualification.highest_Qualification}}
                                                 </select> -->
                                                 <select class="form-select" id="redCountryScountry"
-                                                    formControlName="qualification" [(ngModel)]="qualification">
+                                                     formControlName="qualification" readonly>
                                                     <option selected="selected" disabled="" value="0">MADHYAMIK</option>
                                                     <option *ngFor="let higestQualification of highestQualifications"
                                                         [ngValue]="higestQualification.highest_Qualification">
-                                                        {{higestQualification.highest_Qualification}}
+                                                        {{higestQualification.highest_Qualification}}</option>
                                                 </select>
                                             </td>
                                             <td><input type="text" class="form-control"
@@ -918,13 +1028,13 @@
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody formArrayName="Attachments">
+                                    <tbody formArrayName="EducationAttachments">
                                         <tr *ngFor="let Attachments of educationDocumentArr;let l=index;"
                                             [formGroupName]="l">
                                             <td>{{l+1}}</td>
                                             <td>
                                                 <select class="form-select" id="eCountryname"
-                                                    formControlName="courseName">
+                                                    formControlName="courseName" readonly>
                                                     <option *ngFor="let higestQualification of highestQualifications"
                                                         [value]="higestQualification.highest_Qualification">
                                                         {{higestQualification.highest_Qualification}}
@@ -934,21 +1044,20 @@
                                                     placeholder="Document Type"></td>
                                             <td>
                                                 <input type="file" class="form-control" formControlName="documentfile"
-                                                    name="image" (change)="fileProgress($event)">
-                                                <button class="form-control btn-sm btn-primary" (click)="onSubmit(l)"
-                                                    *ngIf="documentfile">Upload
+                                                    name="image" (change)="fileProgressEducation($event)">
+                                                <button class="form-control btn-sm btn-primary" (click)="onSubmitEducation(l)"
+                                                    *ngIf="eduDocumentPreviewUrl">Upload
                                                     Document</button>
                                                 <div *ngIf="fileUploadProgress" style="color: green;">
                                                     Upload progress: <strong> {{ fileUploadProgress }}</strong>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div *ngIf="!documentfile && !documentPreviewUrl">
+                                                <!-- <div *ngIf="!documentfile && !documentPreviewUrl">
                                                     <img height="70" width="70" src="../../../../assets/images/1.jpg"
                                                         alt="">
-                                                </div>
-                                                <div class="image-preview mb-3"
-                                                    *ngIf="documentPreviewUrl && documentfile">
+                                                </div> -->
+                                                <div class="image-preview mb-3">
                                                     <img [src]="getImgSrc(l)" height="70" width="70" />
                                                 </div>
                                             </td>
@@ -1380,19 +1489,18 @@
                                             <td><input type="text" class="form-control"
                                                     formControlName="documentType"></td>
                                             <td>
-                                                <input type="file" class="form-control" formControlName="documentUrl"
+                                                <input type="file" class="form-control" formControlName="documentFile"
                                                     name="image" (change)="professionalFile($event)">
                                                 <button class="form-control btn-sm btn-primary"
-                                                    (click)="onProfessionalSubmit(m)" *ngIf="pidocumentfile">Upload
+                                                    (click)="onProfessionalSubmit(m)" *ngIf="_professionalDocumentPreviewUrl">Upload
                                                     Document</button>
                                             </td>
                                             <td>
-                                                <div *ngIf="!pidocumentfile && !_documentPreviewUrl">
+                                                <!-- <div *ngIf="!pidocumentfile && !_professionalDocumentPreviewUrl">
                                                     <img height="70" width="70" src="../../../../assets/images/1.jpg"
                                                         alt="">
-                                                </div>
-                                                <div class="image-preview mb-3"
-                                                    *ngIf="_documentPreviewUrl && pidocumentfile">
+                                                </div> -->
+                                                <div class="image-preview mb-3">
                                                     <img [src]="getImgProfessionalSrc(m)" height="70" width="70" />
                                                 </div>
                                             </td>
@@ -1476,7 +1584,7 @@
                                                     <select id="eIdentityProof" class="form-select"
                                                         [(ngModel)]="identityType"
                                                         [ngModelOptions]="{standalone: true}">
-                                                        <option selected="" disabled="" value="0">PAN</option>
+                                                        <!-- <option selected="" disabled="" value="0">PAN</option> -->
                                                         <option *ngFor="let identityobj of identityList"
                                                             value="{{identityobj.id}}">
                                                             {{identityobj.identity_Type}}</option>
@@ -1485,7 +1593,7 @@
                                                 <td>
                                                     <input type="text" autocomplete="off" class="form-control"
                                                         [(ngModel)]="identityNo" [ngModelOptions]="{standalone: true}"
-                                                        id="eYear" placeholder="Year"
+                                                        id="eYear" placeholder=""
                                                         (keypress)="keyPressNumbers($event)">
                                                 </td>
                                                 <td>
@@ -1493,7 +1601,7 @@
                                                         [(ngModel)]="validUpto" [ngModelOptions]="{standalone: true}" />
                                                 </td>
                                                 <td>
-                                                    <input type="file" (change)="fileProgress($event)"
+                                                    <input type="file" [(ngModel)]="identityPreviewUrl" (change)="fileProgress($event)"
                                                         class="form-control" id="validationPicture" />
                                                 </td>
                                                 <td>
@@ -1522,10 +1630,11 @@
                                                 [formGroupName]="p">
                                                 <td>{{p+1}}</td>
                                                 <td>
-                                                    <select id="eidentityProf" class="form-select"
+                                                    <select id="eidentityProfS" class="form-select"
                                                         formControlName="identity_Type" disabled>
+                                                        <option selected="selected" disabled="" value="0"></option>
                                                         <option *ngFor="let identityobj of identityList"
-                                                            [ngValue]="identityobj.id">
+                                                        value="{{identityobj.id}}">
                                                             {{identityobj.identity_Type}}</option>
                                                     </select>
                                                 </td>
@@ -1537,12 +1646,21 @@
                                                     <input type="date" class="form-control form-selectdisabled"
                                                         id="redidentityProf" formControlName="valid_Upto" />
                                                 </td>
-                                                <td>
+                                                <!-- <td>
                                                     <div *ngIf="!attachmentsSysIdentityProof && !documentPreviewUrl">
                                                         <img height="70" width="70"
                                                             src="../../../../assets/images/1.jpg" alt="">
                                                     </div>
                                                     <div *ngIf="documentPreviewUrl">
+                                                        <img height="70" width="70" [src]="getIdentityImgSrc(p)" alt="">
+                                                    </div>
+                                                </td> -->
+                                                <td>
+                                                    <!-- <div *ngIf="!attachmentsSysIdentityProof && !documentPreviewUrl">
+                                                        <img height="70" width="70"
+                                                            src="../../../../assets/images/1.jpg" alt="">
+                                                    </div> -->
+                                                    <div>
                                                         <img height="70" width="70" [src]="getIdentityImgSrc(p)" alt="">
                                                     </div>
                                                 </td>
@@ -1591,24 +1709,24 @@
                                             <label for="eUserId">User Id</label>
                                             <div class="d-flex">
                                                 <div class="custom-control custom-radio custom-control-inline mr-5">
-                                                    <input type="radio" (click)="oiStatus('EmpCode')" id="redEmpCode"
-                                                        value="Emp Code" name="ipUserId" class="custom-control-input">
+                                                    <input type="radio" (click)="oiStatus('Emp Code')" id="redEmpCode"
+                                                    formControlName="user_Id" value="Emp Code" name="user_Id" class="custom-control-input">
                                                     <label class="custom-control-label" for="redEmpCode"> Emp
                                                         Code</label>
                                                 </div>
                                                 <div class="custom-control custom-radio custom-control-inline mr-5">
-                                                    <input type="radio" (click)="oiStatus('MobileNo')" value="Mobile No"
-                                                        id="redMobileNo" name="ipUserId" class="custom-control-input">
+                                                    <input type="radio" formControlName="user_Id" (click)="oiStatus('Mobile No')" value="Mobile No"
+                                                        id="redMobileNo" name="user_Id" class="custom-control-input">
                                                     <label class="custom-control-label" for="redMobileNo"> Mobile No
                                                     </label>
                                                 </div>
                                                 <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" (click)="oiStatus('Others')" value="Others"
-                                                        id="redOthers" name="ipUserId" class="custom-control-input">
+                                                    <input type="radio" formControlName="user_Id" (click)="oiStatus('Others')" value="Others"
+                                                        id="redOthers" name="user_Id" class="custom-control-input">
                                                     <label class="custom-control-label" for="redOthers">Others</label>
                                                 </div>
                                             </div>
-                                            <input type="text" [disabled]="!isStatusVisible" class="form-control"
+                                            <input type="text" [attr.readonly]="isStatusVisible ? null : ''"  class="form-control" name="user_Data" formControlName="user_Data"
                                                 id="validationUserId" />
                                         </div>
                                     </div>
@@ -1627,6 +1745,9 @@
                                             <label for="ePicture">Picture</label>
                                             <input type="file" formControlName="pictureFile" (change)="fileProgressOtherInfo($event, 'pictureFile')" class="form-control"
                                                 id="ePicture" />
+                                                <div class="image-preview mb-3" *ngIf="pictureUrl">
+                                                    <img [src]="pictureUrl" height="70" width="70" />
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -1634,6 +1755,9 @@
                                             <label for="eSignature">Signature</label>
                                             <input type="file" formControlName="signatureFile" (change)="fileProgressOtherInfo($event, 'signatureFile')" class="form-control"
                                                 id="eSignature" />
+                                                <div class="image-preview mb-3" *ngIf="signatureUrl">
+                                                    <img [src]="signatureUrl" height="70" width="70" />
+                                                </div>
                                         </div>
                                     </div>
                                 </div>

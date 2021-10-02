@@ -127,4 +127,9 @@ const statData = [{
     value: '$16.2'
 }];
 
+export const InputTypes = {
+    Text: 'text',
+    Select: 'select'
+  };
+
 export { emailSentBarChart, monthlyEarningChart, employees, statData };

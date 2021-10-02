@@ -11,6 +11,7 @@ import { DesignationsService } from 'src/app/core/services/designations.service'
 import { EmployeesService } from 'src/app/core/services/employees.service';
 import { EmployeeMasterService } from 'src/app/core/services/employee-master.service';
 import { ExportService } from 'src/app/core/services/export.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-validation',
   templateUrl: './validation.component.html',
@@ -28,7 +29,7 @@ export class ValidationComponent implements OnInit {
   typeValidationForm: FormGroup; // type validation form
   rangeValidationForm: FormGroup; // range validation form
   lstEmployees: any[];
-  constructor(public formBuilder: FormBuilder, private getemployeservice: GetemployeService
+  constructor(private router: Router,public formBuilder: FormBuilder, private getemployeservice: GetemployeService
     , private companyservice: CompanyService, private branch: BranchesService, private department: DepartmentsService,
     private employeetypeService: EmployeesService, private employeeMasterService: EmployeeMasterService,
     private zone: ZoneService, private designationSerivce: DesignationsService, private excelService: ExportService
@@ -327,6 +328,7 @@ export class ValidationComponent implements OnInit {
   }
 
   editEmployee(id) {
+    this.router.navigate(['dashboard', id]);
   }
   disableEmployee(id) {
     if (confirm('Are you sure?')) {

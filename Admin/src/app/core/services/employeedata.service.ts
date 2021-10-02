@@ -195,7 +195,8 @@ export class EmployeedataService {
       marks: this.setDefaultValueString(data?.marks),
       remarks: this.setDefaultValueString(data?.remarks),
       isDeleted: data?.isDeleted==undefined?false:data?.isDeleted,
-      attachments: this.getAttachmentsData(data?.attachments)
+      // attachments: this.getAttachmentsData(data?.attachments)
+      attachments: []
     }
     return educationalQualificationDto;
   }
@@ -209,8 +210,8 @@ export class EmployeedataService {
       attachmentData.remarks = this.setDefaultValueString(attachment.remarks);
       attachmentData.action_Remarks = this.setDefaultValueString(attachment.action_Remarks);;
       attachmentData.educational_Qualification_Id = this.setDefaultValue(attachment.educational_Qualification_Id);
-      // attachmentData.employeeId = this.setDefaultValue(attachment.employeeId);
-      attachmentData.employeeId = 0;
+      attachmentData.employeeId = this.setDefaultValue(attachment.employeeId);
+      // attachmentData.employeeId = 0;
       attachmentData.courseName = this.setDefaultValueString(attachment.courseName);;
       attachmentData.documentType = this.setDefaultValueString(attachment.documentType);;
       attachmentData.documentUrl = this.setDefaultValueString(attachment.documentUrl);;
@@ -395,8 +396,8 @@ export class EmployeedataService {
       attachment2Data.remarks = this.setDefaultValueString(attachment.remarks);
       attachment2Data.action_Remarks = this.setDefaultValueString(attachment.action_Remarks);;
       attachment2Data.professional_Information_Attachements_Id = this.setDefaultValue(attachment.professional_Information_Attachements_Id);
-      // attachment2Data.employeeId = this.setDefaultValue(attachment.employeeId);
-      attachment2Data.employeeId = 0;
+      attachment2Data.employeeId = this.setDefaultValue(attachment.employeeId);
+      // attachment2Data.employeeId = 0;
       attachment2Data.employeeName = this.setDefaultValueString(attachment.employeeName);
       attachment2Data.documentType = this.setDefaultValueString(attachment.documentType);
       attachment2Data.documentUrl = this.setDefaultValueString(attachment.documentUrl);
@@ -572,8 +573,8 @@ export class EmployeedataService {
       attachmentData.remarks = this.setDefaultValueString(attachment.remarks);
       attachmentData.action_Remarks = this.setDefaultValueString(attachment.action_Remarks);;
       attachmentData.identity_Proof_Id = this.setDefaultValue(attachment.identity_Proof_Id);
-      // attachmentData.employeeId = this.setDefaultValue(attachment.employeeId);
-      attachmentData.employeeId = 0;
+      attachmentData.employeeId = this.setDefaultValue(attachment.employeeId);
+      // attachmentData.employeeId = 0;
       attachmentData.identityType = this.setDefaultValueString(attachment.identityType);;
       attachmentData.documentType = this.setDefaultValueString(attachment.documentType);;
       attachmentData.documentUrl = this.setDefaultValueString(attachment.documentUrl);;

@@ -52,6 +52,7 @@ namespace API.Controllers
             try
             {
                 await _unitOfWork.BeginChanges();
+                //var o = _unitOfWork.Repository<Sys_EmployeeMaster>().GetLastInsertedId(Messages.tbl_EmployeeMaster);
                 int result = 0;
                 Sys_EmployeeMaster employeeMaster = new Sys_EmployeeMaster();
 

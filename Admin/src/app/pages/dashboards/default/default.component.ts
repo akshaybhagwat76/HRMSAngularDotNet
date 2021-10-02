@@ -1112,14 +1112,15 @@ export class DefaultComponent implements OnInit {
     this.NumberofDate = Math.floor((this.currentDate.getTime() - dateOfjoining.getTime()) / 1000 / 60 / 60 / 24);
     var intvalue = (this.currentDate - dateOfjoining.getTime()) / (365 * 24 * 60 * 60 * 1000);
     this.NumberOfYears = Math.floor(intvalue);
-    if (this.NumberOfYears < 18) {
-      alert("Employee Age must be greater then 18 years!");
-    }
     let dateOfjoiningmonth = dateOfjoining.getMonth();
     let currentmonth = this.currentDate.getMonth();
     let dateOfjoiningyear = dateOfjoining.getFullYear();
     let currentyear = this.currentDate.getFullYear();
     this.NumberOfMonth = (currentyear - dateOfjoiningyear) * 12 + (currentmonth - dateOfjoiningmonth);
+    if (this.NumberOfYears < 18) {
+      alert("Employee Age must be greater then 18 years!");
+    }
+    
     //const diffDays = Math.round(Math.abs((dateOfjoining - this.currentDate) / oneDay));
     //var Difference_In_Time = dateOfjoining.getTime() - currentDate.getTime();
 
@@ -1732,6 +1733,22 @@ export class DefaultComponent implements OnInit {
     //   debugger;
     //   return;
     // }   
+    const oneDay = 24 * 60 * 60 * 1000;
+    let currentDate: any = new Date();
+    let dateOfjoining = new Date(hrmsFormData.date_Of_Birth);
+    let NumberofDate = Math.floor((currentDate.getTime() - dateOfjoining.getTime()) / 1000 / 60 / 60 / 24);
+    var intvalue = (currentDate - dateOfjoining.getTime()) / (365 * 24 * 60 * 60 * 1000);
+    this.NumberOfYears = Math.floor(intvalue);
+    let dateOfjoiningmonth = dateOfjoining.getMonth();
+    let currentmonth = currentDate.getMonth();
+    let dateOfjoiningyear = dateOfjoining.getFullYear();
+    let currentyear = currentDate.getFullYear();
+    this.NumberOfMonth = (currentyear - dateOfjoiningyear) * 12 + (currentmonth - dateOfjoiningmonth);
+    if (this.NumberOfYears < 18) {
+      alert("Employee Age must be greater then 18 years!");
+      return;
+    }
+
     
     let inputModel: Employee = new Employee();
     // inputModel.id = Number(this.hrmsForm.controls.id.value);

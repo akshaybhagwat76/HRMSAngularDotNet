@@ -15,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+
 namespace API.Controllers
 {
     [Route("api/[controller]")]
@@ -30,6 +32,7 @@ namespace API.Controllers
         public SqlConnection cn = null;
         // var tr = null;
         SqlTransaction tr = null;
+        IDbContextTransaction contextTransaction = null;
         #endregion
 
         #region Constructor
@@ -47,13 +50,15 @@ namespace API.Controllers
         [HttpPost("AddOrUpdateEmployeeMaster")]
         public async Task<ActionResult<Sys_EmployeeMasterDto>> AddOrUpdateEmployeeMaster(Sys_EmployeeMasterDto EmployeeMasterDto)
         {
-            //await cn.OpenAsync();
+            await cn.OpenAsync();
             //tr = cn.BeginTransaction("FreelencerDB");
+
             try
             {
-                await _unitOfWork.BeginChanges();
+                // await _unitOfWork.BeginChanges();
                 //var o = _unitOfWork.Repository<Sys_EmployeeMaster>().GetLastInsertedId(Messages.tbl_EmployeeMaster);
                 int result = 0;
+                contextTransaction = _storeContext.Database.BeginTransaction();
                 Sys_EmployeeMaster employeeMaster = new Sys_EmployeeMaster();
 
                 var listOfEmployees = await _unitOfWork.Repository<Sys_EmployeeMaster>().ListAllAsync();
@@ -189,7 +194,7 @@ namespace API.Controllers
                     }
                     if (!isRollBacked)
                     {
-                        await _unitOfWork.CommitChanges();
+                        // await _unitOfWork.CommitChanges();
                         //await tr.CommitAsync();
                     }
                     else
@@ -201,15 +206,16 @@ namespace API.Controllers
                         return BadRequest(new ApiResponse(400, "Problem submitting employee master details"));
                     }
 
-                    
+                    await contextTransaction.CommitAsync();
                     return _mapper.Map<Sys_EmployeeMaster, Sys_EmployeeMasterDto>(employeeMaster);
                 }
             }
             catch (Exception exception)
             {
+                await contextTransaction.RollbackAsync();
                 if (!isRollBacked)
                 {
-                    await tr.RollbackAsync();
+                    // await tr.RollbackAsync();
                 }
                 return BadRequest(exception.Message.ToString());
             }
@@ -220,6 +226,7 @@ namespace API.Controllers
                 if (tr != null)
                     await tr.DisposeAsync();
             }
+
         }
         #endregion
 
@@ -340,6 +347,7 @@ namespace API.Controllers
         [HttpGet("GetEmployee")]
         public async Task<ActionResult<Sys_EmployeeMasterDto>> GetEmployee(int employeeId)
         {
+            await cn.OpenAsync();
             Sys_EmployeeMasterDto sys_EmployeeMaster = new Sys_EmployeeMasterDto();
             try
             {
@@ -681,7 +689,7 @@ namespace API.Controllers
             }
             catch (Exception error)
             {
-                await tr.RollbackAsync();
+                // await tr.RollbackAsync();
                 isRollBacked = true;
                 string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
                 throw new Exception(exception);

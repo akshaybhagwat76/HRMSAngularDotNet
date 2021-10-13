@@ -34,6 +34,10 @@ namespace Core.Entities
         public int? UpdatedFrom_Sub_Menu_Id { get; set; }
         public string UpdatedFrom_API_Name { get; set; }
         public int Employee_Id { get; set; }
+        public bool IsDeleted { get; set; }
+        public int OtherInfromationId { get; set; }
+        public string SignatureFile { get; set; }
+        public string PictureFile { get; set; }
 
     }
 }

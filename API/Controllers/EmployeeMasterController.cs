@@ -628,7 +628,7 @@ namespace API.Controllers
                             {
                                 string docUrl = UploadFile(TBL_Professional_Information_Attachement.DocumentUrl, ProfessionalInformationDto.Employee_Id);
                                 TBL_Professional_Information_AttachementsDto Professional_Information_AttachementsDto = new TBL_Professional_Information_AttachementsDto() { EmployeeId = ProfessionalInformationDto.Employee_Id, DocumentType = TBL_Professional_Information_Attachement.DocumentType, Professional_Information_Attachements_Id = ProfessionalInformationId, DocumentUrl = docUrl };
-                                var Professional_Information_Attachement = _mapper.Map<TBL_Professional_Information_AttachementsDto, TBL_Professional_Information_Attachements>(TBL_Professional_Information_Attachement);
+                                var Professional_Information_Attachement = _mapper.Map<TBL_Professional_Information_AttachementsDto, TBL_Professional_Information_Attachements>(Professional_Information_AttachementsDto);
                                 _unitOfWork.Repository<TBL_Professional_Information_Attachements>().Add(Professional_Information_Attachement);
                                 var resultProfessional_Information_Attachement = await _unitOfWork.Complete();
                             }
@@ -874,8 +874,9 @@ namespace API.Controllers
                                         if (!string.IsNullOrEmpty(TBL_Identity_Proof_Attachements.DocumentType) && !string.IsNullOrEmpty(TBL_Identity_Proof_Attachements.DocumentUrl) && TBL_Identity_Proof_Attachements.DocumentUrl.Length > 1000)
                                         {
                                             string docUrl = UploadFile(TBL_Identity_Proof_Attachements.DocumentUrl, OtherInformationDto.Employee_Id);
-                                            TBL_Identity_Proof_AttachementsDto Identity_ProofAttachementDto = new TBL_Identity_Proof_AttachementsDto() { EmployeeId = otherInformation.Employee_Id, DocumentType = Identity_Proof.Identity_Type, Identity_Proof_Id = identityProofId, DocumentUrl = docUrl };
+                                            TBL_Identity_Proof_AttachementsDto Identity_ProofAttachementDto = new TBL_Identity_Proof_AttachementsDto() { EmployeeId = otherInformation.Employee_Id,  DocumentType = Identity_Proof.Identity_Type, Identity_Proof_Id = identityProofId, DocumentUrl = docUrl };
                                             var Identity_ProofAttachement = _mapper.Map<TBL_Identity_Proof_AttachementsDto, TBL_Identity_Proof_Attachements>(Identity_ProofAttachementDto);
+                                            Identity_ProofAttachement.EmployeeName = "NA"; // this i don't know why Employee name is required in this table if we are already mapping the EmployeeId
                                             _unitOfWork.Repository<TBL_Identity_Proof_Attachements>().Add(Identity_ProofAttachement);
                                             var resultIdentity_ProofAttachement = await _unitOfWork.Complete();
                                         }
@@ -957,7 +958,7 @@ namespace API.Controllers
             }
             catch (Exception error)
             {
-                await tr.RollbackAsync();
+                //await tr.RollbackAsync();
                 isRollBacked = true;
 
                 string exception = error.Message.ToString() + " " + (error.InnerException != null ? error.InnerException.Message.ToString() : string.Empty);
@@ -1042,7 +1043,7 @@ namespace API.Controllers
                 cmd.Connection = Con;
                 if (Con != null && Con.State == ConnectionState.Closed)
                     Con.Open();
-                SqlCommand command = new SqlCommand($"select top 1 Id from {tableName} order by Id desc", Con);
+                SqlCommand command = new SqlCommand($"select top 1 Id from {tableName}  WITH (NOLOCK) order by Id desc ", Con);
                 if (!string.IsNullOrEmpty(command.ExecuteScalar() + ""))
                 {
                     letestInformationId = Convert.ToInt32(command.ExecuteScalar());

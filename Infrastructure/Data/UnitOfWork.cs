@@ -19,11 +19,13 @@ namespace Infrastructure.Data
 
         public async Task<int> Complete(bool isEmployeeCommit = false)
         {
-            if (selfManagedTransaction && isEmployeeCommit)
+            /*if (selfManagedTransaction && isEmployeeCommit)
             {
                 return await CommitChanges();
             }
             return 0;
+            */
+            return await CommitChanges();
         }
 
         public void Dispose()

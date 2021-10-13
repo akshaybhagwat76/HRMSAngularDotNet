@@ -19,6 +19,8 @@ namespace API.Dtos
         public string SignatureFile { get; set; }
         public string PictureFile { get; set; }
         public int Employee_Id { get; set; }
+        public bool IsDeleted { get; set; }
+        public int OtherInfromationId { get; set; }
         public List<Sys_Identity_ProofDto> sys_Identity_Proofs { get; set; }
     }
 }

@@ -72,6 +72,15 @@ namespace Infrastructure.Data
 
         public void Update(T entity)
         {
+            var local = _context.Set<T>()
+                .Local
+                .FirstOrDefault(entry => entry.Id.Equals(entity.Id));
+
+            if (local != null)
+            {
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
             _context.Set<T>().Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
@@ -8,6 +9,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace API.Controllers
 {
@@ -38,7 +40,16 @@ namespace API.Controllers
 
                 var data = _mapper.Map<IReadOnlyList<Sys_RelationShip>, IReadOnlyList<Sys_RelationShipDto>>(relationShips);
 
-                return Ok(new List<Sys_RelationShipDto>(data));
+                SelectList relationShipList = null;
+                if (data != null && data.Count > 0)
+                {
+                    relationShipList = new SelectList(
+              data.Select(x => new { Value = x.Id, Text = x.RelationShip_Name }),
+              "Value",
+              "Text"
+          );
+                }
+                return Ok(relationShipList);
             }
             catch (Exception exception)
             {

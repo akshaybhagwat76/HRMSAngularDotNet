@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace API.Controllers
 {
     [Route("api/")]
@@ -27,15 +30,23 @@ namespace API.Controllers
 
         #region Get methods
         [HttpGet("bloodgroup")]
-        public async Task<ActionResult<List<Sys_BloodGroupDto>>> GetBloodGroupsAsync()
+
+        public async Task<ActionResult<SelectList>> GetBloodGroupsAsync()
         {
             try
             {
                 var bloodGroups = await _unitOfWork.Repository<Sys_BloodGroup>().ListAllAsync();
-
                 var data = _mapper.Map<IReadOnlyList<Sys_BloodGroup>, IReadOnlyList<Sys_BloodGroupDto>>(bloodGroups);
-
-                return Ok(new List<Sys_BloodGroupDto>(data));
+                SelectList bloodGroupsList = null;
+                if (data != null && data.Count > 0)
+                {
+                    bloodGroupsList = new SelectList(
+              data.Select(x => new { Value = x.Id, Text = x.BloodGroup_Name }),
+              "Value",
+              "Text"
+          );
+                }
+                return Ok(bloodGroupsList);
             }
             catch (Exception exception)
             {

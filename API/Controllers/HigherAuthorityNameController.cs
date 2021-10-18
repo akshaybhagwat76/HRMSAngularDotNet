@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace API.Controllers
 {
@@ -35,6 +37,18 @@ namespace API.Controllers
                 var higherAuthorities = await _unitOfWork.Repository<Sys_HigherAuthorityName>().ListAllAsync();
 
                 var data = _mapper.Map<IReadOnlyList<Sys_HigherAuthorityName>, IReadOnlyList<Sys_HigherAuthorityNameDto>>(higherAuthorities);
+
+
+                SelectList higherAuthorityNameList = null;
+                if (data != null && data.Count > 0)
+                {
+                    higherAuthorityNameList = new SelectList(
+              data.Select(x => new { Value = x.Id, Text = x.HigherAuthority_Name }),
+              "Value",
+              "Text"
+          );
+                }
+                return Ok(higherAuthorityNameList);
 
                 return Ok(new List<Sys_HigherAuthorityNameDto>(data));
             }

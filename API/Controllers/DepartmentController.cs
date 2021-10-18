@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace API.Controllers
 {
@@ -35,6 +37,17 @@ namespace API.Controllers
                 var departments = await _unitOfWork.Repository<Sys_DEPARTMENT>().ListAllAsync();
 
                 var data = _mapper.Map<IReadOnlyList<Sys_DEPARTMENT>, IReadOnlyList<Sys_DEPARTMENTDto>>(departments);
+
+                SelectList deparmentList = null;
+                if (data != null && data.Count > 0)
+                {
+                    deparmentList = new SelectList(
+              data.Select(x => new { Value = x.Id, Text = x.Department_Name }),
+              "Value",
+              "Text"
+          );
+                }
+                return Ok(deparmentList);
 
                 return Ok(new List<Sys_DEPARTMENTDto>(data));
             }

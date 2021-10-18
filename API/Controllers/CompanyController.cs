@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace API.Controllers
 {
     [Route("api/")]
@@ -35,7 +38,16 @@ namespace API.Controllers
 
                 var data = _mapper.Map<IReadOnlyList<sys_Compnays>, IReadOnlyList<Sys_CompnayDto>>(compnanys);
 
-                return Ok(new List<Sys_CompnayDto>(data));
+                SelectList compnayList = null;
+                if (data != null && data.Count > 0)
+                {
+                    compnayList = new SelectList(
+              data.Select(x => new { Value = x.Id, Text = x.Compnay_Name}),
+              "Value",
+              "Text"
+          );
+                }
+                return Ok(compnayList);              
             }
             catch (Exception exception)
             {

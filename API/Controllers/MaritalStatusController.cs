@@ -8,6 +8,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace API.Controllers
 {
@@ -39,7 +40,18 @@ namespace API.Controllers
 
                 var data = _mapper.Map<IReadOnlyList<Sys_MaritalStatus>, IReadOnlyList<Sys_MaritalStatusDto>>(maritalStatus);
 
-                return Ok(new List<Sys_MaritalStatusDto>(data));
+
+                SelectList maritalStatusList = null;
+                if (data != null && data.Count > 0)
+                {
+                    maritalStatusList = new SelectList(
+              data.Select(x => new { Value = x.Id, Text = x.Marital_Status }),
+              "Value",
+              "Text"
+          );
+                }
+                return Ok(maritalStatusList);
+
             }
             catch (Exception exception)
             {

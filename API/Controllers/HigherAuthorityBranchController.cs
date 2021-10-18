@@ -8,6 +8,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace API.Controllers
 {
@@ -38,7 +39,18 @@ namespace API.Controllers
 
                 var data = _mapper.Map<IReadOnlyList<tbl_HigherAuthorityBranch>, IReadOnlyList<Sys_HigherAuthorityBranchesDto>>(higherAuthoritiyBranches);
 
-                return Ok(new List<Sys_HigherAuthorityBranchesDto>(data));
+
+                SelectList higherAuthorityBranchList = null;
+                if (data != null && data.Count > 0)
+                {
+                    higherAuthorityBranchList = new SelectList(
+              data.Select(x => new { Value = x.Id, Text = x.HigherAuthority_Branch }),
+              "Value",
+              "Text"
+          );
+                }
+                return Ok(higherAuthorityBranchList);
+
             }
             catch (Exception exception)
             {

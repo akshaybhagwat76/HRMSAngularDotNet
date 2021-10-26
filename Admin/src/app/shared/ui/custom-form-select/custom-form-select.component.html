@@ -1,0 +1,29 @@
+<!-- <p>custom-form-select works!</p> -->
+<div [formGroup]="formGrp">
+    <div *ngIf="inputType == inputTypes.Select">
+        <label [for]="labelFor">{{labelName}}<span *ngIf="requiredField" class="text-danger">*</span></label>
+        <!-- <input type="text" 
+            [autocomplete]="autocomplete" 
+            [class]="class"
+            [formControlName]="formCtrlName"
+            [id]="id"
+            [placeholder]="placeholder" />
+        <div *ngIf="getErrorRequired()"
+        class="text text-danger error-div">
+        *{{errorText}}</div>
+        <div *ngIf="getErrorValid()" class="text text-danger error-div">
+            *{{errorValidText}}</div> -->
+            <select 
+            [class]="class" 
+            [id]="id" 
+            (ngModelChange)="onChanges($event)"
+            [formControlName]="formCtrlName">
+                <option selected="" disabled="" value="">Choose...</option>
+                <option 
+                    *ngFor="let value of dropdownDatas" 
+                    [ngValue]="value.value">
+                    {{value?.text}}
+                </option>
+            </select>
+    </div>
+</div>

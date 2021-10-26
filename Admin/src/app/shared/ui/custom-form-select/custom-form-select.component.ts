@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { InputTypes } from 'src/app/pages/dashboards/default/data';
 
 @Component({
-  selector: 'app-custom-form-input',
-  templateUrl: './custom-form-input.component.html',
-  styleUrls: ['./custom-form-input.component.scss']
+  selector: 'app-custom-form-select',
+  templateUrl: './custom-form-select.component.html',
+  styleUrls: ['./custom-form-select.component.scss']
 })
-export class CustomFormInputComponent implements OnInit {
+export class CustomFormSelectComponent implements OnInit {
 
   @Input() formGrp: FormGroup;
   @Input() formCtrlName: string = '';
@@ -22,18 +22,14 @@ export class CustomFormInputComponent implements OnInit {
   @Input() requiredField: boolean = false;
   @Input() errorFormCtrl: FormGroup;
   @Input() errorText: string;
-  @Input() errorValidText: string;
-  @Input() readOnly?: string = null;
-  @Input() hideLabel: boolean = false;
+  @Input() errorValidText: string;  
+  @Input() dropdownDatas: any;
+  // @Output() onChange: any;
+  @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
 
   inputTypes = InputTypes;
-  // inputTypes = [{
-  //   Text: 'text',
-  //   Select: 'select'
-  // }];
 
-  constructor() {
-   }
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -43,6 +39,11 @@ export class CustomFormInputComponent implements OnInit {
   }
   getErrorValid(): boolean {
     return this.requiredField && this.errorFormCtrl[this.formCtrlName].hasError(this.formCtrlValidName);
+  }
+
+  onChanges(id) {
+    // let departments = this.departments;
+    // this.projectDepartments = departments.filter(x => x.branch_Id == id);
   }
 
 }

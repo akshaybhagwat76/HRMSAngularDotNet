@@ -22,14 +22,26 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="companyId" class="form-label">Company<span
+                                        <!-- <label for="companyId" class="form-label">Company<span
                                                 class="text-danger">*</span></label>
-                                        <select class="form-select" id="companyId" formControlName="companyId">
+                                        <select class="form-select" id="companyId" 
+                                        formControlName="companyId">
                                             <option selected="" disabled="" value="">Choose...</option>
                                             <option *ngFor="let company of companies" [ngValue]="company.id">
                                                 {{company.compnay_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select 
+                                            [id]="'companyId'" 
+                                            [class]="'form-select'" 
+                                            [formGrp]="hrmsForm" 
+                                            [formCtrlName]="'companyId'" 
+                                            [labelFor]="'companyId'"
+                                            [labelName]="'Company'"
+                                            [inputType]="inputTypes.Select"
+                                            [dropdownDatas]= "companies" >
+                                        </app-custom-form-select>
 
                                         <!-- <div *ngIf="submit && form.company.errors" class="invalid-feedback">
             <span *ngIf="form.company.errors.required">Please provide a valid company.</span>
@@ -38,14 +50,26 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eEmployeeCategory" class="form-label">Employee Category</label>
+                                        <!-- <label for="eEmployeeCategory" class="form-label">Employee Category</label>
                                         <select class="form-select" id="eEmployeeCategory"
                                             formControlName="employeeCategoryId">
                                             <option selected="" disabled="" value="">Choose...</option>
                                             <option *ngFor="let category of categories" [ngValue]="category.id">
                                                 {{category?.category_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select 
+                                            [id]="'eEmployeeCategory'" 
+                                            [class]="'form-select'" 
+                                            [formGrp]="hrmsForm" 
+                                            [formCtrlName]="'employeeCategoryId'" 
+                                            [labelFor]="'eEmployeeCategory'"
+                                            [labelName]="'Employee Category'"
+                                            [inputType]="inputTypes.Select"
+                                            [dropdownDatas]= "categories" >
+                                        </app-custom-form-select>
+
                                         <!-- <div *ngIf="submit && form.category.errors" class="invalid-feedback">
             <span *ngIf="form.category.errors.required">Please provide a valid category.</span>
           </div> -->
@@ -57,9 +81,24 @@
                                                 class="text-danger">*</span><span><input type="checkbox"
                                                     (change)="disabledEmployee($event)">Auto
                                                 Generation</span></label>
-                                        <input type="text" autocomplete="off" class="form-control" id="eEmployeeCode"
+
+                                        <!-- <input type="text" autocomplete="off" class="form-control" id="eEmployeeCode"
                                             formControlName="employeeCode" placeholder="Employee Code"
-                                            [attr.readonly]="!hrmsForm.controls.employeeAutoGenerate.value ? null : ''">
+                                            [attr.readonly]="!hrmsForm.controls.employeeAutoGenerate.value ? null : ''"> -->
+                                        
+                                            <app-custom-form-input 
+                                            [id]="'eEmployeeCode'" 
+                                            [class]="'form-control'" 
+                                            [formGrp]="hrmsForm" 
+                                            [formCtrlName]="'employeeCode'" 
+                                            [labelFor]="'eEmployeeCode'"
+                                            [labelName]="'Employee Code'"
+                                            [placeholder]="'Employee Code'"
+                                            [inputType]="inputTypes.Text"
+                                            [hideLabel]="true"
+                                            [readOnly]="!hrmsForm.controls.employeeAutoGenerate.value ? null : ''" >
+                                        </app-custom-form-input>
+
                                         <!-- <div *ngIf="submit && form.employeeCode.errors" class="invalid-feedback">
             <span *ngIf="form.employeeCode.errors.required">Please provide a valid employee code.</span>
           </div> -->
@@ -569,21 +608,21 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="redName">Name</label>
+                                        <!-- <label for="redName">Name</label>
                                         <input type="text" autocomplete="off" class="form-control" [(ngModel)]="fName"
                                             name="fName" [ngModelOptions]="{standalone: true}" id="redName"
-                                            placeholder="Name">
-                                        <!-- <app-custom-form-input 
+                                            placeholder="Name"> -->
+                                        <app-custom-form-input-scope 
                                         [id]="'redName'" 
                                         [class]="'form-control'" 
                                         [formGrp]="hrmsForm" 
-                                        [formCtrlName]="'email'" 
                                         [labelFor]="'redName'"
                                         [labelName]="'Name'"
                                         [placeholder]="'Name'"
-                                        [inputType]="inputTypes.Text"
+                                        [(scope)]="fName"
+                                        [inputType]="inputTypes.TextScope"
                                         >
-                                        </app-custom-form-input> -->
+                                        </app-custom-form-input-scope>
                                     </div>
                                 </div>
                                 <div class="col-md-3">

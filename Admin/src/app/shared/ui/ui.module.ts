@@ -8,9 +8,12 @@ import { ClickOutsideModule } from 'ng-click-outside';
 import { PagetitleComponent } from './pagetitle/pagetitle.component';
 import { LoaderComponent } from './loader/loader.component';
 import { CustomFormInputComponent } from './custom-form-input/custom-form-input.component';
+import { CustomFormSelectComponent } from './custom-form-select/custom-form-select.component';
+import { CustomFormInputScopeComponent } from './custom-form-input-scope/custom-form-input-scope.component';
+import { CustomFormSelectScopeComponent } from './custom-form-select-scope/custom-form-select-scope.component';
 
 @NgModule({
-  declarations: [PagetitleComponent, LoaderComponent, CustomFormInputComponent],
+  declarations: [PagetitleComponent, LoaderComponent, CustomFormInputComponent, CustomFormSelectComponent, CustomFormInputScopeComponent, CustomFormSelectScopeComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -21,6 +24,6 @@ import { CustomFormInputComponent } from './custom-form-input/custom-form-input.
     NgbTimepickerModule,
     NgbDropdownModule
   ],
-  exports: [PagetitleComponent, LoaderComponent, CustomFormInputComponent]
+  exports: [PagetitleComponent, LoaderComponent, CustomFormInputComponent, CustomFormSelectComponent, CustomFormInputScopeComponent]
 })
 export class UIModule { }

@@ -1,0 +1,22 @@
+<!-- <p>custom-form-input-scope works!</p> -->
+<div >
+    <div *ngIf="inputType == inputTypes.TextScope">
+        <label [for]="labelFor">{{labelName}}<span *ngIf="requiredField" class="text-danger">*</span></label>
+        <input type="text" 
+            (change)="emitText()"
+            [(ngModel)]="scope"
+            [ngModelOptions]="{standalone: true}"
+            [autocomplete]="autocomplete" 
+            [class]="class"
+            [id]="id"
+            [placeholder]="placeholder" />
+        <!-- <div *ngIf="getErrorRequired()"
+        class="text text-danger error-div">
+        *{{errorText}}</div>
+        <div *ngIf="getErrorValid()" class="text text-danger error-div">
+            *{{errorValidText}}</div> -->
+        <!-- <div *ngIf="f.firstName.hasError('required') && f.firstName.touched"
+        class="text text-danger error-div">
+        *Enter First Name</div> -->
+    </div>
+</div>

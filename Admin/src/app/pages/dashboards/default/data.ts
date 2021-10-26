@@ -129,6 +129,7 @@ const statData = [{
 
 export const InputTypes = {
     Text: 'text',
+    TextScope: 'text',
     Select: 'select'
   };
 

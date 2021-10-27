@@ -8,6 +8,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static API.Helpers.Common;
 
 namespace API.Controllers
 {
@@ -38,17 +39,13 @@ namespace API.Controllers
 
                 var data = _mapper.Map<IReadOnlyList<Sys_HigherAuthorityName>, IReadOnlyList<Sys_HigherAuthorityNameDto>>(higherAuthorities);
 
+                List<ReplyFormat> lstHigherAuthorityName = null;
 
-                SelectList higherAuthorityNameList = null;
                 if (data != null && data.Count > 0)
                 {
-                    higherAuthorityNameList = new SelectList(
-              data.Select(x => new { Value = x.Id, Text = x.HigherAuthority_Name }),
-              "Value",
-              "Text"
-          );
+                    lstHigherAuthorityName = data.Select(x => new ReplyFormat { Value = x.Id, Text = x.HigherAuthority_Name, Group = x.HigherAuthorityId }).ToList();
                 }
-                return Ok(higherAuthorityNameList);
+                return Ok(lstHigherAuthorityName);
 
                 return Ok(new List<Sys_HigherAuthorityNameDto>(data));
             }

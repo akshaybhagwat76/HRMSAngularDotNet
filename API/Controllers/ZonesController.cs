@@ -10,6 +10,7 @@ using Core.Interfaces;
 using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static API.Helpers.Common;
 
 namespace API.Controllers
 {
@@ -40,17 +41,14 @@ namespace API.Controllers
 
                 var data = _mapper.Map<IReadOnlyList<Sys_REGION_ZONE>, IReadOnlyList<Sys_REGION_ZONEDto>>(sTATEs);
 
+                List<ReplyFormat> lstRegionZoneList = null;
 
-                SelectList regionZoneList = null;
                 if (data != null && data.Count > 0)
                 {
-                    regionZoneList = new SelectList(
-              data.Select(x => new { Value = x.Id, Text = x.Zone_Name }),
-              "Value",
-              "Text"
-          );
+                    lstRegionZoneList = data.Select(x => new ReplyFormat { Value = x.Id, Text =x.Zone_Name, Group = x.Country_Id }).ToList();
                 }
-                return Ok(regionZoneList);
+                return Ok(lstRegionZoneList);
+
             }
             catch (Exception exception)
             {

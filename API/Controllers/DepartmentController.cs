@@ -8,6 +8,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static API.Helpers.Common;
 
 namespace API.Controllers
 {
@@ -37,19 +38,15 @@ namespace API.Controllers
                 var departments = await _unitOfWork.Repository<Sys_DEPARTMENT>().ListAllAsync();
 
                 var data = _mapper.Map<IReadOnlyList<Sys_DEPARTMENT>, IReadOnlyList<Sys_DEPARTMENTDto>>(departments);
+            
+                List<ReplyFormat> lstDeparment = null;
 
-                SelectList deparmentList = null;
                 if (data != null && data.Count > 0)
                 {
-                    deparmentList = new SelectList(
-              data.Select(x => new { Value = x.Id, Text = x.Department_Name }),
-              "Value",
-              "Text"
-          );
+                    lstDeparment = data.Select(x => new ReplyFormat { Value = x.Id, Text = x.Department_Name, Group = x.Branch_Id }).ToList();
                 }
-                return Ok(deparmentList);
+                return Ok(lstDeparment);
 
-                return Ok(new List<Sys_DEPARTMENTDto>(data));
             }
             catch (Exception exception)
             {

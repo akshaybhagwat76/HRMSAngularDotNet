@@ -10,6 +10,7 @@ using Core.Interfaces;
 using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static API.Helpers.Common;
 
 namespace API.Controllers
 {
@@ -40,17 +41,13 @@ namespace API.Controllers
 
                 var data = _mapper.Map<IReadOnlyList<Sys_STATE>, IReadOnlyList<Sys_STATEDto>>(sTATEs);
 
+                List<ReplyFormat> lstState = null;
 
-                SelectList stateList = null;
                 if (data != null && data.Count > 0)
                 {
-                    stateList = new SelectList(
-              data.Select(x => new { Value = x.Id, Text = x.State_Name }),
-              "Value",
-              "Text"
-          );
+                    lstState = data.Select(x => new ReplyFormat { Value = x.Id, Text = x.State_Name, Group = x.Zone_Id }).ToList();
                 }
-                return Ok(stateList);
+                return Ok(lstState);
             }
             catch (Exception exception)
             {

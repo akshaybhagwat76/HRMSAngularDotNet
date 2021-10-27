@@ -42,12 +42,12 @@ namespace API.Controllers
                 if (data != null && data.Count > 0)
                 {
                     compnayList = new SelectList(
-              data.Select(x => new { Value = x.Id, Text = x.Compnay_Name}),
+              data.Select(x => new { Value = x.Id, Text = x.Compnay_Name }),
               "Value",
               "Text"
           );
                 }
-                return Ok(compnayList);              
+                return Ok(compnayList);
             }
             catch (Exception exception)
             {

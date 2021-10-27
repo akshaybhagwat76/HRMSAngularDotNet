@@ -8,6 +8,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static API.Helpers.Common;
 
 namespace API.Controllers
 {
@@ -39,16 +40,14 @@ namespace API.Controllers
                 var data = _mapper.Map<IReadOnlyList<Sys_ThirdParty>, IReadOnlyList<Sys_ThirdPartyDto>>(thirdParty);
 
 
-                SelectList thirdpartyList = null;
+                List<ReplyFormat> lstThirdparty = null;
+
                 if (data != null && data.Count > 0)
                 {
-                    thirdpartyList = new SelectList(
-              data.Select(x => new { Value = x.Id, Text = x.ThirdParty_Name }),
-              "Value",
-              "Text"
-          );
+                    lstThirdparty = data.Select(x => new ReplyFormat { Value = x.Id, Text = x.ThirdParty_Name, Group = x.ThirdPartyType_Id }).ToList();
                 }
-                return Ok(thirdpartyList);
+                return Ok(lstThirdparty);
+               
             }
             catch (Exception exception)
             {

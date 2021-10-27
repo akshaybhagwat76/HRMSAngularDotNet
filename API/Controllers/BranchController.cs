@@ -8,6 +8,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static API.Helpers.Common;
 
 namespace API.Controllers
 {
@@ -37,16 +38,13 @@ namespace API.Controllers
                 var branches = await _unitOfWork.Repository<Sys_Branch>().ListAllAsync();
 
                 var data = _mapper.Map<IReadOnlyList<Sys_Branch>, IReadOnlyList<Sys_BranchDto>>(branches);
-                SelectList branchList = null;
+                List<ReplyFormat> lstBranches = null;
+
                 if (data != null && data.Count > 0)
                 {
-                    branchList = new SelectList(
-              data.Select(x => new { Value = x.Id, Text = x.Branch_Name }),
-              "Value",
-              "Text"
-              );
+                    lstBranches = data.Select(x => new ReplyFormat {Value = x.Id, Text = x.Branch_Name,Group = x.ZoneId}).ToList();
                 }
-                return Ok(branchList);
+                return Ok(lstBranches);
             }
             catch (Exception exception)
             {

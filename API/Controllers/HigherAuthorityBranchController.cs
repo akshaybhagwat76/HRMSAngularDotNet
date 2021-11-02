@@ -39,8 +39,8 @@ namespace API.Controllers
 
                 var data = _mapper.Map<IReadOnlyList<tbl_HigherAuthorityBranch>, IReadOnlyList<Sys_HigherAuthorityBranchesDto>>(higherAuthoritiyBranches);
 
+             SelectList higherAuthorityBranchList = null;
 
-                SelectList higherAuthorityBranchList = null;
                 if (data != null && data.Count > 0)
                 {
                     higherAuthorityBranchList = new SelectList(

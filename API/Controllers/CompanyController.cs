@@ -8,6 +8,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static API.Helpers.Common;
 
 namespace API.Controllers
 {
@@ -38,16 +39,13 @@ namespace API.Controllers
 
                 var data = _mapper.Map<IReadOnlyList<sys_Compnays>, IReadOnlyList<Sys_CompnayDto>>(compnanys);
 
-                SelectList compnayList = null;
+                List<ReplyFormat> lstCompany = null;
+
                 if (data != null && data.Count > 0)
                 {
-                    compnayList = new SelectList(
-              data.Select(x => new { Value = x.Id, Text = x.Compnay_Name}),
-              "Value",
-              "Text"
-          );
+                    lstCompany = data.Select(x => new ReplyFormat { Value = x.Id, Text = x.Compnay_Name, GroupText = x.Compnay_Code }).ToList();
                 }
-                return Ok(compnayList);              
+                return Ok(lstCompany);
             }
             catch (Exception exception)
             {

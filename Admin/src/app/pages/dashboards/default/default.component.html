@@ -191,7 +191,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eProject/Branch" class="form-label">Project/Branch</label>
+                                        <!-- <label for="eProject/Branch" class="form-label">Project/Branch</label>
                                         <select class="form-select" id="eProject/Branch"
                                             (ngModelChange)="onBranchChanges($event)"
                                             formControlName="project_BranchId">
@@ -199,7 +199,20 @@
                                             <option *ngFor="let branch of branches" [ngValue]="branch.id">
                                                 {{branch?.branch_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select 
+                                            [id]="'eProject/Branch'" 
+                                            [class]="'form-select'" 
+                                            [formGrp]="hrmsForm" 
+                                            [formCtrlName]="'project_BranchId'" 
+                                            [labelFor]="'eProject/Branch'"
+                                            [labelName]="'Project/Branch'"
+                                            [inputType]="inputTypes.Select"
+                                            [dropdownDatas]= "branches"
+                                            (onChange) ="onChangesDropdown($event, 'project_BranchId')" >
+                                        </app-custom-form-select>
+
                                         <!-- <div *ngIf="submit && form.project.errors" class="invalid-feedback">
             <span *ngIf="form.project.errors.required">Please provide a valid project/branch.</span>
           </div> -->
@@ -207,7 +220,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="departmentId" class="form-label">Department<span
+                                        <!-- <label for="departmentId" class="form-label">Department<span
                                                 class="text-danger">*</span></label>
                                         <select class="form-select" id="departmentId"
                                             (ngModelChange)="fetchDesignation($event)" formControlName="departmentId">
@@ -215,18 +228,26 @@
                                             <option *ngFor="let depart of projectDepartments" [ngValue]="depart.id">
                                                 {{depart?.department_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                        <app-custom-form-select 
+                                            [id]="'departmentId'" 
+                                            [class]="'form-select'" 
+                                            [formGrp]="hrmsForm" 
+                                            [formCtrlName]="'departmentId'" 
+                                            [labelFor]="'departmentId'"
+                                            [labelName]="'Department'"
+                                            [inputType]="inputTypes.Select"
+                                            [dropdownDatas]= "projectDepartments"
+                                            (onChange) ="onChangesDropdown($event, 'departmentId')" >
+                                        </app-custom-form-select>
                                         <div *ngIf="f.departmentId.hasError('required') && f.departmentId.touched"
                                             class="text text-danger error-div">
                                             *Select Department</div>
-                                        <!-- <div *ngIf="submit && form.department.errors" class="invalid-feedback">
-            <span *ngIf="form.department.errors.required">Please provide a valid department.</span>
-          </div> -->
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="validationCustom08" class="form-label">Designation<span
+                                        <!-- <label for="validationCustom08" class="form-label">Designation<span
                                                 class="text-danger">*</span></label>
                                         <select class="form-select" id="validationCustom08"
                                             formControlName="designationId">
@@ -235,7 +256,19 @@
                                                 [ngValue]="designation.id">
                                                 {{designation?.designation_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select 
+                                            [id]="'validationCustom08'" 
+                                            [class]="'form-select'" 
+                                            [formGrp]="hrmsForm" 
+                                            [formCtrlName]="'designationId'" 
+                                            [labelFor]="'validationCustom08'"
+                                            [labelName]="'Designation'"
+                                            [inputType]="inputTypes.Select"
+                                            [dropdownDatas]= "designationsDepartmentList"
+                                            (onChange) ="onChangesDropdown($event, '')" >
+                                        </app-custom-form-select>
                                         <div *ngIf="f.designationId.hasError('required') && f.designationId.touched"
                                             class="text text-danger error-div">
                                             *Select Designation</div>
@@ -243,7 +276,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eBranch/Project" class="form-label">Higher Authority
+                                        <!-- <label for="eBranch/Project" class="form-label">Higher Authority
                                             Branch/Project<span class="text-danger">*</span></label>
                                         <select class="form-select" id="hAuthorityBranchProject"
                                             formControlName="higher_Authority_Branch_ProjectId"
@@ -253,12 +286,26 @@
                                                 [ngValue]="hBranches.id">
                                                 {{hBranches?.higherAuthority_Branch}}
                                             </option>
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select 
+                                            [id]="'hAuthorityBranchProject'" 
+                                            [class]="'form-select'" 
+                                            [formGrp]="hrmsForm" 
+                                            [formCtrlName]="'higher_Authority_Branch_ProjectId'" 
+                                            [labelFor]="'eBranch/Project'"
+                                            [labelName]="'Higher Authority
+                                            Branch/Project'"
+                                            [inputType]="inputTypes.Select"
+                                            [dropdownDatas]= "higherAuthoritiesBranches"
+                                            (onChange) ="onChangesDropdown($event, 'hAuthorityBranchProject')" >
+                                        </app-custom-form-select>
+
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="higher_AuthorityId" class="form-label">Higher Authority</label>
+                                        <!-- <label for="higher_AuthorityId" class="form-label">Higher Authority</label>
                                         <select class="form-select" id="higher_AuthorityId"
                                             formControlName="higher_AuthorityId"
                                             (ngModelChange)="fetchHigherAuthorityNames($event)">
@@ -267,12 +314,25 @@
                                                 [ngValue]="higherAuthority.id">
                                                 {{higherAuthority?.higherAuthority}}
                                             </option>
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select 
+                                            [id]="'higher_AuthorityId'" 
+                                            [class]="'form-select'" 
+                                            [formGrp]="hrmsForm" 
+                                            [formCtrlName]="'higher_Authority_Branch_ProjectId'" 
+                                            [labelFor]="'higher_AuthorityId'"
+                                            [labelName]="'Higher Authority'"
+                                            [inputType]="inputTypes.Select"
+                                            [dropdownDatas]= "filteredHigherAuthorities"
+                                            (onChange) ="onChangesDropdown($event, 'higher_AuthorityId')" >
+                                        </app-custom-form-select>
+
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eHigherName" class="form-label">Select Higher Authority Name</label>
+                                        <!-- <label for="eHigherName" class="form-label">Select Higher Authority Name</label>
                                         <select class="form-select" id="eHigherName"
                                             formControlName="higher_Authority_NameId">
                                             <option selected="" disabled="" value="">Choose...</option>
@@ -280,7 +340,20 @@
                                                 [ngValue]="higherAuthorityN.id">
                                                 {{higherAuthorityN?.higherAuthority_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select 
+                                            [labelFor]="'eHigherName'"
+                                            [labelName]="'Select Higher Authority Name'"
+                                            [id]="'eHigherName'" 
+                                            [class]="'form-select'" 
+                                            [formGrp]="hrmsForm" 
+                                            [formCtrlName]="'higher_Authority_NameId'" 
+                                            [inputType]="inputTypes.Select"
+                                            [dropdownDatas]= "filteredHigherAuthorityNames"
+                                            (onChange) ="onChangesDropdown($event, '')" >
+                                        </app-custom-form-select>
+
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -323,14 +396,25 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eEmployee" class="form-label">Employee Type<span
+                                        <!-- <label for="eEmployee" class="form-label">Employee Type<span
                                                 class="text-danger">*</span></label>
                                         <select class="form-select" id="eEmployee" formControlName="employee_TypeId">
                                             <option selected="" disabled="" value="">Choose...</option>
                                             <option *ngFor="let employee of employees" [ngValue]="employee.id">
                                                 {{employee?.type_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                        <app-custom-form-select
+                                            [class]="'form-select'" 
+                                            [formGrp]="hrmsForm"  
+                                            [labelFor]="'eEmployee'"
+                                            [labelName]="'Employee Type'"
+                                            [id]="'eEmployee'" 
+                                            [formCtrlName]="'employee_TypeId'" 
+                                            [inputType]="inputTypes.Select"
+                                            [dropdownDatas]= "employees"
+                                            (onChange) ="onChangesDropdown($event, '')" >
+                                        </app-custom-form-select>
                                         <div *ngIf="f.employee_TypeId.hasError('required') && f.employee_TypeId.touched"
                                             class="text text-danger error-div">*Select Employee Type</div>
                                     </div>
@@ -351,7 +435,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="third_Party_Type" class="form-label">Third Party Type</label>
+                                        <!-- <label for="third_Party_Type" class="form-label">Third Party Type</label>
                                         <select class="form-select" id="third_Party_Type"
                                             (ngModelChange)="onThirdPartySelected($event)"
                                             formControlName="third_Party_Type">
@@ -359,24 +443,47 @@
                                             <option *ngFor="let tPartyType of thirdPartyType" [ngValue]="tPartyType.id">
                                                 {{tPartyType?.thirdPartyType_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                        <app-custom-form-select
+                                            [class]="'form-select'" 
+                                            [formGrp]="hrmsForm"  
+                                            [labelFor]="'third_Party_Type'"
+                                            [labelName]="'Third Party Type'"
+                                            [id]="'third_Party_Type'" 
+                                            [formCtrlName]="'third_Party_Type'" 
+                                            [inputType]="inputTypes.Select"
+                                            [dropdownDatas]= "thirdPartyType"
+                                            (onChange) ="onChangesDropdown($event, 'third_Party_Type')" >
+                                        </app-custom-form-select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="third_Party_Id" class="form-label">Third Party</label>
+                                        <!-- <label for="third_Party_Id" class="form-label">Third Party</label>
                                         <select class="form-select" id="third_Party_Id"
                                             formControlName="third_Party_Id">
                                             <option selected="" disabled="" value="">Choose...</option>
                                             <option *ngFor="let tParty of filetedThirdParty" [ngValue]="tParty.id">
                                                 {{tParty?.thirdParty_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                        <app-custom-form-select
+                                        [class]="'form-select'" 
+                                        [formGrp]="hrmsForm"  
+                                        [labelFor]="'third_Party_Id'"
+                                        [labelName]="'Third Party'"
+                                        [id]="'third_Party_Id'" 
+                                        [formCtrlName]="'third_Party_Id'" 
+                                        [inputType]="inputTypes.Select"
+                                        [dropdownDatas]= "filetedThirdParty"
+                                        (onChange) ="onChangesDropdown($event, '')" >
+                                    </app-custom-form-select>
+
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="working_StatusId" class="form-label">Working Status</label>
+                                        <!-- <label for="working_StatusId" class="form-label">Working Status</label>
                                         <select class="form-select" id="working_StatusId"
                                             formControlName="working_StatusId">
                                             <option selected="" disabled="" value="">Choose...</option>
@@ -384,7 +491,19 @@
                                                 [ngValue]="workingStatus.id">
                                                 {{workingStatus?.workingStatus_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select
+                                        [class]="'form-select'" 
+                                        [formGrp]="hrmsForm"  
+                                        [labelFor]="'working_StatusId'"
+                                        [labelName]="'Working Status'"
+                                        [id]="'working_StatusId'" 
+                                        [formCtrlName]="'working_StatusId'" 
+                                        [inputType]="inputTypes.Select"
+                                        [dropdownDatas]= "workingStatus"
+                                        (onChange) ="onChangesDropdown($event, '')" >
+                                    </app-custom-form-select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -529,13 +648,25 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="validationCustom26" class="form-label">Cast</label>
+                                        <!-- <label for="validationCustom26" class="form-label">Cast</label>
                                         <select class="form-select" id="validationCustom26" formControlName="castId">
                                             <option selected="" disabled="" value="">Choose...</option>
                                             <option *ngFor="let tcast of casts" [ngValue]="tcast.id">
                                                 {{tcast.cast_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select
+                                        [class]="'form-select'" 
+                                        [formGrp]="hrmsForm"  
+                                        [labelFor]="'validationCustom26'"
+                                        [labelName]="'Cast'"
+                                        [id]="'validationCustom26'" 
+                                        [formCtrlName]="'castId'" 
+                                        [inputType]="inputTypes.Select"
+                                        [dropdownDatas]= "casts"
+                                        (onChange) ="onChangesDropdown($event, '')" >
+                                    </app-custom-form-select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -561,19 +692,30 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="validationCustom28" class="form-label">Blood Group</label>
+                                        <!-- <label for="validationCustom28" class="form-label">Blood Group</label>
                                         <select class="form-select" id="validationCustom28"
                                             formControlName="blood_GroupId">
                                             <option selected="" disabled="" value="">Choose...</option>
                                             <option *ngFor="let blood of bloodGroup" [ngValue]="blood.id">
                                                 {{blood.bloodGroup_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                        <app-custom-form-select
+                                        [class]="'form-select'" 
+                                        [formGrp]="hrmsForm"  
+                                        [labelFor]="'validationCustom28'"
+                                        [labelName]="'Blood Group'"
+                                        [id]="'validationCustom28'" 
+                                        [formCtrlName]="'blood_GroupId'" 
+                                        [inputType]="inputTypes.Select"
+                                        [dropdownDatas]= "bloodGroup"
+                                        (onChange) ="onChangesDropdown($event, '')" >
+                                    </app-custom-form-select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="validationCustom34" class="form-label">Marital Status<span
+                                        <!-- <label for="validationCustom34" class="form-label">Marital Status<span
                                                 class="text-danger">*</span></label>
                                         <select class="form-select" id="validationCustom34"
                                             formControlName="marital_StatusId">
@@ -581,7 +723,19 @@
                                             <option *ngFor="let meritalS of meritalStatuses" [ngValue]="meritalS.id">
                                                 {{meritalS.marital_Status}}
                                             </option>
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select
+                                        [class]="'form-select'" 
+                                        [formGrp]="hrmsForm"  
+                                        [labelFor]="'validationCustom34'"
+                                        [labelName]="'Marital Status'"
+                                        [id]="'validationCustom34'" 
+                                        [formCtrlName]="'marital_StatusId'" 
+                                        [inputType]="inputTypes.Select"
+                                        [dropdownDatas]= "meritalStatuses"
+                                        (onChange) ="onChangesDropdown($event, '')" >
+                                    </app-custom-form-select>
                                         <div *ngIf="f.marital_StatusId.hasError('required') && f.marital_StatusId.touched"
                                             class="text text-danger error-div">*Select Marital Status</div>
                                     </div>
@@ -627,7 +781,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eRelationshipName" class="form-label">Relationship</label>
+                                        <!-- <label for="eRelationshipName" class="form-label">Relationship</label>
                                         <select class="form-select" id="eRelationshipName"
                                             [(ngModel)]="FamilyDetail_RelationshipId"
                                             [ngModelOptions]="{standalone: true}">
@@ -635,7 +789,19 @@
                                             <option *ngFor="let relation of relationShip" [ngValue]="relation.id">
                                                 {{relation.relationShip_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select
+                                        [class]="'form-select'" 
+                                        [formGrp]="hrmsForm"  
+                                        [labelFor]="'eRelationshipName'"
+                                        [labelName]="'Relationship'"
+                                        [id]="'eRelationshipName'" 
+                                        [formCtrlName]="'eRelationshipName'" 
+                                        [inputType]="inputTypes.Select"
+                                        [dropdownDatas]= "relationShip"
+                                        (onChange) ="onChangesDropdown($event, 'eRelationshipName')" >
+                                    </app-custom-form-select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -773,14 +939,25 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eRelationshipName" class="form-label">Relationship</label>
+                                        <!-- <label for="eRelationshipName" class="form-label">Relationship</label>
                                         <select class="form-select" id="eRelationshipName" [(ngModel)]="nRelationship"
                                             [ngModelOptions]="{standalone: true}">
                                             <option selected="selected" disabled="" value="0">Choose...</option>
                                             <option *ngFor="let relation of relationShip" [ngValue]="relation.id">
                                                 {{relation.relationShip_Name}}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                        <app-custom-form-select
+                                        [class]="'form-select'" 
+                                        [formGrp]="hrmsForm"  
+                                        [labelFor]="'nRelationshipName'"
+                                        [labelName]="'Relationship'"
+                                        [id]="'nRelationshipName'" 
+                                        [formCtrlName]="'nRelationshipName'" 
+                                        [inputType]="inputTypes.Select"
+                                        [dropdownDatas]= "relationShip"
+                                        (onChange) ="onChangesDropdown($event, 'nRelationshipName')" >
+                                    </app-custom-form-select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -918,7 +1095,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="eHighestQualification" class="form-label">Highest
+                                        <!-- <label for="eHighestQualification" class="form-label">Highest
                                             Qualification</label>
                                         <select class="form-select" id="eHighestQualification"
                                             [(ngModel)]="highestQualification" [ngModelOptions]="{standalone: true}">
@@ -926,7 +1103,19 @@
                                             <option *ngFor="let higesQualification of highestQualifications"
                                                 [ngValue]="higesQualification.highest_Qualification">
                                                 {{higesQualification.highest_Qualification}}
-                                        </select>
+                                        </select> -->
+
+                                        <app-custom-form-select
+                                        [class]="'form-select'" 
+                                        [formGrp]="hrmsForm"  
+                                        [labelFor]="'eHighestQualification'"
+                                        [labelName]="'Highest Qualification'"
+                                        [id]="'eHighestQualification'" 
+                                        [formCtrlName]="'eHighestQualification'" 
+                                        [inputType]="inputTypes.Select"
+                                        [dropdownDatas]= "highestQualifications"
+                                        (onChange) ="onChangesDropdown($event, 'eHighestQualification')" >
+                                    </app-custom-form-select>
                                     </div>
                                 </div>
                             </div>

@@ -2206,4 +2206,36 @@ export class DefaultComponent implements OnInit {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
   }
 
+  onChangesDropdown(id, typeId) {
+    console.log(id);
+    console.log(typeId);
+    if(typeId == 'project_BranchId') {
+      this.onBranchChanges(id);
+    }
+    else if(typeId == 'departmentId') {
+      this.fetchDesignation(id);
+    }
+    else if(typeId == 'hAuthorityBranchProject') {
+      this.fetchHigherAuthorities(id);
+    }
+    else if(typeId == 'higher_AuthorityId') {
+      this.fetchHigherAuthorityNames(id);
+    }
+    else if(typeId == 'third_Party_Type') {
+      this.onThirdPartySelected(id);
+    }
+    else if(typeId == 'eRelationshipName') {
+      this.FamilyDetail_RelationshipId = id;
+    }
+    else if(typeId == 'nRelationshipName') {
+      this.nRelationship = id;
+    }
+    else if(typeId == '') {
+      this.highestQualification = id;
+    }
+    // else if(typeId == '') {
+    //  // this.fetchHigherAuthorities(id);
+    // }
+  }
+
 }

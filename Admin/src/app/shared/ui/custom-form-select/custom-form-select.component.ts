@@ -44,6 +44,7 @@ export class CustomFormSelectComponent implements OnInit {
   onChanges(id) {
     // let departments = this.departments;
     // this.projectDepartments = departments.filter(x => x.branch_Id == id);
+    this.onChange.emit(id);
   }
 
 }

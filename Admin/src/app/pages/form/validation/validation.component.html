@@ -19,8 +19,8 @@
                   <select class="form-select" id="validationCompany" name="company" name="company"
                     formControlName="companyId">
                     <option selected="" [value]="0">-- All --</option>
-                    <option *ngFor="let company of companies" [value]="company.id">
-                      {{company?.compnay_Name}}
+                    <option *ngFor="let company of companies" [value]="company.value">
+                      {{company?.text}}
                     </option>
                   </select>
                 </div>

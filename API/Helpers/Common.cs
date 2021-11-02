@@ -98,6 +98,8 @@
             public int Value { get; set; }
             public string Text { get; set; }
             public int Group { get; set; }
+            public string GroupText { get; set; }
+
         }
     }
 }

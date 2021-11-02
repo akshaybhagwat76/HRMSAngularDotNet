@@ -10,6 +10,7 @@ export class CompanyService {
   }
 
   getAll() {
+    debugger
     // return this.http.get<Company[]>(`http://localhost:64156/api/companies`);
     return this.http.get<Company[]>(`${environment.url}/api/companies`);
   }

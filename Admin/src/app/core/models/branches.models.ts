@@ -1,5 +1,5 @@
 export class Branches {
-    id: number;
-    branch_Name: string;
-    zoneId: number;
+    value: number;
+    text: string;
+    group: number;
 }
